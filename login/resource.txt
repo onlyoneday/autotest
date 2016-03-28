@@ -1,0 +1,50 @@
+
+*** Settings ***
+
+Documentation  A resource file containing the application specific keywords
+Library        Selenium2Library
+
+
+*** Variables ***
+
+${SERVER}        devwww.dataman-inc.net
+${BROWSER}       firefox
+${DELAY}         0
+${VALID USER}    cchen@dataman-inc.com
+${VALID PASSWD}  111111cC
+${LOGIN URL}     http://${SERVER}/user/login
+${HOME URL}      http://devdashboard.dataman-inc.net/home
+${login_btn}     login-btn-login
+${login_btn_disable}  //button[@id="login-btn-login" and @disabled="disabled"]
+${username_field}  //input[@name='username']
+${password_field}  //input[@name='password']
+
+*** Keywords ***
+
+Open Browser To Login Page
+    Open Browser  ${LOGIN URL}  ${BROWSER}
+    Maximize Browser Window
+    Set Selenium Speed  ${DELAY}
+    Title Should Be  数人云 - 下一代 DCOS 数据中心操作系统
+
+Go To Login Page
+    Go To  ${LOGIN URL}
+    Title Should Be  数人云 - 下一代 DCOS 数据中心操作系统
+
+Input Username  [Arguments]  ${username}
+    Input Text  ${username_field}  ${username}
+
+Input Password  [Arguments]  ${password}
+    Input Text  ${password_field}  ${password}
+
+Submit Credentials
+    Click Button  ${login_btn}
+    sleep  3
+
+Home Page Should Be Open
+    Location Should Be  ${HOME URL}
+    Title Should Be  数人云
+
+Login Should Have Failed
+    Location Should Be  ${LOGIN URL}
+
