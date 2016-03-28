@@ -6,10 +6,8 @@
 
 '#install robotframework
 $easy_install robotframework
-
 #Check if robotframework is installed:
 $pybot --help
-
 #install robotframework-selenium2library
 $easy_install robotframework-selenium2library'
 
