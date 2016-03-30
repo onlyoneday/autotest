@@ -1,0 +1,22 @@
+
+*** Settings ***
+
+Documentation  A test suite with a single test for valid register.
+Resource       resource.txt
+
+
+*** Test Cases ***
+
+Valid Register
+    ${EMAIL NAME} =	      Generate Random String	6	[LOWER]
+    ${VALID EMAIL} =      Evaluate  '${EMAIL NAME}'+'${EMAIL DOMAIN}'
+    Open Browser To Register Page
+    Input Email             ${VALID EMAIL}
+    Input Company           ${VALID COMPANY}
+    Input Weixin            ${VALID WEIXIN}
+    Input Phone Number      ${VALID PHONE NUM}
+    Input Password          ${VALID PASSWORD}
+    Input Password Again    ${VALID PASSWORD}
+    Submit Register
+    Register Success Page Should Be Open
+    [Teardown]  Close Browser

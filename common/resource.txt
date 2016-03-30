@@ -1,0 +1,12 @@
+
+*** Settings ***
+
+Documentation  A resource file containing the specific keywords and variables for application
+Library        Selenium2Library
+Library        String
+
+*** Variables ***
+
+${SERVER}        devwww.dataman-inc.net
+${BROWSER}       firefox
+${DELAY}         0
