@@ -63,6 +63,6 @@ Submit Register
 Register Success Page Should Be Open
     Location Should Be  ${REGISTER SUCCESS URL}
 
-Register Should Have Failed
-    Location Should Not Be  ${REGISTER SUCCESS URL}
+Register Success Page Should Not Be Open 
+    Location Should Be  ${REGISTER URL}
 

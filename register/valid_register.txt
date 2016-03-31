@@ -3,20 +3,32 @@
 
 Documentation  A test suite with a single test for valid register.
 Resource       resource.txt
+Suite Setup     Open Browser To Register Page
+Test Setup      Go To Register Page
+Test Template   Register With Valid Info Should Success
+Suite Teardown  Close Browser
 
 
-*** Test Cases ***
+*** Test Cases ***     ${company}         ${weixin}         ${phone num}         ${password}        ${repassword}  
+With Phone Number      ${VALID COMPANY}   ${VALID WEIXIN}   ${VALID PHONE NUM}   ${VALID PASSWORD}  ${VALID PASSWORD}
+Without Phone Number   ${VALID COMPANY}   ${VALID WEIXIN}   ${EMPTY}             ${VALID PASSWORD}  ${VALID PASSWORD}
 
-Valid Register
-    ${EMAIL NAME} =	      Generate Random String	6	[LOWER]
-    ${VALID EMAIL} =      Evaluate  '${EMAIL NAME}'+'${EMAIL DOMAIN}'
-    Open Browser To Register Page
-    Input Email             ${VALID EMAIL}
-    Input Company           ${VALID COMPANY}
-    Input Weixin            ${VALID WEIXIN}
-    Input Phone Number      ${VALID PHONE NUM}
-    Input Password          ${VALID PASSWORD}
-    Input Password Again    ${VALID PASSWORD}
+
+*** Keywords ***
+
+Get Valid Email Adress
+    ${email name} =       Generate Random String    6   [LOWER]
+    ${valid email} =      Evaluate  '${email name}'+'${EMAIL DOMAIN}'
+    [Return]    ${valid email}
+
+Register With Valid Info Should Success
+    [Arguments]  ${company}  ${weixin}  ${phone num}  ${password}  ${repassword}
+    ${email} =              Get Valid Email Adress
+    Input Email             ${email}
+    Input Company           ${company}
+    Input Weixin            ${weixin}
+    Input Phone Number      ${phone num}
+    Input Password          ${password}
+    Input Password Again    ${repassword}
     Submit Register
     Register Success Page Should Be Open
-    [Teardown]  Close Browser
