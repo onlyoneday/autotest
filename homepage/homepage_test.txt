@@ -1,0 +1,25 @@
+*** Settings ***
+
+Documentation   Test home page cases
+Resource        resource.txt
+Resource        ../common/resource.txt
+Suite Setup     Open Browser And Login cchen
+Test Setup      Go To Home Page
+Suite Teardown  Close All Browsers
+
+
+*** Test Cases ***
+
+Verify User Community Button
+    Click User Community Button
+    User Community Page Should be Opened
+    Close Browser
+
+Verify User Doc Button
+    [Tags]   1
+    Click User Doc Button
+    User Doc Page Should be Opened
+    Close Browser
+
+
+

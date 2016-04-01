@@ -5,44 +5,11 @@ Documentation  A resource file containing the specific keywords and variables fo
 Resource       ../common/resource.txt
 
 
-*** Variables ***
+#*** Variables ***
 
-${VALID USER}    cchen@dataman-inc.com
-${VALID PASSWD}  111111cC
-${LOGIN URL}     http://${SERVER}/user/login
-${HOME URL}      http://devdashboard.dataman-inc.net/home
-${LOGIN BTN}     login-btn-login
-${LOGIN BTN DISABLE}  //button[@id="login-btn-login" and @disabled="disabled"]
-${USERNAME FIELD}  //input[@name='username']
-${PASSWORD FIELD}  //input[@name='password']
 
 
 *** Keywords ***
 
-Open Browser To Login Page
-    Open Browser  ${LOGIN URL}  ${BROWSER}
-    Maximize Browser Window
-    Set Selenium Speed  ${DELAY}
-    Title Should Be  数人云 - 下一代 DCOS 数据中心操作系统
-
-Go To Login Page
-    Go To  ${LOGIN URL}
-    Title Should Be  数人云 - 下一代 DCOS 数据中心操作系统
-
-Input Username  [Arguments]  ${username}
-    Input Text  ${USERNAME FIELD}  ${username}
-
-Input Password  [Arguments]  ${password}
-    Input Text  ${PASSWORD FIELD}  ${password}
-
-Submit Credentials
-    Click Button  ${LOGIN BTN}
-    sleep  3
-
-Home Page Should Be Open
-    Location Should Be  ${HOME URL}
-    Title Should Be  数人云
-
 Login Should Have Failed
     Location Should Be  ${LOGIN URL}
-

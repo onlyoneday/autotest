@@ -1,0 +1,49 @@
+
+*** Settings ***
+
+Documentation   Home page test resources
+Resource        ../common/resource.txt
+
+
+*** Variables ***
+
+#In home page-----------------
+${CLUSTER 1 LINK}    //section[@class="dashboard ng-scope"]/div[1]/div/h2/a
+
+
+#In cluster page--------------
+${ClUSTER INFO}    //div[@class="main-container-body"]/h3
+
+
+${USER COMMU TITLE}  数人之家 - 数人云及Mesos、Docker等云计算技术实践交流社区
+${USER DOC TITLE}    Introduction | 数人云 用户手册
+
+${USER COMMU URL}   http://open.shurenyun.com/
+${USER DOC URL}     http://doc.shurenyun.com/
+
+*** Keywords ***
+
+Click first cluster link
+    Click link  ${CLUSTER 1}
+
+Get Cluster Name
+    ${cluster name} =    Get Text  ${CLUSTER 1}
+    [return]    ${cluster name}
+
+Verify Cluster Info In Home Page
+
+
+Go To Cluster Info Page Should Success
+    Page should contain    集群详情
+    ${cluster name} =    Get Cluster Name
+    Page should contain    ${cluster name}
+
+
+User Community Page Should be Opened
+    Select Window  ${USER COMMU TITLE}
+    Location Should Be  ${USER COMMU URL}
+
+User Doc Page Should be Opened
+    Get Window Titles
+    Select Window  ${USER DOC TITLE}
+    Location Should Be  ${USER DOC URL}

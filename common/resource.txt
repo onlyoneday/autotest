@@ -5,8 +5,149 @@ Documentation  A resource file containing the specific keywords and variables fo
 Library        Selenium2Library
 Library        String
 
+
 *** Variables ***
 
-${SERVER}        devwww.dataman-inc.net
-${BROWSER}       firefox
-${DELAY}         0
+${DATAMAN SERVER}        devwww.dataman-inc.net
+${SERVER}                devdashboard.dataman-inc.net
+${BROWSER}               firefox
+${DELAY}                 0.2
+${SLEEP TIME}            3
+
+#------ URL ----------
+${LOGIN URL}       http://${DATAMAN SERVER}/user/login
+${HOME URL}        http://${SERVER}/home
+${CLUSTER URL}     http://${SERVER}/cluster/listclusters
+${APP USR}         http://${SERVER}/apps
+${IMAGE USR}       http://${SERVER}/image
+${LOG USR}         http://${SERVER}/log
+
+#----- LOCATION --------
+${LOGIN BTN}          login-btn-login
+${USERNAME FIELD}     //input[@name='username']
+${PASSWORD FIELD}     //input[@name='password']
+${LOGOUT LINK}        //a[@data-ng-click="logout()"]
+${HOME LINK}          //a[@data-ui-sref="home" and @data-ui-sref-opts="{reload: true}"]
+${CLUSTER LINK}       //a[@data-ui-sref="cluster.listclusters"]
+${APP LINK}           //a[@data-ui-sref="applist"]
+${IMAGE LINK}         //a[@data-ui-sref="imageList"]
+${LOG LINK}           //a[@data-ui-sref="log"]
+${USER COMMU LINK}    //a[@title="数人社区"]
+${USER DOC LINK}      //a[@title="用户手册"]
+${DATAMAN NEWS LINK}  //a[@class="btn btn-success"]
+${FEED BACK LINK}     //a/i[@class="glyphicon glyphicon-edit"]
+
+#---- DATA ------------
+${VALID USER}    cchen@dataman-inc.com
+${VALID PASSWD}  111111cC
+
+
+*** Keywords ***
+
+Open Browser To Login Page
+    Set Selenium Speed  ${DELAY}
+    Open Browser  ${LOGIN URL}  ${BROWSER}
+    Maximize Browser Window
+    Title Should Be  数人云 - 下一代 DCOS 数据中心操作系统
+
+Input Username  [Arguments]  ${username}
+    Input Text  ${USERNAME FIELD}  ${username}
+
+Input Password  [Arguments]  ${password}
+    Input Text  ${PASSWORD FIELD}  ${password}
+
+Submit Credentials
+    Click Button  ${LOGIN BTN}
+    sleep  3
+#--------------------
+Open Browser And Login cchen
+    Open Browser To Login Page
+    Input Username  ${VALID USER}
+    Input Password  ${VALID PASSWD}
+    Submit Credentials
+
+Logout
+    Click link  ${LOGOUT LINK}
+
+#----------------------
+Go To Login Page
+    Go To  ${LOGIN URL}
+    Title Should Be  数人云 - 下一代 DCOS 数据中心操作系统
+
+Go To Home Page
+    Go To  ${HOME URL}
+    Home Page Should Be Open
+
+Go To Cluster Page
+    Go To  ${CLUSTER URL}
+    Cluster Page Should Be Open
+
+Go To App Page
+    Go To  ${APP URL}
+    App Page Should Be Open
+
+Go To Image Page
+    Go To  ${IMAGE URL}
+    Image Page Should Be Open
+
+Go To Log Page
+    Go To  ${LOG URL}
+    Log Page Should Be Open
+
+#----------------------
+Click Home Page Button
+    Click Link  ${HOME LINK}
+    Home Page Should Be Open
+
+Click Cluster Page Button
+    Click Link  ${CLUSTER LINK}
+    Cluster Page Should Be Open
+
+Click App Page Button
+    Click Link  ${APP LINK}
+    App Page Should Be Open
+
+Click Image Page Button
+    Click Link  ${IMAGE LINK}
+    Image Page Should Be Open
+
+Click Log Page Button
+    Click Link  ${LOG LINK}
+    Log Page Should Be Open
+
+#-----------------------
+Click User Community Button
+    Click Link  ${USER COMMU LINK}
+
+Click User Doc Button
+    Click Link  ${USER DOC LINK}
+
+Click BBS Button
+    Click Link  ${BBS LINK}
+
+Click Dataman News Button
+    Click Link  ${DATAMAN NEWS LINK}
+
+Click Feed Back Button
+    Click Link  ${FEED BACK LINK}
+
+#-----------------------
+Home Page Should Be Open
+    Location Should Be  ${HOME URL}
+    Title Should Be  数人云
+
+Cluster Page Should Be Open
+    Page Should Contain  集群管理
+
+App Page Should Be Open
+    Page Should Contain  应用管理
+
+Image Page Should Be Open
+    Page Should Contain  镜像构建
+
+Log Page Should Be Open
+    Page Should Contain  日志查询
+#---------------------
+
+
+
