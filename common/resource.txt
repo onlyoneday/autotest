@@ -11,7 +11,7 @@ Library        String
 ${DATAMAN SERVER}        devwww.dataman-inc.net
 ${SERVER}                devdashboard.dataman-inc.net
 ${BROWSER}               firefox
-${DELAY}                 0.2
+${DELAY}                 0.3
 ${SLEEP TIME}            3
 
 #------ URL ----------
@@ -34,8 +34,9 @@ ${IMAGE LINK}         //a[@data-ui-sref="imageList"]
 ${LOG LINK}           //a[@data-ui-sref="log"]
 ${USER COMMU LINK}    //a[@title="数人社区"]
 ${USER DOC LINK}      //a[@title="用户手册"]
-${DATAMAN NEWS LINK}  //a[@class="btn btn-success"]
-${FEED BACK LINK}     //a/i[@class="glyphicon glyphicon-edit"]
+${SHURENZHIJIA LINK}  //a[@class="btn btn-success"]
+${FEED BACK LINK}     //a[@data-ng-click="getCSUrl()"]
+${USER CENTER LINK}   //a[@data-ui-sref="user.groups"]
 
 #---- DATA ------------
 ${VALID USER}    cchen@dataman-inc.com
@@ -58,7 +59,7 @@ Input Password  [Arguments]  ${password}
 
 Submit Credentials
     Click Button  ${LOGIN BTN}
-    sleep  3
+    sleep  10
 #--------------------
 Open Browser And Login cchen
     Open Browser To Login Page
@@ -113,7 +114,10 @@ Click Image Page Button
 
 Click Log Page Button
     Click Link  ${LOG LINK}
-    Log Page Should Be Open
+    Log Page Should Be 
+
+Click User Center Link
+    Click Link  ${USER CENTER LINK}
 
 #-----------------------
 Click User Community Button
@@ -122,11 +126,8 @@ Click User Community Button
 Click User Doc Button
     Click Link  ${USER DOC LINK}
 
-Click BBS Button
-    Click Link  ${BBS LINK}
-
-Click Dataman News Button
-    Click Link  ${DATAMAN NEWS LINK}
+Click Shurenzhijia Button
+    Click Link  ${SHURENZHIJIA LINK}
 
 Click Feed Back Button
     Click Link  ${FEED BACK LINK}
@@ -147,6 +148,9 @@ Image Page Should Be Open
 
 Log Page Should Be Open
     Page Should Contain  日志查询
+
+User Center Should Be Opened
+    Page Should Contain  用户中心
 #---------------------
 
 

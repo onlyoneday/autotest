@@ -1,0 +1,23 @@
+*** Settings ***
+
+Documentation  A resource file containing the specific keywords and variables and test cases for logout
+Resource       ../common/resource.txt
+Suite Setup     Open Browser And Login cchen
+Suite Teardown  Close All Browsers
+
+*** Variables ***
+${LOGOUT LINK}    //a[@data-ng-click="logout()"]
+
+
+*** Test Cases ***
+Verify Logout Link
+    Click Logout Link
+    Logout Should Be Successful
+
+*** Keywords ***
+Click Logout link
+    Click Link  ${LOGOUT LINK}
+    Sleep  3
+
+Logout Should Be Successful
+    Page Should Contain  将应用弹性做到极致

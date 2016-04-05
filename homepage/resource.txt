@@ -8,7 +8,7 @@ Resource        ../common/resource.txt
 *** Variables ***
 
 #In home page-----------------
-${CLUSTER 1 LINK}    //section[@class="dashboard ng-scope"]/div[1]/div/h2/a
+${FIRST CLUSTER LINK}    //section[@class="dashboard ng-scope"]/div[1]/div/h2/a
 
 
 #In cluster page--------------
@@ -17,33 +17,41 @@ ${ClUSTER INFO}    //div[@class="main-container-body"]/h3
 
 ${USER COMMU TITLE}  数人之家 - 数人云及Mesos、Docker等云计算技术实践交流社区
 ${USER DOC TITLE}    Introduction | 数人云 用户手册
+${FEED BACK TITLE}   提交新工单 - dataman - 数人云客户服务平台
 
 ${USER COMMU URL}   http://open.shurenyun.com/
 ${USER DOC URL}     http://doc.shurenyun.com/
+${FEED BACK URL}    http://support.dataman-inc.com/request/new/
 
 *** Keywords ***
 
-Click first cluster link
-    Click link  ${CLUSTER 1}
-
-Get Cluster Name
-    ${cluster name} =    Get Text  ${CLUSTER 1}
+Get Cluster Info
+    ${cluster info} =    Get Text  ${CLUSTER INFO}
     [return]    ${cluster name}
 
 Verify Cluster Info In Home Page
 
 
-Go To Cluster Info Page Should Success
-    Page should contain    集群详情
-    ${cluster name} =    Get Cluster Name
-    Page should contain    ${cluster name}
-
-
-User Community Page Should be Opened
+User Community Page Should Be Opened
     Select Window  ${USER COMMU TITLE}
     Location Should Be  ${USER COMMU URL}
 
-User Doc Page Should be Opened
+User Doc Page Should Be Opened
     Get Window Titles
     Select Window  ${USER DOC TITLE}
     Location Should Be  ${USER DOC URL}
+
+Feed Back Page Should Be Opened
+    Get Window Titles
+    Select Window  ${FEED BACK TITLE}
+    Location Should Be  ${FEED BACK URL}
+
+Click First Cluster Link
+    Click Link  ${FIRST CLUSTER LINK}
+
+
+Cluster Info Page Should Be Opened
+    Page should contain    集群详情
+
+
+
