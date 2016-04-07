@@ -1,0 +1,129 @@
+
+*** Settings ***
+
+Documentation   Cluster page test resources
+Resource        ../common/resource.txt
+Suite Setup     Open Browser And Login cchen
+Test Setup      Go To Cluster Page
+Suite Teardown  Close All Browsers
+
+*** Variables ***
+
+${NEW CLUSTER LINK}      //a[@data-ui-sref="cluster.createcluster"]
+${NEW CLUSTER NAME}      //input[@data-ng-model="form.name"]
+${SELECT GROUP}          //select[@data-ng-model="form.groupId"]
+${1 master}              //div[@data-ng-click="form.clusterType='1_master'"]
+${3 master}              //div[@data-ng-click="form.clusterType='3_masters'"]
+${5 master}              //div[@data-ng-click="form.clusterType='5_masters'"]
+${SUBMIT BTN}            //button[@data-ng-click="createCluster()"]
+${SUBMIT ADD NODE BTN}   //button[@data-ng-click="createCluster(true)"]
+${ADD NODE CP}           //div/section[1]/div/div/div/h4/a
+${CLUSTER MENU}          //div/section[1]/div/div/div/button
+${ADD NODE M CP}         //div/section[1]/div/div/div/ul/li[1]
+${CHECK CLUSTER M CP}    //div/section[1]/div/div/div/ul/li[2]
+${DELETE CLUSTER M CP}   //div/section[1]/div/div/div/ul/li[3]
+${BACK CLUSER PAGE}      //li[a="集群管理"]/a
+${CLUSTER INFO}          //h3[@class="ng-binding"]
+${CLUSTER MENU CIP}      //button[@class="btn btn-default dropdown-toggle"]
+${DELETE CLUSTER M CIP}  //li[a="删除集群"]/a
+${EDIT CLUSTER M CIP}    //li[a="编辑集群"]/a
+
+# CP -- In cluster Page
+# M -- In cluster menu
+
+*** Keywords ***
+Click new cluster link in CP
+    Click Link  ${NEW CLUSTER LINK}
+    Sleep  2
+
+Cluster Info Page Should Be Opened
+    Page Should Contain  新建集群
+
+Get New Cluster Name
+    ${new cluster name} =  Generate Random String    10   [LOWER]
+    [return]  ${new cluster name}
+
+Input Cluster Name  [Arguments]  ${cluster name}
+    Input Text  ${NEW CLUSTER NAME}  ${cluster name}
+
+Select First Group
+    #Click Element ${SELECT GROUP}
+    Select From List By Index  ${SELECT GROUP}  1
+
+Select 1 master
+    Click Element  ${1 master}
+
+Select 3 master
+    Click Element  ${3 master}
+
+Select 5 master
+    Click Element  ${5 master}
+
+Submit New Cluster
+    Click Button  ${SUBMIT BTN}
+
+Submit New Cluster And Add Node
+    Click Button  ${SUBMIT ADD NODE BTN}
+
+Get Cluster Name In CI
+    ${cluster info} =  Get Text  ${CLUSTER INFO}
+    ${cluster name} =  Get Substring  ${cluster info}  0  10
+    [return]  ${cluster name}
+
+# CI -- Cluster info page
+# CIP -- Cluster info page
+
+Delete First Cluster In CP
+    Click Element  ${CLUSTER MENU CP}
+    Click Element  ${DELETE CLUSTER M CP}
+
+Delete Cluster In CIP
+    Click Button  ${CLUSTER MENU CIP}
+    Click Element  ${DELETE CLUSTER M CIP}
+
+Check First Cluster Info
+    Click Element  ${CHECK CLUSTER M CP}
+
+Back To Cluster Page
+    Click Element  ${BACK CLUSER PAGE}
+
+
+New A 1master Cluster Without Group
+    [Tags]  1
+    Click new cluster link in CP
+    Cluster Info Page Should Be Opened
+    ${new cluster name} =  Get New Cluster Name
+    Input Cluster Name  ${new cluster name}
+    Select 1 master
+    Submit New Cluster
+    Cluster Info Page Should Be Opened
+    ${cluster name} =  Get Cluster Name In CI
+    Should Be Equal  ${cluster name}  ${new cluster name}
+
+New A 1master Cluster With Group
+    [Tags]  2
+    Click new cluster link in CP
+    Cluster Info Page Should Be Opened
+    ${new cluster name} =  Get New Cluster Name
+    Input Cluster Name  ${new cluster name}
+    Select First Group
+    Select 1 master
+    Submit New Cluster
+    Cluster Info Page Should Be Opened
+    ${cluster name} =  Get Cluster Name In CI
+    Should Be Equal  ${cluster name}  ${new cluster name}
+
+
+*** Test Cases ***
+
+Verify New and Delete A 1master Cluster
+    [Tags]  1
+    New A 1master Cluster Without Group
+    Back To Cluster Page
+    Delete First Cluster In CP
+
+Verify New and Delete A 1master Cluster With Group
+    [Tags]  2
+    New A 1master Cluster With Group
+    Delete Cluster In CIP
+

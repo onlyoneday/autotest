@@ -11,7 +11,7 @@ Library        String
 ${DATAMAN SERVER}        devwww.dataman-inc.net
 ${SERVER}                devdashboard.dataman-inc.net
 ${BROWSER}               firefox
-${DELAY}                 0.3
+${DELAY}                 0.1
 ${SLEEP TIME}            3
 
 #------ URL ----------
@@ -59,7 +59,7 @@ Input Password  [Arguments]  ${password}
 
 Submit Credentials
     Click Button  ${LOGIN BTN}
-    sleep  10
+    sleep  5
 #--------------------
 Open Browser And Login cchen
     Open Browser To Login Page

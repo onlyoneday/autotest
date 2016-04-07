@@ -4,7 +4,7 @@ Documentation   Test home page cases
 Resource        resource.txt
 Resource        ../common/resource.txt
 Suite Setup     Open Browser And Login cchen
-#Test Setup      Go To Home Page
+#Test Setup     Go To Home Page
 Suite Teardown  Close All Browsers
 
 
