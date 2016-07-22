@@ -8,19 +8,25 @@ Library        String
 
 *** Variables ***
 
-${DATAMAN SERVER}        devwww.dataman-inc.net
 ${SERVER}                devdashboard.dataman-inc.net
+#${SERVER}                dashboard.shurenyun.com
+
+${IMAGE SERVER}          devregistry.dataman-inc.com:5000/sryci40/
+
 ${BROWSER}               firefox
-${DELAY}                 0.1
+${DELAY}                 0.5
 ${SLEEP TIME}            3
 
+
 #------ URL ----------
-${LOGIN URL}       http://${DATAMAN SERVER}/user/login
-${HOME URL}        http://${SERVER}/home
+${LOGIN URL}       http://${SERVER}/auth/login
+${HOME URL}        http://${SERVER}/dashboard/home
 ${CLUSTER URL}     http://${SERVER}/cluster/listclusters
-${APP USR}         http://${SERVER}/apps
-${IMAGE USR}       http://${SERVER}/image
-${LOG USR}         http://${SERVER}/log
+${APP URL}         http://${SERVER}/apps/apps/my
+${IMAGE URL}       http://${SERVER}/image
+${LOG URL}         http://${SERVER}/log
+
+
 
 #----- LOCATION --------
 ${LOGIN BTN}          login-btn-login
@@ -49,7 +55,7 @@ Open Browser To Login Page
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}
     Maximize Browser Window
-    Title Should Be  数人云 - 下一代 DCOS 数据中心操作系统
+    #Title Should Be  数人云 - 下一代 DCOS 数据中心操作系统
 
 Input Username  [Arguments]  ${username}
     Input Text  ${USERNAME FIELD}  ${username}

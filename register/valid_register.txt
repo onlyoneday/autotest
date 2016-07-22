@@ -17,7 +17,7 @@ Without Phone Number   ${VALID COMPANY}   ${VALID WEIXIN}   ${EMPTY}            
 *** Keywords ***
 
 Get Valid Email Adress
-    ${email name} =       Generate Random String    6   [LOWER]
+    ${email name} =       Generate Random String    6
     ${valid email} =      Evaluate  '${email name}'+'${EMAIL DOMAIN}'
     [Return]    ${valid email}
 

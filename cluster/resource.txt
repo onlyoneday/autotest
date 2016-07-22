@@ -3,9 +3,7 @@
 
 Documentation   Cluster page test resources
 Resource        ../common/resource.txt
-Suite Setup     Open Browser And Login cchen
-Test Setup      Go To Cluster Page
-Suite Teardown  Close All Browsers
+
 
 *** Variables ***
 
@@ -21,7 +19,7 @@ ${ADD NODE CP}           //div/section[1]/div/div/div/h4/a
 ${CLUSTER MENU}          //div/section[1]/div/div/div/button
 ${ADD NODE M CP}         //div/section[1]/div/div/div/ul/li[1]
 ${CHECK CLUSTER M CP}    //div/section[1]/div/div/div/ul/li[2]
-${DELETE CLUSTER M CP}   //div/section[1]/div/div/div/ul/li[3]
+${DELETE CLUSTER M CP}   //div/section[1]/div/div/div/ul/li[3]926622797cC
 ${BACK CLUSER PAGE}      //li[a="集群管理"]/a
 ${CLUSTER INFO}          //h3[@class="ng-binding"]
 ${CLUSTER MENU CIP}      //button[@class="btn btn-default dropdown-toggle"]
@@ -40,7 +38,7 @@ Cluster Info Page Should Be Opened
     Page Should Contain  新建集群
 
 Get New Cluster Name
-    ${new cluster name} =  Generate Random String    10   [LOWER]
+    ${new cluster name} =  Generate Random String    10
     [return]  ${new cluster name}
 
 Input Cluster Name  [Arguments]  ${cluster name}
@@ -99,6 +97,7 @@ New A 1master Cluster Without Group
     Cluster Info Page Should Be Opened
     ${cluster name} =  Get Cluster Name In CI
     Should Be Equal  ${cluster name}  ${new cluster name}
+    #---delete this Cluster---
 
 New A 1master Cluster With Group
     [Tags]  2
@@ -112,18 +111,7 @@ New A 1master Cluster With Group
     Cluster Info Page Should Be Opened
     ${cluster name} =  Get Cluster Name In CI
     Should Be Equal  ${cluster name}  ${new cluster name}
+    #---delete this Cluster---
+    
 
-
-*** Test Cases ***
-
-Verify New and Delete A 1master Cluster
-    [Tags]  1
-    New A 1master Cluster Without Group
-    Back To Cluster Page
-    Delete First Cluster In CP
-
-Verify New and Delete A 1master Cluster With Group
-    [Tags]  2
-    New A 1master Cluster With Group
-    Delete Cluster In CIP
 

@@ -14,4 +14,4 @@ Valid Login
     Input Password    ${VALID PASSWD}
     Submit Credentials
     Home Page Should Be Open
-    [Teardown]  Close Browser
+    #[Teardown]  Close Browser
