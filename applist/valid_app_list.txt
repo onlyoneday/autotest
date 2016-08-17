@@ -1,0 +1,43 @@
+
+*** Settings ***
+
+Documentation  Test deploying apps in app list with default settings 
+Resource       ../common/resource.txt
+Suite Setup     Open Browser And Login cchen
+Test Setup      Go To App List Page
+#Suite Teardown  Close All Browsers
+
+
+*** Test Cases ***
+Deploy Redis
+    [Tags]  1
+    ${app name range} =   Generate Random String    6
+    ${app name range} =   Evaluate    "Redis" + ${app name range}
+    Deploy App In App List   ${app name range}  ${APP REDIS DEPLOY LINK}
+    Go To App Page
+    Click App Name In ALP  ${app name range}
+    #verify if redis is running
+    Sleep  10
+    Delete App In AIP
+
+Deploy Nginx
+    [Tags]  2
+    ${app name range} =   Generate Random String    6
+    ${app name range} =   Evaluate    "Nginx" + ${app name range}
+    Deploy App In App List   ${app name range}  ${APP NGINX DEPLOY LINK}
+    Go To App Page
+    Click App Name In ALP  ${app name range}
+    #verify if redis is running
+    Sleep  10
+    Delete App In AIP
+
+Deploy Mysql
+    [Tags]  3
+    ${app name range} =   Generate Random String    6
+    ${app name range} =   Evaluate    "Mysql" + ${app name range}
+    Deploy App In App List   ${app name range}  ${APP MYSQL DEPLOY LINK}
+    Go To App Page
+    Click App Name In ALP  ${app name range}
+    #verify if redis is running
+    Sleep  10
+    Delete App In AIP

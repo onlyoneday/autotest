@@ -8,8 +8,9 @@ Library        String
 
 *** Variables ***
 
-${SERVER}                devdashboard.dataman-inc.net
+#${SERVER}                devdashboard.dataman-inc.net
 #${SERVER}                dashboard.shurenyun.com
+${SERVER}                demodashboard.dataman-inc.net
 
 ${IMAGE SERVER}          devregistry.dataman-inc.com:5000/sryci40/
 
@@ -23,6 +24,7 @@ ${LOGIN URL}       http://${SERVER}/auth/login
 ${HOME URL}        http://${SERVER}/dashboard/home
 ${CLUSTER URL}     http://${SERVER}/cluster/listclusters
 ${APP URL}         http://${SERVER}/apps/apps/my
+${APP LIST URL}    http://${SERVER}/repository/list
 ${IMAGE URL}       http://${SERVER}/image
 ${LOG URL}         http://${SERVER}/log
 
@@ -93,6 +95,10 @@ Go To App Page
     Go To  ${APP URL}
     App Page Should Be Open
 
+Go To App List Page
+    Go To  ${APP LIST URL}
+    App List Page Should Be Open
+
 Go To Image Page
     Go To  ${IMAGE URL}
     Image Page Should Be Open
@@ -144,18 +150,27 @@ Home Page Should Be Open
     Title Should Be  数人云
 
 Cluster Page Should Be Open
+    #Location Should Be  ${HOME URL}
     Page Should Contain  集群管理
 
 App Page Should Be Open
+    #Location Should Be  ${HOME URL}
     Page Should Contain  应用管理
 
+App List Page Should Be Open
+    Location Should Be  ${APP LIST URL}
+    Page Should Contain  应用目录
+
 Image Page Should Be Open
+    #Location Should Be  ${HOME URL}
     Page Should Contain  镜像构建
 
 Log Page Should Be Open
+    #Location Should Be  ${HOME URL}
     Page Should Contain  日志查询
 
 User Center Should Be Opened
+    #Location Should Be  ${HOME URL}
     Page Should Contain  用户中心
 #---------------------
 

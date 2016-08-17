@@ -1,0 +1,113 @@
+
+*** Settings ***
+
+Documentation   App test keywords
+Resource        ../common/resource.txt
+
+
+*** Variables ***
+
+${NEW APP XPATH}           //a[@href="/app/create"]
+#----New app page----
+${APP NAME INPUT XPATH}    //input[@name="appName"]
+${SELECT CLUSTER XPATH}    //select[@data-ng-model="createAppCtrl.form.cluster_id"]
+${IMAGE URI INPUT XPATH}   //input[@name="imageName"]
+${IMAGE VERSION XPATH}     //input[@name="imageVersion"]
+${FORCE PULL IMAGE XPATH}  //input[@data-ng-model="createAppCtrl.form.forceImage"]
+${NETWORK BRIDGE XPATH}    //form[@name="staticForm"]/div[5]/div/label[1]
+${NETWORK HOST XPATH}      //form[@name="staticForm"]/div[5]/div/label[2]
+${CREATE APP XPATH}         //button[@data-ng-click="createAppCtrl.createApp()"]
+${NEW APP PAGE TITLE XPATH}     //div[@class="page-header ng-scope"]/div/h1
+
+${CPU DRAG XPATH}  //form[@name="staticForm"]/div[8]/div/rzslider/span[3]
+${MEMORY DRAG XPATH}  //form[@name="staticForm"]/div[9]/div/rzslider/span[3]
+
+#----App info page (AIP)
+${APP STATUS XPATH}        //div[@class="main-container-body"]/dl/dd[2]
+${MENU XPATH}              //button[@data-ng-disabled="!detailAppCtrl.appStatus.status"]
+${DELETE AIP XPATH}        //ul[@class="dropdown-menu dropdown-menu-right"]/li[3]
+${DELETE CONFIRM XPATH}    //button[@data-ng-click="confirmCtrl.ok()"]
+
+
+*** Keywords ***
+
+#在应用列表页面点击【新建应用】按钮
+Click New App
+    Click Link  ${NEW APP XPATH}
+    Wait Until Element Contains  ${NEW APP PAGE TITLE XPATH}  新建应用
+
+#--------------------------------
+#在新建应用页面输入应用名称
+Input App Name  [Arguments]  ${name}
+    Input Text  ${APP NAME INPUT XPATH}  ${name}
+
+#在新建应用页面按照index选择集群
+Select Cluster  [Arguments]  ${index}
+    Select From List By Index  ${SELECT CLUSTER XPATH}  ${index}
+
+#在新建应用页面输入应用地址
+Input Image URI    [Arguments]  ${uri}
+    Input Text  ${IMAGE URI INPUT XPATH}  ${uri}
+
+#在新建应用页面输入应用版本号
+Input Version    [Arguments]  ${version}
+    Input Text  ${IMAGE VERSION XPATH}  ${version}
+
+#在新建应用页面选择强制拉取镜像
+Force Pull Image
+    Click Element  ${FORCE PULL IMAGE XPATH}
+
+#在新建应用页面选择网络模式为Host模式
+Select Network Type Host
+    Click Element  ${NETWORK HOST XPATH}
+
+#在新建应用页面选择网络模式为网桥模式
+Select Network Type Bridge
+    Click Element  ${NETWORK BRIDGE XPATH}
+
+#在新建应用页面选择容器规格-cpu，eg. 0.1 0.2 ...
+Select CPU Size  [Arguments]  ${size}
+    ${final_size} =  Evaluate  ${size}*10*31-2
+    Drag And Drop By Offset  ${CPU DRAG XPATH}  ${final_size}  0
+
+#在新建应用页面选择容器规格-内存, eg. 16 32 ...
+Select Memory Size  [Arguments]  ${size}
+    ${final_size} =  Evaluate  ${size}/16*31-2
+    Drag And Drop By Offset  ${MEMORY DRAG XPATH}  ${final_size}  0
+
+#在新建应用页面点击【创建】按钮
+Click Create App
+    Click Button  ${CREATE APP XPATH}
+
+#---------------------------------------
+#在应用详情页面验证应用状态是否为运行中
+Verity App Is Runing
+    ${get_status} =  Get Text  ${APP STATUS XPATH}
+    Should Be Equal As Strings  ${get_status}  运行中
+
+#在应用详情页面验证应用状态是否为已停止
+Verity App Is Stopped
+    ${get_status} =  Get Text  ${APP STATUS XPATH}
+    Should Be Equal As Strings  ${get_status}  已停止
+
+#在应用详情页面删除应用
+Delete App In AIP
+    Click Button  ${MENU XPATH}
+    Click Element  ${DELETE AIP XPATH}
+    Click Button  ${DELETE CONFIRM XPATH}
+
+#在应用列表页面按照名称点击应用，进入应用详情
+Click App Name In ALP  [Arguments]  ${name}
+    ${app name link} =  Evaluate  '//td[a="'+${app name}+'"]/a'
+    Click Link   ${app name link}
+
+    
+
+
+
+
+
+
+
+
+
