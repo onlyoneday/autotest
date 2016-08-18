@@ -2,7 +2,7 @@
 
 ## Before test
 
-#### Make sure robotframework and robotframework-selenium2library have been installed, if no, follow steps below:
+#### Make sure robotframework  and robotframework-selenium2library have been installed, if no, follow steps below:
 
 	#install robotframework
 	$easy_install robotframework
