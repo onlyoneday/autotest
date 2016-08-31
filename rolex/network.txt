@@ -1,0 +1,35 @@
+
+*** Settings ***
+
+Documentation  A test suite with a single test for valid login. This test has
+...            a workflow that is created using keywords from the resource file.
+Resource       common.txt
+#Test Teardown  Close Browser
+
+*** Variables ***
+
+${Network Table}	.md-table
+${Network Link}		//li[@title="网络"]/a
+
+*** Keywords ***
+
+
+*** Test Cases ***
+Check Click Network Link
+	[Tags]	1
+	Open Browser And Login With Admin
+	Click Link	${Network Link}
+	#Network Page Should Be Open
+
+Check Network Table
+	[Tags]	2
+	Open Browser And Login With Admin
+	Go To Network Page
+    Table Row Should Contain	${Network Table}	1	ID
+    Table Row Should Contain	${Network Table}	1	名称
+    Table Row Should Contain	${Network Table}	1	类型
+    Table Row Should Contain	${Network Table}	1	内部网络
+    Table Row Should Contain	${Network Table}	1	子网掩码
+    Table Row Should Contain	${Network Table}	1	网关
+    Table Row Should Contain	${Network Table}	1	IP 范围
+    Table Row Should Contain	${Network Table}	1	操作
