@@ -5,6 +5,54 @@ Library        Selenium2Library
 Library        String
 
 *** Variables ***
-${Server}  192.168.1.47
+
+${BROWSER}					firefox
+${DELAY}					0.5
+${SLEEP TIME}				3
+
+${Server}					http://192.168.1.47
+
+#------ URL ----------
+${Login Url}				/auth/login
+${Stack Url}				/stack/list
+${Registry List Url}		/registry/list/catalogs
+${Node List Url}			/node/list
+${Network List Url}			/network/list
+${Registry Auth List Url}	/registryAuth/list
+${Info Url}					/misc/config
+
+#----- LOCATION --------
+${USERNAME FIELD}     //input[@name='Email']
+${PASSWORD FIELD}     //input[@name='password']
+${LOGIN BTN}       //button[@id='login-btn-login']
+
+#----------Account-------------
+${Admin Email}		admin@admin.com
+${Admin Password}	adminadmin
 
 *** Keywords ***
+
+Open Browser To Login Page
+    Set Selenium Speed  ${DELAY}
+    Open Browser  ${Server}  ${BROWSER}
+    Maximize Browser Window
+    Page Should Contain Button  ${LOGIN BTN}
+
+Input Username  [Arguments]  ${user}
+    Input Text  ${USERNAME FIELD}  ${user}
+
+Input Password  [Arguments]  ${password}
+    Input Text  ${PASSWORD FIELD}  ${password}
+
+Submit Credentials
+    Click Button  ${LOGIN BTN}
+
+Open Browser And Login With Admin
+    Open Browser To Login Page
+    Input Username  ${VALID USER}
+    Input Password  ${VALID PASSWD}
+    Submit Credentials
+
+ Home Page Should Be Open
+    Location Should Be  ${Server}${Stack Url}
+    Title Should Be  数人云
