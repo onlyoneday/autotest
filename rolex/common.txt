@@ -1,0 +1,10 @@
+*** Settings ***
+
+Documentation  A resource file containing the specific keywords and variables for application
+Library        Selenium2Library
+Library        String
+
+*** Variables ***
+${Server}  192.168.1.47
+
+*** Keywords ***
