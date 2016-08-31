@@ -24,7 +24,7 @@ ${Info Url}					/misc/config
 #----- LOCATION --------
 ${USERNAME FIELD}     //input[@name='Email']
 ${PASSWORD FIELD}     //input[@name='password']
-${LOGIN BTN}       //button[@id='login-btn-login']
+${LOGIN BTN}          //button[@id='login-btn-login']
 
 #----------Account-------------
 ${Admin Email}		admin@admin.com
@@ -49,10 +49,18 @@ Submit Credentials
 
 Open Browser And Login With Admin
     Open Browser To Login Page
-    Input Username  ${VALID USER}
-    Input Password  ${VALID PASSWD}
+    Input Username  ${Admin Email}
+    Input Password  ${Admin Password}
     Submit Credentials
 
- Home Page Should Be Open
+Home Page Should Be Open
     Location Should Be  ${Server}${Stack Url}
-    Title Should Be  数人云
+
+Network Page Should Be Open
+    Location Should Be  ${Server}${Network List Url}
+
+Go To Network Page
+    Go To  ${Network List Url}
+    Network Page Should Be Open
+
+    
