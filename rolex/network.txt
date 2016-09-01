@@ -7,12 +7,31 @@ Resource       common.txt
 #Test Teardown  Close Browser
 
 *** Variables ***
+${Create Network Url}				/network/create
 
-${Network Table}	.md-table
-${Network Link}		//li[@title="网络"]/a
+${Network Table}					css=.md-table
+${Network Link}						//li[@title="网络"]/a
+${Create Network Link}				//a[@href="/network/create"]
+
+${Network Name Input}				//input[@name="name"]
+${Subnet mask Input}				//input[@name="Subnet"
+${Gateway Input}					input[@name="Gateway"]
+${IPRange Input}					input[@name="IPRange"]
+${Inter Net Radio}					id="radio_2"
+${Extra Net Radio}					id="radio_3"
+${Create Tag Button}				//button[@class="md-raised md-success md-small md-button md-ink-ripple"]
+${Confirm Create Network Button}	//button[@class="md-raised md-primary md-button md-ink-ripple"]
+${Concel Create Network Button}		//button[@class="md-raised md-button md-ink-ripple"]
 
 *** Keywords ***
-
+Check Network Exist
+	[Arguments]		${name}		${subnet}		${gateway}		${iprange}		${type}
+    Table Column Should Contain		${Network Table}	2	${name}
+    Table Column Should Contain		${Network Table}	3	overlay
+    Table Column Should Contain		${Network Table}	4	${type}
+    Table Column Should Contain		${Network Table}	5	${subnet}
+    Table Column Should Contain		${Network Table}	6	${gateway}
+    Table Column Should Contain		${Network Table}	7	${iprange}
 
 *** Test Cases ***
 Check Click Network Link
@@ -25,11 +44,38 @@ Check Network Table
 	[Tags]	2
 	Open Browser And Login With Admin
 	Go To Network Page
-    Table Row Should Contain	${Network Table}	1	ID
-    Table Row Should Contain	${Network Table}	1	名称
-    Table Row Should Contain	${Network Table}	1	类型
-    Table Row Should Contain	${Network Table}	1	内部网络
-    Table Row Should Contain	${Network Table}	1	子网掩码
-    Table Row Should Contain	${Network Table}	1	网关
-    Table Row Should Contain	${Network Table}	1	IP 范围
-    Table Row Should Contain	${Network Table}	1	操作
+
+    Table Header Should Contain		${Network Table}	ID
+    Table Header Should Contain		${Network Table}	名称
+    Table Header Should Contain		${Network Table}	类型
+    Table Header Should Contain		${Network Table}	内部网络
+    Table Header Should Contain		${Network Table}	子网掩码
+    Table Header Should Contain		${Network Table}	网关
+    Table Header Should Contain		${Network Table}	IP 范围
+    Table Header Should Contain		${Network Table}	操作
+
+    Table Row Should Contain	${Network Table}	1	ingress
+    Table Row Should Contain	${Network Table}	1	overlay
+
+Create Network
+	[Tags]	3
+	Open Browser And Login With Admin
+	Go To Network Page
+	${network name}=	Generate Random String    6
+    Click Link			${Create Network Link}
+    Location Should Be  ${Server}${Create Network Url}
+    Input Text			${Network Name Input}		${network name}
+    Click Button 		${Confirm Create Network Button}
+    Sleep				${SLEEP TIME}
+    Check Network Exist		${network name}		${EMPTY}	${EMPTY}	${EMPTY}	是
+
+    
+
+
+
+
+
+
+
+
+

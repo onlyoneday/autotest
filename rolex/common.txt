@@ -7,7 +7,8 @@ Library        String
 *** Variables ***
 
 ${BROWSER}					firefox
-${DELAY}					0.5
+${DELAY}					0.1
+
 ${SLEEP TIME}				3
 
 ${Server}					http://192.168.1.47
@@ -60,7 +61,7 @@ Network Page Should Be Open
     Location Should Be  ${Server}${Network List Url}
 
 Go To Network Page
-    Go To  ${Network List Url}
+    Go To	${Server}${Network List Url}
+    log  ${Server}${Network List Url}
     Network Page Should Be Open
 
-    
