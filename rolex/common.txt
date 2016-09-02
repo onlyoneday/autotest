@@ -6,62 +6,62 @@ Library        String
 
 *** Variables ***
 
-${BROWSER}					firefox
-${DELAY}					0.1
-
-${SLEEP TIME}				3
-
-${Server}					http://192.168.1.47
+${BROWSER}                  firefox
+${DELAY}                    0.1
+${SLEEP TIME}               3
 
 #------ URL ----------
-${Login Url}				/auth/login
-${Stack Url}				/stack/list
-${Registry List Url}		/registry/list/catalogs
-${Node List Url}			/node/list
-${Network List Url}			/network/list
-${Registry Auth List Url}	/registryAuth/list
-${Info Url}					/misc/config
+${Server}                   http://192.168.1.47
+${Login Url}                /auth/login
+${Stack Url}                /stack/list
+${Registry List Url}        /registry/list/catalogs
+${Node List Url}            /node/list
+${Network List Url}         /network/list
+${Registry Auth List Url}   /registryAuth/list
+${Info Url}                 /misc/config
 
 #----- LOCATION --------
-${USERNAME FIELD}     //input[@name='Email']
-${PASSWORD FIELD}     //input[@name='password']
-${LOGIN BTN}          //button[@id='login-btn-login']
+${USERNAME FIELD}           //input[@name='Email']
+${PASSWORD FIELD}           //input[@name='password']
+${LOGIN BTN}                //button[@id='login-btn-login']
 
 #----------Account-------------
-${Admin Email}		admin@admin.com
-${Admin Password}	adminadmin
+${Admin Email}              admin@admin.com
+${Admin Password}           adminadmin
+
 
 *** Keywords ***
 
 Open Browser To Login Page
-    Set Selenium Speed  ${DELAY}
-    Open Browser  ${Server}  ${BROWSER}
+    Set Selenium Speed          ${DELAY}
+    Open Browser                ${Server}           ${BROWSER}
     Maximize Browser Window
     Page Should Contain Button  ${LOGIN BTN}
 
-Input Username  [Arguments]  ${user}
-    Input Text  ${USERNAME FIELD}  ${user}
+Input Username
+    [Arguments]  ${user}
+    Input Text                  ${USERNAME FIELD}   ${user}
 
-Input Password  [Arguments]  ${password}
-    Input Text  ${PASSWORD FIELD}  ${password}
+Input Password
+    [Arguments]  ${password}
+    Input Text                  ${PASSWORD FIELD}   ${password}
 
 Submit Credentials
-    Click Button  ${LOGIN BTN}
+    Click Button                ${LOGIN BTN}
 
 Open Browser And Login With Admin
     Open Browser To Login Page
-    Input Username  ${Admin Email}
-    Input Password  ${Admin Password}
+    Input Username              ${Admin Email}
+    Input Password              ${Admin Password}
     Submit Credentials
 
 Home Page Should Be Open
-    Location Should Be  ${Server}${Stack Url}
+    Location Should Be          ${Server}${Stack Url}
 
 Network Page Should Be Open
-    Location Should Be  ${Server}${Network List Url}
+    Location Should Be          ${Server}${Network List Url}
 
 Go To Network Page
-    Go To	${Server}${Network List Url}
-    log  ${Server}${Network List Url}
+    Go To                       ${Server}${Network List Url}
     Network Page Should Be Open
 
