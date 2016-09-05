@@ -10,7 +10,7 @@ class swarmapi(object):
         pass
 
 
-    #登录
+    #1登录
     def login(self,email ,password):
         payload = {"email": email ,"password": password}
         re = requests.post(url + "/v1/login" ,data=json.dumps(payload))
@@ -23,7 +23,7 @@ class swarmapi(object):
         elif re.json()['code'] == 0:
             return re.status_code ,re.json()
 
-    #退出登录
+    #2退出登录
     def logout(self,token):
         re = requests.post(url + "/v1/logout" ,headers={'Authorization': token})
         if re.status_code != 200:
@@ -31,51 +31,39 @@ class swarmapi(object):
         elif re.json()['code'] == 0:
             return re.status_code ,re.json()
 
-    #修改密码
-    def get_all_userinfo(self,token):
-        re = requests.get(url + "/account/v1/accounts" ,headers={'Authorization': token})
+    #3修改密码
+    def change_passwd(self,token):
+        re = requests.put(url + "/v1/password" ,headers={'Authorization': token})
         if re.status_code != 200:
             return re.status_code ,re.json()
         elif re.json()['code'] == 0:
             return re.status_code ,re.json()
 
-    #根据用户id获取用户信息
-    def get_userinfo_byid(self,token,id):
-        re = requests.get(url + "/account/v1/accounts/"+str(id)+"/groups" ,headers={'Authorization': token})
+    # 4获取当前用户信息
+    def getuserinfo(self, token):
+        re = requests.get(url + "/v1/aboutme", headers={'Authorization': token})
+        if re.status_code != 200:
+            return re.status_code, re.json()
+        elif re.json()['code'] == 0:
+            return re.status_code, re.json()
+
+    #5获取所有用户
+    def get_all_user_info(self,token):
+        re = requests.get(url + "/v1/accounts" ,headers={'Authorization': token})
         if re.status_code != 200:
             return re.status_code ,re.json()
         elif re.json()['code'] == 0:
             return re.status_code ,re.json()
 
-    #根据用户id获取所属组
+    #6创建用户 need docs
+
+
+
+
+    #7根据用户id获取用户信息
     def get_groupinfo_byuserid(self,token,id):
-        re = requests.get(url + "/account/v1/accounts/"+str(id) ,headers={'Authorization': token})
+        re = requests.get(url + "/v1/accounts/"+str(id) ,headers={'Authorization': token})
         if re.status_code != 200:
             return re.status_code ,re.json()
         elif re.json()['code'] == 0:
             return re.status_code ,re.json()
-
-
-
-
-    # curl -XGET localhost:5013/account/v1/accounts/1/groups
-
-    #curl -XGET localhost:5013/account/v1/accounts/1
-
-
-
-
-    def getuserinfo(self,token):
-        re = requests.get(url + "/account/v1/aboutme" ,headers={'Authorization': token})
-        if re.status_code != 200:
-            return re.status_code ,re.json()
-        elif re.json()['code'] == 0:
-            return re.status_code ,re.json()
-
-    def getgroupinfo(self,token):
-        re = requests.get(url + "/account/v1/groups" ,headers={'Authorization': token})
-        if re.status_code != 200:
-            return re.status_code ,re.json()
-        elif re.json()['code'] == 0:
-            return re.status_code ,re.json()
-
