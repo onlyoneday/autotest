@@ -8,12 +8,12 @@ class Logger:
 
     @staticmethod
     def log_normal(info):
-        print (Logger.OKBLUE + info + Logger.ENDC)
+        print ('[INFO]  ' + info )
 
     @staticmethod
     def log_high(info):
-        print (Logger.OKGREEN + info + Logger.ENDC)
+        print (Logger.OKGREEN + '  ~ [OK]  ' + info + Logger.ENDC)
 
     @staticmethod
     def log_fail(info):
-        print (Logger.FAIL + info + Logger.ENDC)
+        print (Logger.FAIL + '  ~ [FAIL]  '  + info + Logger.ENDC)
