@@ -10,7 +10,7 @@ Test Teardown  Close Browser
 
 Valid Login
     Open Browser To Login Page
-    Input Username    ${Admin Email}
-    Input Password    ${Admin Password}
+    Input Username				${Admin Email}
+    Input Password				${Admin Password}
     Submit Credentials
     Home Page Should Be Open
