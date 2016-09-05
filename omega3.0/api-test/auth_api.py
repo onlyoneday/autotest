@@ -1,35 +1,58 @@
 import requests
 import json
-
+from  Logger import Logger
 url = "http://192.168.1.155:9999"
 
 
-class swarmapi(object):
+class authapi(object):
 
     def __init__(self):
         pass
 
 
     #1登录
-    def login(self,email ,password):
+    def login(self, email, password, expectcode):
         payload = {"email": email ,"password": password}
         re = requests.post(url + "/v1/login" ,data=json.dumps(payload))
-        if re.status_code ==400:
-            return re.status_code ,re.json()
-        if re.status_code ==401:
-            return re.status_code ,re.json()
-        if re.status_code != 200:
-            return re.status_code ,re.json()
-        elif re.json()['code'] == 0:
-            return re.status_code ,re.json()
+        if expectcode ==200 and re.status_code == expectcode :
+            Logger.log_normal("test valid login ")
+            if len(re.json()["data"])==32 and int(re.json()["code"])==0 :
+                Logger.log_high("valid login test passed")
+                return re.json()['data']
+            else:
+                Logger.log_fail("valid login test failed")
+        elif expectcode ==400 and re.status_code == expectcode:
+            Logger.log_normal("test invalid login ")
+            if int(re.json()["code"])==12007 :
+                Logger.log_high("invalid login test passed")
+            else:
+                Logger.log_fail("invalid login test failed return code is "+int(re.json()["code"])+"but it must be 12007")
+        elif(re.status_code!=200 and re.status_code!=400):
+            Logger.log_fail("uncatched error" + str(re.status_code))
+        else:
+            Logger.log_fail("uncatched error" + str(re.status_code))
+
 
     #2退出登录
-    def logout(self,token):
+    def logout(self,token,expectcode):
         re = requests.post(url + "/v1/logout" ,headers={'Authorization': token})
-        if re.status_code != 200:
-            return re.status_code ,re.json()
-        elif re.json()['code'] == 0:
-            return re.status_code ,re.json()
+        if expectcode ==200 and re.status_code == expectcode :
+            Logger.log_normal("test valid login ")
+            if len(re.json()["data"])==32 and int(re.json()["code"])==0 :
+                Logger.log_high("valid login test passed")
+                return re.json()['data']
+            else:
+                Logger.log_fail("valid login test failed")
+        elif expectcode ==400 and re.status_code == expectcode:
+            Logger.log_normal("test invalid login ")
+            if int(re.json()["code"])==12007 :
+                Logger.log_high("invalid login test passed")
+            else:
+                Logger.log_fail("invalid login test failed return code is "+int(re.json()["code"])+"but it must be 12007")
+        elif(re.status_code!=200 and re.status_code!=400):
+            Logger.log_fail("uncatched error" + str(re.status_code))
+        else:
+            Logger.log_fail("uncatched error" + str(re.status_code))
 
     #3修改密码
     def change_passwd(self,token):
