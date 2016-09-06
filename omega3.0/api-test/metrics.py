@@ -1,9 +1,13 @@
 import requests
 import json
+import configparser
 from  auth_api import authapi
 from  Logger import Logger
+from json_compare import json_compare
 
-url = "http://192.168.1.155:9999"
+cf = configparser.ConfigParser()
+cf.read("test.conf")
+url = cf.get("all", "url")
 
 def gettoken( email , password):
     payload = {"email": email , "password": password}
@@ -37,7 +41,6 @@ def assert_status_code(re,assert_code):
         Logger.log_fail("Response http code " + str(re[0]) + ", but expected is "+ str(assert_code) + ".")
     else:
         Logger.log_pass("Response http code is " + str(assert_code) + " as expected.")
-    
 
 if __name__ == '__main__':
     #GET /v1/nodes/ 测试===获取集群主机列表 /v1/nodes==============================================
@@ -68,6 +71,10 @@ if __name__ == '__main__':
     re2 = m.get_nodes_info(master_ip)
     assert_status_code(re2, 200)
 
+    # 测试 GET /v1/nodes/:node_ip/info 中的元素
+    Logger.log_info("Test get node info reponse json")
+    json_compare(re2[1]["data"], "api_response.json", "GET /v1/nodes/:node_ip/info")
+
     # 测试 ip 为 slave 时 GET /v1/nodes/:node_ip/info返回的http_code
     Logger.log_info("Test get nodes info response http code with slave ip")
     slave_ip = re[1]["data"]["slaves"][0].get('ip', None)
@@ -91,6 +98,6 @@ if __name__ == '__main__':
     assert_status_code(re3, 200)
 
     # 测试 ip 不存在时 GET /v1/nodes/:node_ip/instances 返回的http_code
-    Logger.log_info("Test get nodes instances response http code with slave ip")
+    Logger.log_info("Test get nodes instances response http code with invalid ip")
     re3 = m.get_nodes_instances("192.168.1.1")
     assert_status_code(re3, 404)
