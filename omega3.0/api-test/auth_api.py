@@ -19,16 +19,16 @@ class authapi(object):
         re = requests.post(url + "/v1/login" ,data=json.dumps(payload))
         apicase='login'
         if expectcode ==200 and re.status_code == expectcode :
-            Logger.log_normal("valid  "+apicase)
+            Logger.log_info("valid  "+apicase)
             if len(re.json()["data"])==32 and int(re.json()["code"])==0 :
-                Logger.log_high("valid "+apicase+" passed")
+                Logger.log_pass("valid "+apicase+" passed")
                 return re.json()['data']
             else:
                 Logger.log_fail("valid "+apicase+" failed")
         elif expectcode ==400 and re.status_code == expectcode:
-            Logger.log_normal("invalid "+apicase )
+            Logger.log_info("invalid "+apicase )
             if int(re.json()["code"])==12007 :
-                Logger.log_high("invalid "+apicase+" passed")
+                Logger.log_pass("invalid "+apicase+" passed")
             else:
                 Logger.log_fail("invalid "+apicase+" failed return code is "+int(re.json()["code"])+"but it must be 12007")
         else:
@@ -42,15 +42,15 @@ class authapi(object):
         re = requests.post(url + "/v1/logout" ,headers={'Authorization': token})
         apicase = 'logout'
         if expectcode ==200 and re.status_code == expectcode :
-            Logger.log_normal("valid  " + apicase)
+            Logger.log_info("valid  " + apicase)
             if re.json()["data"]=='success' and int(re.json()["code"])==0 :
-                Logger.log_high("valid " + apicase + " passed")
+                Logger.log_pass("valid " + apicase + " passed")
             else:
                 Logger.log_fail("valid " + apicase + " failed")
         elif expectcode ==401 and re.status_code == expectcode:
-            Logger.log_normal("invalid " + apicase)
+            Logger.log_info("invalid " + apicase)
             if int(re.json()["code"])==1 :
-                Logger.log_high("invalid " + apicase + " passed")
+                Logger.log_pass("invalid " + apicase + " passed")
             else:
                 Logger.log_fail("invalid "+apicase+" test failed return code is "+int(re.json()["code"])+"but it must be 1")
         else:
@@ -69,15 +69,15 @@ class authapi(object):
         re = requests.get(url + "/v1/aboutme", headers={'Authorization': token})
         apicase = 'get user info'
         if expectcode ==200 and re.status_code == expectcode :
-            Logger.log_normal("valid  " + apicase)
+            Logger.log_info("valid  " + apicase)
             if re.json()["data"]['email'] != None and int(re.json()["code"])==0 :
-                Logger.log_high("valid " + apicase + " passed")
+                Logger.log_pass("valid " + apicase + " passed")
             else:
                 Logger.log_fail("valid " + apicase + " failed")
         elif expectcode ==401 and re.status_code == expectcode:
-            Logger.log_normal("invalid " + apicase)
+            Logger.log_info("invalid " + apicase)
             if int(re.json()["code"])==1 :
-                Logger.log_high("invalid " + apicase + " passed")
+                Logger.log_pass("invalid " + apicase + " passed")
             else:
                 Logger.log_fail("invalid "+apicase+" test failed return code is "+int(re.json()["code"])+"but it must be 1")
         else:
@@ -89,15 +89,15 @@ class authapi(object):
         re = requests.get(url + "/v1/accounts" ,headers={'Authorization': token})
         apicase = 'get all user info'
         if expectcode ==200 and re.status_code == expectcode :
-            Logger.log_normal("valid  " + apicase)
+            Logger.log_info("valid  " + apicase)
             if  int(re.json()["code"])==0 :
-                Logger.log_high("valid " + apicase + " passed")
+                Logger.log_pass("valid " + apicase + " passed")
             else:
                 Logger.log_fail("valid " + apicase + " failed")
         elif expectcode ==401 and re.status_code == expectcode:
-            Logger.log_normal("invalid " + apicase)
+            Logger.log_info("invalid " + apicase)
             if int(re.json()["code"])==1 :
-                Logger.log_high("invalid " + apicase + " passed")
+                Logger.log_pass("invalid " + apicase + " passed")
             else:
                 Logger.log_fail("invalid " + apicase + " test failed return code is " + int(re.json()["code"]) + "but it must be 1")
         else:
@@ -113,21 +113,21 @@ class authapi(object):
         re = requests.get(url + "/v1/accounts/"+str(id) ,headers={'Authorization': token})
         apicase = 'get group info  by userid'
         if expectcode ==200 and re.status_code == expectcode :
-            Logger.log_normal("valid  " + apicase)
+            Logger.log_info("valid  " + apicase)
             if  int(re.json()["code"])==0 :
-                Logger.log_high("valid " + apicase + " passed")
+                Logger.log_pass("valid " + apicase + " passed")
             else:
                 Logger.log_fail("valid " + apicase + " failed")
         elif expectcode ==401 and re.status_code == expectcode:
-            Logger.log_normal("invalid " + apicase)
+            Logger.log_info("invalid " + apicase)
             if int(re.json()["code"])==1 :
-                Logger.log_high("invalid " + apicase + " passed")
+                Logger.log_pass("invalid " + apicase + " passed")
             else:
                 Logger.log_fail("invalid " + apicase + " test failed return code is " + int(re.json()["code"]) + "but it must be 1")
         elif expectcode ==404 and re.status_code == expectcode:
-            Logger.log_normal("invalid " + apicase)
+            Logger.log_info("invalid " + apicase)
             if int(re.json()["code"])==1 :
-                Logger.log_high("invalid " + apicase + " passed")
+                Logger.log_pass("invalid " + apicase + " passed")
             else:
                 Logger.log_fail("ttest get group info by userid failed return code is "+int(re.json()["code"])+"but it must be 1")
         else:
