@@ -7,11 +7,11 @@ class Logger:
     ENDC = '\033[0m'
 
     @staticmethod
-    def log_normal(info):
+    def log_info(info):
         print ('[INFO]  ' + info )
 
     @staticmethod
-    def log_high(info):
+    def log_pass(info):
         print (Logger.OKGREEN + '  ~ [OK]  ' + info + Logger.ENDC)
 
     @staticmethod
