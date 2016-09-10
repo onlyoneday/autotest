@@ -1,0 +1,11 @@
+{
+    "cpus": 0.1,
+    "mem": 16,
+    "container": {
+        "docker": {
+            "network": "BRIDGE",
+            "image": "blackicebird/2048:latest"}
+    },
+    "id": "cc23",
+    "instances": 1
+}
