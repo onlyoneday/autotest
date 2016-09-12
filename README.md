@@ -13,7 +13,7 @@
 	#install robotframework-selenium2library
 	$easy_install robotframework-selenium2library
 
-#### Run test
+#### Run test 
 Take login test for example: 
 
 	$pybot login
