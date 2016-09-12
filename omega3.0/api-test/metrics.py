@@ -254,27 +254,34 @@ if __name__ == '__main__':
         except:
             slave_notswarm_ip = slave["hostname"]
             break
-    print(slave_notswarm_ip)
+    # print(slave_notswarm_ip)
 
 
     app_id = str(random.random())
 
     payload = json.load(open("post_apps_slave_ip.json"))
     payload["id"] = app_id
+    # print("app_id")
+    # print(app_id)
     payload["constraints"] = [["hostname","LIKE",str(slave_notswarm_ip)]]
+    # print("payload")
+    # print(payload)
     a = apps()
     a_re = a.post_apps(payload)
 
     #找到lable为app_id的instance
     re_i = m.get_nodes_instances(slave_notswarm_ip)
-    print(re_i[2])
+    # print("get_nodes_instances")
+    # print(re_i[2])
 
     flag = 0
     for instance in re_i[1]["data"]:
         try:
+            # print("APP_ID")
+            # print(instance["Labels"]["APP_ID"])
             if instance["Labels"]["APP_ID"] == app_id:
                 flag = 1
-                print(instance["Labels"]["APP_ID"])
+                # print(instance["Labels"]["APP_ID"])
 
                 Logger.log_info("22. Test get instance logs by id response http code.")
 
@@ -295,12 +302,14 @@ if __name__ == '__main__':
                 #         json_compare(json_line, "metrics.json", "GET /v1/nodes/:node_ip/instances/:instance_id/stats")
         except:
             pass
+    if flag == 0:
+        Logger.log_fail("Can't find instance.")
 
     re_7 = m.get_nodes_instances_logs(master_ip, "invalid_id")
     Logger.log_info("24. Test get instance logs by invalid id response http code.")
     assert_status_code(re_7[0], 404)
 
-    # delete_app()
+    delete_app()
 
 
 
