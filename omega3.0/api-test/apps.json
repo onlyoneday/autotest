@@ -463,7 +463,7 @@
     },
     {
         "api":"GET /v1/queue",
-        "reponse":
+        "response":
         {"code":0,"data":{"queue":[]}}
     },
     {
@@ -628,5 +628,5 @@
                 }
             }
         }
-        }
+    }
 ]

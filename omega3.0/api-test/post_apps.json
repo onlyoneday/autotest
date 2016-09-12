@@ -1,11 +1,34 @@
 {
-    "cpus": 0.1,
-    "mem": 16,
-    "container": {
-        "docker": {
-            "network": "BRIDGE",
-            "image": "blackicebird/2048:latest"}
+  "id": "2048",
+  "cmd": null,
+  "cpus": 0.1,
+  "mem": 32,
+  "disk": 0,
+  "instances": 1,
+  "container": {
+    "docker": {
+      "image": "blackicebird/2048",
+      "network": "BRIDGE",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp",
+          "name": "7444"
+        }
+      ]
     },
-    "id": "cc23",
-    "instances": 1
+    "type": "DOCKER"
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/",
+      "portIndex": 0,
+      "gracePeriodSeconds": 1,
+      "intervalSeconds": 1,
+      "timeoutSeconds": 1,
+      "maxConsecutiveFailures": 1
+    }
+  ],
+  "constraints": []
 }

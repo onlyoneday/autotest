@@ -1,8 +1,10 @@
 import requests
 import json
+import random
 import configparser
 from  Logger import Logger
 from json_compare import json_compare
+from apps import apps
 
 cf = configparser.ConfigParser()
 cf.read("test.conf")
@@ -66,13 +68,46 @@ class metrics(object):
         re.close()
         return code, lines
 
+    #获取主机上指定容器的日志 GET /v1/nodes/:node_ip/instances/:instance_id/logs    7
+    def get_nodes_instances_logs(self, node_ip, instance_id):
+        re = requests.get(url + "/v1/nodes/" + node_ip + "/instances/" + instance_id + "/logs", headers={'Authorization': TOKEN}, stream=True)
+        index = 0
+        lines = []
+        for line in re.iter_lines():
+            if line:
+                lines.append(line)
+                index += 1
+            if index == 4:
+                break
+        code = re.status_code
+        re.close()
+        return code, lines
+
+
 def assert_status_code(code,assert_code):
     if code != assert_code:
         Logger.log_fail("Response http code " + str(code) + ", but expected is "+ str(assert_code) + ".")
     else:
         Logger.log_pass("Response http code is " + str(code) + " as expected.")
 
+def delete_app():
+    a = apps()
+    Logger.log_info("Delete apps")
+    a_re_1 = a.get_apps()
+    assert_status_code(a_re_1[0], 200)
+    for i in a_re_1[1]["data"]["apps"]:
+        #删除应用
+        app_id = i["id"][1:]
+        if app_id[:2] == '0.':
+            a_re_6 = a.delete_apps(app_id)
+            assert_status_code(a_re_6[0], 200)
+
+
+
+
+
 if __name__ == '__main__':
+    print(TOKEN)
     m = metrics()
     #获取集群主机列表 GET /v1/nodes==============================================       1
     re = m.get_nodes()
@@ -127,6 +162,8 @@ if __name__ == '__main__':
     assert_status_code(re3[0], 200)
 
     master_instance_id = re3[1]["data"][0]["Id"]
+    print("master_instance_id:")
+    print(master_instance_id)
 
     # # 测试 ip 为 master 时  GET /v1/nodes/:node_ip/instances 返回的response json
     Logger.log_info("9. Test get nodes instances response json with master ip")
@@ -138,8 +175,10 @@ if __name__ == '__main__':
     Logger.log_info("10. Test get nodes instances response json with slave ip")
     re3 = m.get_nodes_instances(slave_ip)
     assert_status_code(re3[0], 200)
-
-    slave_instance_id = re3[1]["data"][0]["Id"]
+    try:
+        slave_instance_id = re3[1]["data"][0]["Id"]
+    except:
+        Logger.log_fail("Can't get slave_instance_id")
 
     # 测试 ip 为 slave 时  GET /v1/nodes/:node_ip/instances 返回的response json
     Logger.log_info("11. Test get nodes instances response json with slave ip")
@@ -160,7 +199,7 @@ if __name__ == '__main__':
     # # 测试 ip 为 master 时  GET /v1/nodes/:node_ip/instances 返回的response json
     Logger.log_info("14. Test get nodes images response json with master ip")
     json_compare(re4[1]["data"], "metrics.json", "GET /v1/nodes/:node_ip/images")
-    print(re3[2])
+    print(re4[2])
 
     # 测试 ip 为 slave 时  GET /v1/nodes/:node_ip/instances 返回的http_code
     Logger.log_info("15. Test get nodes images response json with slave ip")
@@ -183,7 +222,7 @@ if __name__ == '__main__':
     re5 = m.get_nodes_instanses_info(master_ip,master_instance_id)
     assert_status_code(re5[0], 200)
 
-    # 获取主机上指定容器的状态 GET /v1/nodes/:node_ip/instances/:instance_id/stats    6
+    # 获取主机上指定容器的状态 GET /v1/nodes/:node_ip/instances/:instance_id/stats===================    6
     re_6 = m.get_nodes_instances_stats(master_ip,master_instance_id)
 
     Logger.log_info("19. Test get instance status by id response http code.")
@@ -195,12 +234,75 @@ if __name__ == '__main__':
         str_line = line.decode("utf-8")
         if str_line != 'event:container-stats':
             str_line = str_line[5:]
-            print(str_line)
             json_line = json.loads(str_line)
-            print(type(json_line))
+            print(str_line)
             json_compare(json_line, "metrics.json", "GET /v1/nodes/:node_ip/instances/:instance_id/stats")
 
-    re_6 = a.get_nodes_instances_stats(master_ip,"invalid_id")
+    re_6 = m.get_nodes_instances_stats(master_ip,"invalid_id")
     Logger.log_info("21. Test get instance status by invalid id response http code.")
     assert_status_code(re_6[0], 404)
+    print(re_6[1])
+
+    #获取主机上指定容器的日志 GET /v1/nodes/:node_ip/instances/:instance_id/logs==================         7
+    #先找到非swarm的slave ip
+    re = m.get_nodes()
+    for slave in re[1]["data"]["slaves"]:
+        try:
+            if slave["attributes"].get("type",None) != 'swarm':
+                slave_notswarm_ip = slave["hostname"]
+                break
+        except:
+            slave_notswarm_ip = slave["hostname"]
+            break
+    print(slave_notswarm_ip)
+
+
+    app_id = str(random.random())
+
+    payload = json.load(open("post_apps_slave_ip.json"))
+    payload["id"] = app_id
+    payload["constraints"] = [["hostname","LIKE",str(slave_notswarm_ip)]]
+    a = apps()
+    a_re = a.post_apps(payload)
+
+    #找到lable为app_id的instance
+    re_i = m.get_nodes_instances(slave_notswarm_ip)
+    print(re_i[2])
+
+    flag = 0
+    for instance in re_i[1]["data"]:
+        try:
+            if instance["Labels"]["APP_ID"] == app_id:
+                flag = 1
+                print(instance["Labels"]["APP_ID"])
+
+                Logger.log_info("22. Test get instance logs by id response http code.")
+
+                instance_id = instance["Id"]
+
+                re_7 = m.get_nodes_instances_logs(slave_notswarm_ip,instance_id)
+                # print(re_7[1])
+
+                assert_status_code(re_7[0], 200)
+
+                # Logger.log_info("23.Test get instance logs by id response json")
+                # lines = re_7[1]
+                # for line in lines:
+                #     str_line = line.decode("utf-8")
+                #     if str_line != 'event:container-logs':
+                #         str_line = str_line[5:]
+                #         json_line = json.loads(str_line)
+                #         json_compare(json_line, "metrics.json", "GET /v1/nodes/:node_ip/instances/:instance_id/stats")
+        except:
+            pass
+
+    re_7 = m.get_nodes_instances_logs(master_ip, "invalid_id")
+    Logger.log_info("24. Test get instance logs by invalid id response http code.")
+    assert_status_code(re_7[0], 404)
+
+    # delete_app()
+
+
+
+
 

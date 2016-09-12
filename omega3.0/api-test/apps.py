@@ -110,13 +110,26 @@ class apps(object):
         re = requests.get(url + "/v1/queue", headers={'Authorization': TOKEN})
         return re.status_code, re.json(), re.text
 
+
+def delete_app():
+    a = apps()
+    Logger.log_info("Delete apps")
+    a_re_1 = a.get_apps()
+    assert_status_code(a_re_1[0], 200)
+    for i in a_re_1[1]["data"]["apps"]:
+        #删除应用
+        app_id = i["id"][1:]
+        if app_id[:2] == '0.':
+            a_re_6 = a.delete_apps(app_id)
+            assert_status_code(a_re_6[0], 200)
+
 if __name__ == '__main__':
     a = apps()
 
+    # 新建应用 POST /v1/apps==============================================      2
     app_id = str(random.random())
     print(app_id)
 
-    # 新建应用 POST /v1/apps==============================================      2
     payload = json.load(open("post_apps.json"))
     payload["id"] = app_id
     a_re_2 = a.post_apps(payload)
@@ -147,7 +160,7 @@ if __name__ == '__main__':
     print(a_re_1[2])
 
     # 获取指定应用的信息 GET /v1/apps/:aid======================================     3
-    time.sleep(5)
+    time.sleep(10)
     a_re_3 = a.get_apps_aid(app_id)
 
     Logger.log_info("6. Test get apps by aid response http code.")
@@ -259,11 +272,26 @@ if __name__ == '__main__':
     assert_status_code(a_re_7[0], 400)
 
 
-    # 删除指定应用 DELETE /v1/apps/:aid=========================================      6
-    # a_re_6 = a.delete_apps(app_id)
-    #
-    # Logger.log_info("27. Test delete apps response http code.")
-    # assert_status_code(a_re_6[0], 200)
-    # print(a_re_6)
+    #删除指定应用 DELETE /v1/apps/:aid=========================================      6
+    a_re_6 = a.delete_apps(app_id)
 
-    # 列出所有等待执行的任务实例POST /v1/queue====================================      12
+    Logger.log_info("27. Test delete apps response http code.")
+    assert_status_code(a_re_6[0], 200)
+    print(a_re_6)
+
+    # 列出所有等待执行的任务实例GET /v1/queue====================================      12
+    app_id = str(random.random())
+    print(app_id)
+
+    payload = json.load(open("post_apps.json"))
+    payload["id"] = app_id
+    a_re = a.post_apps(payload)
+
+    Logger.log_info("28. Test get queue responce http code.")
+    a_re_12 = a.get_queue()
+    assert_status_code(a_re_12[0], 200)
+
+    Logger.log_info("29. Test get queue response json.")
+    json_compare(a_re_12[1]["data"], "apps.json", "GET /v1/queue")
+
+    delete_app()
