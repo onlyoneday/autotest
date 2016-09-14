@@ -18,5 +18,6 @@ Verify Multiple Login
     Logout
 
     Switch Browser   B1
+    Sleep  ${SLEEP TIME}
     Title Should Be  ${EMPTY}
     
