@@ -1,0 +1,33 @@
+*** Settings ***
+
+Documentation  A test suite with a single test for changing password failed. 
+Resource        ../common/resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page  ${USER_P URL}
+Test Template   Invalid Change Password
+Suite Teardown  Close All Browsers
+
+
+*** Test Cases ***      Old Password      New Password       New Password
+
+Invalid Old Passwd      ${MMJ NEWPASSWD}  ${MMJ NEWPASSWD}   ${MMJ NEWPASSWD} 
+Invalid New Passwd 1-1  ${MMJ PASSWD}     M123456            M123456
+Invalid New Passwd 1-2  ${MMJ PASSWD}     M1234567890123456  M1234567890123456     
+Invalid New Passwd 1-3  ${MMJ PASSWD}     m1234567           m1234567
+Invalid New Passwd 2    ${MMJ PASSWD}     Whatever           whatever
+
+
+*** Keywords ***
+
+Invalid Change Password
+    [Arguments]   ${oldpasswd}  ${newpasswd1}  ${newpasswd2}
+    Input Text    oldPassword         ${oldpasswd} 
+    Input Text    newPassword         ${newpasswd1} 
+    Input Text    newPasswordCompare  ${newpasswd2}
+    Click Button  submit-update-password
+    Page Should Not Contain   ${success change} 
+
+
+*** Variables ***
+
+${success change}       密码修改成功
