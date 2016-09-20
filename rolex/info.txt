@@ -1,0 +1,133 @@
+
+*** Settings ***
+
+Documentation   A test suite with a single test for info page.
+Resource        common.txt
+Suite Setup     Open Browser And Login With Admin
+Test Setup      Go To Info Page
+Suite Teardown  Close All Browsers
+
+*** Variables ***
+${VERSION}                    1.0.0
+${YEAR}                       2016
+${FF}                         ["registry","account","catalog","search","registryauth"]
+
+${Info Link}                  index-misc
+${Breadcrumb-main Div}        breadcrumb-main
+${Container-main Div}         //*[@id="container-main"]
+
+${Section1 Div}               ${Container-main Div}/ui-view/div/section[1]
+
+${Version Div}                ${Section1 Div}/div/div[1]
+${Version Value Div}          ${Section1 Div}/div/div[2]
+
+${Build Div}                  ${Section1 Div}/div/div[3]
+${Build Value Div}             ${Section1 Div}/div/div[4]
+
+${FeatureFlags Div}           ${Section1 Div}/div/div[5]
+${FeatureFlags Value Div}     ${Section1 Div}/div/div[6]
+
+
+
+${Section2 Div}               ${Container-main Div}/ui-view/div/section[2]
+
+${Cluster Name Div}           ${Section2 Div}/div/div[1]
+${Cluster Name Value Div}     ${Section2 Div}/div/div[2]
+
+${Manager Token Div}          ${Section2 Div}/div/div[3]
+${Manager Token Value Div}    ${Section2 Div}/div/div[4]
+
+${Node Token Div}             ${Section2 Div}/div/div[5]
+${Node Token Value Div}       ${Section2 Div}/div/div[6]
+
+${Update Div}                 ${Section2 Div}/div/div[7]
+${Update Value Div}           ${Section2 Div}/div/div[8]
+
+${Create Div}                 ${Section2 Div}/div/div[9]
+${Create Value Div}           ${Section2 Div}/div/div[10]
+
+*** Keywords ***
+Info Page Should Be Open
+    Location Should Be          ${Info Url}
+
+Verify Info
+    #验证基本信息是否正确显示============================================================
+    #Version已显示---------------------------
+    ${get}=  Get Text  ${Version Div}
+    Run Keyword If  '${get}' != 'Version'  Fail  Version isn't shown.
+
+    ${get value}=  Get Text  ${Version Value Div}
+    ${get sub value}=  Fetch From Left  ${get value}  -
+    #Version是1.0.0
+    Run Keyword If  '${get sub value}' != '${VERSION}'  Fail  Version isn't correct.
+
+    #Build已显示------------------------
+    ${get}=  Get Text  ${Build Div}
+    Run Keyword If  '${get}' != 'Build'  Fail  Build isn't shown.
+
+    ${get value}=  Get Text  ${Build Value Div}
+    ${get sub value}=  Fetch From Left  ${get value}  -
+    #Build是2016
+    Run Keyword If  '${get sub value}' != '${YEAR}'  Fail  Build isn't correct.
+
+    # FeatureFlags已显示------------------
+    ${get}=  Get Text  ${FeatureFlags Div}
+    Run Keyword If  '${get}' != 'FeatureFlags'  Fail  Build isn't shown.
+
+    ${get value}=  Get Text  ${FeatureFlags Value Div}
+    #FeatureFlags是["registry","account","catalog","search","registryauth"]
+    Run Keyword If  '${get value}' != '${FF}'  Fail  Build isn't correct.
+
+    #验证集群信息是否正确显示============================================================
+    #集群名称已显示---------
+    ${get}=  Get Text  ${Cluster Name Div}
+    Run Keyword If  '${get}' != '集群名称'  Fail  Cluster Name isn't shown.
+
+    ${get value}=  Get Text  ${Cluster Name Value Div}
+    #FeatureFlags是["registry","account","catalog","search","registryauth"]
+    Run Keyword If  '${get value}' != 'default'  Fail  Cluster Name isn't correct.
+
+    #管理节点 Token---------
+    ${get}=  Get Text  ${Manager Token Div}
+    Run Keyword If  '${get}' != '管理节点 Token'  Fail  Manager token isn't shown.
+
+    ${get value}=  Get Text  ${Manager Token Value Div}
+    Run Keyword If  '${get value}' == '${EMPTY}'  Fail  Manager token isn't correct.
+
+    #工作节点 Token------------
+    ${get}=  Get Text  ${Node Token Div}
+    Run Keyword If  '${get}' != '工作节点 Token'  Fail  Node Token isn't shown.
+
+    ${get value}=  Get Text  ${Node Token Value Div}
+    Run Keyword If  '${get value}' == '${EMPTY}'  Fail  Node Token isn't correct.
+
+    #更新时间---------------
+    ${get}=  Get Text  ${Update Div}
+    Run Keyword If  '${get}' != '更新时间'  Fail  Update time isn't shown.
+
+    ${get value}=  Get Text  ${Update Value Div}
+    ${get sub value}=  Fetch From Left  ${get value}  -
+    Run Keyword If  '${get sub value}' != '${YEAR}'  Fail  Update time isn't correct.
+
+    #创建时间----------------
+    ${get}=  Get Text  ${Update Div}
+    Run Keyword If  '${get}' != '更新时间'  Fail  Create time isn't shown.
+
+    ${get value}=  Get Text  ${Update Value Div}
+    ${get sub value}=  Fetch From Left  ${get value}  -
+    Run Keyword If  '${get sub value}' != '${YEAR}'  Fail  Create time isn't correct.
+
+*** Test Cases ***
+Case IF-001 Cheak Clike Info
+    [Tags]  1
+    [Documentation]  新建网络，验证是否正确显示在网络列表中，之后删除网络
+    Go To Home Page
+    Click Link   ${Info Link}
+    Info Page Should Be Open
+
+Case IF-002 Verify Info
+    Verify Info
+
+
+
+

@@ -7,18 +7,18 @@ Library        String
 *** Variables ***
 
 ${BROWSER}                  firefox
-${DELAY}                    0.1
-${SLEEP TIME}               3
+${DELAY}                    0.2
+${SLEEP TIME}               2
 
 #------ URL ----------
 ${Server}                   http://192.168.1.47
-${Login Url}                /auth/login
-${Stack Url}                /stack/list
-${Registry List Url}        /registry/list/catalogs
-${Node List Url}            /node/list
-${Network List Url}         /network/list
-${Registry Auth List Url}   /registryAuth/list
-${Info Url}                 /misc/config
+${Login Url}                ${Server}/auth/login
+${Stack Url}                ${Server}/stack/list
+${Registry List Url}        ${Server}/registry/list/catalogs
+${Node List Url}            ${Server}/node/list
+${Network List Url}         ${Server}/network/list
+${Registry Auth List Url}   ${Server}/registryAuth/list
+${Info Url}                 ${Server}/misc/config
 
 #----- LOCATION --------
 ${USERNAME FIELD}           //input[@name='Email']
@@ -34,9 +34,14 @@ ${Admin Password}           adminadmin
 
 Open Browser To Login Page
     Set Selenium Speed          ${DELAY}
-    Open Browser                ${Server}           ${BROWSER}
+    #Open Browser                ${Server}  ${BROWSER}     ff_profile_dir=/Users/chenchen/cc_profile/54ivsrjq.default
+    Open Browser                ${Server}  ${BROWSER}
     Maximize Browser Window
-    Page Should Contain Button  ${LOGIN BTN}
+    # Sleep                       ${SLEEP TIME}
+    Login Page Should Be Open
+
+Sleep Sometime
+    Sleep                       ${SLEEP TIME}
 
 Input Username
     [Arguments]  ${user}
@@ -56,12 +61,25 @@ Open Browser And Login With Admin
     Submit Credentials
 
 Home Page Should Be Open
-    Location Should Be          ${Server}${Stack Url}
+    Location Should Be          ${Stack Url}
 
 Network Page Should Be Open
-    Location Should Be          ${Server}${Network List Url}
+    Location Should Be          ${Network List Url}
+
+Login Page Should Be Open
+    Location Should Be          ${Login Url}
+
+Info Page Should Be Open
+    Location Should Be          ${Login Url}
 
 Go To Network Page
-    Go To                       ${Server}${Network List Url}
-    Network Page Should Be Open
+    Go To                       ${Network List Url}
 
+Go To Login Page
+    Go To                       ${Login Url}
+
+Go To Home Page
+    Go To                       ${Stack Url}
+
+Go To Info Page
+    Go To                       ${Info Url}

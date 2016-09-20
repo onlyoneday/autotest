@@ -4,7 +4,9 @@
 Documentation  A test suite with a single test for valid login. This test has
 ...            a workflow that is created using keywords from the resource file.
 Resource       common.txt
-Test Teardown  Close Browser
+Suite Setup     Open Browser And Login With Admin
+Test Setup      Go To Network Page
+Suite Teardown  Close All Browsers
 
 *** Variables ***
 ${Create Network Url}               /network/create
@@ -75,19 +77,29 @@ Delete Network
 
 *** Test Cases ***
 
-Check Click Network Link
+Case WL-001 Check Click Network Link
     [Tags]  1
     [Documentation]  验证页面左侧菜单中的网络连接是否正确
-    Open Browser And Login With Admin
+    Go To Home Page
     Click Link                      ${Network Link}
-    #Network Page Should Be Open
+    Network Page Should Be Open
 
-Check Network Table
+Case WL-002 Create Network
+    [Tags]  3
+    [Documentation]  新建网络，验证是否正确显示在网络列表中，之后删除网络
+    ${network name}=                Generate Random String    6
+    Click Link                      ${Create Network Link}
+    Location Should Be              ${Server}${Create Network Url}
+    Input Text                      ${Network Name Input}               ${network name}
+    Click Button                    ${Confirm Create Network Button}
+    Reload Page
+    Sleep Sometime
+    Check Network Exist             ${network name}                      ${EMPTY}               ${EMPTY}            ${EMPTY}        是
+    Delete Network                  ${network name}
+
+Case WL-009 Check Network Table
     [Tags]  2
-    [Documentation]  验证网络礼拜的表头字段正确，并且一直存在ingress网络
-    Open Browser And Login With Admin
-    Go To Network Page
-
+    [Documentation]  验证网络表格的表头字段正确，并且一直存在ingress网络
     Table Header Should Contain     ${Network Table}    ID
     Table Header Should Contain     ${Network Table}    名称
     Table Header Should Contain     ${Network Table}    类型
@@ -99,22 +111,6 @@ Check Network Table
 
     Table Should Contain        ${Network Table}               ingress
     Table Should Contain        ${Network Table}               overlay
-
-Create Network
-    [Tags]  3
-    [Documentation]  新建网络，验证是否正确显示在网络列表中，之后删除网络
-    Open Browser And Login With Admin
-    Go To Network Page
-    ${network name}=                Generate Random String    6
-    Click Link                      ${Create Network Link}
-    Location Should Be              ${Server}${Create Network Url}
-    Input Text                      ${Network Name Input}               ${network name}
-    Click Button                    ${Confirm Create Network Button}
-    Reload Page
-    Sleep                           ${SLEEP TIME}
-    Check Network Exist             ${network name}                      ${EMPTY}               ${EMPTY}            ${EMPTY}        是
-    Delete Network                  ${network name}
-
 
 
 

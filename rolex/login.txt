@@ -1,16 +1,29 @@
 
 *** Settings ***
 
-Documentation  A test suite with a single test for valid login. This test has
-...            a workflow that is created using keywords from the resource file.
+Documentation  A test suite with a single test for valid login.
 Resource       common.txt
 Test Teardown  Close Browser
 
+*** Variables ***
+${USER MENU BTN}  index-menu
+${LOGOUT BTN}     index-logout
+
 *** Test Cases ***
 
-Valid Login
+Case YG-001 Valid Login
+    [Tags]  1
     Open Browser To Login Page
     Input Username				${Admin Email}
     Input Password				${Admin Password}
     Submit Credentials
     Home Page Should Be Open
+
+
+Case YG-002 Logout
+    [Tags]  2
+    Open Browser And Login With Admin
+    Click Button  ${USER MENU BTN}
+    Click Button  ${LOGOUT BTN}
+    Sleep Sometime
+    Login Page Should Be Open
