@@ -10,7 +10,8 @@ Suite Teardown  Close All Browsers
 
 Verify Create User
 
-    ${email} =    Get Valid Email Adress
+    ${email name} =    Get Lower String
+    ${email} =   Evaluate  '${email name}'+'@test.com'
     #注册新用户
     Go To Page    ${USER_U URL}   
     Click Link    to-create-user
@@ -24,23 +25,12 @@ Verify Create User
     Login  ${email}  ${MMJ PASSWD} 
     #注销新用户
     Go To Page    ${USER_U URL}  
-    ${index} =    Get Matching Xpath Count   ${user list xpath}  
+    ${index} =    Get Matching Xpath Count   //*[@id="user-list"]/tbody/tr[*] 
     ${cancel xpath} =   Evaluate   '//*[@id="user-list"]/tbody/tr['+'${index}'+']/td/button'
     Click Button  xpath=${cancel xpath}
     Logout
     #新用户登录
     Login  ${email}  ${MMJ PASSWD} 
     Location Should Be   ${LOGIN URL}
-
-*** Keywords ***
-
-Get Valid Email Adress
-    ${email name} =    Generate Random String    6
-    ${valid email} =   Evaluate  '${email name}'+'@test.com'
-    [Return]    ${valid email}
-
-
-*** Variables ***
-
-${user list xpath}     //*[@id="user-list"]/tbody/tr[*]
+  
 

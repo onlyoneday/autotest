@@ -11,13 +11,15 @@ ${SERVER}                http://192.168.1.155:9999/ui
 ${BROWSER}               Firefox
 ${FF_PROFILE}            /Users/mmj/Library/Application Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
-${SLEEP TIME}            3
+${SLEEP TIME}            4
+${SLEEP LONG TIME}       10
 
 #--------------------URL--------------------
 ${LOGIN URL}             ${SERVER}/auth/login
 ${HOME URL}              ${SERVER}/app/list/my
-${APP_M URL}             ${SERVER}/app/list/my
-${APP_A URL}             ${SERVER}/app/list/all
+${APP_MY URL}            ${SERVER}/app/list/my
+${APP_ALL URL}           ${SERVER}/app/list/all
+${APP_CREATE URL}        ${SERVER}/app/create
 ${NODE URL}              ${SERVER}/node/list&clusterInfo
 ${RSTACK URL}            ${SERVER}/rolexStack/list
 ${USER_U URL}            ${SERVER}/user/users
@@ -25,7 +27,7 @@ ${USER_U_CREATE URL}     ${SERVER}/users/create
 ${USER_P URL}            ${SERVER}/user/password
 
 
-#----- LOCATION --------
+#----- LOCATION ---------
 ${LOGIN BTN}             login-btn-login
 ${USERNAME FIELD}        //input[@name="Email"]
 ${PASSWORD FIELD}        //input[@name="Password"]
@@ -62,6 +64,10 @@ Home Page Should Be Open
 Go To Page  [Arguments]  ${URL}
     Go To   ${URL}
     Sleep   ${SLEEP TIME}
+
+Click And Wait  [Arguments]  ${ELEMENT}
+    Click Element  ${ELEMENT}
+    Sleep   ${SLEEP TIME}
     
 #--------------------
 Open Browser And Login Mmj
@@ -82,8 +88,10 @@ Logout
     Click Button  logout
     Sleep  ${SLEEP TIME} 
 
-
-
+Get Lower String
+    ${Random} =    Generate Random String    6
+    ${Name} =   Convert To Lowercase  ${Random}
+    [Return]    ${Name}
     
 
 
