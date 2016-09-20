@@ -1,0 +1,48 @@
+
+*** Settings ***
+
+Documentation  A resource file containing the specific keywords and variables for application
+Library        Selenium2Library
+Library        String
+Resource       ../common/resources.txt
+
+
+*** Keywords ***
+
+Input Simple App
+    #填写应用名称
+    ${random} =    Get Lower String
+    ${app name} =   Evaluate  'simple2048'+'${random}'
+    Input Text     stackAppName   ${app name}
+    #填写镜像名称
+    Input Text     stackImageAddress    blackicebird/2048:latest
+    #填写容器规格
+    Input Text     stackCpus    0.2
+    Clear Element Text  stackMemory
+    Input Text     stackMemory  128
+    #填写容器个数
+    Input Text     stackInstanceNumber   1
+    [Return]       ${app name}
+
+Input Advanced App
+    #打开高级设置
+    Click Element  css=.fa-chevron-down
+    #定义环境变量
+    Click Element  stackAddMountpoints
+    Input Text     stackEnvsKey0     ENV
+    Input Text     stackEnvsValue0   env 
+    #定义Docker参数 
+    Click Element  stackParametersAdd
+    Input Text     stackDockerKey-0    hostname 
+    Input Text     stackDockerValue-0  mmj
+    #填写健康检查
+    Click Element  stackAddHealthChecks
+    Input Text     stackGracePeriodSeconds-0  300
+    Input Text     stackIntervalSeconds-0  60
+    Input Text     stackTimeoutSeconds-0  20
+    Input Text     stackMaxConsecutiveFailures-0  3
+    Input Text     stackPortIndex-0  0        
+    #填写CMD
+    Input Text     stackCMD  while [ true ]; do echo simple; sleep 5; done
+
+

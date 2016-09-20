@@ -1,0 +1,39 @@
+*** Settings ***
+
+Documentation   App test cases
+Resource        ../common/resources.txt
+Resource        app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Click And Wait  stackCreate
+Test Template   Deploy App
+Suite Teardown  Close Browser
+
+
+*** Test Cases ***   Network     forceImage    advanced
+
+app_c-02,06-11       ${EMPTY}    ${EMPTY}      a
+app_c-04,05          stackHost   image         ${EMPTY} 
+
+*** Keywords ***
+
+Deploy App  [Arguments]   ${network}   ${forceImage}   ${advanced}
+    
+    #输入最简参数
+    ${app name} =   Input Simple App
+    #强制拉取镜像
+    Run Keyword If  '${forceImage}' == 'image'   Click Element  forceImage
+    #选择网络模式
+    Run Keyword If  '${network}' == 'stackHost'  Click Element  stackHost
+    #输入高级设置
+    Run Keyword If  '${advanced}' == 'a'   Input Advanced App
+    
+    #等待应用发布
+    Click Element   stackFormCreate
+    Sleep   ${SLEEP LONG TIME}
+    #验证应用是否部署成功
+    ${name} =   Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Be Equal As Strings  ${name}  ${app name}
+    #删除该应用（避免垃圾数据）
+    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
+    Click Element   css=[aria-hidden="false"] #stackListDelete  #stackListDelete  
+    Click And Wait  css=button:nth-child(2)>span.ng-binding
