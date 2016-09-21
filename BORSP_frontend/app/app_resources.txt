@@ -12,8 +12,8 @@ Resource       ../common/resources.txt
 Input Simple App
     #填写应用名称
     ${random} =    Get Lower String
-    ${app name} =   Evaluate  'simple2048'+'${random}'
-    Input Text     stackAppName   ${app name}
+    ${app name} =  Evaluate  'simple2048'+'${random}'
+    Input Text     stackAppName    ${app name}
     #填写镜像名称
     Input Text     stackImageAddress    blackicebird/2048:latest
     #填写容器规格
@@ -24,25 +24,43 @@ Input Simple App
     Input Text     stackInstanceNumber   1
     [Return]       ${app name}
 
-Input Advanced App
-    #打开高级设置
+
+Input Advanced App  [Arguments]   ${EDHC}
+
     Click Element  css=.fa-chevron-down
-    #定义环境变量
+    Sleep   ${SLEEP TIME}
+
+    ${e} =   Get Substring   ${EDHC}   0  1
+    ${d} =   Get Substring   ${EDHC}   1  2
+    ${h} =   Get Substring   ${EDHC}   2  3
+    ${c} =   Get Substring   ${EDHC}   3
+    Run Keyword If  '${e}' == '1'   Add Environment
+    Run Keyword If  '${d}' == '1'   Add Docker
+    Run Keyword If  '${h}' == '1'   Add Healthchecks
+    Run Keyword If  '${c}' == '1'   Add Command
+
+Add Environment
     Click Element  stackAddMountpoints
     Input Text     stackEnvsKey0     ENV
     Input Text     stackEnvsValue0   env 
-    #定义Docker参数 
+
+Add Docker
     Click Element  stackParametersAdd
     Input Text     stackDockerKey-0    hostname 
     Input Text     stackDockerValue-0  mmj
-    #填写健康检查
+
+Add Healthchecks
     Click Element  stackAddHealthChecks
+    Click Element  css=.add-row-container.ng-scope > ng-form > div:nth-child(1) > div.flex-30 > md-input-container
+    Click Element  stackprotocoOption-1
+    Input Text     stackHelthPath-0  /
     Input Text     stackGracePeriodSeconds-0  300
     Input Text     stackIntervalSeconds-0  60
     Input Text     stackTimeoutSeconds-0  20
     Input Text     stackMaxConsecutiveFailures-0  3
-    Input Text     stackPortIndex-0  0        
-    #填写CMD
+    Input Text     stackPortIndex-0  0
+
+Add Command
     Input Text     stackCMD  while [ true ]; do echo simple; sleep 5; done
 
 

@@ -11,19 +11,19 @@ Suite Teardown  Close Browser
 
 *** Test Cases ***   input                  text        advanced
 
-app_c-13             stackAppName           Invalid     ${EMPTY}
-app_c-14             stackCpus              Invalid     ${EMPTY}
-app_c-14-2           stackCpus              0.009       ${EMPTY}
-app_c-15             stackMemory            Invalid     ${EMPTY}
-app_c-15-2           stackMemory            15          ${EMPTY}
-app_c-16             stackInstanceNumber    Invalid     ${EMPTY}
-app_c-16-2           stackInstanceNumber    ${EMPTY}    ${EMPTY}
-app_c-17             stackEnvsKey0          中文         a
-app_c-17-2           stackEnvsValue0        中文         a
-app_c-18             stackDockerKey-0       中文         a
-app_c-18-2           stackDockerValue-0     中文         a
-app_c-19             stackTimeoutSeconds-0  Invalid     a
-app_c-19-2           stackPortIndex-0       Invalid     a
+app_c_14             stackAppName           Invalid     ${EMPTY}
+app_c_15             stackCpus              Invalid     ${EMPTY}
+app_c_15-2           stackCpus              0.009       ${EMPTY}
+app_c_16             stackMemory            Invalid     ${EMPTY}
+app_c_16-2           stackMemory            15          ${EMPTY}
+app_c_17             stackInstanceNumber    Invalid     ${EMPTY}
+app_c_17-2           stackInstanceNumber    ${EMPTY}    ${EMPTY}
+app_c_18             stackEnvsKey0          中文         a
+app_c_18-2           stackEnvsValue0        中文         a
+app_c_19             stackDockerKey-0       中文         a
+app_c_19-2           stackDockerValue-0     中文         a
+app_c_20             stackTimeoutSeconds-0  Invalid     a
+app_c_20-2           stackPortIndex-0       Invalid     a
 
 
 *** Keywords ***
@@ -33,7 +33,7 @@ Input Check  [Arguments]  ${input}   ${text}   ${advanced}
     #输入最简参数
     Input Simple App
     #输入高级设置
-    Run Keyword If  '${advanced}' == 'a'   Input Advanced App
+    Run Keyword If  '${advanced}' == 'a'   Input Advanced App  1110
     #输入异常内容
     Clear Element Text  ${input}
     Input Text  ${input}  ${text}

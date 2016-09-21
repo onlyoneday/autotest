@@ -59,7 +59,6 @@ Submit Credentials
 
 Home Page Should Be Open
     Location Should Be  ${HOME URL}
-    Title Should Be  上证容器云
 
 Go To Page  [Arguments]  ${URL}
     Go To   ${URL}
@@ -67,7 +66,7 @@ Go To Page  [Arguments]  ${URL}
 
 Click And Wait  [Arguments]  ${ELEMENT}
     Click Element  ${ELEMENT}
-    Sleep   ${SLEEP TIME}
+    Sleep   ${SLEEP LONG TIME} 
     
 #--------------------
 Open Browser And Login Mmj

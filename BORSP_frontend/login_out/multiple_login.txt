@@ -10,14 +10,16 @@ Suite Teardown  Close All Browsers
 Verify Multiple Login
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}   B1
+    Sleep  ${SLEEP TIME}
     Login Mmj
 
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}   B2
+    Sleep  ${SLEEP TIME}
     Login Mmj
     Logout
 
     Switch Browser   B1
     Sleep  ${SLEEP TIME}
-    Title Should Be  ${EMPTY}
+    Location Should Be  ${LOGIN URL} 
     
