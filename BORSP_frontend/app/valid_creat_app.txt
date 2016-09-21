@@ -9,14 +9,14 @@ Test Template   Deploy App
 Suite Teardown  Close Browser
 
 
-*** Test Cases ***   Network     forceImage    advanced
+*** Test Cases ***   Network     forceImage    edhc
 
-app_c-02,06-11       ${EMPTY}    ${EMPTY}      a
-app_c-04,05          stackHost   image         ${EMPTY} 
+app_c_02,04,06,12    ${EMPTY}    ${EMPTY}      0010
+app_c_05,07-11       stackHost   image         1101
 
 *** Keywords ***
 
-Deploy App  [Arguments]   ${network}   ${forceImage}   ${advanced}
+Deploy App  [Arguments]   ${network}   ${forceImage}   ${edhc}
     
     #输入最简参数
     ${app name} =   Input Simple App
@@ -25,15 +25,17 @@ Deploy App  [Arguments]   ${network}   ${forceImage}   ${advanced}
     #选择网络模式
     Run Keyword If  '${network}' == 'stackHost'  Click Element  stackHost
     #输入高级设置
-    Run Keyword If  '${advanced}' == 'a'   Input Advanced App
+    Input Advanced App  ${edhc}
     
     #等待应用发布
     Click Element   stackFormCreate
     Sleep   ${SLEEP LONG TIME}
     #验证应用是否部署成功
-    ${name} =   Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Be Equal As Strings  ${name}  ${app name}
+    ${apname} =   Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Be Equal As Strings   ${apname}   ${app name}
+    #${status} =   Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
+    #Should Be Equal As Strings   ${status}   Running
     #删除该应用（避免垃圾数据）
     Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
-    Click Element   css=[aria-hidden="false"] #stackListDelete  #stackListDelete  
+    Click Element   stackListDelete0
     Click And Wait  css=button:nth-child(2)>span.ng-binding

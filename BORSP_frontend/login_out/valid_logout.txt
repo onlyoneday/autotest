@@ -12,8 +12,7 @@ Verify Logout Link
     \    ${index} =   Evaluate    ${index} + 1
     \    Login Mmj
     \    Logout
-    \    Title Should Be    ${EMPTY}
-
+    \    Location Should Be  ${LOGIN URL} 
 
 
     

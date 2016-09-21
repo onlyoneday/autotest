@@ -9,7 +9,7 @@ Library        String
 
 ${SERVER}                http://192.168.1.155:9999/ui
 ${BROWSER}               Firefox
-${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
+#${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
 ${SLEEP TIME}            7
 ${SLEEP LONG TIME}       20
@@ -59,7 +59,6 @@ Submit Credentials
 
 Home Page Should Be Open
     Location Should Be  ${HOME URL}
-    Title Should Be  上证容器云
 
 Go To Page  [Arguments]  ${URL}
     Go To   ${URL}
@@ -67,7 +66,7 @@ Go To Page  [Arguments]  ${URL}
 
 Click And Wait  [Arguments]  ${ELEMENT}
     Click Element  ${ELEMENT}
-    Sleep   ${SLEEP TIME}
+    Sleep   ${SLEEP LONG TIME} 
     
 #--------------------
 Open Browser And Login Mmj
