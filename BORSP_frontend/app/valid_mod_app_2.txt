@@ -52,12 +52,13 @@ app_m_14,23
     Click And Wait  stackDetailExtend
     Input Text      name=containerNum  1
     Click And Wait  css=md-dialog-actions > button:nth-child(3)
-    Sleep    ${SLEEP LONG TIME} 
+    Sleep   ${SLEEP LONG TIME} 
     #验证应用是否扩展成功
+    Go To Page   ${APP_MY URL} 
     ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
     Should Be Equal As Strings   ${status}   Deploying
     #删除该应用（避免垃圾数据）
     Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
-    Click Element   css=[aria-hidden="false"] #stackListDelete  
+    Click Element   stackListDelete0
     Click And Wait  css=button:nth-child(2)>span.ng-binding
 
