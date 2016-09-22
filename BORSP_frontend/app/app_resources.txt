@@ -19,7 +19,7 @@ Input Simple App
     #填写容器规格
     Input Text     stackCpus    0.2
     Clear Element Text  stackMemory
-    Input Text     stackMemory  128
+    Input Text     stackMemory   64
     #填写容器个数
     Input Text     stackInstanceNumber   1
     [Return]       ${app name}
@@ -51,13 +51,20 @@ Add Docker
 
 Add Healthchecks
     Click Element  stackAddHealthChecks
-    Click Element  css=.add-row-container.ng-scope > ng-form > div:nth-child(1) > div.flex-30 > md-input-container
+    #协议
+    Click Element  stackProtocolSelect-0
     Click Element  stackprotocoOption-1
+    #路径
     Input Text     stackHelthPath-0  /
+    #宽限时间
     Input Text     stackGracePeriodSeconds-0  300
+    #间隔时间
     Input Text     stackIntervalSeconds-0  60
-    Input Text     stackTimeoutSeconds-0  20
-    Input Text     stackMaxConsecutiveFailures-0  3
+    #检查超时
+    Input Text     stackTimeoutSeconds-0  10
+    #最多持续失败次数
+    Input Text     stackMaxConsecutiveFailures-0  5
+    #端口组索引
     Input Text     stackPortIndex-0  0
 
 Add Command
