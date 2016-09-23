@@ -11,7 +11,7 @@ ${SERVER}                http://192.168.1.155:9999/ui
 ${BROWSER}               Firefox
 #${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
-${SLEEP TIME}            6
+${SLEEP TIME}            10
 ${SLEEP LONG TIME}       60
 
 #--------------------URL--------------------
@@ -66,7 +66,7 @@ Go To Page  [Arguments]  ${URL}
 
 Click And Wait  [Arguments]  ${ELEMENT}
     Click Element   ${ELEMENT}
-    Sleep   30
+    Sleep   20
     
 #--------------------
 Open Browser And Login Mmj

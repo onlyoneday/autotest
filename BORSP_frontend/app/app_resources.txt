@@ -10,9 +10,9 @@ Resource       ../common/resources.txt
 *** Keywords ***
 
 Input Simple App
+
     #填写应用名称
-    ${random} =    Get Lower String
-    ${app name} =  Evaluate  'simple2048'+'${random}'
+    ${app name} =  Generate Name
     Input Text     stackAppName    ${app name}
     #填写镜像名称
     Input Text     stackImageAddress    blackicebird/2048:latest
@@ -22,6 +22,12 @@ Input Simple App
     Input Text     stackMemory   64
     #填写容器个数
     Input Text     stackInstanceNumber   1
+    [Return]       ${app name}
+
+
+Generate Name
+    ${random} =    Get Lower String
+    ${app name} =  Evaluate  'application'+'${random}'
     [Return]       ${app name}
 
 
