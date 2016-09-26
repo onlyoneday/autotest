@@ -8,24 +8,26 @@ Test Template   Invalid Register
 Suite Teardown  Close All Browsers
 
 
-*** Test Cases ***      Email          Password
+*** Test Cases ***      Email          Password              active
 
-EMPTY Email             ${EMPTY}       ${MMJ NEWPASSWD}
-EMPTY Passwd            m@m.cn         ${EMPTY}
-EMPTY Email And Passwd  ${EMPTY}       ${EMPTY}
-Invalid Email           m@m.m          ${MMJ NEWPASSWD}
-Invalid Passwd 1        m@m.cn         M123456 
-Invalid Passwd 2        m@m.cn         M1234567890123456
-Invalid Passwd 3        m@m.cn         m1234567
-Exist Email             ${MMJ USER}    ${MMJ NEWPASSWD}
+EMPTY Email             ${EMPTY}       ${MMJ NEWPASSWD}    ${EMPTY}
+EMPTY Passwd            m@m.cn         ${EMPTY}            ${EMPTY}
+EMPTY Email And Passwd  ${EMPTY}       ${EMPTY}            ${EMPTY}
+Invalid Email           m@m.m          ${MMJ NEWPASSWD}    ${EMPTY}
+Invalid Passwd 1        m@m.cn         M123456             ${EMPTY}
+Invalid Passwd 2        m@m.cn         M1234567890123456   ${EMPTY}
+Invalid Passwd 3        m@m.cn         m1234567            ${EMPTY}
+Exist Email             ${MMJ USER}    ${MMJ NEWPASSWD}    a
 
 
 *** Keywords ***
 
 Invalid Register
-    [Arguments]   ${email}   ${password} 
+    [Arguments]   ${email}   ${password}   ${active}
     Click Link    to-create-user
     Input Text    Email      ${email} 
     Input Text    Password   ${password} 
-    Click Button  submit-create-user
+    #验证
+    Run Keyword If  '${active}' == 'a'   Click Element   submit-create-user
+    ...              ELSE   Element Should Be Disabled   submit-create-user
     Location Should Be       ${USER_U_CREATE URL}

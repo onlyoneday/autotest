@@ -88,7 +88,7 @@ Logout
     Sleep  ${SLEEP TIME} 
 
 Get Lower String
-    ${Random} =    Generate Random String    6
+    ${Random} =    Generate Random String    6    
     ${Name} =   Convert To Lowercase  ${Random}
     [Return]    ${Name}
     

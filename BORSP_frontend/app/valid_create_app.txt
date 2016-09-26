@@ -2,7 +2,7 @@
 
 Documentation   App test cases
 Resource        ../common/resources.txt
-Resource        app_resources.txt
+Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
 Test Template   Deploy App
 Suite Teardown  Close Browser
@@ -36,6 +36,6 @@ Deploy App  [Arguments]   ${network}   ${forceImage}   ${edhc}   ${status}
     ${app status} =   Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
     Should Be Equal As Strings   ${app status}   ${status}
     #删除该应用（避免垃圾数据）
-    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
-    Click Element   stackListDelete0
-    Click And Wait  css=button:nth-child(2)>span.ng-binding
+    Click And Wait   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
+    Click And Wait   stackListDelete0
+    Click And Wait   css=button:nth-child(2)>span.ng-binding
