@@ -1,0 +1,38 @@
+*** Settings ***
+
+Documentation   App test cases
+Resource        ../common/resources.txt
+Resource        app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page  ${APP_CREATE URL} 
+Test Template   Input Check1
+Suite Teardown  Close Browser
+
+
+*** Test Cases ***   input                  text        active
+
+app_c_14             stackAppName           Invalid     a
+app_c_15             stackCpus              Invalid     i
+app_c_15-2           stackCpus              0.009       i
+app_c_16             stackMemory            Invalid     i
+app_c_16-2           stackMemory            15          i
+app_c_17             stackInstanceNumber    Invalid     i
+app_c_17-2           stackInstanceNumber    ${EMPTY}    i
+
+
+*** Keywords ***
+
+Input Check1  [Arguments]  ${input}   ${text}   ${active}
+    
+    #输入最简参数
+    Input Simple App
+    #输入异常内容
+    Clear Element Text  ${input}
+    Input Text  ${input}  ${text}
+    #验证
+    Run Keyword If  '${active}' == 'a'   Click Element   stackFormCreate
+    ...              ELSE   Element Should Be Disabled   stackFormCreate
+    Location Should Be  ${APP_CREATE URL}  
+    
+
+    
