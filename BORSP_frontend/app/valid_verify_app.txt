@@ -1,0 +1,52 @@
+*** Settings ***
+
+Documentation   App test cases
+Resource        ../common/resources.txt
+Resource        app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Suite Teardown  Close Browser
+Library         DateTime
+
+*** Test Cases ***
+
+app_m_5,6,8
+    #新建应用
+    Click And Wait  stackCreate
+    #输入最简参数
+    ${name} =   Input Simple App
+    #更新容器个数
+    Input Text      stackInstanceNumber   2   
+    #等待应用发布
+    Click And Wait  stackFormCreate
+    Sleep  ${SLEEP LONG TIME} 
+    #跳转到详情页面
+    Click And Wait  xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
+    #验证信息是否正确
+    #应用名称
+    ${app name} =   Get Text  css=h2
+    Should Be Equal As Strings   ${app name}   ${name}
+    #创建时间
+    ${cur date} =   Get Current Date
+    ${app date} =   Get Text  css=dl:nth-child(2) > dd:nth-child(2)
+    ${cd} =   Get Substring   ${cur date}   0  13
+    ${ad} =   Get Substring   ${app date}   0  13
+    Should Be Equal   ${cd}   ${ad}
+    #KILL
+    Click Element   stackSelectInstance0
+    Click And Wait  stackInstanceKilTack
+    Click And Wait  css=.md-dialog-container.ng-scope > md-dialog > md-dialog-actions > button:nth-child(2)
+    ${index} =    Get Matching Xpath Count   //*[@id="stackInstanceList"]/tbody/tr[*] 
+    Should Be Equal   ${index}   2
+    #KILL&SCALE
+    Click Element   stackSelectInstance0
+    Click And Wait  stackInstanceKilOrTack
+    Click And Wait  css=.md-dialog-container.ng-scope > md-dialog > md-dialog-actions > button:nth-child(2)
+    ${index} =    Get Matching Xpath Count   //*[@id="stackInstanceList"]/tbody/tr[*] 
+    Should Be Equal   ${index}   1
+    #删除该应用（避免垃圾数据）
+    Click And Wait  stackDetailMenu
+    Click And Wait  stackDetailDelete
+
+
+
+

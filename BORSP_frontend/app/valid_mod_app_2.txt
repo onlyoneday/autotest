@@ -58,7 +58,7 @@ app_m_14,23
     ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
     Should Be Equal As Strings   ${status}   Deploying
     #删除该应用（避免垃圾数据）
-    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
-    Click Element   stackListDelete0
-    Click And Wait  css=button:nth-child(2)>span.ng-binding
+    Click And Wait  xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
+    Click And Wait  stackDetailMenu
+    Click And Wait  stackDetailDelete
 
