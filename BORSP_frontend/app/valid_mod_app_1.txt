@@ -2,7 +2,7 @@
 
 Documentation   App test cases
 Resource        ../common/resources.txt
-Resource        app_resources.txt
+Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
 Suite Teardown  Close Browser
 
