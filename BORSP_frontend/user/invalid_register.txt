@@ -1,4 +1,4 @@
-** Settings ***
+*** Settings ***
 
 Documentation  A test suite with a single test for registering failed. 
 Resource        ../common/resources.txt

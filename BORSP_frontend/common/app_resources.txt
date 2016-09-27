@@ -1,4 +1,3 @@
-
 *** Settings ***
 
 Documentation  A resource file containing the specific keywords and variables for application

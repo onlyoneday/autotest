@@ -62,7 +62,7 @@ Home Page Should Be Open
 
 Go To Page  [Arguments]  ${URL}
     Go To   ${URL}
-    Sleep   ${SLEEP TIME}
+    Sleep   20
 
 Click And Wait  [Arguments]  ${ELEMENT}
     Click Element   ${ELEMENT}

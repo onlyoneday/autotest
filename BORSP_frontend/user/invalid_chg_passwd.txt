@@ -25,8 +25,8 @@ Invalid Change Password
     Input Text    newPassword         ${newpasswd1} 
     Input Text    newPasswordCompare  ${newpasswd2}
     #验证
-    Run Keyword If  '${active}' == 'a'   Click Element   submit-update-password
-    ...              ELSE   Element Should Be Disabled   submit-update-password
+    Run Keyword If  '${active}' == 'a'   Click Element  submit-update-password
+    ...             ELSE   Element Should Be Disabled   submit-update-password
     Page Should Not Contain   ${success change} 
 
 
