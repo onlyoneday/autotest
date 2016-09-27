@@ -1,0 +1,23 @@
+*** Settings ***
+
+Documentation  A resource file containing the specific keywords and variables for application
+Library        Selenium2Library
+Library        String
+Resource       ../common/resources.txt
+
+
+*** Keywords ***
+
+Create Compose  [Arguments]   ${template}
+
+    #输入编排名称
+    ${random} =      Get Lower String
+    ${comp name} =   Evaluate  'compose'+'${random}'
+    Input Text    rolex-stackName   ${comp name}
+    #选择试试看模板
+    Click Element    relox-try-menu
+    Click Element    ${template}
+    #等待编排发布
+    Click And Wait   rolex-json-create
+    Sleep  ${SLEEP LONG TIME} 
+    [Return]	 ${comp name}

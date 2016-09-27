@@ -1,27 +1,22 @@
 *** Settings ***
 
-Documentation   App test cases
+Documentation   应用编排-测试修改任务数
 Resource        ../common/resources.txt
+Resource        ../common/comp_resources.txt
 Suite Setup     Open Browser And Login Mmj
 Test Setup      Go To Page   ${RSTACK URL}
 Suite Teardown  Close Browser
 
 
-*** Test Cases ***    template
+*** Test Cases ***
 
-compose_3,10-12 
+#修改任务数
+compose_10
+
     #新建编排
     Click And Wait  stack-create
-    #输入编排名称
-    ${random} =   Get Lower String
-    ${name} =  Evaluate  'compose'+'${random}'
-    Input Text    rolex-stackName   ${name}
-    #选择试试看模板
-    Click Element   relox-try-menu
-    Click Element   rolex-json-2048
-    #等待编排发布
-    Click And Wait  rolex-json-create
-    Sleep  ${SLEEP LONG TIME} 
+    #新建编排
+    Create Compose  rolex-json-2048
     #验证编排是否发布成功
     Reload Page
     ${task1} =   Get Text        //*[@id='rolexStackServices']/tbody/tr[1]/td[2]
@@ -36,11 +31,6 @@ compose_3,10-12
     ${task1} =   Get Text    //*[@id='rolexStackServices']/tbody/tr[1]/td[2]
     ${sum} =     Get Substring   ${task1}   2
     Should Be Equal As Strings   ${sum}     2
-    #验证重复编排名称
-    #Go To Page   ${RSTACK URL}
-    #Click And Wait  stack-create
-    #Input Text      rolex-stackName   ${name}
-    #Click And Wait  rolex-json-create
     #删除编排
     Click And Wait   delete-stack
     Click And Wait   css=md-dialog > md-dialog-actions > button:nth-child(2)

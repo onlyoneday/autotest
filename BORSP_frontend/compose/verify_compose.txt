@@ -1,0 +1,84 @@
+*** Settings ***
+
+Documentation   应用编排-验证名称重复、链接和详细信息
+Resource        ../common/resources.txt
+Resource        ../common/comp_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${RSTACK URL}
+Suite Teardown  Close Browser
+Library         DateTime
+
+
+*** Test Cases ***    template
+
+compose_9,12-16
+
+    #新建编排
+    Click And Wait  stack-create
+    #新建编排
+    ${name} =    Create Compose  rolex-json-2048
+    #验证编排名称重复
+    #Go To Page      ${RSTACK URL}
+    #Click And Wait  stack-create
+    #Input Text      rolex-stackName   ${name}
+    #Click And Wait  rolex-json-create
+    #Page Should Contain   重复
+    #验证编排名称
+    Go To Page   ${RSTACK URL}
+    ${com name} =    Get Text    stack0-name
+    Should Be Equal As Strings   ${com name}   ${name}
+    #验证创建时间
+    ${cur date} =   Get Current Date
+    ${app date} =   Get Text  css=td.md-cell.ng-binding
+    ${cd} =   Get Substring   ${cur date}   0  13
+    ${ad} =   Get Substring   ${app date}   0  13
+    Should Be Equal   ${cd}   ${ad}
+    #点击编排名称跳转到服务列表
+    Click And Wait   stack0-name
+    #验证服务名称
+    ${name_2048} =   Evaluate    '${name}'+'_2048'
+    ${ser name} =    Get Text    rolex-stack-name-0 
+    Should Be Equal As Strings   ${ser name}   ${name_2048}
+    #点击服务名称跳转到任务列表
+    Click And Wait   rolex-stack-name-0
+    #验证任务列表
+    ${task num} =    Get Text    xpath=//*[@id='service-detail-task-table']/tbody/tr/td[1]
+    ${task sta} =    Get Text    xpath=//*[@id='service-detail-task-table']/tbody/tr/td[2]
+    ${task dat} =    Get Text    xpath=//*[@id='service-detail-task-table']/tbody/tr/td[5]
+    Should Be Equal As Strings   ${task num}   1
+    Should Be Equal As Strings   ${task sta}   运行中
+    Should Be Equal As Strings   ${task dat}   ${app date}
+    #验证详情列表
+    Click And Wait   css=md-tab-item:nth-child(2)
+    Page Should Contain   基本信息
+    ${detail img} =   Get Text   xpath=//*[@id='service-config-basic-table']/tbody/tr[1]/td[2]
+    ${detail num} =   Get Text   xpath=//*[@id='service-config-basic-table']/tbody/tr[3]/td[2]
+    ${detail net} =   Get Text   xpath=//*[@id='service-config-basic-table']/tbody/tr[6]/td[2]
+    Should Be Equal As Strings   ${detail img}   blackicebird/2048
+    Should Be Equal As Strings   ${detail num}   1
+    Should Be Equal As Strings   ${detail net}   ingress
+    Page Should Contain   滚动更新
+    ${detail fai} =   Get Text   xpath=//*[@id='service-config-continue-table']/tbody/tr[1]/td[2]
+    Should Be Equal As Strings   ${detail fai}   停止尝试
+    Page Should Contain   服务标签
+    ${detail spa} =   Get Text   xpath=//*[@id='instance-config-env-list']/tr[1]/td[2]
+    ${detail nam} =   Get Text   xpath=//*[@id='instance-config-env-list']/tr[2]/td[2]
+    Should Be Equal As Strings   ${detail spa}   ${name} 
+    Should Be Equal As Strings   ${detail nam}   2048
+    Page Should Contain   端口映射
+    ${detail po1} =   Get Text   xpath=//*[@id='service-config-endpoint-table']/tbody/tr/td[1]
+    ${detail tcp} =   Get Text   xpath=//*[@id='service-config-endpoint-table']/tbody/tr/td[2]
+    ${detail po2} =   Get Text   xpath=//*[@id='service-config-endpoint-table']/tbody/tr/td[3]
+    Should Be Equal As Strings   ${detail po1}   80
+    Should Be Equal As Strings   ${detail tcp}   tcp
+    Should Be Equal As Strings   ${detail po2}   8000
+    #验证入口列表
+    Click And Wait   css=md-tab-item:nth-child(3)
+    Page Should Contain   IP:Port
+    Page Should Contain   nginx conf 配置参考
+    Page Should Contain   haproxy cfg 配置参考
+    #删除编排
+    Go To Page   ${RSTACK URL}
+    Click And Wait   stack0-name
+    Click And Wait   delete-stack
+    Click And Wait   css=md-dialog > md-dialog-actions > button:nth-child(2)
