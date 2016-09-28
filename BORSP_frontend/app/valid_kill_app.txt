@@ -9,7 +9,7 @@ Library         DateTime
 
 *** Test Cases ***
 
-app_m_5,6,8
+app_m_5,8
     #新建应用
     Click And Wait  stackCreate
     #输入最简参数
@@ -21,16 +21,6 @@ app_m_5,6,8
     Sleep  ${SLEEP LONG TIME} 
     #跳转到详情页面
     Click And Wait  xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
-    #验证信息是否正确
-    #应用名称
-    ${app name} =   Get Text  css=h2
-    Should Be Equal As Strings   ${app name}   ${name}
-    #创建时间
-    ${cur date} =   Get Current Date
-    ${app date} =   Get Text  css=dl:nth-child(2) > dd:nth-child(2)
-    ${cd} =   Get Substring   ${cur date}   0  13
-    ${ad} =   Get Substring   ${app date}   0  13
-    Should Be Equal   ${cd}   ${ad}
     #KILL
     Click Element   stackSelectInstance0
     Click And Wait  stackInstanceKilTack
