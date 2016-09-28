@@ -9,14 +9,16 @@ Suite Teardown  Close Browser
 
 *** Test Cases ***
 
-app_c_03
+app_c_32
     
     #新建应用
     Click And Wait  stackCreate
     #输入最简参数
     ${name} =   Input Simple App
+    #切换到json模式
+    Click And Wait  css=md-tab-item:nth-child(2)
     #点击取消
-    Click And Wait  stackFormCancel
+    Click And Wait  stackJsonCancel
     #验证应用是否部署
     ${index} =    Get Matching Xpath Count   //*[@id="stackListApp"]/tbody/tr[*]
     :FOR    ${li}   IN RANGE   ${index} 

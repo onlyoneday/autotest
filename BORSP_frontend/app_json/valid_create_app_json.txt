@@ -1,0 +1,39 @@
+*** Settings ***
+
+Documentation   App test cases
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Template   Verify Json Template
+Suite Teardown  Close Browser
+
+*** Test Cases ***    template         
+
+app_c_23              stackSimpleModel
+app_c_23,27           stackAdvancedModel 
+
+*** Keywords ***
+
+Verify Json Template    [Arguments]   ${template}
+
+    #新建应用
+    Click And Wait  stackCreate
+    #切换到json模式
+    Click And Wait  css=md-tab-item:nth-child(2)
+    #试试看
+    Click And Wait  stackTrySee
+    Click And Wait  ${template}
+    #等待应用发布
+    Click And Wait  stackJsonCreate
+    Sleep   ${SLEEP LONG TIME} 
+    #验证应用是否部署成功
+    ${name}     Run Keyword If   '${template}' == 'stackSimpleModel'   set variable   simple-template
+    ...         ELSE   set variable    advanced-template
+    ${app name} =   Get Text     //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Be Equal As Strings   ${app name}    ${name}
+    ${app status} =   Get Text   //*[@id="stackListApp"]/tbody/tr[1]/td[3]
+    Should Be Equal As Strings   ${app status}  Running
+    #删除该应用（避免垃圾数据）
+    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
+    Click Element   stackListDelete0
+    Click And Wait  css=button:nth-child(2)>span.ng-binding
