@@ -1,0 +1,36 @@
+*** Settings ***
+
+Documentation   A test suite containing tests related to invalid login. 
+Resource        ../common/resources.txt
+Suite Setup     Open Browser To Login Page
+Test Setup      Go To Page  ${LOGIN URL}
+Test Template   Login With Invalid Credentials Should Fail
+Suite Teardown  Close Browser
+
+
+
+*** Test Cases ***              User Name            Password            Info
+
+Invalid Username                admin@dataman.com    ${VALID PASSWD}     ${no record}
+Invalid Password                ${VALID USER}        invalid             ${no record}
+Invalid Username And Password   invalid              whatever            ${no record}
+Empty Username                  ${EMPTY}             ${VALID PASSWD}     ${EMPTY} 
+Empty Password                  ${VALID USER}        ${EMPTY}            ${EMPTY} 
+Empty Username And Password     ${EMPTY}             ${EMPTY}            ${EMPTY} 
+Wrong Email Format              whatever             ${VALID PASSWD}     ${no record}
+
+
+*** Keywords ***
+
+Login With Invalid Credentials Should Fail
+    [Arguments]  ${username}  ${password}  ${info}
+    Input Username   ${username}
+    Input Password   ${password}
+    Submit Credentials
+    Page Should Contain  ${info}
+    Location Should Be   ${LOGIN URL}
+
+
+*** Variables ***
+
+${no record}    record not found

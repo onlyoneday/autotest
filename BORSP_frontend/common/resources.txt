@@ -1,0 +1,101 @@
+
+*** Settings ***
+
+Documentation  A resource file containing the specific keywords and variables for application
+Library        Selenium2Library
+Library        String
+
+*** Variables ***
+
+${SERVER}                http://192.168.1.155:9999/ui
+${BROWSER}               Firefox
+#${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
+${DELAY}                 0.1
+${SLEEP TIME}            10
+${SLEEP LONG TIME}       60
+
+#--------------------URL--------------------
+${LOGIN URL}             ${SERVER}/auth/login
+${HOME URL}              ${SERVER}/app/list/my
+${APP_MY URL}            ${SERVER}/app/list/my
+${APP_ALL URL}           ${SERVER}/app/list/all
+${APP_CREATE URL}        ${SERVER}/app/create
+${NODE URL}              ${SERVER}/node/list&clusterInfo
+${RSTACK URL}            ${SERVER}/rolexStack/list
+${USER_U URL}            ${SERVER}/user/users
+${USER_U_CREATE URL}     ${SERVER}/users/create
+${USER_P URL}            ${SERVER}/user/password
+
+
+#----- LOCATION ---------
+${LOGIN BTN}             login-btn-login
+${USERNAME FIELD}        //input[@name="Email"]
+${PASSWORD FIELD}        //input[@name="Password"]
+
+#---- DATA --------------
+${VALID USER}            admin@dataman-inc.com
+${VALID PASSWD}          Dataman1234
+
+${MMJ USER}              m@m.com
+${MMJ PASSWD}            M12345678
+${MMJ NEWPASSWD}         M1234567
+
+
+
+*** Keywords ***
+
+Open Browser To Login Page
+    Set Selenium Speed  ${DELAY}
+    Open Browser  ${LOGIN URL}  ${BROWSER}  #ff_profile_dir=${FF_PROFILE}
+
+Input Username  [Arguments]  ${USERNAME}
+    Input Text  ${USERNAME FIELD}  ${USERNAME}
+
+Input Password  [Arguments]  ${PASSWORD}
+    Input Text  ${PASSWORD FIELD}  ${PASSWORD}
+
+Submit Credentials
+    Click Button  ${LOGIN BTN}
+
+Home Page Should Be Open
+    Location Should Be  ${HOME URL}
+
+Go To Page  [Arguments]  ${URL}
+    Go To   ${URL}
+    Sleep   15
+
+Click And Wait  [Arguments]  ${ELEMENT}
+    Click Element   ${ELEMENT}
+    Sleep   20
+    
+#--------------------
+Open Browser And Login Mmj
+    Open Browser To Login Page
+    Login Mmj
+
+Login Mmj
+    Login   ${MMJ USER}  ${MMJ PASSWD}
+
+Login  [Arguments]   ${USER}   ${PASSWD}
+    Input Username   ${USER}
+    Input Password   ${PASSWD}
+    Submit Credentials
+    Sleep  ${SLEEP TIME}
+
+Logout
+    Click Button  open-user-menu
+    Click Button  logout
+    Sleep  ${SLEEP TIME} 
+
+Get Lower String
+    ${Random} =    Generate Random String    6    
+    ${Name} =   Convert To Lowercase  ${Random}
+    [Return]    ${Name}
+    
+
+
+
+
+
+
+

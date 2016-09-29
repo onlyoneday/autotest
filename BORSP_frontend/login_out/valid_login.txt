@@ -1,0 +1,14 @@
+*** Settings ***
+
+Documentation  A test suite with a single test for valid login. 
+Resource       ../common/resources.txt
+Test Teardown  Close Browser
+
+
+*** Test Cases ***
+
+Verify Valid Login
+    Open Browser To Login Page
+    Login Mmj
+    Home Page Should Be Open
+
