@@ -2,6 +2,7 @@
 
 Documentation  A resource file containing the specific keywords and variables for application
 Library        Selenium2Library
+Library        DateTime
 Library        String
 
 *** Variables ***
@@ -11,7 +12,7 @@ ${DELAY}                    0.2
 ${SLEEP TIME}               2
 
 #------ URL ----------
-${Server}                   http://192.168.1.47
+${Server}                   http://192.168.1.56
 ${Login Url}                ${Server}/auth/login
 ${Stack Url}                ${Server}/stack/list
 ${Registry List Url}        ${Server}/registry/list/catalogs
@@ -20,15 +21,22 @@ ${Network List Url}         ${Server}/network/list
 ${Registry Auth List Url}   ${Server}/registryAuth/list
 ${Info Url}                 ${Server}/misc/config
 
+
 #----- LOCATION --------
 ${USERNAME FIELD}           //input[@name='Email']
 ${PASSWORD FIELD}           //input[@name='password']
 ${LOGIN BTN}                //button[@id='login-btn-login']
 
+${User Menu BTN}                index-menu
+
 #----------Account-------------
 ${Admin Email}              admin@admin.com
 ${Admin Password}           adminadmin
 
+#-----language--------
+${Language Menu BTN}  //md-menu[@md-position-mode="cascade"]/button
+${English Menu BTN}  //md-menu-item[@value="en"]/button
+${Chinese Menu BTN}  //md-menu-item[@value="zh-CN"]/button
 
 *** Keywords ***
 
@@ -59,8 +67,17 @@ Open Browser And Login With Admin
     Input Username              ${Admin Email}
     Input Password              ${Admin Password}
     Submit Credentials
+    Set Language Chinese
+
+Set Language Chinese
+    Click Button  ${User Menu BTN}
+    Click Button  ${Language Menu BTN}
+    Click Button  ${Chinese Menu BTN}
 
 Home Page Should Be Open
+    Location Should Be          ${Stack Url}
+
+Project Page Should Be Open
     Location Should Be          ${Stack Url}
 
 Network Page Should Be Open
@@ -83,3 +100,6 @@ Go To Home Page
 
 Go To Info Page
     Go To                       ${Info Url}
+
+Go To Project Page
+    Go To                       ${Stack Url}

@@ -6,14 +6,15 @@ Documentation  A test suite with a single test for valid login. This test has
 Resource       common.txt
 Suite Setup     Open Browser And Login With Admin
 Test Setup      Go To Network Page
-Suite Teardown  Close All Browsers
+
+# Suite Teardown  Close All Browsers
 
 *** Variables ***
 ${Create Network Url}               /network/create
 
 ${Network Table}                    css=table.md-table
 ${Network Link}                     index-network
-${Create Network Link}              //a[@href="/network/create"]
+${Create Network Link}              net-create-btn
 
 ${Network Name Input}               //input[@name="name"]
 ${Subnet mask Input}                //input[@name="Subnet"
@@ -36,9 +37,8 @@ ${Network Table Delete Button End}  ]/td[8]/button
 ${Confirm Delete Network Button}    //md-dialog-actions/button[2]
 
 
-
-
 *** Keywords ***
+
 
 Check Network Exist
     [Arguments]     ${name}     ${subnet}   ${gateway}  ${iprange}  ${type}
@@ -54,29 +54,25 @@ Find Network Row
     [Arguments]     ${name}
     [Documentation]     找到名称是${name}的网络所在的行号
     #获取网络table行数
-    ${row}=  Evaluate  0
     ${row count}=      Get Matching Xpath Count    ${Network Table Row}
     :FOR    ${index}    IN RANGE    1  ${row count}+1
     \   ${Network Name Field}=    Set Variable     ${Network Table Row Start}${index}${Network Name End}
     \   ${get name}=    Get Text    ${Network Name Field}
-    \   ${row}=  Set Variable  ${index}
-    \   Run Keyword If  '${get name}' == '${name}'  Exit For Loop
-    Run Keyword If  '${row}' == '${row count}'  Run Keyword If  '${get name}' != '${name}'  Fail  Can't find this network
-    [Return]    ${row}
+    \   Return From Keyword If  '${get name}' == '${name}'    ${index}
+    Return From Keyword    ${-1}
 
 Delete Network
     [Arguments]     ${name}
     [Documentation]     删除名称是${name}的网络
     ${get row}=  Find Network Row                ${name}
+    Keyword If
     ${delete network button}=     Set Variable    ${Network Table Row Start}${get row}${Network Table Delete Button End}
     Click Button      ${delete network button}
     Click Button      ${Confirm Delete Network Button}
     Sleep             2
     Page Should Contain  删除成功
 
-
 *** Test Cases ***
-
 Case WL-001 Check Click Network Link
     [Tags]  1
     [Documentation]  验证页面左侧菜单中的网络连接是否正确
@@ -92,7 +88,6 @@ Case WL-002 Create Network
     Location Should Be              ${Server}${Create Network Url}
     Input Text                      ${Network Name Input}               ${network name}
     Click Button                    ${Confirm Create Network Button}
-    Reload Page
     Sleep Sometime
     Check Network Exist             ${network name}                      ${EMPTY}               ${EMPTY}            ${EMPTY}        是
     Delete Network                  ${network name}
