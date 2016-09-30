@@ -1,65 +1,52 @@
 *** Settings ***
 
-Documentation   App test cases
+Documentation   应用详情-右上方停止、扩展、删除、更新可用
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
-Test Setup      Go To Page   ${RSTACK URL}
 Suite Teardown  Close Browser
-
 
 *** Test Cases ***
 
-app_m_14,23
+app_m_14
     #创建应用
     Click And Wait  stackCreate
     ${app name} =   Input Simple App
-    Input Advanced App  0010
     #等待应用发布
     Click And Wait  stackFormCreate   
-    Sleep    ${SLEEP LONG TIME} 
     #验证应用是否部署成功
     ${apname} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
     Should Be Equal As Strings   ${apname}   ${app name}
     ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
-    Should Be Equal As Strings   ${status}   Deploying
+    Should Be Equal As Strings   ${status}   Running
     #更新应用
     Click And Wait  xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
     Click And Wait  stackDetailMenu
     Click And Wait  stackDetailUpdate  
-    #打开高级设置
-    Click Element   css=.fa-chevron-down
-    #更新健康检查-最多持续失败次数
-    Input Text      stackMaxConsecutiveFailures-0   6
+    #更新CPU
+    Input Text      stackCpus   0.3
     #等待应用更新
     Click And Wait  stackFormUpdate
-    Sleep    ${SLEEP LONG TIME} 
-    #验证应用是否部署成功
+    #验证应用是否部署
     ${apname} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
     Should Be Equal As Strings   ${apname}   ${app name}
     ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
-    Should Be Equal As Strings   ${status}   Deploying
+    Should Be Equal As Strings   ${status}   Running
     #停止应用
     Click And Wait  xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
     Click And Wait  stackDetailMenu
     Click And Wait  stackDetailSuspended
     #验证应用是否停止
-    Go To Page   ${APP_MY URL} 
-    ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
+    ${status} =     Get Text  css=dl:nth-child(2) > dd:nth-child(4)
     Should Be Equal As Strings   ${status}   Suspended
     #扩展应用
-    Click And Wait  xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
     Click And Wait  stackDetailMenu
     Click And Wait  stackDetailExtend
-    Input Text      name=containerNum  1
+    Input Text      name=containerNum   1
     Click And Wait  css=md-dialog-actions > button:nth-child(3)
-    Sleep   ${SLEEP LONG TIME} 
     #验证应用是否扩展成功
-    Go To Page   ${APP_MY URL} 
-    ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
-    Should Be Equal As Strings   ${status}   Deploying
+    ${status} =     Get Text  css=dl:nth-child(2) > dd:nth-child(4)
+    Should Be Equal As Strings   ${status}   Running
     #删除该应用（避免垃圾数据）
-    Click And Wait  xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
-    Click And Wait  stackDetailMenu
-    Click And Wait  stackDetailDelete
+    Delete App From Detail
 

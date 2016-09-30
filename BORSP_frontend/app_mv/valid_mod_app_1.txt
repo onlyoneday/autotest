@@ -1,15 +1,14 @@
 *** Settings ***
 
-Documentation   App test cases
+Documentation   应用管理列表界面停止、扩展、删除、更新可用
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
 Suite Teardown  Close Browser
 
-
 *** Test Cases ***
 
-app_m_4,15-22
+app_m_4,22
     #创建应用
     Click And Wait  stackCreate
     ${app name} =   Input Simple App
@@ -24,26 +23,10 @@ app_m_4,15-22
     #更新应用
     Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
     Click And Wait  stackListUpdate0
-    #更新镜像名称
-    Input Text     stackImageAddress   blackicebird/2048
-    #强制拉取镜像
-    Click Element  forceImage
-    #更新网络模式
-    Click Element  stackHost
-    #更新容器规格
-    Input Text     stackCpus    0.3
-    Clear Element Text  stackMemory
-    Input Text     stackMemory  130
-    #更新容器个数
-    Input Text     stackInstanceNumber   3
     #打开高级设置
-    Click Element  css=.fa-chevron-down
-    #更新环境变量
-    Input Text     stackEnvsValue0   env3 
-    #更新Docker参数
-    Input Text     stackDockerValue-0  mmj3
+    Click And Wait  css=.fa-chevron-down
     #更新CMD
-    Input Text     stackCMD  while [ true ]; do echo simple; sleep 5; done
+    Input Text      stackCMD      ${CMD TEXT} 
     #等待应用更新
     Click And Wait  stackFormUpdate
     #验证应用是否部署成功
@@ -53,7 +36,9 @@ app_m_4,15-22
     Should Be Equal As Strings   ${status}   Running
     #停止应用
     Click And Wait  stackListSuspended0
-    #验证应用是否停止 
+    #验证应用是否停止
+    ${apname} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Be Equal As Strings   ${apname}   ${app name}
     ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
     Should Be Equal As Strings   ${status}   Suspended
     #扩展应用
@@ -61,12 +46,12 @@ app_m_4,15-22
     Input Text      name=containerNum  1
     Click And Wait  css=md-dialog-actions > button:nth-child(3)
     #验证应用是否扩展成功
+    ${apname} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Be Equal As Strings   ${apname}   ${app name}
     ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
     Should Be Equal As Strings   ${status}   Running
     #删除该应用（避免垃圾数据）
-    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
-    Click Element   stackListDelete0
-    Click And Wait  css=button:nth-child(2)>span.ng-binding
+    Delete App From Button
 
 
 

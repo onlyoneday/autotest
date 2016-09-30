@@ -5,11 +5,22 @@ Library        Selenium2Library
 Library        String
 Resource       ../common/resources.txt
 
-
 *** Keywords ***
 
-Input Simple App
+Delete App From Button
+    #从应用列表的Button删除应用
+    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
+    Click Element   stackListDelete0
+    Click And Wait  css=button:nth-child(2)>span.ng-binding
 
+Delete App From Detail
+    #从应用详情的菜单删除应用
+    Click And Wait  stackDetailMenu
+    Click And Wait  stackDetailDelete
+    Click And Wait  css=button:nth-child(2)>span.ng-binding
+
+
+Input Simple App
     #填写应用名称
     ${app name} =  Generate Name
     Input Text     stackAppName    ${app name}
@@ -18,7 +29,7 @@ Input Simple App
     #填写容器规格
     Input Text     stackCpus    0.2
     Clear Element Text  stackMemory
-    Input Text     stackMemory   64
+    Input Text     stackMemory   32
     #填写容器个数
     Input Text     stackInstanceNumber   1
     [Return]       ${app name}
@@ -31,7 +42,6 @@ Generate Name
 
 
 Input Advanced App  [Arguments]   ${EDHC}
-
     Click Element  css=.fa-chevron-down
     Sleep   ${SLEEP TIME}
 
@@ -47,7 +57,7 @@ Input Advanced App  [Arguments]   ${EDHC}
 Add Environment
     Click Element  stackAddMountpoints
     Input Text     stackEnvsKey0     ENV
-    Input Text     stackEnvsValue0   env 
+    Input Text     stackEnvsValue0   environment 
 
 Add Docker
     Click Element  stackParametersAdd
@@ -73,6 +83,6 @@ Add Healthchecks
     Input Text     stackPortIndex-0  0
 
 Add Command
-    Input Text     stackCMD  while [ true ]; do echo simple; sleep 5; done
+    Input Text     stackCMD    ${CMD TEXT}
 
 

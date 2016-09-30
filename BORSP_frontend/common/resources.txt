@@ -1,4 +1,3 @@
-
 *** Settings ***
 
 Documentation  A resource file containing the specific keywords and variables for application
@@ -11,7 +10,7 @@ ${SERVER}                http://192.168.1.155:9999/ui
 ${BROWSER}               Firefox
 #${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
-${SLEEP TIME}            10
+${SLEEP TIME}            15
 ${SLEEP LONG TIME}       60
 
 #--------------------URL--------------------
@@ -27,18 +26,20 @@ ${USER_U_CREATE URL}     ${SERVER}/users/create
 ${USER_P URL}            ${SERVER}/user/password
 
 
-#----- LOCATION ---------
+#--------------------LOCATION----------------
 ${LOGIN BTN}             login-btn-login
 ${USERNAME FIELD}        //input[@name="Email"]
 ${PASSWORD FIELD}        //input[@name="Password"]
 
-#---- DATA --------------
+#--------------------DATA--------------------
 ${VALID USER}            admin@dataman-inc.com
 ${VALID PASSWD}          Dataman1234
 
 ${MMJ USER}              m@m.com
 ${MMJ PASSWD}            M12345678
 ${MMJ NEWPASSWD}         M1234567
+
+${CMD TEXT}              while [ true ]; do echo BORSP; sleep 10; done
 
 
 
@@ -62,11 +63,11 @@ Home Page Should Be Open
 
 Go To Page  [Arguments]  ${URL}
     Go To   ${URL}
-    Sleep   20
+    Sleep   ${SLEEP TIME} 
 
 Click And Wait  [Arguments]  ${ELEMENT}
     Click Element   ${ELEMENT}
-    Sleep   20
+    Sleep   ${SLEEP TIME} 
     
 #--------------------
 Open Browser And Login Mmj

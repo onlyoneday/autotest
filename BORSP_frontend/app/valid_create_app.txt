@@ -29,9 +29,9 @@ Deploy App  [Arguments]   ${network}   ${forceImage}   ${edhc}   ${status}
     Click And Wait    stackFormCreate
     Sleep    ${SLEEP LONG TIME} 
     #验证应用是否部署成功
-    ${app name} =     Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    ${app name} =     Get Text   //*[@id="stackListApp"]/tbody/tr[1]/td[1]
     Should Be Equal As Strings   ${app name}     ${name}
-    ${app status} =   Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
+    ${app status} =   Get Text   //*[@id="stackListApp"]/tbody/tr[1]/td[3]
     Should Be Equal As Strings   ${app status}   ${status}
     #删除该应用（避免垃圾数据）
     Delete App From Button
