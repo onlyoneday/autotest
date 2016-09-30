@@ -40,4 +40,3 @@ Verify Log
     Sleep   10
     ${logrow1} =    Get Matching Xpath Count  //*[@id='appLog']/ul/li[*]
     Should Be Equal As Strings   ${logrow1}   11
-

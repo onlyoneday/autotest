@@ -46,4 +46,3 @@ Not Update    [Arguments]   ${i}   ${time}
     #删除该应用（避免垃圾数据）
     Delete App From Detail
     Exit For Loop
-
