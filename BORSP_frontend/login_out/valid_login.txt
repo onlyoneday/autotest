@@ -1,13 +1,12 @@
 *** Settings ***
 
-Documentation  A test suite with a single test for valid login. 
-Resource       ../common/resources.txt
-Test Teardown  Close Browser
-
+Documentation   正常登录
+Resource        ../common/resources.txt
+Test Teardown   Close Browser
 
 *** Test Cases ***
 
-Verify Valid Login
+login_out_2
     Open Browser To Login Page
     Login Mmj
     Home Page Should Be Open

@@ -1,13 +1,12 @@
 *** Settings ***
 
-Documentation  A test suite with a single test for multiple-sign-on. 
-Resource       ../common/resources.txt
+Documentation   多点登录退出
+Resource        ../common/resources.txt
 Suite Teardown  Close All Browsers
-
 
 *** Test Cases ***
 
-Verify Multiple Login
+login_out_10
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}   B1
     Sleep  ${SLEEP TIME}

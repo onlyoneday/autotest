@@ -1,24 +1,20 @@
 *** Settings ***
 
-Documentation  A test suite with a single test for changing password successfully. 
+Documentation   修改密码
 Resource        ../common/resources.txt
 Suite Setup     Open Browser And Login Mmj
 Suite Teardown  Close All Browsers
 
-
 *** Test Cases ***
 
-Verify Change Passwords
+user_12
     Go To Page  ${USER_P URL}   
     Change Password  ${MMJ PASSWD}  ${MMJ NEWPASSWD}  
     Page Should Contain  ${success change} 
     Logout
-    
     Login  ${MMJ USER}  ${MMJ NEWPASSWD} 
-
     Go To Page  ${USER_P URL}  
     Change Password  ${MMJ NEWPASSWD}  ${MMJ PASSWD} 
-
 
 *** Keywords ***
 
@@ -27,7 +23,6 @@ Change Password  [Arguments]  ${oldpasswd}  ${newpasswd}
     Input Text   newPassword         ${newpasswd}
     Input Text   newPasswordCompare  ${newpasswd}
     Click Button    submit-update-password
-
 
 *** Variables ***
 

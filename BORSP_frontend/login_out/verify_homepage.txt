@@ -1,10 +1,9 @@
 *** Settings ***
 
-Documentation  A test suite containing tests related to homepage. 
+Documentation   左侧菜单可用（login_out_9）
 Resource        ../common/resources.txt
 Suite Setup     Open Browser And Login Mmj
 Suite Teardown  Close All Browsers
-
 
 *** Test Cases ***
 

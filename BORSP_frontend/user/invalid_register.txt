@@ -1,24 +1,22 @@
 *** Settings ***
 
-Documentation  A test suite with a single test for registering failed. 
+Documentation   注册(异常)
 Resource        ../common/resources.txt
 Suite Setup     Open Browser And Login Mmj
 Test Setup      Go To Page  ${USER_U URL}
 Test Template   Invalid Register
 Suite Teardown  Close All Browsers
 
-
 *** Test Cases ***      Email          Password              active
 
-EMPTY Email             ${EMPTY}       ${MMJ NEWPASSWD}    ${EMPTY}
-EMPTY Passwd            m@m.cn         ${EMPTY}            ${EMPTY}
-EMPTY Email And Passwd  ${EMPTY}       ${EMPTY}            ${EMPTY}
-Invalid Email           m@m.m          ${MMJ NEWPASSWD}    ${EMPTY}
-Invalid Passwd 1        m@m.cn         M123456             ${EMPTY}
-Invalid Passwd 2        m@m.cn         M1234567890123456   ${EMPTY}
-Invalid Passwd 3        m@m.cn         m1234567            ${EMPTY}
-Exist Email             ${MMJ USER}    ${MMJ NEWPASSWD}    a
-
+user_5                  ${EMPTY}       ${MMJ NEWPASSWD}    ${EMPTY}
+user_5-2                m@m.cn         ${EMPTY}            ${EMPTY}
+user_5-3                ${EMPTY}       ${EMPTY}            ${EMPTY}
+user_6                  m@m.m          ${MMJ NEWPASSWD}    ${EMPTY}
+user_7					m@m.cn         M123456             ${EMPTY}
+user_7-2                m@m.cn         M1234567890123456   ${EMPTY}
+user_7-3                m@m.cn         m1234567            ${EMPTY}
+user_8					${MMJ USER}    ${MMJ NEWPASSWD}    a
 
 *** Keywords ***
 

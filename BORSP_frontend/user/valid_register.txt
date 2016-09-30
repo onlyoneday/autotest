@@ -1,15 +1,13 @@
 *** Settings ***
 
-Documentation  A test suite with a single test for registering successfully. 
+Documentation   注册新用户、注销新用户
 Resource        ../common/resources.txt
 Suite Setup     Open Browser And Login Mmj
 Suite Teardown  Close All Browsers
 
-
 *** Test Cases ***
 
-Verify Create User
-
+user_2,3,13
     ${email name} =    Get Lower String
     ${email} =   Evaluate  '${email name}'+'@test.com'
     #注册新用户
