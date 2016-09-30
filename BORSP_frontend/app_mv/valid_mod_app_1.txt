@@ -12,7 +12,6 @@ app_m_4,22
     #创建应用
     Click And Wait  stackCreate
     ${app name} =   Input Simple App
-    Input Advanced App  1100
     #等待应用发布
     Click And Wait  stackFormCreate   
     #验证应用是否部署成功
@@ -24,9 +23,7 @@ app_m_4,22
     Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
     Click And Wait  stackListUpdate0
     #打开高级设置
-    Click And Wait  css=.fa-chevron-down
-    #更新CMD
-    Input Text      stackCMD      ${CMD TEXT} 
+    Input Advanced App  0001
     #等待应用更新
     Click And Wait  stackFormUpdate
     #验证应用是否部署成功
