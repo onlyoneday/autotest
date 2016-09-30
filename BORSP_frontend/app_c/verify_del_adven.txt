@@ -9,8 +9,8 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 
 app_c_08,13
-    #Go To Page   ${APP_CREATE URL}
-    #Delete Empty
+    Go To Page   ${APP_CREATE URL}
+    Delete Empty
 app_m_35
     Go To Page   ${APP_CREATE URL}
     Delete Run 
