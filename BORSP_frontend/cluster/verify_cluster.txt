@@ -1,16 +1,14 @@
 *** Settings ***
 
-Documentation   App test cases
+Documentation   验证集群信息
 Resource        ../common/resources.txt
 Suite Setup     Open Browser And Login Mmj
 Test Setup      Go To Page   ${NODE URL}
 Suite Teardown  Close Browser
 
-
 *** Test Cases ***
 
-Verify Cluster
-    
+cluster-2,4-5,10-11
 	#验证主机信息
     #集群角色和主机状态
 	${index} =      Get Matching Xpath Count   //*[@id="node-list"]/tbody/tr[*] 
@@ -34,7 +32,7 @@ Verify Cluster
     Page Should Contain   Slave
     #返回主机管理标签
     Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(1)
-    ${master ip} =  Get Text   xpath=//*[@id='node-list']/tbody/tr[1]/td[1]
+    ${master ip} =  Get Text   xpath=//*[@id='node-list']/tbody/tr[1]/td[2]
     #跳转到容器列表
     Click And Wait  xpath=//*[@id='node-list']/tbody/tr[1]/td[1]/a
     #验证header信息

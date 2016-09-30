@@ -8,21 +8,19 @@ Test Setup      Go To Page   ${RSTACK URL}
 Suite Teardown  Close Browser
 Library         DateTime
 
-
 *** Test Cases ***    template
 
 compose_9,12-16
-
     #新建编排
     Click And Wait  stack-create
     #新建编排
     ${name} =    Create Compose  rolex-json-2048
     #验证编排名称重复
-    #Go To Page      ${RSTACK URL}
-    #Click And Wait  stack-create
-    #Input Text      rolex-stackName   ${name}
-    #Click And Wait  rolex-json-create
-    #Page Should Contain   重复
+    Go To Page      ${RSTACK URL}
+    Click And Wait  stack-create
+    Input Text      rolex-stackName   ${name}
+    Click And Wait  rolex-json-create
+    #Page Should Contain
     #验证编排名称
     Go To Page   ${RSTACK URL}
     ${com name} =    Get Text    stack0-name
@@ -80,5 +78,4 @@ compose_9,12-16
     #删除编排
     Go To Page   ${RSTACK URL}
     Click And Wait   stack0-name
-    Click And Wait   delete-stack
-    Click And Wait   css=md-dialog > md-dialog-actions > button:nth-child(2)
+    Delete Compose

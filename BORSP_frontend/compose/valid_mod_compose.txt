@@ -7,24 +7,22 @@ Suite Setup     Open Browser And Login Mmj
 Test Setup      Go To Page   ${RSTACK URL}
 Suite Teardown  Close Browser
 
-
 *** Test Cases ***
 
-#修改任务数
 compose_10
-
     #新建编排
     Click And Wait  stack-create
     #新建编排
     Create Compose  rolex-json-2048
     #验证编排是否发布成功
     Reload Page
+    Sleep  3
     ${task1} =   Get Text        //*[@id='rolexStackServices']/tbody/tr[1]/td[2]
     ${run} =   Get Substring     ${task1}   0    1
     ${sum} =   Get Substring     ${task1}   2
     Should Be Equal As Strings   ${run}    ${sum}
     #修改任务数
-    Click Element   upServiceScale
+    Click Element   upServiceScale0
     Input Text      rolex-scale    2
     Click And Wait  rolex-confirm
     #验证编排是否扩展成功
@@ -32,5 +30,4 @@ compose_10
     ${sum} =     Get Substring   ${task1}   2
     Should Be Equal As Strings   ${sum}     2
     #删除编排
-    Click And Wait   delete-stack
-    Click And Wait   css=md-dialog > md-dialog-actions > button:nth-child(2)
+    Delete Compose
