@@ -1,0 +1,173 @@
+*** Settings ***
+
+Documentation   验证APP详细参数（Header、实例、配置、DEBUG）
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Suite Teardown  Close Browser
+Library         DateTime
+
+*** Test Cases ***
+
+app_m_5-7,9-11,15-21,23
+    #新建应用
+    Click And Wait  stackCreate
+    #切换到json模式
+    Click And Wait  css=md-tab-item:nth-child(2)
+    #试试看
+    Click And Wait  stackTrySee
+    Click And Wait  stackAdvancedModel
+    #切换到表单模式
+    Click And Wait  css=md-tab-item:nth-child(1)
+    #改名、输入高级设置
+    ${name} =       Generate Name
+    Input Text      stackAppName    ${name}
+    Input Advanced App      1100
+    #等待应用发布
+    Click And Wait  stackFormCreate
+    Sleep  ${SLEEP LONG TIME}
+
+    #验证信息是否正确
+    Click And Wait    xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
+    #应用名称
+    ${app name} =     Get Text  css=h2
+    Should Be Equal   ${app name}   ${name}
+    #验证Header
+    Verify Header
+    #验证实例
+    Verify Instance
+    #验证配置
+    Verify Config
+
+    #转到配置tab
+    Click And Wait    css=md-tab-item:nth-child(2)
+    #编辑按钮可用
+    Click And Wait    stackConfigEditFirst
+    #更新应用
+    Modify Parameter
+    #等待应用发布
+    Click And Wait    stackFormUpdate
+    Sleep  ${SLEEP LONG TIME}
+
+    #验证信息是否正确
+    Click And Wait    xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
+    #验证实例2
+    Verify Config 2
+    #验证Debug
+    Verify Debug
+
+    #删除该应用（避免垃圾数据）
+    Delete App From Detail
+
+*** Keywords ***
+
+Modify Parameter
+    #更改基本参数
+    Input Text        stackImageAddress   nginx:latestt
+    Click Element     forceImage
+    Click Element     stackHost
+    Input Text        stackCpus      0.2
+    Clear Element Text   stackMemory
+    Input Text        stackMemory    64
+    Input Text        stackInstanceNumber   2
+    #更改高级设置
+    Click Element     css=.fa-chevron-down
+    Sleep   ${SLEEP TIME}
+    #环境变量
+    Input Text        stackEnvsValue0     evm
+    #Docker参数
+    Input Text        stackDockerValue-0  mou
+    #健康检查
+    Input Text        stackMaxConsecutiveFailures-0  5
+
+Verify Header
+    #Header-更新时间
+    ${cur date} =     Get Current Date
+    ${app date} =     Get Text   css=dl:nth-child(2) > dd:nth-child(2)
+    ${cd} =   Get Substring   ${cur date}   0  13
+    ${ad} =   Get Substring   ${app date}   0  13
+    Should Be Equal As Strings   ${cd}   ${ad}
+    #Header-应用状态
+    ${app status} =   Get Text   css=dl:nth-child(2) > dd:nth-child(4)
+    Should Be Equal As Strings   ${app status}    Running
+    #Healthy
+    ${app healthy} =  Get Text   css=header > div.info.flex > dl:nth-child(3) > dd
+    Should Be Equal As Strings   ${app healthy}   1
+
+Verify Instance
+    #实例-实例数
+    ${index} =      Get Matching Xpath Count   //*[@id="stackInstanceList"]/tbody/tr[*] 
+    Should Be Equal As Strings   ${index}    1
+    #实例-链接可用
+    Click And Wait  xpath=//*[@id='stackInstanceList']/tbody/tr/td[2]/p[2]/span/a
+    Page Should Contain   Welcome to nginx!
+    Go Back
+    Sleep  ${SLEEP TIME}
+
+Verify Config
+    #转到配置tab
+    Click And Wait  css=md-tab-item:nth-child(2)
+    #CPU
+    ${cpu} =    Get Text   css=div.flex-75 > div > dl:nth-child(2) > dd
+    Should Be Equal As Strings   ${cpu}    0.1
+    #内存
+    ${mem} =    Get Text   css=div.flex-75 > div > dl:nth-child(3) > dd
+    Should Be Equal As Strings   ${mem}    32.00 MB
+    #实例个数
+    ${num} =    Get Text   css=div.flex-75 > div > dl:nth-child(4) > dd
+    Should Be Equal As Strings   ${num}    1
+    #CMD
+    ${cmd} =   Get Text    css=div.flex-75 > div > dl:nth-child(5) > dd
+    Should Be Equal As Strings   ${cmd}    Unspecified
+    #镜像
+    Page Should Contain    "image": "nginx:latest"
+    Page Should Contain    "forcePullImage": false
+    #网络模式
+    Page Should Contain    "network": "BRIDGE"
+    #环境变量
+    Page Should Contain    environment
+    #Docker参数
+    Page Should Contain    mmj
+    #健康检查
+    Page Should Contain    "maxConsecutiveFailures": 3
+
+Verify Config 2
+    #转到配置tab
+    Click And Wait  css=md-tab-item:nth-child(2)
+    #CPU
+    ${cpu} =    Get Text   css=div.flex-75 > div > dl:nth-child(2) > dd
+    Should Be Equal As Strings   ${cpu}    0.2
+    #内存
+    ${mem} =    Get Text   css=div.flex-75 > div > dl:nth-child(3) > dd
+    Should Be Equal As Strings   ${mem}    64.00 MB
+    #实例个数
+    ${num} =    Get Text   css=div.flex-75 > div > dl:nth-child(4) > dd
+    Should Be Equal As Strings   ${num}    2
+    #版本信息（原、新）
+    Click And Wait  stackConfigDetail0
+    #镜像
+    Page Should Contain    "image": "nginx:latest"
+    Page Should Contain    "forcePullImage": false
+    Page Should Contain    "image": "nginx:latestt"
+    Page Should Contain    "forcePullImage": true
+    #网络模式
+    Page Should Contain    "network": "BRIDGE"
+    Page Should Contain    "network": "HOST"
+    #环境变量
+    Page Should Contain    environment
+    Page Should Contain    evm
+    #Docker参数
+    Page Should Contain    mmj
+    Page Should Contain    mou
+    #健康检查
+    Page Should Contain    "maxConsecutiveFailures": 3
+    Page Should Contain    "maxConsecutiveFailures": 5
+
+
+Verify Debug
+    #Debug信息
+    Click And Wait  css=md-tab-item:nth-child(3)
+    Page Should Contain    Failed to run 'docker -H unix:///var/run/docker.sock pull nginx:latestt'
+
+
+

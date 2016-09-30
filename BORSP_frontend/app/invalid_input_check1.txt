@@ -1,6 +1,6 @@
 *** Settings ***
 
-Documentation   App test cases
+Documentation   异常输入-基本参数
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
@@ -23,7 +23,6 @@ app_c_17-2           stackInstanceNumber    ${EMPTY}    i
 *** Keywords ***
 
 Input Check1  [Arguments]  ${input}   ${text}   ${active}
-    
     #输入最简参数
     Input Simple App
     #输入异常内容

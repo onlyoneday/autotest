@@ -1,6 +1,6 @@
 *** Settings ***
 
-Documentation   App test cases
+Documentation   异常输入
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
@@ -22,7 +22,6 @@ app_c_20-2           stackPortIndex-0       Invalid
 *** Keywords ***
 
 Input Check2  [Arguments]  ${input}   ${text}
-    
     #输入最简参数
     Input Simple App
     #输入高级设置

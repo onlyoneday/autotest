@@ -1,0 +1,43 @@
+*** Settings ***
+
+Documentation   验证APP详细参数（日志）、CMD
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Suite Teardown  Close Browser
+Library         DateTime
+
+*** Test Cases ***
+
+app_m_12
+    #新建应用
+    Click And Wait  stackCreate
+    #输入最简参数
+    ${name} =   Input Simple App
+    #输入高级设置
+    Input Advanced App    0001
+    #等待应用发布
+    Click And Wait  stackFormCreate
+    #验证logs
+    Click And Wait  xpath=//*[@id="stackListApp"]/tbody/tr[1]/td[1]/a
+    Verify Log 
+    #删除该应用（避免垃圾数据）
+    Delete App From Detail
+
+*** Keywords ***
+
+Verify Log
+    Sleep  ${SLEEP LONG TIME}
+    #转到配置tab
+    Click And Wait  css=md-tab-item:nth-child(2)
+    ${cmd} =   Get Text   css=div.flex-75 > div > dl:nth-child(5) > dd
+    Should Be Equal As Strings   ${cmd}   ${CMD TEXT} 
+    #转到日志tab
+    Click Element   css=md-tab-item:nth-child(4)
+    Wait Until Page Contains     BORSP
+    ${logrow0} =    Get Matching Xpath Count  //*[@id='appLog']/ul/li[*]
+    Should Be Equal As Strings   ${logrow0}   10
+    Sleep   10
+    ${logrow1} =    Get Matching Xpath Count  //*[@id='appLog']/ul/li[*]
+    Should Be Equal As Strings   ${logrow1}   11
+

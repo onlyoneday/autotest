@@ -1,6 +1,6 @@
 *** Settings ***
 
-Documentation   App test cases
+Documentation   新建json-取消
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
@@ -10,7 +10,6 @@ Suite Teardown  Close Browser
 *** Test Cases ***
 
 app_c_32
-    
     #新建应用
     Click And Wait  stackCreate
     #输入最简参数
