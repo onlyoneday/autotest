@@ -22,6 +22,7 @@ app_m_5,8
     #跳转到详情页面
     Click And Wait    xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
     #KILL
+    Click And Wait    stackInstanceRefresh
     Click Element     stackSelectInstance0
     Click And Wait    stackInstanceKilTack
     Click And Wait    css=.md-dialog-container.ng-scope > md-dialog > md-dialog-actions > button:nth-child(2)
