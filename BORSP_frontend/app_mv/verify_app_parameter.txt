@@ -161,7 +161,6 @@ Verify Config 2
     Page Should Contain    "maxConsecutiveFailures": 3
     Page Should Contain    "maxConsecutiveFailures": 5
 
-
 Verify Debug
     #Debug信息
     Click And Wait  css=md-tab-item:nth-child(3)
