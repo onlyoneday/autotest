@@ -2,27 +2,40 @@
 
 Documentation   左侧菜单可用（login_out_9）
 Resource        ../common/resources.txt
-Suite Setup     Open Browser And Login Mmj
+Suite Setup     Open Browser And Login Adm
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***
+
+Befor Test
+    Click Element  select_value_label_0
+    Click Element  select_option_8
+
+Verify Cluster Button
+    Click Link    index-to-cluster
+    Page Should Contain   集群列表
 
 Verify App Button
     Click Link    index-to-stack
     Page Should Contain   我的应用
 
-Verify NODE Button
+Verify Node Button
     Click Link    index-to-node
     Page Should Contain   集群信息
 
-Verify RSTACK Button
+Verify Rstack Button
     Click Link    index-to-rolexStack
     Page Should Contain   应用编排
 
-Verify USER Button
+Verify User Button
     Click Button  open-user-menu
     Click Link    index-to-user-list
     Page Should Contain   用户中心
+
+Verify User_manage Button
+    Click Button  open-user-menu
+    Click Link    index-to-user-manage
+    Page Should Contain   用户管理
 
 
 

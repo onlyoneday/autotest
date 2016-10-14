@@ -21,9 +21,9 @@ user_6                  whatever             ${VALID PASSWD}     ${no record}
 
 Invalid Login
     [Arguments]  ${username}  ${password}  ${info}
-    Input Username   ${username}
-    Input Password   ${password}
-    Submit Credentials
+    Input Text   ${USERNAME FIELD}   ${username}
+    Input Text   ${PASSWORD FIELD}   ${password}
+    Click Button     ${LOGIN BTN}
     Page Should Contain  ${info}
     Location Should Be   ${LOGIN URL}
 

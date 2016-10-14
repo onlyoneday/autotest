@@ -1,0 +1,36 @@
+*** Settings ***
+
+Documentation   用户中心-查看个人信息
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Test Setup      Open Browser To Login Page
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+#组管理员-查看个人信息
+G-006
+	Login Gm
+	Go To   ${USER_ME URL}
+	Verify User  groupmanager  groupmanager  gm@gm.com  test group manager  test  组管理员
+	
+#普通用户-查看个人信息
+G-008
+	Login Mmj
+	Go To   ${USER_ME URL}
+	Verify User  mmj  mmj  m@m.com  test user  test  组成员
+
+*** Keywords ***
+Verify User
+	[Arguments]   	${username}  ${name}  ${email}  ${description}  ${group}  ${role}
+	${t uname} =    Get Text   table-td-userid-value
+	${t name} =     Get Text   table-td-username-value
+	${t email} =    Get Text   table-td-email-value
+	${t descp} =    Get Text   table-td-description-value
+	${t group} =    Get Text   table-td-groups-value
+	Should Be Equal As Strings   ${t uname}     ${username}
+	Should Be Equal As Strings   ${t name}      ${name}
+	Should Be Equal As Strings   ${t email}     ${email}
+	Should Be Equal As Strings   ${t descp}     ${description}
+	Should Contain  ${t group}   ${group}
+	Should Contain  ${t group}   ${role}
+	
