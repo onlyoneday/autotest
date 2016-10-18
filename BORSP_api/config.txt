@@ -1,0 +1,20 @@
+| *** Settings *** |
+| Library        | random |
+
+| *** Variables *** |
+| ${SERVER}      | http://192.168.1.155:9999 |
+| ${domain}      | shurenyun |
+| ${adminname}   | zhfang |
+| ${adminpasswd} | Fzh12345 |
+
+| *** Keywords *** |
+| Get Randomstring |
+|    | ${Random} = | Generate Random String | 6 |
+|    | ${randomstring} = | Convert To Lowercase | ${Random} |
+|    | [Return] | ${randomstring} |
+
+| Test Login |
+|    | [Arguments] | ${USERNAME} | ${PASSWORD} |
+|    | ${data} = | Set Variable | {"userName":"${USERNAME}","password":"${PASSWORD}"} |
+|    | ${resp}= | Post Request | shurenyun | /v1/login | data=${data} |
+|    | [Return] | ${resp.status_code} |
