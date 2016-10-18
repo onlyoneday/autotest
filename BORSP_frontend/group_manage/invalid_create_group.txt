@@ -2,7 +2,7 @@
 
 Documentation   用户组管理-超级管理员-创建用户组-异常
 Resource        ../common/resources.txt
-Resource        ../common/user_resources.txt
+Resource        ../common/group_resources.txt
 Suite Setup     Open Browser And Login Adm
 Test Setup      Go To Page   ${USER_MANG URL}
 Suite Teardown  Close All Browsers

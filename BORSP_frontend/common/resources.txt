@@ -46,6 +46,12 @@ ${TEST EML}              UserForEditing@u.com
 ${TEST GRP}              GroupForEditing
 ${SUPER}                 SuperGroup
 
+#--------------------DBID--------------------
+${MMJ DBID}              122
+${GM DBID}               123
+${TESTG DBID}            44
+${TESTINGG DBID}         12
+
 #--------------------STRING------------------
 ${CMD TEXT}              while [ true ]; do echo BORSP; sleep 10; done
 

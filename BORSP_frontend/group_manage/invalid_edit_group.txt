@@ -2,7 +2,7 @@
 
 Documentation   用户组管理-超级管理员-编辑用户组-异常
 Resource        ../common/resources.txt
-Resource        ../common/user_resources.txt
+Resource        ../common/group_resources.txt
 Suite Setup     Open Browser And Login Adm
 Test Setup      Go To Page   ${USER_MANG URL}
 Suite Teardown  Close All Browsers
@@ -11,35 +11,35 @@ Suite Teardown  Close All Browsers
 
 #测试前准备
 Creat Test Group For Edition
-	Input Group     ${TEST GRP}   ${EMPTY}
-	Click Element   submit-create-user
+	Input Group    ${TEST GRP}   ${EMPTY}
+	Click Element  submit-create-user
 
 #必填项不填
 G-069
-	Edit Group     ${TEST GRP}
-	Update Group   g    ${EMPTY}
+	Edit Group           ${TEST GRP}
+	Edit Group Info      g    ${EMPTY}
 	Clear Element text   input-username
-	Result Web     ${gname css}    ${message1} 
+	Result Web           ${gname css}    ${message1} 
 	Element Should Be Disabled      ${button} 
 
 #输入项上边外侧界(用户名)
 G-070
-	Edit Group     ${TEST GRP}
-	Update Group   ${STR 256}      ${EMPTY}
-	Result Web     p:nth-child(3) > small    ${message0} 
+	Edit Group           ${TEST GRP}
+	Edit Group Info      ${STR 256}      ${EMPTY}
+	Result Web           p:nth-child(3) > small    ${message0} 
 	Element Should Be Disabled      ${button} 
 
 #输入项上边外侧界(用户描述)
 G-070-2
-	Edit Group     ${TEST GRP}
-	Update Group   g    ${STR 256}
-	Result Api     ${button}   ${message2} 
+	Edit Group           ${TEST GRP}
+	Edit Group Info      g    ${STR 256}
+	Result Api           ${button}   ${message2} 
 
 #输入项不符合规范(重复)
 G-072
-	Edit Group     ${TEST GRP}
-	Update Group   ${SUPER}     ${EMPTY}
-	Result Api     ${button}    ${message3} 
+	Edit Group           ${TEST GRP}
+	Edit Group Info      ${SUPER}     ${EMPTY}
+	Result Api           ${button}    ${message3} 
 
 #删除组
 Delete Test Group After Edition

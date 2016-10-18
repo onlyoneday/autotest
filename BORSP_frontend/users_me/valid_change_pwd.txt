@@ -30,3 +30,10 @@ G-007
 	Go To   ${USER_PWD URL}
 	Input Password  ${STR 8}    ${MMJ PASSWD}    ${MMJ PASSWD}
 	Click Element   submit-update-password
+
+*** Keywords ***	
+Input Password
+    [Arguments]   	${oldpassword}  ${newpassword}  ${repassword}
+	Input Text		oldPassword	    ${oldpassword}
+	Input Text		newPassword     ${newpassword}
+	Input Text		newPasswordCompare    ${repassword}

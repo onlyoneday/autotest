@@ -19,7 +19,6 @@ G-033
 	Result Web     div:nth-child(2) > div.layout-column.flex-60 > p:nth-child(2) > small     ${message1}
 	Element Should Be Disabled   css=md-dialog-actions > button:nth-child(3)
 
-
 #输入项上、下边外侧界
 G-035
 	Edit User Password     mmj

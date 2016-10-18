@@ -30,7 +30,7 @@ G-045/053
 G-046/054
 	#创建组无应用普通用户
 	Create User      ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group    44   member
+	Select User Group    ${TESTG DBID}   member
 	Click Element    submit-create-user
 	#禁用/启用
 	Disable Enable   ${TEST ID}
@@ -43,7 +43,7 @@ G-046/054
 G-048/056
 	#创建组管理员
 	Create User      ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group    44   owner
+	Select User Group    ${TESTG DBID}   owner
 	Click Element    submit-create-user
 	#禁用/启用
 	Disable Enable   ${TEST ID}
@@ -83,5 +83,4 @@ Disable Enable
 	Logout
 
 *** Variables ***
-
-${no record}    record not found
+${no record}         record not found

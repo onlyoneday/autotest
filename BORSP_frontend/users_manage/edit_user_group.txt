@@ -17,16 +17,16 @@ Create Test User For Edition
 #相同组的组管理员和组成员
 G-023
 	Edit User Group    ${TEST ID}
-	Update User Group  testing   member
+	Add User Group  testing   member
 	Click Element      css=ng-form > div > button
-	Update User Group  ${SUPER}   ${EMPTY}
+	Add User Group     ${SUPER}   ${EMPTY}
 	Click Element      css=ng-form > div > button
 	Click Element      css=md-dialog-actions > button
 
 #不同组 
 G-023-2
 	Edit User Group    ${TEST ID}
-	Update User Group  testing   owner
+	Add User Group  testing   owner
 	Click Element      css=ng-form > div > button
 	Page Should Contain    不能添加重复的用户组
 

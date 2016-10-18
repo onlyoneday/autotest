@@ -1,0 +1,88 @@
+*** Settings ***
+
+Documentation  A resource file containing the specific keywords and variables for application
+Library        Selenium2Library
+Library        String
+Resource       ../common/resources.txt
+
+*** Keywords ***
+
+Input Group
+    [Arguments]   	${username}  ${description}
+    Click Element   stackCreate
+    Sleep           2
+	Input Text		input-username	 ${username}
+	Input Text		userDescription  ${description}
+
+Edit Group
+    [Arguments]   	${name}
+	${index} =      Get Group Index    ${name}
+	${menu} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	Click Element   ${menu}
+	${no} =         Evaluate    ${index}-1
+	${path} =       Evaluate   'edit-group'+'${no}'
+	Click Element   ${path}
+
+Edit Group Info
+	[Arguments]   	${username}  ${description}
+	Input Text		input-username	 ${username}
+	Input Text		userDescription  ${description}
+
+Manage Group 
+	[Arguments]   	${name}  ${tab}
+	${index} =      Get Group Index    ${name}
+	${menu} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
+	Click Element   ${menu}
+	Sleep           2
+	Run Keyword If  '${tab}' == '2'    Click Element    css=md-tab-item:nth-child(2) > span
+
+Add Group User
+	[Arguments]   	${user}  ${role}
+	Click Element   accountGroupCreate
+	Sleep           2
+	${upath} =      Evaluate  '//*[@value='+'"${user}"'+']'
+	${rpath} =  	Evaluate  '//*[@value='+'"${role}"'+']'
+	Click Element   update-select-group
+	Click Element   xpath=${upath}
+	Click Element   update-select-role
+	Click Element   xpath=${rpath}
+	Click Element   css=button:nth-child(3) > span
+	Sleep           2
+
+Delete Group User
+	[Arguments]   	${user}  
+	${index} =      Get Group User Index    ${user}
+	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[4]/button'
+	Click Element   ${path}
+	Click Element   css=md-dialog-actions > button:nth-child(2)
+	Sleep           2
+
+Delete Group
+	[Arguments]     ${name}
+	${index} =      Get Group Index    ${name}
+	${menu} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	Click Element   ${menu}
+	${no} =         Evaluate    ${index}-1
+	${path} =       Evaluate   'delete-group'+'${no}'
+	Click Element   ${path}
+	Click Element   css=md-dialog-actions > button:nth-child(2)
+	Sleep           2
+
+Get Group Index
+    [Arguments]     ${name}
+    ${row} =        Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
+    :FOR    ${index}   IN RANGE   ${row} 
+    \       ${index} =    Evaluate   ${index} + 1
+    \       ${path} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
+    \       ${group} =    Get Text   ${path}
+    \       Return From Keyword If   "${group}" == "${name}"   ${index}
+
+Get Group User Index
+    [Arguments]     ${name}
+    ${row} =        Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
+    :FOR    ${index}   IN RANGE   ${row} 
+    \       ${index} =    Evaluate   ${index} + 1
+    \       ${path} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[1]'
+    \       ${user} =    Get Text   ${path}
+    \       Return From Keyword If   "${user}" == "${name}"   ${index}
+

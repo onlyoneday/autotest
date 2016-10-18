@@ -12,8 +12,8 @@ Suite Teardown  Close All Browsers
 #相同组的组管理员和组成员
 G-015
 	Click Element  stackCreate
-	Select User Group    44   owner
-	Select User Group2   44   member
+	Select User Group    ${TESTG DBID}   owner
+	Select User Group2   ${TESTG DBID}   member
 	Result Web     ${group css}    ${message10} 
 
 #必填项不填

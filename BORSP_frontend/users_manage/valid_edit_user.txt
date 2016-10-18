@@ -12,8 +12,8 @@ Suite Teardown  Close All Browsers
 #用户管理-超级管理员-创建用户-属于多个组
 G-014
 	Create User     ${TEST ID}  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group     44    member
-	Select User Group2    12    member
+	Select User Group     ${TESTG DBID}     member
+	Select User Group2    ${TESTINGG DBID}  member
 	Click Element   submit-create-user
 
 #查看用户信息/修改用户信息
@@ -33,7 +33,6 @@ Delete Test User After Edition
 Result User
 	[Arguments]     ${username}    ${useremail}    ${userdscp}
 	#验证用户信息
-	Page Should Contain         更新成功
 	${usereml} =    Evaluate   '('+'${useremail}'+')'
 	${index} =      Get Matching Xpath Count   //*[@id='user-list-table']/tbody/tr[*]
 	${path12} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[1]/small'

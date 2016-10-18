@@ -1,17 +1,18 @@
 *** Settings ***
 
-Documentation   用户管理-其他用户的密码-正常
+Documentation   用户管理-修改其他用户的密码-正常
 Resource        ../common/resources.txt
 Resource        ../common/user_resources.txt
-Test Setup      Open Browser And Login Adm
+Suite Setup     Open Browser And Login Adm
 Test Setup      Go To Page   ${USER_MANU URL}
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***
+
 #测试前新建
 Creat Test User For Changing Password
-	Create User     ${TEST ID}  U  ${TEST EML}  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
-	Select User Group     44    member
+	Create User           ${TEST ID}  U  ${TEST EML}  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
+	Select User Group     ${TESTG DBID}    member
 	Click Element   submit-create-user
 
 #上边界值
@@ -19,23 +20,28 @@ G-030
 	Edit User Password    ${TEST ID}
 	Change User Password  ${STR 16}   ${STR 16}
 	Click Element   css=md-dialog-actions > button:nth-child(3) > span
+	Sleep    0.5
 	Page Should Contain   密码修改成功
 	Logout
 	Login    ${TEST ID}   ${STR 16} 
 	Location Should Be    ${HOME URL}
 	Logout
+	Login Adm
 
 #下边界值
 G-031
 	Edit User Password    ${TEST ID}
 	Change User Password  ${STR 8}   ${STR 8}
 	Click Element   css=md-dialog-actions > button:nth-child(3) > span
+	Sleep    0.5
 	Page Should Contain   密码修改成功
 	Logout
 	Login    ${TEST ID}   ${STR 8} 
 	Location Should Be    ${HOME URL}
 	Logout
+	Login Adm
 
 #删除无组用户
 Delete Test User For Changing Password
 	Delete User    ${TEST ID}
+

@@ -7,37 +7,6 @@ Resource       ../common/resources.txt
 
 *** Keywords ***
 
-Input Group
-    [Arguments]   	${username}  ${description}
-    Click Element   stackCreate
-	Input Text		input-username	 ${username}
-	Input Text		userDescription  ${description}
-
-Edit Group
-    [Arguments]   	${name}
-	${index} =      Get Group Index    ${name}
-	${menu} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
-	Click Element   ${menu}
-	${no} =         Evaluate    ${index}-1
-	${path} =       Evaluate   'edit-group'+'${no}'
-	Click Element   ${path}
-
-Update Group
-    [Arguments]   	${username}  ${description}
-    Input Text		input-username    ${username}
-	Input Text		userDescription   ${description}
-
-Delete Group
-	[Arguments]     ${name}
-	${index} =      Get Group Index    ${name}
-	${menu} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
-	Click Element   ${menu}
-	${no} =         Evaluate    ${index}-1
-	${path} =       Evaluate   'delete-group'+'${no}'
-	Click Element   ${path}
-	Click Element   css=md-dialog-actions > button:nth-child(2)
-	Sleep           5
-
 Create User
     [Arguments]   	${username}  ${name}  ${email}  ${password}  ${repassword}  ${description}  ${super}
     Click Element   stackCreate
@@ -55,7 +24,7 @@ Select User Group
 	Click Element   stackParametersAdd
 	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${group}"'+']'
 	${rpath} =  	Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${role}"'+']'
-	Click Element   xpath=//*[@id="groupForm0"]/md-input-container/md-select[@id="select-group"]
+	Click Element   select-group0
 	Click Element   xpath=${gpath}
 	Click Element   xpath=//*[@id="groupForm0"]/md-input-container/md-select[@id="select-role"]
 	Click Element   xpath=${rpath}
@@ -65,7 +34,7 @@ Select User Group2
 	Click Element   stackParametersAdd
 	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${group}"'+']'
 	${rpath} =  	Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${role}"'+']'
-	Click Element   xpath=//*[@id="groupForm1"]/md-input-container/md-select[@id="select-group"]
+	Click Element   select-group1
 	Click Element   xpath=${gpath}
 	Click Element   xpath=//*[@id="groupForm1"]/md-input-container/md-select[@id="select-role"]
 	Click Element   xpath=${rpath}
@@ -84,7 +53,7 @@ Edit User Group
 	Click Element   ${path}
 	Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item[2]/button
 
-Update User Group
+Add User Group
 	[Arguments]   	${group}  ${role}
 	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${group}"'+')]'
 	${rpath} =  	Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${role}"'+']'
@@ -112,25 +81,20 @@ Delete User
 	Click Element   ${path}
 	Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item[3]/button
 	Click Element   css=md-dialog-actions > button:nth-child(2)
-	Sleep           5
+	Sleep           2
 
 Disable User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
 	Click Element   ${path} 
+	Click Element   css=md-dialog-actions > button:nth-child(2)
 
 Enable User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
 	Click Element   ${path} 
-	
-Input Password
-    [Arguments]   	${oldpassword}  ${newpassword}  ${repassword}
-	Input Text		oldPassword	    ${oldpassword}
-	Input Text		newPassword     ${newpassword}
-	Input Text		newPasswordCompare    ${repassword}
 
 Get User Index
     [Arguments]     ${name}
@@ -141,12 +105,4 @@ Get User Index
     \       ${uname} =    Get Text   ${path}
     \       Return From Keyword If   "${uname}" == "${name}"   ${index}
 
-Get Group Index
-    [Arguments]     ${name}
-    ${row} =        Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
-    :FOR    ${index}   IN RANGE   ${row} 
-    \       ${index} =    Evaluate   ${index} + 1
-    \       ${path} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
-    \       ${group} =    Get Text   ${path}
-    \       Return From Keyword If   "${group}" == "${name}"   ${index}
 

@@ -1,0 +1,39 @@
+*** Settings ***
+
+Documentation   超级管理员
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Resource        ../common/group_resources.txt
+Suite Setup     Open Browser And Login Adm
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+#删除自己
+G-041
+	Go To Page     ${USER_MANU URL}
+	Delete User    ${VALID USER}
+	Page Should Contain   can't delete yourself account
+
+#禁用自己
+G-051
+	Go To Page     ${USER_MANU URL}
+	Disable User   ${VALID USER}
+	Sleep   0.5
+	Page Should Contain   can't disable yourself account
+
+#管理超级用户组
+G-079
+	#添加其他超级管理员
+	Go To Page     ${USER_MANG URL}
+	Manage Group    ${SUPER}  2
+	Add Group User  ${MMJ DBID}  superuser
+	Page Should Contain   ${MMJ USER} 
+	#删除其他超级管理员
+	Delete Group User     ${MMJ USER}
+
+#管理超级用户组-删除自己
+G-080
+	Go To Page     ${USER_MANG URL}
+	Manage Group    ${SUPER}  2
+	#Delete Group User     ${VALID USER}
+	#Page Should Contain   不能删除自己

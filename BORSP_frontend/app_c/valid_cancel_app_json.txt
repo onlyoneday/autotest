@@ -6,7 +6,6 @@ Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
 Suite Teardown  Close Browser
 
-
 *** Test Cases ***
 
 app_c_32

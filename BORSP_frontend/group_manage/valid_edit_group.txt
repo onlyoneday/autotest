@@ -2,7 +2,7 @@
 
 Documentation   用户组管理-超级管理员-编辑用户组-正常
 Resource        ../common/resources.txt
-Resource        ../common/user_resources.txt
+Resource        ../common/group_resources.txt
 Suite Setup     Open Browser And Login Adm
 Test Setup      Go To Page   ${USER_MANG URL}
 Suite Teardown  Close All Browsers
@@ -11,19 +11,15 @@ Suite Teardown  Close All Browsers
 
 #测试前准备
 Creat Test Group For Edition
-	Input Group     ${TEST GRP}   ${EMPTY}
-	Click Element   submit-create-user
+	Input Group       ${TEST GRP}   ${EMPTY}
+	Click Element     submit-create-user
 
 #修改用户组（修改组名、描述）
 G-068
-	Edit Group      ${TEST GRP}
-	Update Group    GroupForEditingName    GroupForEditingDescription
-	Click Element   submit-update-user
-	Result Group    GroupForEditingName    GroupForEditingDescription
-
-#删除无用户的组
-G-082
-	Delete Group    GroupForEditingName
+	Edit Group        ${TEST GRP}
+	Edit Group Info   GroupForEditingName  GroupForEditingDescription
+	Click Element     submit-update-user
+	Result Group      GroupForEditingName  GroupForEditingDescription
 
 *** Keywords ***
 Result Group
