@@ -17,12 +17,12 @@
 |    | ${resp}= | Post Request | shurenyun | /v1/login | data=${data} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | ${token}= | Evaluate | '${resp.json()['data']}' |
-|    | Set Global Variable | ${token} |
+|    | ${headers}= | Create Dictionary | Authorization=${token} |
+|    | Set Global Variable | ${headers} |
 
 | 用户组管理-超级管理员-创建用户组 |
 |    | [Tags] | 用户组管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${groupName}= | Get Randomstring |
 |    | ${CrarteGroup} = | Set Variable | {"name": "${groupName}" , "description": "cdscds"} |
 |    | ${resp}= | Post Request | ${domain} | /v1/groups | data=${CrarteGroup} | headers=${headers} |
@@ -34,7 +34,6 @@
 | 用户管理-超级管理员-创建用户 |
 |    | [Tags] | 用户管理 |
 |    | Create Session | shurenyun | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${username}= | Get Randomstring |
 |    | Set Global Variable | ${username} |
 |    | ${email}= | Evaluate | '${username}'+ '@dataman-inc.com' |
@@ -48,10 +47,10 @@
 |    | ${data} = | Set Variable | {"userName":"${username}","password":"admin1234"} |
 |    | ${resp}= | Post Request | shurenyun | /v1/login | data=${data} |
 |    | ${testtoken}= | Evaluate | '${resp.json()['data']}' |
-|    | Set Global Variable | ${testtoken} |
+|    | ${testheaders}= | Create Dictionary | Authorization=${testtoken} |
+|    | Set Global Variable | ${testheaders} |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${testtoken} |
-|    | ${resp}= | Get Request | ${domain} | /v1/aboutme | headers=${headers} |
+|    | ${resp}= | Get Request | ${domain} | /v1/aboutme | headers=${testheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | ${UserId}= | Evaluate | '${resp.json()['data']['id']}' |
 |    | Set Global Variable | ${UserId} |
@@ -59,7 +58,6 @@
 | 用户组管理-超级管理员-更新用户组 |
 |    | [Tags] | 用户组管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${groupName}= | Get Randomstring |
 |    | ${UpdateGroup} = | Set Variable | {"id":${GroupId},"name": "${groupName}" , "description": "cdscds"} |
 |    | ${resp}= | Put Request | ${domain} | /v1/groups | data=${UpdateGroup} | headers=${headers} |
@@ -68,14 +66,12 @@
 | 用户组管理-超级管理员-获取所有用户组 |
 |    | [Tags] | 用户组管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${resp}= | Get Request | ${domain} | /v1/groups | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户组管理-超级管理员-获取指定用户组 |
 |    | [Tags] | 用户组管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${path}= | Evaluate | '/v1/groups/'+str(${GroupId}) |
 |    | ${resp}= | GET Request | ${domain} | ${path} | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
@@ -83,7 +79,6 @@
 | 用户组管理-超级管理员-获取指定用户组的所有用户 |
 |    | [Tags] | 用户组管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${path}= | Evaluate | '/v1/groups/'+str(${GroupId})+'/accounts' |
 |    | ${resp}= | GET Request | ${domain} | ${path} | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
@@ -91,9 +86,8 @@
 | 用户管理-修改密码 |
 |    | [Tags] | 用户管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${testtoken} |
 |    | ${data} = | Set Variable | {"oldPassword":"admin1234","password":"admin12345"} |
-|    | ${resp}= | Put Request | ${domain} | /v1/password | data=${data} | headers=${headers} |
+|    | ${resp}= | Put Request | ${domain} | /v1/password | data=${data} | headers=${testheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | ${return.status_code}= | Test Login | ${username} | admin1234 |
 |    | Should Be Equal As Strings | ${return.status_code} | 400 |
@@ -103,7 +97,6 @@
 | 用户管理-超级管理员-更新用户 |
 |    | [Tags] | 用户管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${data} = | Set Variable | {"id":${UserId},"email":"test@admin.com","userName":"用户名填","name":"真实名"} |
 |    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId})+'/resetpassword' |
 |    | ${resp}= | Put Request | ${domain} | ${path} | data=${data} | headers=${headers} |
@@ -113,7 +106,6 @@
 | 用户管理-超级管理员-重置密码 |
 |    | [Tags] | 用户管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${data} = | Set Variable | {"password": "123"} |
 |    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId})+'/resetpassword' |
 |    | ${resp}= | Put Request | ${domain} | ${path} | data=${data} | headers=${headers} |
@@ -126,7 +118,6 @@
 | 用户管理-超级管理员-加入一个用户组 |
 |    | [Tags] | 用户组管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${groupName}= | Get Randomstring |
 |    | ${CrarteGroup} = | Set Variable | {"name": "${groupName}" , "description": "cdscds"} |
 |    | ${resp}= | Post Request | ${domain} | /v1/groups | data=${CrarteGroup} | headers=${headers} |
@@ -145,14 +136,12 @@
 | 用户管理-超级管理员-获取所有用户 |
 |    | [Tags] | 用户管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${resp}= | Get Request | ${domain} | /v1/accounts | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户管理-超级管理员-获取指定用户信息 |
 |    | [Tags] | 用组管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId}) |
 |    | ${resp}= | Get Request | ${domain} | ${path} | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
@@ -160,7 +149,6 @@
 | 用户管理-离开一个用户组 |
 |    | [Tags] | 用户组管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${testtoken} |
 |    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId})+'/groups/'+str(${GroupId}) |
 |    | ${resp}= | Delete Request | ${domain} | ${path} | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
@@ -168,7 +156,6 @@
 | 用户组管理-超级管理员-禁用一个用户 |
 |    | [Tags] | 用户管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId})+'/disable' |
 |    | ${resp}= | Put Request | ${domain} | ${path} | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
@@ -178,7 +165,6 @@
 | 用户组管理-超级管理员-删除用户 |
 |    | [Tags] | 用户管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId}) |
 |    | ${resp}= | Delete Request | ${domain} | ${path} | headers=${headers} |
 |    | Log | ${resp.json()} |
@@ -189,7 +175,6 @@
 | 用户组管理-超级管理员-删除用户组 |
 |    | [Tags] | 用户组管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${path}= | Evaluate | '/v1/groups/'+str(${GroupId}) |
 |    | ${resp}= | Delete Request | ${domain} | ${path} | headers=${headers} |
 |    | Log | ${resp.json()} |
@@ -198,6 +183,5 @@
 | 用户管理-登出 |
 |    | [Tags] | 用户管理 |
 |    | Create Session | shurenyun | ${SERVER} |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | ${resp}= | Post Request | shurenyun | /v1/logout | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
