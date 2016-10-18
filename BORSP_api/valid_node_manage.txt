@@ -1,0 +1,26 @@
+| *** Settings *** |
+| Suite Setup    | Get Token |
+| Suite Teardown | Delete All Sessions |
+| Library        | Collections |
+| Library        | String |
+| Library        | OperatingSystem |
+| Library        | RequestsLibrary |
+| Library        | Collections |
+| Library        | XML |
+| Library        | json |
+| Resource       | config.txt |
+
+| *** Test Cases *** |
+| 主机管理-获取集群主机列表 |
+|    | [Tags] | 主机管理 |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Get Request | shurenyun | /v1/nodes | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${nodeip}= | Evaluate | '${resp.json()['data']['masters'][0]['ip']}' |
+
+| 主机管理-获取集群监控信息 |
+|    | [Tags] | 主机管理 |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Get Request | shurenyun | /v1/metrics/snapshot | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | log | ${resp.json()} |
