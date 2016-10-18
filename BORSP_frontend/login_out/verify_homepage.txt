@@ -7,10 +7,6 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-Befor Test
-    Click Element  select_value_label_0
-    Click Element  select_option_8
-
 Verify Cluster Button
     Click Link    index-to-cluster
     Page Should Contain   集群列表

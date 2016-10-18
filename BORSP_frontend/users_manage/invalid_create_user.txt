@@ -1,0 +1,75 @@
+*** Settings ***
+
+Documentation   用户管理-超级管理员-创建用户-异常
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${USER_MANU URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#相同组的组管理员和组成员
+G-015
+	Click Element  stackCreate
+	Select User Group    44   owner
+	Select User Group2   44   member
+	Result Web     ${group css}    ${message10} 
+
+#必填项不填
+G-017
+	Create User    u  u  u  u  ${EMPTY}  ${EMPTY}    ${EMPTY}
+	Clear Element text    input-username
+	Clear Element text    input-name
+	Clear Element text    input-email
+	Clear Element text    input-password
+	Result Web     div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(2) > small    ${message1} 
+	Result Web     div:nth-child(2) > div.layout-column.flex-40 > p:nth-child(2) > small    ${message2} 
+	Result Web     div:nth-child(3) > div.layout-column.flex-40 > p:nth-child(2) > small    ${message3} 
+	Result Web     div:nth-child(4) > div > p:nth-child(3) > small      ${message4} 
+	Element Should Be Disabled     ${button}
+
+#输入项上边外侧界(用户名、姓名、邮箱、密码、确认密码、用户描述)
+G-018
+	Create User    ${STR 256}  ${STR 256}  ${EML 256}  ${STR 17}  ${STR 17}  ${STR 256}  ${EMPTY}
+	Result Web     div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(3) > small    ${message0} 
+	Result Web     div:nth-child(2) > div.layout-column.flex-40 > p:nth-child(3) > small    ${message0} 
+	Result Web     div:nth-child(3) > div.layout-column.flex-40 > p:nth-child(4) > small    ${message0} 
+	Result Web     div:nth-child(4) > div > p:nth-child(2) > span      ${message5} 
+	Element Should Be Disabled     ${button}
+
+#输入项下边外侧界(密码)
+G-019
+	Create User    u  u  ${MMJ USER}  ${STR 7}  ${STR 7}  ${EMPTY}  ${EMPTY}
+	Result Web     div:nth-child(4) > div > p:nth-child(2) > span      ${message5} 
+	Element Should Be Disabled     ${button}
+
+#输入项不符合格式规范(邮箱)
+G-020
+	#格式
+	Create User     u  u  m@m.m  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
+	Result Web      div:nth-child(3) > div.layout-column.flex-40 > p:nth-child(3) > small   ${message7} 
+	Element Should Be Disabled      ${button}
+	#重复用户名
+	Input Text		input-username  mmj
+	Input Text		input-email     m@m.cn
+	Result Api      ${button}       ${message9} 
+	#重复邮箱
+	Input Text		input-username  u
+	Input Text		input-email     m@m.com
+	Result Api      ${button}       ${message9} 
+
+*** Variables ***
+${group css}        div:nth-child(3) > p
+${message0}         最大长度255个字符
+${message1}         用户名不能为空
+${message2}         姓名不能为空
+${message3}         邮箱地址不能为空
+${message4}         密码不能为空
+${message5}         密码只能包含英文字母、数字、标点符号且必须包含大写字母，长度为8-16位。
+${message6}         两次输入密码不一致
+${message7}         邮箱格式不正确
+${message9}		    Error 1062
+${message10}	    选择的组重复
+${button}           submit-create-user
+

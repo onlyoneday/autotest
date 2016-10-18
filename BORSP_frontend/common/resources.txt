@@ -10,56 +10,61 @@ ${SERVER}                http://192.168.1.155:9999/ui
 ${BROWSER}               Firefox
 #${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
-${SLEEP TIME}            15
+${SLEEP TIME}            10
 ${SLEEP LONG TIME}       60
 
 #--------------------URL--------------------
 ${LOGIN URL}             ${SERVER}/auth/login
-${HOME URL}              ${SERVER}/app/list/my
+${HOME URL}              ${SERVER}/cluster/list
 ${APP_MY URL}            ${SERVER}/app/list/my
 ${APP_ALL URL}           ${SERVER}/app/list/all
 ${APP_CREATE URL}        ${SERVER}/app/create
 ${NODE URL}              ${SERVER}/node/list&clusterInfo
 ${RSTACK URL}            ${SERVER}/rolexStack/list
-${USER_U URL}            ${SERVER}/user/users
-${USER_U_CREATE URL}     ${SERVER}/users/create
-${USER_P URL}            ${SERVER}/user/password
-
+${USER_ME URL}           ${SERVER}/user/aboutme
+${USER_PWD URL}          ${SERVER}/user/password
+${USER_MANU URL}         ${SERVER}/user-manage/list/user
+${USER_MANG URL}         ${SERVER}/user-manage/list/group
 
 #--------------------LOCATION----------------
 ${LOGIN BTN}             login-btn-login
-${USERNAME FIELD}        //input[@name="Email"]
+${USERNAME FIELD}        //input[@name="userName"]
 ${PASSWORD FIELD}        //input[@name="Password"]
 
-#--------------------DATA--------------------
+#--------------------USER--------------------
 ${VALID USER}            admin@dataman-inc.com
 ${VALID PASSWD}          Dataman1234
 
-${MMJ USER}              m@m.com
+${MMJ USER}              mmj
 ${MMJ PASSWD}            M12345678
-${MMJ NEWPASSWD}         M1234567
 
+${GM USER}               groupmanager   
+${GM PASSWD}             M1234567
+
+${TEST ID}               UserForEditing
+${TEST EML}              UserForEditing@u.com
+${TEST GRP}              GroupForEditing
+${SUPER}                 SuperGroup
+
+#--------------------STRING------------------
 ${CMD TEXT}              while [ true ]; do echo BORSP; sleep 10; done
+
+${STR 7}                 M012345
+${STR 8}                 M0123456
+${STR 16}                M012345678901234
+${STR 17}                M0123456789012345
+
+${STR 255}               012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234
+${STR 256}               0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
+${EML 255}               0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789@d.cn
+${EML 256}               01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890@d.cn
 
 
 
 *** Keywords ***
-
 Open Browser To Login Page
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}  #ff_profile_dir=${FF_PROFILE}
-
-Input Username  [Arguments]  ${USERNAME}
-    Input Text  ${USERNAME FIELD}  ${USERNAME}
-
-Input Password  [Arguments]  ${PASSWORD}
-    Input Text  ${PASSWORD FIELD}  ${PASSWORD}
-
-Submit Credentials
-    Click Button  ${LOGIN BTN}
-
-Home Page Should Be Open
-    Location Should Be  ${HOME URL}
 
 Go To Page  [Arguments]  ${URL}
     Go To   ${URL}
@@ -68,19 +73,54 @@ Go To Page  [Arguments]  ${URL}
 Click And Wait  [Arguments]  ${ELEMENT}
     Click Element   ${ELEMENT}
     Sleep   ${SLEEP TIME} 
-    
-#--------------------
+
+Get Lower String
+    ${Random} =    Generate Random String    6
+    ${Name} =   Convert To Lowercase  ${Random}
+    [Return]    ${Name}
+
+Result Web
+    [Arguments]     ${css}  ${webmsg}
+    ${text} =       Get Text  css=${css}
+    Should Be Equal As Strings    ${text}   ${webmsg}
+
+Result Api
+    [Arguments]     ${loc}  ${apimsg}
+    Click Element   ${loc}
+    Page Should Contain     ${apimsg}
+
+#--------------------LOGIN------------------
+Open Browser And Login Adm
+    Open Browser To Login Page
+    Login Adm
+    Click Element   select_value_label_0
+    Click Element   xpath=//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'SuperGroup')]
+
+
+Open Browser And Login Gm
+    Open Browser To Login Page
+    Login Gm
+
 Open Browser And Login Mmj
     Open Browser To Login Page
     Login Mmj
 
+Login Adm
+    Login   ${VALID USER}   ${VALID PASSWD} 
+    Sleep   5
+
+Login Gm
+    Login   ${GM USER}   ${GM PASSWD} 
+    Sleep   5
+
 Login Mmj
     Login   ${MMJ USER}  ${MMJ PASSWD}
+    Sleep   5
 
 Login  [Arguments]   ${USER}   ${PASSWD}
-    Input Username   ${USER}
-    Input Password   ${PASSWD}
-    Submit Credentials
+    Input Text  ${USERNAME FIELD}   ${USER}
+    Input Text  ${PASSWORD FIELD}   ${PASSWD}
+    Click Button     ${LOGIN BTN}
     Sleep  ${SLEEP TIME}
 
 Logout
@@ -88,12 +128,7 @@ Logout
     Click Button  logout
     Sleep  ${SLEEP TIME} 
 
-Get Lower String
-    ${Random} =    Generate Random String    6    
-    ${Name} =   Convert To Lowercase  ${Random}
-    [Return]    ${Name}
     
-
 
 
 

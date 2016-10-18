@@ -8,7 +8,6 @@ Test Setup      Go To Page  ${APP_CREATE URL}
 Test Template   Input Check1
 Suite Teardown  Close Browser
 
-
 *** Test Cases ***   input                  text        active
 
 app_c_14             stackAppName           Invalid     a

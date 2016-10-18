@@ -1,0 +1,57 @@
+*** Settings ***
+
+Documentation   用户管理-超级管理员-编辑用户-异常
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${USER_MANU URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#必填项不填
+G-026
+	Edit User Info  mmj
+	Clear Element text    input-name
+	Clear Element text    input-email
+	Result Web      div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(2) > small    ${message2} 
+	Result Web      div:nth-child(2) > div.layout-column.flex-40 > p:nth-child(2) > small    ${message3} 
+	Element Should Be Disabled      ${button}
+
+#输入项上边外侧界(姓名、邮箱)
+G-027
+	Edit User Info  mmj
+	Input Text		input-name      ${STR 256}
+	Input Text		input-email     ${EML 256}
+	Result Web      div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(3) > small    ${message0} 
+	Result Web      div:nth-child(2) > div.layout-column.flex-40 > p:nth-child(4) > small    ${message0} 
+	Element Should Be Disabled      ${button}
+
+#输入项上边外侧界(用户描述)
+G-027-2
+	Edit User Info  mmj
+	Input Text		userDescription  ${STR 256}
+	Result Api      ${button}        ${message8} 
+
+#输入项不符合格式规范(邮箱)
+G-029
+	#格式
+	Edit User Info  mmj
+	Input Text		input-email     m@m.m
+	Result Web      div:nth-child(2) > div.layout-column.flex-40 > p:nth-child(3) > small    ${message7} 
+	Element Should Be Disabled      ${button}
+	#重复邮箱
+	Input Text		input-email     gm@gm.com
+	Result Api      ${button}       ${message9} 
+
+*** Variables ***
+${name css}         p:nth-child(2) > small 
+${email css}        p:nth-child(3) > small 
+${message0}         最大长度255个字符
+${message2}         姓名不能为空
+${message3}         邮箱地址不能为空
+${message7}         邮箱格式不正确
+${message8}		    Error 1406
+${message9}		    Error 1062
+${button}           submit-update-user
+

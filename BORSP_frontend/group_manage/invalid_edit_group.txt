@@ -1,0 +1,54 @@
+*** Settings ***
+
+Documentation   用户组管理-超级管理员-编辑用户组-异常
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${USER_MANG URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#测试前准备
+Creat Test Group For Edition
+	Input Group     ${TEST GRP}   ${EMPTY}
+	Click Element   submit-create-user
+
+#必填项不填
+G-069
+	Edit Group     ${TEST GRP}
+	Update Group   g    ${EMPTY}
+	Clear Element text   input-username
+	Result Web     ${gname css}    ${message1} 
+	Element Should Be Disabled      ${button} 
+
+#输入项上边外侧界(用户名)
+G-070
+	Edit Group     ${TEST GRP}
+	Update Group   ${STR 256}      ${EMPTY}
+	Result Web     p:nth-child(3) > small    ${message0} 
+	Element Should Be Disabled      ${button} 
+
+#输入项上边外侧界(用户描述)
+G-070-2
+	Edit Group     ${TEST GRP}
+	Update Group   g    ${STR 256}
+	Result Api     ${button}   ${message2} 
+
+#输入项不符合规范(重复)
+G-072
+	Edit Group     ${TEST GRP}
+	Update Group   ${SUPER}     ${EMPTY}
+	Result Api     ${button}    ${message3} 
+
+#删除组
+Delete Test Group After Edition
+	Delete Group   ${TEST GRP}
+
+*** Variables ***
+${gname css}       p:nth-child(2) > small 
+${message0}        最大长度255个字符
+${message1}        用户名不能为空
+${message2}		   Error 1406
+${message3}		   Error 1062
+${button}          submit-update-user

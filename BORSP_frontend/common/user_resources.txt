@@ -1,0 +1,152 @@
+*** Settings ***
+
+Documentation  A resource file containing the specific keywords and variables for application
+Library        Selenium2Library
+Library        String
+Resource       ../common/resources.txt
+
+*** Keywords ***
+
+Input Group
+    [Arguments]   	${username}  ${description}
+    Click Element   stackCreate
+	Input Text		input-username	 ${username}
+	Input Text		userDescription  ${description}
+
+Edit Group
+    [Arguments]   	${name}
+	${index} =      Get Group Index    ${name}
+	${menu} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	Click Element   ${menu}
+	${no} =         Evaluate    ${index}-1
+	${path} =       Evaluate   'edit-group'+'${no}'
+	Click Element   ${path}
+
+Update Group
+    [Arguments]   	${username}  ${description}
+    Input Text		input-username    ${username}
+	Input Text		userDescription   ${description}
+
+Delete Group
+	[Arguments]     ${name}
+	${index} =      Get Group Index    ${name}
+	${menu} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	Click Element   ${menu}
+	${no} =         Evaluate    ${index}-1
+	${path} =       Evaluate   'delete-group'+'${no}'
+	Click Element   ${path}
+	Click Element   css=md-dialog-actions > button:nth-child(2)
+	Sleep           5
+
+Create User
+    [Arguments]   	${username}  ${name}  ${email}  ${password}  ${repassword}  ${description}  ${super}
+    Click Element   stackCreate
+    Sleep           2
+	Input Text		input-username	 ${username}
+	Input Text		input-name       ${name}
+	Input Text		input-email      ${email}
+	Input Text		input-password      ${password}
+	Input Text		input-repassword    ${repassword}
+	Input Text		input-userDescription   ${description}
+	Run Keyword If  '${super}' == 'True'    Click Element   checkbox-suppermanager
+
+Select User Group
+	[Arguments]   	${group}  ${role}
+	Click Element   stackParametersAdd
+	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${group}"'+']'
+	${rpath} =  	Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${role}"'+']'
+	Click Element   xpath=//*[@id="groupForm0"]/md-input-container/md-select[@id="select-group"]
+	Click Element   xpath=${gpath}
+	Click Element   xpath=//*[@id="groupForm0"]/md-input-container/md-select[@id="select-role"]
+	Click Element   xpath=${rpath}
+
+Select User Group2
+	[Arguments]   	${group}  ${role}
+	Click Element   stackParametersAdd
+	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${group}"'+']'
+	${rpath} =  	Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${role}"'+']'
+	Click Element   xpath=//*[@id="groupForm1"]/md-input-container/md-select[@id="select-group"]
+	Click Element   xpath=${gpath}
+	Click Element   xpath=//*[@id="groupForm1"]/md-input-container/md-select[@id="select-role"]
+	Click Element   xpath=${rpath}
+
+Edit User Info
+	[Arguments]     ${name}
+	${index} =      Get User Index    ${name}
+	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	Click Element   ${path}
+	Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item/a
+
+Edit User Group
+	[Arguments]     ${name}
+	${index} =      Get User Index    ${name}
+	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	Click Element   ${path}
+	Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item[2]/button
+
+Update User Group
+	[Arguments]   	${group}  ${role}
+	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${group}"'+')]'
+	${rpath} =  	Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${role}"'+']'
+	Click Element   update-select-group
+	Click Element   xpath=${gpath}
+	Run Keyword If  '${group}' <> '${SUPER}'   Click Element   update-select-role
+	Run Keyword If  '${group}' <> '${SUPER}'   Click Element   xpath=${rpath}
+
+Edit User Password
+	[Arguments]     ${name}
+	${index} =      Get User Index    ${name}
+	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	Click Element   ${path}
+	Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item[4]/button
+
+Change User Password
+    [Arguments]   	${newpassword}  ${repassword}
+	Input Text		modals-new-password    ${newpassword}
+	Input Text		modals-again-password  ${repassword}
+
+Delete User
+	[Arguments]     ${name}
+	${index} =      Get User Index    ${name}
+	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	Click Element   ${path}
+	Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item[3]/button
+	Click Element   css=md-dialog-actions > button:nth-child(2)
+	Sleep           5
+
+Disable User
+	[Arguments]     ${name}
+	${index} =      Get User Index    ${name}
+	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
+	Click Element   ${path} 
+
+Enable User
+	[Arguments]     ${name}
+	${index} =      Get User Index    ${name}
+	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
+	Click Element   ${path} 
+	
+Input Password
+    [Arguments]   	${oldpassword}  ${newpassword}  ${repassword}
+	Input Text		oldPassword	    ${oldpassword}
+	Input Text		newPassword     ${newpassword}
+	Input Text		newPasswordCompare    ${repassword}
+
+Get User Index
+    [Arguments]     ${name}
+    ${row} =        Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
+    :FOR    ${index}   IN RANGE   ${row} 
+    \       ${index} =    Evaluate   ${index} + 1
+    \       ${path} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[1]/p'
+    \       ${uname} =    Get Text   ${path}
+    \       Return From Keyword If   "${uname}" == "${name}"   ${index}
+
+Get Group Index
+    [Arguments]     ${name}
+    ${row} =        Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
+    :FOR    ${index}   IN RANGE   ${row} 
+    \       ${index} =    Evaluate   ${index} + 1
+    \       ${path} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
+    \       ${group} =    Get Text   ${path}
+    \       Return From Keyword If   "${group}" == "${name}"   ${index}
+

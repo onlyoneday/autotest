@@ -1,0 +1,41 @@
+*** Settings ***
+
+Documentation   用户组管理-超级管理员-编辑用户组-正常
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${USER_MANG URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#测试前准备
+Creat Test Group For Edition
+	Input Group     ${TEST GRP}   ${EMPTY}
+	Click Element   submit-create-user
+
+#修改用户组（修改组名、描述）
+G-068
+	Edit Group      ${TEST GRP}
+	Update Group    GroupForEditingName    GroupForEditingDescription
+	Click Element   submit-update-user
+	Result Group    GroupForEditingName    GroupForEditingDescription
+
+#删除无用户的组
+G-082
+	Delete Group    GroupForEditingName
+
+*** Keywords ***
+Result Group
+	[Arguments]     ${groupname}    ${description}
+	#验证组
+	${index} =      Get Matching Xpath Count   //*[@id='user-list-table']/tbody/tr[*]
+	${path2} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
+	${path5} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[5]'
+	${name} =       Get Text    ${path2}
+	${dscp} =       Get Text    ${path5}
+	Should Be Equal As Strings  ${name}   ${groupname}
+	Should Be Equal As Strings  ${dscp}   ${description}
+	#删除组
+	Delete Group    ${groupname}
+
