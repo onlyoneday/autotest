@@ -6,6 +6,9 @@
 | ${domain}      | shurenyun |
 | ${adminname}   | zhfang |
 | ${adminpasswd} | Fzh12345 |
+| ${HOST}        | 192.168.1.155 |
+| ${USERNAME}    | root |
+| ${PASSWORD}    | dev |
 
 | *** Keywords *** |
 | Get Randomstring |
