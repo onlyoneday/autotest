@@ -1,0 +1,20 @@
+| *** Settings *** |
+| Suite Setup    | Get Token |
+| Suite Teardown | Delete All Sessions |
+| Library        | Collections |
+| Library        | String |
+| Library        | OperatingSystem |
+| Library        | RequestsLibrary |
+| Library        | Collections |
+| Library        | XML |
+| Library        | json |
+| Library        | SSHLibrary |
+| Resource       | config.txt |
+
+| *** Test Cases *** |
+| 应用管理-获取应用列表 |
+|    | [Tags] | 应用管理 |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Get Request | shurenyun | /v1/apps | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | Log | ${resp.text} |
