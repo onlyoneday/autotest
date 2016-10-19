@@ -1,0 +1,37 @@
+*** Settings ***
+
+Documentation   用户组管理-超级管理员-取消
+Resource        ../common/resources.txt
+Resource        ../common/group_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${USER_MANG URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#取消创建
+G-066
+	Input Group       Cancel   ${EMPTY}
+	Click Element     cancel-create-user
+	${index} =        Get Group Index     Cancel
+    Run Keyword If   '${index}' <> 'None'   Fail
+
+#取消修改
+G-081
+	Edit Group        test
+	Edit Group Info   Cancel   ${EMPTY}
+	Click Element     cancel-create-user
+	${index} =        Get Group Index     Cancel
+    Run Keyword If   '${index}' <> 'None'   Fail
+
+#取消删除
+G-088
+	${index} =        Get Group Index    test
+	${menu} =         Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	Click Element     ${menu}
+	${no} =           Evaluate    ${index}-1
+	${path} =         Evaluate   'delete-group'+'${no}'
+	Click Element     ${path}
+	Click Element     //*[@aria-label="是否确认删除该用户组?"]/md-dialog-actions/button[@aria-label="取消"]
+	${index} =        Get Group Index    test
+    Run Keyword If   '${index}' == 'None'   Fail

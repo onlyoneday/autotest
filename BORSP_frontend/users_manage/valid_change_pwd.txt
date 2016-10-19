@@ -31,7 +31,7 @@ G-030
 #下边界值
 G-031
 	Edit User Password    ${TEST ID}
-	Change User Password  ${STR 8}   ${STR 8}
+	Change User Password  ${STR 7}   ${STR 7}
 	Click Element   css=md-dialog-actions > button:nth-child(3) > span
 	Sleep    0.5
 	Page Should Contain   密码修改成功

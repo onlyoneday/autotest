@@ -72,7 +72,7 @@ Disable Enable
 	Logout
 	#不能登录
 	Login            ${name}  ${password}
-	Page Should Contain       ${no record}
+	Location Should Be        ${LOGIN URL}
 	#启用
 	Login Adm
 	Go To Page       ${USER_MANU URL}
@@ -81,6 +81,5 @@ Disable Enable
 	Logout
 	Login            ${name}  ${password}
 	Logout
+	Location Should Be        ${HOME URL}
 
-*** Variables ***
-${no record}         record not found

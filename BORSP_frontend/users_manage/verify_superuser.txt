@@ -8,18 +8,30 @@ Suite Setup     Open Browser And Login Adm
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***
-#删除自己
+
+#用户管理-删除自己
 G-041
 	Go To Page     ${USER_MANU URL}
 	Delete User    ${VALID USER}
 	Page Should Contain   can't delete yourself account
 
-#禁用自己
+#用户管理-禁用自己
 G-051
 	Go To Page     ${USER_MANU URL}
 	Disable User   ${VALID USER}
 	Sleep   0.5
 	Page Should Contain   can't disable yourself account
+
+#查看查看任意组成员列表
+G-067
+	Go To Page    ${USER_MANG URL}
+	${row} =      Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
+	:FOR    ${index}      IN RANGE    1  ${row}  5
+    \       ${path} =     Evaluate    '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
+    \       ${group} =    Get Text    ${path}
+	\		Manage Group  ${group}    2
+	\		Page Should Contain       成员名称
+	\		Go To Page    ${USER_MANG URL}
 
 #管理超级用户组
 G-079

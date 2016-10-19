@@ -83,6 +83,6 @@ Get Group User Index
     :FOR    ${index}   IN RANGE   ${row} 
     \       ${index} =    Evaluate   ${index} + 1
     \       ${path} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[1]'
-    \       ${user} =    Get Text   ${path}
+    \       ${user} =     Get Text   ${path}
     \       Return From Keyword If   "${user}" == "${name}"   ${index}
 

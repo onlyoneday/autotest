@@ -1,0 +1,58 @@
+*** Settings ***
+
+Documentation   用户组管理-超级管理员-取消
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${USER_MANU URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#取消创建
+G-016   
+    Create User     Cancel  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+    Click Element   cancel-create-user
+    ${index} =      Get User Index     Cancel
+    Run Keyword If  '${index}' <> 'None'    Fail
+
+#取消修改
+G-025 
+    Edit User Info  ${MMJ USER}
+    Input Text      input-name        Cancel
+    Click Element   cancel-create-user
+    ${index} =      Get User Index    ${MMJ USER}
+    ${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
+    ${name} =       Get Text    ${path}
+    Run Keyword If  '${name}' == 'Cancel'    Fail
+
+#取消删除
+G-042
+    ${index} =      Get User Index    ${MMJ USER}
+    ${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+    Click Element   ${path}
+    Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item[3]/button
+    Click Element   //*[@aria-label="是否确认删除该用户?"]/md-dialog-actions/button[@aria-label="取消"]
+    ${index} =      Get User Index    ${MMJ USER}
+    Run Keyword If  '${index}' == 'None'    Fail
+
+#取消修改密码
+G-032  
+    Edit User Password    ${MMJ USER}
+    Change User Password  ${STR 7}    ${STR 7}
+    Click Element   css=md-dialog-actions > button:nth-child(2)
+    Logout
+    Login   ${MMJ USER}   ${STR 7} 
+    Location Should Be    ${LOGIN URL}
+    Login Adm
+
+#取消禁用
+G-052
+    ${index} =      Get User Index    ${MMJ USER}
+    ${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
+    Click Element   ${path} 
+    Click Element   //*[@aria-label="是否确认禁止该用户?"]/md-dialog-actions/button[@aria-label="取消"]
+    Logout
+    Login Mmj
+    Location Should Be    ${HOME URL}
+
