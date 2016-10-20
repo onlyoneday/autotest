@@ -25,7 +25,7 @@ G-135
 #集群
 G-136
 	#表单模式
-	Create App        appmmj    clustermmj
+	Create App        appmmj    ${EMPTY}
     Element Should Be Disabled  stackFormCreate
     #JSON模式
     Click Element     css=md-tab-item:nth-child(2)

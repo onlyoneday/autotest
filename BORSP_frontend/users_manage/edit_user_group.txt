@@ -17,7 +17,7 @@ Create Test User For Edition
 #相同组的组管理员和组成员
 G-023
 	Edit User Group    ${TEST ID}
-	Add User Group  testing   member
+	Add User Group     testing   member
 	Click Element      css=ng-form > div > button
 	Add User Group     ${SUPER}   ${EMPTY}
 	Click Element      css=ng-form > div > button
@@ -26,7 +26,7 @@ G-023
 #不同组 
 G-023-2
 	Edit User Group    ${TEST ID}
-	Add User Group  testing   owner
+	Add User Group     testing   owner
 	Click Element      css=ng-form > div > button
 	Page Should Contain    不能添加重复的用户组
 

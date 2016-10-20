@@ -21,7 +21,7 @@ app_m_4,22
     ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
     Should Be Equal As Strings   ${status}   Running
     #更新应用
-    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
+    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[8]/md-menu/button
     Click And Wait  stackListUpdate0
     #打开高级设置
     Input Advanced App  0001

@@ -9,8 +9,7 @@ Resource       ../common/resources.txt
 
 Input Cluster
     [Arguments]   	${clustername}  ${group}  ${description}
-    Click Element   cluster-create
-    Sleep           2
+    Click And Wait  cluster-create
 	Input Text		input-clustername	 ${clustername}
 	Run Keyword If  '${group}' <> '${EMPTY}'    Select Cluster Group  ${group}
 	Input Text		clusterDesc          ${description}
@@ -18,13 +17,13 @@ Input Cluster
 Select Cluster Group
 	[Arguments]   	${group}
 	Click Element   select-userGroup
-	${path} =       Evaluate  '//*[@value='+'"${group}"'+']'
+	${path} =       Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${group}"'+')]'
 	Click Element   ${path}
 
-Delete Group
+Delete Cluster
 	[Arguments]     ${name}
 	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
-	Click Element   ${menu}
+	Click And Wait  ${link}
 	Click Element   delete-cluster
-	Click Element   css=md-dialog-actions > button:nth-child(2)
+	Click And Wait  css=md-dialog-actions > button:nth-child(2)
 

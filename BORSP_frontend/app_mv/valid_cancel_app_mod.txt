@@ -18,7 +18,7 @@ app_m_37
     Click And Wait  stackFormCreate
     ${time1} =   Get Text  xpath=//*[@id='stackListApp']/tbody/tr[1]/td[4]
     #更新应用
-    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[7]/md-menu/button
+    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[8]/md-menu/button
     Click And Wait  stackListUpdate0
     #更新CPU
     Input Text      stackCpus   0.3

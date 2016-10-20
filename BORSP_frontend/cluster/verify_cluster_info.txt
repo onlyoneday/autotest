@@ -20,11 +20,13 @@ cluster-2,4-5,10-11
 	\   ${role} =    Get Text   ${path3}
 	\	${status} =  Get Text   ${path4}
 	\	${mesos} =   Get Text   ${path6}
-	\   Run Keyword If   ${li} == 1   Should Be Equal As Strings   ${role}   master
-    \   ...              ELSE         Should Be Equal As Strings   ${role}   slave
-    \   Run Keyword If   ${li} == 1   Should Be Equal As Strings   ${status}   leader
-    \   ...              ELSE         Should Be Equal As Strings   ${status}   active
-	\   Should Be Equal As Strings    ${mesos}   1.0.1
+    \   ${rolelist} =    Evaluate  'master'+'slave'
+    \   ${statuslist} =  Evaluate  'leader'+'active'
+    \   ${mesoslist} =   Evaluate  '1.0.1'+'0.28.2'
+    \   Should Contain   ${rolelist}    ${role}
+    \   Should Contain   ${statuslist}  ${status}
+    \   Should Contain   ${mesoslist}   ${mesos}
+
 	#验证集群状态信息
     Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(2)
     Page Should Contain   资源

@@ -44,14 +44,14 @@ Edit User Info
 	${index} =      Get User Index    ${name}
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
 	Click Element   ${path}
-	Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item/a
+	Click And Wait  //*[@aria-hidden='false']/md-menu-content/md-menu-item/a
 
 Edit User Group
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
 	Click Element   ${path}
-	Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item[2]/button
+	Click And Wait  //*[@aria-hidden='false']/md-menu-content/md-menu-item[2]/button
 
 Add User Group
 	[Arguments]   	${group}  ${role}
@@ -67,7 +67,7 @@ Edit User Password
 	${index} =      Get User Index    ${name}
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
 	Click Element   ${path}
-	Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item[4]/button
+	Click And Wait  //*[@aria-hidden='false']/md-menu-content/md-menu-item[4]/button
 
 Change User Password
     [Arguments]   	${newpassword}  ${repassword}
@@ -80,29 +80,28 @@ Delete User
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
 	Click Element   ${path}
 	Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item[3]/button
-	Click Element   css=md-dialog-actions > button:nth-child(2)
-	Sleep           2
+	Click And Wait  css=md-dialog-actions > button:nth-child(2)
 
 Disable User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button[1]'
 	Click Element   ${path} 
-	Click Element   css=md-dialog-actions > button:nth-child(2)
+	Click And Wait  css=md-dialog-actions > button:nth-child(2)
 
 Enable User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button[2]'
-	Click Element   ${path} 
+	Click And Wait  ${path} 
 
 Get User Index
     [Arguments]     ${name}
     ${row} =        Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
-    :FOR    ${index}   IN RANGE   ${row} 
-    \       ${index} =    Evaluate   ${index} + 1
-    \       ${path} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[1]/p'
+    :FOR    ${index}   IN RANGE   ${row}
+    \       ${li} =    Evaluate   ${row}-${index}
+    \       ${path} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${li}'+']/td[1]/p'
     \       ${uname} =    Get Text   ${path}
-    \       Return From Keyword If   "${uname}" == "${name}"   ${index}
+    \       Return From Keyword If   "${uname}" == "${name}"   ${li}
 
 

@@ -3,6 +3,8 @@
 Documentation   用户组管理-超级管理员-管理用户组
 Resource        ../common/resources.txt
 Resource        ../common/group_resources.txt
+Resource        ../common/cluster_resources.txt
+Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Adm
 Test Setup      Go To Page   ${USER_MANG URL}
 Suite Teardown  Close All Browsers
@@ -37,15 +39,29 @@ G-074/75
 #删除有用户的用户组
 G-083
 	Delete Group    ${TEST GRP}
-	Page Should Contain   there are users in group
+	Page Should Contain    there are users in group
+	
+Creat Test App For Edition
+	Go To Page       ${HOME URL} 
+	Input Cluster    ${TEST CLU}  ${TEST GRP}  ${TEST CLU}
+	Click And Wait   submit-create-cluster
+	Logout
+	Login Mmj
+	Click Element    select_value_label_0
+    Click Element    xpath=//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'GroupForEditing')]
+	Go To Page       ${APP_CREATE URL} 
+	Create App       ${TEST APP}  ${TEST CLU}
+	Click And Wait   stackFormCreate
+	Logout
+	Login Adm
 
-#删除无应用的组成员
-G-076
+#删除无应用/有应用的组成员
+G-076/077
 	Manage Group    ${TEST GRP}  2
 	Delete Group User    ${MMJ USER} 
 	Delete Group User    ${GM USER}
 
-#删除无应用的组管理
+#删除所有的组管理员
 G-078
 	Manage Group    ${TEST ID}   2
 	Delete Group User    ${MMJ USER} 
@@ -55,3 +71,17 @@ G-078
 G-082
 	Delete Group    ${TEST GRP}
 	Delete Group    ${TEST ID}
+
+#删除没有主机有应用的集群
+G-103
+	#Go To Page      ${HOME URL}
+	#Delete Cluster  ${TEST CLU}
+	#Page Should Contain
+
+#删除应用
+Delete Test App For Edition
+	Go To Page      ${APP_ALL URL}
+	Delete App By Name  ${TEST APP}
+	Go To Page      ${HOME URL}
+	Delete Cluster  ${TEST CLU} 
+

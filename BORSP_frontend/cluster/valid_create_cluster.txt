@@ -11,15 +11,15 @@ Suite Teardown  Close All Browsers
 
 #填写用户组/信息填写上边界值
 G-089/091
-	Input Cluster    c  ${TESTG DBID}  c
+	Input Cluster    c  test  c
 	Click And Wait   submit-create-cluster
-	Result Group	 c  ${TESTG DBID}  c
+	Result Group	 c  test  c
 
 #信息填写下边界值/删除无主机无应用集群
-G-092/
-	Input Cluster    ${STR 255}  ${TESTG DBID}  ${STR 255}
+G-092
+	Input Cluster    ${STR 255}  test  ${STR 255}
 	Click And Wait   submit-create-cluster
-	Result Group	 ${STR 255}  ${TESTG DBID}  ${STR 255}
+	Result Group	 ${STR 255}  test  ${STR 255}
 
 *** Keywords ***
 
