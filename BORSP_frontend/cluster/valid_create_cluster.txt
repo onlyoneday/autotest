@@ -1,0 +1,35 @@
+*** Settings ***
+
+Documentation   集群管理-超级管理员-创建集群-异常
+Resource        ../common/resources.txt
+Resource        ../common/cluster_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${HOME URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#填写用户组/信息填写上边界值
+G-089/091
+	Input Cluster    c  ${TESTG DBID}  c
+	Click And Wait   submit-create-cluster
+	Result Group	 c  ${TESTG DBID}  c
+
+#信息填写下边界值/删除无主机无应用集群
+G-092/
+	Input Cluster    ${STR 255}  ${TESTG DBID}  ${STR 255}
+	Click And Wait   submit-create-cluster
+	Result Group	 ${STR 255}  ${TESTG DBID}  ${STR 255}
+
+*** Keywords ***
+
+Result Group
+	[Arguments]     ${name}    ${group}    ${description}
+	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
+	Click And Wait  ${link}
+	${cdscp} =      Get Text    css=div.info.flex > dl:nth-child(3) > dd
+	Should Be Equal As Strings  ${cdscp}   ${description}  
+	#删除
+	Click Element   delete-cluster
+	Click And Wait  css=md-dialog-actions > button:nth-child(2)
+	

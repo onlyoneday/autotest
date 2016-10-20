@@ -1,0 +1,23 @@
+*** Settings ***
+
+Documentation   用户组管理-超级管理员-取消
+Resource        ../common/resources.txt
+Resource        ../common/cluster_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${HOME URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#取消创建
+G-097
+	Input Cluster     Cancel  ${TESTG DBID}  Cancel
+	Click Element     cancel-create-cluster
+	Page Should Not Contain   Cancel
+
+#取消删除
+G-106
+	Click And Wait  //section/header/h3/a[text()="clustermmj"]
+	Click Element   delete-cluster
+	Click And Wait  //md-dialog-actions/button[@aria-label="取消"]
+	Page Should Contain    clustermmj

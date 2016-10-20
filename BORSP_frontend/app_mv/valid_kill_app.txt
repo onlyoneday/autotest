@@ -4,6 +4,7 @@ Documentation   Kill和Kill&Scale按钮
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${APP_MY URL}
 Suite Teardown  Close Browser
 Library         DateTime
 

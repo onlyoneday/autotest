@@ -4,6 +4,7 @@ Documentation   应用详情-右上方停止、扩展、删除、更新可用
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${APP_MY URL}
 Suite Teardown  Close Browser
 
 *** Test Cases ***

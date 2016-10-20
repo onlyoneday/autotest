@@ -1,0 +1,30 @@
+*** Settings ***
+
+Documentation  A resource file containing the specific keywords and variables for application
+Library        Selenium2Library
+Library        String
+Resource       ../common/resources.txt
+
+*** Keywords ***
+
+Input Cluster
+    [Arguments]   	${clustername}  ${group}  ${description}
+    Click Element   cluster-create
+    Sleep           2
+	Input Text		input-clustername	 ${clustername}
+	Run Keyword If  '${group}' <> '${EMPTY}'    Select Cluster Group  ${group}
+	Input Text		clusterDesc          ${description}
+
+Select Cluster Group
+	[Arguments]   	${group}
+	Click Element   select-userGroup
+	${path} =       Evaluate  '//*[@value='+'"${group}"'+']'
+	Click Element   ${path}
+
+Delete Group
+	[Arguments]     ${name}
+	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
+	Click Element   ${menu}
+	Click Element   delete-cluster
+	Click Element   css=md-dialog-actions > button:nth-child(2)
+

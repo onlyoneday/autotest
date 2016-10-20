@@ -2,7 +2,7 @@
 
 Documentation   验证集群信息
 Resource        ../common/resources.txt
-Suite Setup     Open Browser And Login Mmj
+Suite Setup     Open Browser And Login Adm
 Test Setup      Go To Page   ${NODE URL}
 Suite Teardown  Close Browser
 

@@ -19,6 +19,18 @@ Delete App From Detail
     Click And Wait  stackDetailDelete
     Click And Wait  css=button:nth-child(2)>span.ng-binding
 
+Create App
+    [Arguments]     ${name}    ${cluster}
+    #填写应用名称
+    Input Text      stackAppName    ${name}
+    #填写镜像名称
+    Input Text      stackImageAddress    blackicebird/2048:latest
+    #选择集群
+    Click Element   //*[@name="staticForm"]/div/div/div/md-select
+    ${path} =       Evaluate   '//*[@value='+'"${cluster}"'+']'
+    Click Element   ${path}
+    #填写容器个数
+    Input Text      stackInstanceNumber  1
 
 Input Simple App
     #填写应用名称
@@ -26,6 +38,9 @@ Input Simple App
     Input Text     stackAppName    ${app name}
     #填写镜像名称
     Input Text     stackImageAddress    blackicebird/2048:latest
+    #选择集群
+    Click Element  //*[@name="staticForm"]/div/div/div/md-select
+    Click Element  //*[@value="clustermmj"]
     #填写容器规格
     Input Text     stackCpus    0.2
     Clear Element Text  stackMemory
@@ -34,14 +49,13 @@ Input Simple App
     Input Text     stackInstanceNumber   1
     [Return]       ${app name}
 
-
 Generate Name
     ${random} =    Get Lower String
     ${app name} =  Evaluate  'application'+'${random}'
     [Return]       ${app name}
 
-
-Input Advanced App  [Arguments]   ${EDHC}
+Input Advanced App  
+    [Arguments]   ${EDHC}
     Click Element  css=.fa-chevron-down
     Sleep   ${SLEEP TIME}
 

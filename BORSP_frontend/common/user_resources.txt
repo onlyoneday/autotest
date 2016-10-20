@@ -86,14 +86,14 @@ Delete User
 Disable User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
-	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
+	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button[1]'
 	Click Element   ${path} 
 	Click Element   css=md-dialog-actions > button:nth-child(2)
 
 Enable User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
-	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
+	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button[2]'
 	Click Element   ${path} 
 
 Get User Index

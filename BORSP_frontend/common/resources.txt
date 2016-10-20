@@ -44,6 +44,7 @@ ${GM PASSWD}             M1234567
 ${TEST ID}               UserForEditing
 ${TEST EML}              UserForEditing@u.com
 ${TEST GRP}              GroupForEditing
+${TEST CLU}              ClusterForEditing
 ${SUPER}                 SuperGroup
 
 #--------------------DBID--------------------
@@ -89,6 +90,7 @@ Result Web
     [Arguments]     ${css}  ${webmsg}
     ${text} =       Get Text  css=${css}
     Should Be Equal As Strings    ${text}   ${webmsg}
+    Element Should Be Visible     css=${css}
 
 Result Api
     [Arguments]     ${loc}  ${apimsg}
@@ -101,7 +103,7 @@ Open Browser And Login Adm
     Login Adm
     Click Element   select_value_label_0
     Click Element   xpath=//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'SuperGroup')]
-
+    Sleep  2
 
 Open Browser And Login Gm
     Open Browser To Login Page

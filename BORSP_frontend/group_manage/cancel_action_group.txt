@@ -32,6 +32,6 @@ G-088
 	${no} =           Evaluate    ${index}-1
 	${path} =         Evaluate   'delete-group'+'${no}'
 	Click Element     ${path}
-	Click Element     //*[@aria-label="是否确认删除该用户组?"]/md-dialog-actions/button[@aria-label="取消"]
+	Click Element     //md-dialog-actions/button[@aria-label="取消"]
 	${index} =        Get Group Index    test
     Run Keyword If   '${index}' == 'None'   Fail

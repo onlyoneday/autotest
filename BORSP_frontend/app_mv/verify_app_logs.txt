@@ -4,6 +4,7 @@ Documentation   验证APP详细参数（日志）、CMD
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${APP_MY URL}
 Suite Teardown  Close Browser
 Library         DateTime
 

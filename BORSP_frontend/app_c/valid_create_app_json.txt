@@ -4,6 +4,7 @@ Documentation   新建应用json-验证试试看模板
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${APP_MY URL}
 Test Template   Verify Json Template
 Suite Teardown  Close Browser
 

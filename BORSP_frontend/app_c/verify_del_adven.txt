@@ -4,15 +4,14 @@ Documentation   删除高级设置
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${APP_CREATE URL}
 Suite Teardown  Close Browser
 
 *** Test Cases ***
 
 app_c_08,13
-    Go To Page   ${APP_CREATE URL}
     Delete Empty
 app_m_35
-    Go To Page   ${APP_CREATE URL}
     Delete Run 
 
 *** Keywords ***

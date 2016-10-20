@@ -1,0 +1,42 @@
+*** Settings ***
+
+Documentation   应用管理-超级管理员-发布应用-必填项不填
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page  ${APP_CREATE URL} 
+Suite Teardown  Close Browser
+
+*** Test Cases ***   input                  text        active
+
+#名称、地址
+G-135
+	#表单模式
+    Input Simple App
+    Clear Element Text    stackAppName
+    Clear Element Text    stackImageAddress
+    Result Web            div:nth-child(1) > div.layout-column.flex-50 > p:nth-child(2) > small  ${message1}
+    Result Web            div:nth-child(2) > div.layout-column.flex-50 > p:nth-child(2) > small  ${message2}
+    #JSON模式
+    Click Element         css=md-tab-item:nth-child(2)
+    Result Api            stackJsonCreate    ${message31}
+    Result Api            stackJsonCreate    ${message32}
+
+#集群
+G-136
+	#表单模式
+	Create App        appmmj    clustermmj
+    Element Should Be Disabled  stackFormCreate
+    #JSON模式
+    Click Element     css=md-tab-item:nth-child(2)
+    Result Api        stackJsonCreate    ${message4}
+
+*** Variables ***
+${message1}        应用名称不能为空
+${message2}		   镜像地址不能为空
+${message31}	   /container/docker/image
+${message32}       /id
+${message4}		   have only one vCluster constraint
+
+
+

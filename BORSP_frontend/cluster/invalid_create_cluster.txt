@@ -1,0 +1,40 @@
+*** Settings ***
+
+Documentation   集群管理-超级管理员-创建集群-异常
+Resource        ../common/resources.txt
+Resource        ../common/cluster_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${HOME URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#不填写组
+G-090
+	Input Cluster       c  ${EMPTY}  ${EMPTY}
+	Result Api          ${button}    ${message2}
+
+#用户组之外的必填项不填（名称）
+G-093
+	Input Cluster       c  ${EMPTY}  ${EMPTY}
+	Clear Element text  input-clustername
+	Result Web          div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(2)  ${message1}
+	Element Should Be Disabled       ${button}
+
+#集群名称重复
+G-094
+	Input Cluster       clustermmj   ${TESTG DBID}  clustermmj
+	Result Api          ${button}    ${message3}
+
+#不填写组
+G-095
+	Input Cluster       ${STR 256}   ${EMPTY}  ${EMPTY}
+	Result Web          div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(3)  ${message0}
+	Element Should Be Disabled       ${button}
+
+*** Variables ***
+${message0}        最大长度255个字符
+${message1}        名称不能为空
+${message2}		   invalid GroupId
+${message3}		   Error 1062
+${button}          submit-create-cluster
