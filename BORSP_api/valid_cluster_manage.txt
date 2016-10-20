@@ -1,0 +1,62 @@
+| *** Settings *** |
+| Suite Setup    | Get Token |
+| Suite Teardown | Delete All Sessions |
+| Library        | Collections |
+| Library        | String |
+| Library        | OperatingSystem |
+| Library        | RequestsLibrary |
+| Library        | Collections |
+| Library        | XML |
+| Library        | json |
+| Library        | SSHLibrary |
+| Resource       | config.txt |
+
+| *** Test Cases *** |
+| 集群管理-超级管理员-创建集群 |
+|    | [Tags] | 集群管理 |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${groupName}= | Get Randomstring |
+|    | ${clustername}= | Get Randomstring |
+|    | ${CrarteGroup} = | Set Variable | {"name": "${groupName}" , "description": "cdscds"} |
+|    | ${resp}= | Post Request | ${domain} | /v1/groups | data=${CrarteGroup} | headers=${headers} |
+|    | ${GroupId}= | Evaluate | '${resp.json()['data']['id']}' |
+|    | Set Global Variable | ${GroupId} |
+|    | ${data}= | Set Variable | {"groupId":${GroupId},"clusterLabel":"${clustername}","desc": "xsaxas"} |
+|    | ${resp}= | Post Request | shurenyun | /v1/clusters | data=${data} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${clusterid}= | Evaluate | '${resp.json()['data']}' |
+|    | Set Global Variable | ${clusterid} |
+
+| 集群管理-超级管理员-获取集群列表 |
+|    | [Tags] | 集群管理 |
+|    | ${resp}= | Get Request | shurenyun | /v1/clusters | headers=${headers} |
+|    | log | ${resp.text} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+
+| 集群管理-超级管理员-获取单个集群 |
+|    | [Tags] | 集群管理 |
+|    | ${path}= | Evaluate | '/v1/clusters/'+'${clusterid}' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+
+| 集群管理-超级管理员-获得按vcluster分组的node列表 |
+|    | [Tags] | 集群管理 |
+|    | ${resp}= | Get Request | shurenyun | /v1/clusters/nodes_group_by_vclusters | headers=${headers} |
+|    | log | ${resp.text} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+
+| 集群管理-超级管理员-获得用户组的vcluster列表 |
+|    | [Tags] | 集群管理 |
+|    | ${path}= | Evaluate | '/v1/groups/'+'${GroupId}'+'/clusters' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+
+| 集群管理-超级管理员-删除集群 |
+|    | [Tags] | 集群管理 |
+|    | ${path}= | Evaluate | '/v1/clusters/'+'${clusterid}' |
+|    | ${resp}= | Delete Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
