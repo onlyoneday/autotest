@@ -69,11 +69,35 @@
 |    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | Log | ${resp.text} |
+|    | ${taskid}= | Evaluate | '${resp.json()['data']['tasks'][0]['id']}' |
+|    | Set Global Variable | ${taskid} |
 
 | 应用管理-获取指定应用所有版本 |
 |    | [Tags] | 应用管理 |
 |    | ${path}= | Evaluate | '/v1/apps/'+'${appname}'+'/versions' |
 |    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | Log | ${resp.text} |
+|    | ${versionid}= | Evaluate | '${resp.json()['data']['versions'][0]}' |
+|    | Set Global Variable | ${versionid} |
+
+| 应用管理-根据应用版本id获取版本信息 |
+|    | [Tags] | 应用管理 |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appname}'+'/versions/'+'${versionid}' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | Log | ${resp.text} |
+
+| 应用管理-杀掉列出的任务实例并根据请求扩缩应用 |
+|    | [Tags] | 应用管理 |
+|    | ${data}= | Set Variable | {"ids":["${taskid}"]} |
+|    | ${resp}= | Post Request | shurenyun | /v1/tasks/delete?scale=true | data=${data} | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | Log | ${resp.text} |
+
+| 应用管理-获取所有等待执行的任务实例 |
+|    | [Tags] | 应用管理 |
+|    | ${resp}= | Get Request | shurenyun | /v1/queue | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | Log | ${resp.text} |
 
@@ -82,7 +106,6 @@
 |    | ${path}= | Evaluate | '/v1/apps/'+'${appname}'+'/restart' |
 |    | ${resp}= | Post Request | shurenyun | ${path} | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
-|    | Log | ${resp.text} |
 
 | 应用管理-删除指定应用 |
 |    | [Tags] | 应用管理 |
