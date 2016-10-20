@@ -43,7 +43,7 @@
 
 | 集群管理-超级管理员-获得按vcluster分组的node列表 |
 |    | [Tags] | 集群管理 |
-|    | ${resp}= | Get Request | shurenyun | /v1/clusters/nodes_group_by_vclusters | headers=${headers} |
+|    | ${resp}= | Get Request | shurenyun | /v1/nodes_group_by_vclusters | headers=${headers} |
 |    | log | ${resp.text} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
