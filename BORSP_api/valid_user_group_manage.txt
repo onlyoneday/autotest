@@ -72,7 +72,7 @@
 | 用户组管理-超级管理员-获取指定用户组 |
 |    | [Tags] | 用户组管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${path}= | Evaluate | '/v1/groups/'+str(${GroupId}) |
+|    | ${path}= | Evaluate | c |
 |    | ${resp}= | GET Request | ${domain} | ${path} | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 

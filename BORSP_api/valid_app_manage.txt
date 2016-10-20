@@ -17,4 +17,76 @@
 |    | Create Session | shurenyun | ${SERVER} |
 |    | ${resp}= | Get Request | shurenyun | /v1/apps | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+
+| 应用管理-新建应用 |
+|    | [Tags] | 应用管理 |
+|    | ${appname}= | Get Randomstring |
+|    | Set Global Variable | ${appname} |
+|    | ${appjson}= | Get Binary File | ${CURDIR}${/}json/valid_app.json |
+|    | ${data} = | Replace Variables | ${appjson} |
+|    | ${resp}= | Post Request | shurenyun | /v1/apps | data=${data} | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 201 |
+
+| 应用管理-获取指定应用的信息 |
+|    | [Tags] | 应用管理 |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appname}' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+
+| 应用管理-获取应用容器列表 |
+|    | [Tags] | 应用管理 |
+|    | Sleep | 20 |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appname}'+'/containers' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
 |    | Log | ${resp.text} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+
+| 应用管理-获取指定应用的状态 |
+|    | [Tags] | 应用管理 |
+|    | ${path}= | Evaluate | '/v1/apps/'+'bd7nqi'+'/stats' |
+|    | ${stream}= | Convert To Boolean | True |
+|    | &{headers}= | Create Dictionary | Authorization=${token} | Accept=text/event-stream |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${index}= | Set Variable | 0 |
+|    | : FOR | ${i} | IN | @{resp.iter_lines()} |
+|    |    | Log | ${i} |
+|    |    | ${index}= | Evaluate | ${index}+1 |
+|    |    | Run Keyword If | '${index}' == '4' | Exit For Loop |
+|    | Authorization=${token}{resp.close()} |
+
+| 应用管理-更新指定应用 |
+|    | [Tags] | 应用管理 |
+|    | ${appjson}= | Get Binary File | ${CURDIR}${/}json/valid_app_update.json |
+|    | ${data} = | Replace Variables | ${appjson} |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appname}' |
+|    | ${resp}= | Put Request | shurenyun | ${path} | data=${data} | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+
+| 应用管理-获取指定应用所有实例 |
+|    | [Tags] | 应用管理 |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appname}'+'/tasks' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | Log | ${resp.text} |
+
+| 应用管理-获取指定应用所有版本 |
+|    | [Tags] | 应用管理 |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appname}'+'/versions' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | Log | ${resp.text} |
+
+| 应用管理-重启指定应用 |
+|    | [Tags] | 应用管理 |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appname}'+'/restart' |
+|    | ${resp}= | Post Request | shurenyun | ${path} | headers=${headers} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | Log | ${resp.text} |
+
+| 应用管理-删除指定应用 |
+|    | [Tags] | 应用管理 |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appname}' |
+|    | ${resp}= | Delete Request | shurenyun | ${path} | headers=${headers} |
+|    | Log | ${resp.text} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
