@@ -16,19 +16,19 @@ G-090
 
 #用户组之外的必填项不填（名称）
 G-093
-	Input Cluster       c  test  ${EMPTY}
+	Input Cluster       c  ${MMJ GROUP}  ${EMPTY}
 	Clear Element text  input-clustername
 	Result Web          div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(2)  ${message1}
 	Element Should Be Disabled       ${button}
 
 #集群名称重复
 G-094
-	Input Cluster       clustermmj   test  clustermmj
+	Input Cluster       ${MMJ CLUSTER}  ${MMJ GROUP}  ${MMJ CLUSTER}
 	Result Api          ${button}    ${message3}
 
 #输入上边界外侧
 G-095
-	Input Cluster       ${STR 256}   test  ${STR 256}
+	Input Cluster       ${STR 256}   ${MMJ GROUP}  ${STR 256}
 	Result Web          div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(3)  ${message0}
 	Result Web          div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(3)  ${message0}
 	Element Should Be Disabled       ${button}

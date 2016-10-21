@@ -48,4 +48,4 @@ G-080
 	Go To Page     ${USER_MANG URL}
 	Manage Group    ${SUPER}  2
 	#Delete Group User     ${VALID USER}
-	#Page Should Contain   不能删除自己
+	#Page Should Contain   ${VALID USER}

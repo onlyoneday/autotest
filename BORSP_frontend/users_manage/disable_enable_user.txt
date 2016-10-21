@@ -13,59 +13,59 @@ Suite Teardown  Close All Browsers
 #禁用/启用无组的普通用户
 G-045/053
 	#创建无组用户
-	Create User      ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Click And Wait   submit-create-user
+	Create User         ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Click And Wait      submit-create-user
 	#禁用/启用
-	Disable User     ${TEST ID} 
-	Enable User      ${TEST ID} 
+	Disable User        ${TEST ID} 
+	Enable User         ${TEST ID} 
 	#无组用户不能登录
 	Logout
-	Login            ${TEST ID}  ${STR 8}
+	Login               ${TEST ID}  ${STR 8}
 	Location Should Be  ${LOGIN URL}
 	#删除用户
-	Go To Page       ${USER_MANU URL}
-	Delete User      ${TEST ID}
+	Go To Page          ${USER_MANU URL}
+	Delete User         ${TEST ID}
 
 #禁用/启用有组无应用普通用户
 G-046/054
 	#创建组无应用普通用户
-	Create User      ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group  ${TESTG DBID}   member
-	Click And Wait   submit-create-user
+	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Select User Group  ${MMJ GROUP}  member
+	Click And Wait     submit-create-user
 	#禁用/启用
-	Disable Enable   ${TEST ID}  ${STR 8}
+	Disable Enable     ${TEST ID}  ${STR 8}
 	#删除用户
-	Go To Page       ${USER_MANU URL}
-	Delete User      ${TEST ID}
+	Go To Page         ${USER_MANU URL}
+	Delete User        ${TEST ID}
 
 #禁用/启用组管理员
 G-048/056
 	#创建组管理员
-	Create User      ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group  ${TESTG DBID}   owner
-	Click And Wait   submit-create-user
+	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Select User Group  ${MMJ GROUP}  member
+	Click And Wait     submit-create-user
 	#禁用/启用
-	Disable Enable   ${TEST ID}  ${STR 8}
+	Disable Enable     ${TEST ID}  ${STR 8}
 	#删除用户
-	Go To Page       ${USER_MANU URL}
-	Delete User      ${TEST ID}
+	Go To Page         ${USER_MANU URL}
+	Delete User        ${TEST ID}
 
 #禁用/启用超级管理员
 G-050/057
 	#创建超级管理员
-	Create User      ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  True
-	Click And Wait   submit-create-user
+	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  True
+	Click And Wait     submit-create-user
 	#禁用/启用
-	Disable Enable   ${TEST ID}  ${STR 8}
+	Disable Enable     ${TEST ID}  ${STR 8}
 	#删除用户
-	Go To Page       ${USER_MANU URL}
-	Delete User      ${TEST ID}
+	Go To Page         ${USER_MANU URL}
+	Delete User        ${TEST ID}
 
 #禁用/启用有应用的组成员
 G-047/055
 	#创建有应用的组成员
 	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group  ${TESTG DBID}  member
+	Select User Group  ${MMJ GROUP}  member
 	Click And Wait     submit-create-user
 	Logout
 	Login              ${TEST ID}  ${STR 8}
@@ -86,20 +86,20 @@ G-039
 
 *** Keywords ***
 Disable Enable
-	[Arguments]     ${name}  ${password}
+	[Arguments]       ${name}  ${password}
 	#禁用
-	Disable User    ${name}
+	Disable User      ${name}
 	Logout
 	#不能登录
-	Login           ${name}  ${password}
-	Location Should Be       ${LOGIN URL}
+	Login             ${name}  ${password}
+	Location Should Be         ${LOGIN URL}
 	#启用
 	Login Adm
-	Go To Page      ${USER_MANU URL}
-	Enable User     ${name}
+	Go To Page        ${USER_MANU URL}
+	Enable User       ${name}
 	#登录成功
 	Logout
-	Login           ${name}  ${password}
+	Login             ${name}  ${password}
 	Logout
 	Login Adm
 

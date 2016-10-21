@@ -22,7 +22,7 @@ Create User
 Select User Group
 	[Arguments]   	${group}  ${role}
 	Click Element   stackParametersAdd
-	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${group}"'+']'
+	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${group}"'+')]'
 	${rpath} =  	Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${role}"'+']'
 	Click Element   select-group0
 	Click Element   xpath=${gpath}
@@ -32,7 +32,7 @@ Select User Group
 Select User Group2
 	[Arguments]   	${group}  ${role}
 	Click Element   stackParametersAdd
-	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${group}"'+']'
+	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${group}"'+')]'
 	${rpath} =  	Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${role}"'+']'
 	Click Element   select-group1
 	Click Element   xpath=${gpath}

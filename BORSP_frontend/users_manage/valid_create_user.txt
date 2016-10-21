@@ -11,17 +11,17 @@ Suite Teardown  Close All Browsers
 
 #输入项下边界值
 G-009/012/037
-	Create User     I  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group     ${TESTG DBID}    member
-	Click Element   submit-create-user
-	Result User     I  U  u@u.cn  test  组成员
+	Create User        I  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Select User Group  ${MMJ GROUP}  member
+	Click Element      submit-create-user
+	Result User        I  U  u@u.cn  test  组成员
 
 #输入项下边界值
 G-010/038
-	Create User     ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group     ${TESTG DBID}    owner
-	Click Element   submit-create-user
-	Result User     ${TEST ID}  U  ${TEST EML}  test  组管理员
+	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Select User Group  ${MMJ GROUP}  member
+	Click Element      submit-create-user
+	Result User        ${TEST ID}  U  ${TEST EML}  test  组管理员
 
 #输入项上边界值
 G-011/013/042

@@ -37,22 +37,21 @@ ${VALID PASSWD}          Dataman1234
 
 ${MMJ USER}              mmj
 ${MMJ PASSWD}            M12345678
+${MMJ DBID}              122
+${MMJ GROUP}             groupmmj
+${MMJ CLUSTER}           clustermmj
 
 ${GM USER}               groupmanager   
 ${GM PASSWD}             M1234567
+${GM DBID}               123
+
+${SUPER}                 SuperGroup
 
 ${TEST ID}               UserForEditing
 ${TEST EML}              UserForEditing@u.com
 ${TEST GRP}              GroupForEditing
 ${TEST CLU}              ClusterForEditing
 ${TEST APP}              applicationforediting
-${SUPER}                 SuperGroup
-
-#--------------------DBID--------------------
-${MMJ DBID}              122
-${GM DBID}               123
-${TESTG DBID}            44
-${TESTINGG DBID}         12
 
 #--------------------STRING------------------
 ${CMD TEXT}              while [ true ]; do echo BORSP; sleep 10; done

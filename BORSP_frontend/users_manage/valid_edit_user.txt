@@ -12,8 +12,8 @@ Suite Teardown  Close All Browsers
 #用户管理-超级管理员-创建用户-属于多个组
 G-014
 	Create User     ${TEST ID}  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group     ${TESTG DBID}     member
-	Select User Group2    ${TESTINGG DBID}  member
+	Select User Group     ${MMJ GROUP}  member
+	Select User Group2    testing       member
 	Click Element   submit-create-user
 
 #查看用户信息/修改用户信息

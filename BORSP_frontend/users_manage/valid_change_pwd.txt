@@ -12,7 +12,7 @@ Suite Teardown  Close All Browsers
 #测试前新建
 Creat Test User For Changing Password
 	Create User           ${TEST ID}  U  ${TEST EML}  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
-	Select User Group     ${TESTG DBID}    member
+	Select User Group     ${MMJ GROUP}   member
 	Click Element   submit-create-user
 
 #上边界值
