@@ -6,7 +6,7 @@ Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
 Test Setup      Go To Page   ${APP_MY URL}
 Test Template   Deploy App
-Suite Teardown  Close Browser
+Suite Teardown  Close All Browsers
 
 *** Test Cases ***   Network     forceImage    edhc     status
 

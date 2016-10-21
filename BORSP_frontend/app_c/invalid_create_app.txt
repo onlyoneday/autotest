@@ -5,9 +5,9 @@ Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
 Test Setup      Go To Page  ${APP_CREATE URL} 
-Suite Teardown  Close Browser
+Suite Teardown  Close All Browsers
 
-*** Test Cases ***   input                  text        active
+*** Test Cases ***
 
 #名称、地址
 G-135

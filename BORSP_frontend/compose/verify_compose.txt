@@ -5,7 +5,7 @@ Resource        ../common/resources.txt
 Resource        ../common/comp_resources.txt
 Suite Setup     Open Browser And Login Mmj
 Test Setup      Go To Page   ${RSTACK URL}
-Suite Teardown  Close Browser
+Suite Teardown  Close All Browsers
 Library         DateTime
 
 *** Test Cases ***    template

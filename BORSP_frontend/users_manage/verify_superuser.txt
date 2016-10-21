@@ -47,5 +47,5 @@ G-079
 G-080
 	Go To Page     ${USER_MANG URL}
 	Manage Group    ${SUPER}  2
-	#Delete Group User     ${VALID USER}
-	#Page Should Contain   ${VALID USER}
+	Delete Group User     ${VALID USER}
+	Page Should Contain   ${VALID USER}

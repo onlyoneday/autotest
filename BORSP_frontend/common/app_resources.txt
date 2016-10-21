@@ -24,8 +24,28 @@ Delete App By Name
     ${index} =      Get App Index    ${appname}
     ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]/md-menu/button'
     Click Element   ${path}
-    Click Element   stackListDelete0
+    ${index} =      Evaluate   ${index}-1
+    ${button} =     Evaluate  'stackListDelete'+'${index}'
+    Click Element   ${button}
     Click And Wait  css=button:nth-child(2)>span.ng-binding
+
+Update App By Name
+    [Arguments]     ${appname}
+    ${index} =      Get App Index    ${appname}
+    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]/md-menu/button'
+    Click Element   ${path}
+    ${index} =      Evaluate   ${index}-1
+    ${button} =     Evaluate  'stackListUpdate'+'${index}'
+    Click And Wait  ${button}
+
+Change App Owner
+    [Arguments]     ${appname}
+    ${index} =      Get App Index    ${appname}
+    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]/md-menu/button'
+    Click Element   ${path}
+    ${index} =      Evaluate   ${index}-1
+    ${button} =     Evaluate  'stackLisChangeAppUser'+'${index}'
+    Click And Wait  ${button}
 
 Get App Index
     [Arguments]     ${name}
@@ -33,7 +53,8 @@ Get App Index
     ${row} =        Evaluate  ${row}+1
     :FOR    ${index}   IN RANGE   1  ${row}
     \       ${path} =     Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[1]'
-    \       ${user} =     Get Text   ${path}
+    \       ${cuser} =    Get Text   ${path}
+    \       ${user} =     Fetch From Right  ${cuser}  -
     \       Return From Keyword If   "${user}" == "${name}"   ${index}
 
 Create App

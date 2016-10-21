@@ -6,7 +6,7 @@ Resource        ../common/comp_resources.txt
 Suite Setup     Open Browser And Login Mmj
 Test Setup      Go To Page   ${RSTACK URL}
 Test Template   Compose App
-Suite Teardown  Close Browser
+Suite Teardown  Close All Browsers
 
 *** Test Cases ***    template
 

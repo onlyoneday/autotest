@@ -1,0 +1,32 @@
+*** Settings ***
+
+Documentation   禁用的用户删除其所在用户组-启用后自动失去组身份
+Resource        ../common/resources.txt
+Resource        ../common/cluster_resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Adm
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#创建集群
+Create Cluster Before Testing
+	Input Cluster   ${TEST CLU}  ${MMJ GROUP}  ${TEST CLU}
+	Click And Wait  submit-create-cluster
+
+G-151
+	Go To Page      ${APP_CREATE URL} 
+	Create App      ${TEST APP}    ${MMJ CLUSTER}
+    Click Element	stackFormCreate
+    Sleep 0.5
+    Page Should Contain  创建成功
+    Go To Page		${APP_CREATE URL} 
+    Create App      ${TEST APP}    ${TEST CLU}
+    Click Element	stackFormCreate
+    Page Should Contain  创建成功
+
+Delete App Cluster After Testing
+	Delete App By Name   ${TEST APP} 
+	Delete App By Name   ${TEST APP} 
+	Go To Page		${HOME URL}
+	Delete Cluster  ${TEST CLU}

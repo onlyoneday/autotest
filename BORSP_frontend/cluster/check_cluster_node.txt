@@ -1,0 +1,26 @@
+*** Settings ***
+
+Documentation   超级管理员-查看任意集群的任意主机
+Resource        ../common/resources.txt
+Resource        ../common/cluster_resources.txt
+Suite Setup     Open Browser And Login Adm
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#删除集群-取消删除
+G-106
+	@{path} =     Get WebElements  //section/header/h3/a
+	${index} =    Get Length   ${path}
+	:FOR  ${li}   IN RANGE  ${index}
+	\             Check Cluster  ${li}
+
+*** Keywords ***
+Check Cluster
+	[Arguments]   ${index}
+	${index} =    Evaluate  ${index}+2
+	${path} =     Evaluate  'section:nth-child('+'${index}'+') > header > h3 > a'
+	Click And Wait  css=${path}   
+	Page Should Contain   主机名
+	Go To Page    ${HOME URL}
+

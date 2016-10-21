@@ -6,7 +6,7 @@ Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Mmj
 Test Setup      Go To Page  ${APP_CREATE URL} 
 Test Template   Input Check1
-Suite Teardown  Close Browser
+Suite Teardown  Close All Browsers
 
 *** Test Cases ***   input                  text        active
 
