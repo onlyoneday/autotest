@@ -1,0 +1,151 @@
+| *** Settings *** |
+| Library        | Collections |
+| Library        | String |
+| Library        | OperatingSystem |
+| Library        | RequestsLibrary |
+| Library        | Collections |
+| Library        | XML |
+| Library        | json |
+| Resource       | config.txt |
+
+| *** Keywords *** |
+| Login |
+|    | [Arguments] | ${data} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Post Request | shurenyun | /v1/login | data=${data} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Logout |
+|    | [Arguments] | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Post Request | shurenyun | /v1/logout | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Create User Group |
+|    | [Arguments] | ${data} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Post Request | ${domain} | /v1/groups | data=${data} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Join User Group |
+|    | [Arguments] | ${data} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Post Request | ${domain} | /v1/accounts/joingroup | data=${data} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Leave User Group |
+|    | [Arguments] | ${userid} | ${groupid} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/accounts/'+str(${userid})+'/groups/'+str(${groupid}) |
+|    | ${resp}= | Delete Request | ${domain} | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Change Password |
+|    | [Arguments] | ${data} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Put Request | ${domain} | /v1/password | data=${data} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Reset Password |
+|    | [Arguments] | ${userid} | ${data} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/accounts/'+str(${userid})+'/resetpassword' |
+|    | ${resp}= | Put Request | ${domain} | ${path} | data=${data} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get All User Group |
+|    | [Arguments] | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Get Request | ${domain} | /v1/groups | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get All User |
+|    | [Arguments] | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Get Request | ${domain} | /v1/accounts | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get User By Id |
+|    | [Arguments] | ${userid} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/accounts/'+str(${userid}) |
+|    | ${resp}= | Get Request | ${domain} | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get All User Group Accounts By Id |
+|    | [Arguments] | ${groupid} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/groups/'+str(${groupid})+'/accounts' |
+|    | ${resp}= | Get Request | ${domain} | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get User Group By Id |
+|    | [Arguments] | ${groupid} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/groups/'+str(${groupid}) |
+|    | ${resp}= | Get Request | ${domain} | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Update User Group |
+|    | [Arguments] | ${data} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Put Request | ${domain} | /v1/groups | data=${data} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Delete User Group |
+|    | [Arguments] | ${groupId} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/groups/'+str(${groupId}) |
+|    | ${resp}= | Delete Request | ${domain} | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Create User |
+|    | [Arguments] | ${data} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Post Request | ${domain} | /v1/accounts | data=${data} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Disable User |
+|    | [Arguments] | ${userid} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/accounts/' + str(${userid})+'/disable' |
+|    | ${resp}= | Put Request | ${domain} | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Update User |
+|    | [Arguments] | ${data} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Put Request | ${domain} | /v1/accounts | data=${data} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Delete User |
+|    | [Arguments] | ${userid} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/accounts/' + str(${userid}) |
+|    | ${resp}= | Delete Request | ${domain} | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Aboutme |
+|    | [Arguments] | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Get Request | ${domain} | /v1/aboutme | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |

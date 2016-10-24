@@ -1,5 +1,6 @@
 | *** Settings *** |
 | Library        | random |
+| Resource       | ./all_api.txt |
 
 | *** Variables *** |
 | ${SERVER}      | http://192.168.1.155:9999 |
@@ -31,3 +32,64 @@
 |    | Set Global Variable | ${token} |
 |    | ${headers}= | Create Dictionary | Authorization=${token} |
 |    | Set Global Variable | ${headers} |
+
+| Create Test Data |
+|    | # 登录超级用户 |
+|    | ${data}= | Set Variable | {"userName":"${adminname}","password":"${adminpasswd}"} |
+|    | ${resp}= | Login | ${data} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${admintoken}= | Evaluate | '${resp.json()['data']}' |
+|    | ${adminheaders}= | Create Dictionary | Authorization=${admintoken} |
+|    | Set Global Variable | ${adminheaders} |
+|    | # | 创建用户组1 |
+|    | ${groupname1}= | Get Randomstring |
+|    | ${data} = | Set Variable | {"name": "${groupname1}" , "description": "cdscds"} |
+|    | ${resp}= | Create User Group | ${data} | ${adminheaders} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${groupid1}= | Evaluate | '${resp.json()['data']['id']}' |
+|    | Set Global Variable | ${groupid1} |
+|    | # | 创建用户组2 |
+|    | ${groupname2}= | Get Randomstring |
+|    | Set Global Variable | ${groupname2} |
+|    | ${data} = | Set Variable | {"name": "${groupname2}" , "description": "cdscds"} |
+|    | ${resp}= | Create User Group | ${data} | ${adminheaders} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${groupid2}= | Evaluate | '${resp.json()['data']['id']}' |
+|    | Set Global Variable | ${groupid2} |
+|    | # | 创建用户组1组管理员 |
+|    | ${username1}= | Get Randomstring |
+|    | Set Global Variable | ${username1} |
+|    | ${email}= | Evaluate | '${username1}'+ '@dataman-inc.com' |
+|    | ${data}= | Set Variable | {"email":"${email}","password":"admin1234","title":"职位, 可不填","userName":"${username1}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${groupid1},"role":"owner"}]} |
+|    | ${resp}= | Create User | data=${data} | headers=${adminheaders} |
+|    | ${data} = | Set Variable | {"username":"${username1}","password":"admin1234"} |
+|    | ${resp}= | Login | ${data} |
+|    | ${testtoken1}= | Evaluate | '${resp.json()['data']}' |
+|    | ${testheaders1}= | Create Dictionary | Authorization=${testtoken1} |
+|    | Set Global Variable | ${testheaders1} |
+|    | ${resp}= | Get Aboutme | ${testheaders1} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${userid1}= | Evaluate | '${resp.json()['data']['id']}' |
+|    | Set Global Variable | ${userid1} |
+|    | # | 创建用户组2普通成员 |
+|    | ${username2}= | Get Randomstring |
+|    | Set Global Variable | ${username2} |
+|    | ${email}= | Evaluate | '${username2}'+ '@dataman-inc.com' |
+|    | ${data}= | Set Variable | {"email":"${email}","password":"admin1234","title":"职位, 可不填","userName":"${username2}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${groupid2},"role":"member"}]} |
+|    | ${resp}= | Create User | data=${data} | headers=${adminheaders} |
+|    | ${data} = | Set Variable | {"userName":"${username2}","password":"admin1234"} |
+|    | ${resp}= | Login | ${data} |
+|    | ${testtoken2}= | Evaluate | '${resp.json()['data']}' |
+|    | ${testheaders2}= | Create Dictionary | Authorization=${testtoken2} |
+|    | Set Global Variable | ${testheaders2} |
+|    | ${resp}= | Get Aboutme | ${testheaders2} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${userid2}= | Evaluate | '${resp.json()['data']['id']}' |
+|    | Set Global Variable | ${userid2} |
+
+| Delete Test Data |
+|    | Delete User | ${userid1} | ${adminheaders} |
+|    | Delete User | ${userid2} | ${adminheaders} |
+|    | Delete User Group | ${groupid1} | ${adminheaders} |
+|    | Delete User Group | ${groupid2} | ${adminheaders} |
+|    | Delete All Sessions |
