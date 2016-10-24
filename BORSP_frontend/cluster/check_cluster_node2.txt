@@ -1,0 +1,81 @@
+*** Settings ***
+
+Documentation   超级管理员-查看任意集群任意主机
+Resource        ../common/resources.txt
+Resource        ../common/cluster_resources.txt
+Resource        ../common/group_resources.txt
+Suite Setup     Open Browser To Login Page
+Test Setup      Go To Page  ${LOGIN URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+Add Node Before Testing
+	Login Adm
+	#添加主机
+	Add Cluster Node  ${MMJ CLUSTER}
+	Click Element     md-dialog-actions > button:nth-child(3)
+	#将用户加入多个用户组
+	Go To Page        ${USER_MANG URL}
+	Manage Group      test         2
+	Add Group User    ${MMJ DBID}  member
+	Add Group User    ${GM DBID}   owner
+
+#组管理员-属于多个组-查看多个组下的多个集群和主机
+G-100/121
+	Login Gm
+	Choose Group      ${MMJ GROUP}
+	Page Should Contain      ${MMJ CLUSTER}
+	Check Cluster And Node
+	Choose Group      test
+	Page Should Not Contain  ${MMJ CLUSTER}
+	Check Cluster And Node
+
+#组管理员-属于多个组-查看多个组下的多个集群和主机
+G-101/122
+	Login Mmj
+	Choose Group      ${MMJ GROUP}
+	Page Should Contain      ${MMJ CLUSTER}
+	Check Cluster And Node
+	Choose Group      test
+	Page Should Not Contain  ${MMJ CLUSTER}
+	Check Cluster And Node
+
+Delete Node Before Testing
+	Login Adm
+	Delete Node        0
+	Go To Page         ${USER_MANG URL}
+	Manage Group       test         2
+	Delete Group User  ${MMJ USER}
+	Delete Group User  ${GM USER}
+
+*** Keywords ***
+
+Check Cluster And Node
+	${index} =    Get Matching Xpath Count   //section/header/h3/a
+	:FOR  ${li}   IN RANGE  ${index}
+	\             Check Cluster  ${li}
+	\             Check Node2
+
+Check Cluster
+	[Arguments]   ${index}
+	${index} =    Evaluate  ${index}+2
+	${path} =     Evaluate  'section:nth-child('+'${index}'+') > header > h3 > a'
+	Click And Wait  css=${path}   
+	Page Should Contain  集群详情
+	
+Check Node2
+	${row} =      Get Matching Xpath Count   //table/tbody/tr[*]
+	${noderow} =  Evaluate   ${row}+1
+	:FOR  ${lr}   IN RANGE   1   ${noderow}
+	\     ${link} =      Evaluate   '//table/tbody/tr['+'"${lr}"'+']/td[2]/a'
+	\	  Click Element  ${link}   
+	\     Page Should Contain  主机详情
+	\     Click Element  
+	\     Page Should Contain  容器详情
+	\     Go Back
+	\     Click Element
+	\     Page Should Contain  应用状态  
+	\     Go Back
+	\     Go Back
+	Go To Page    ${HOME URL}

@@ -17,7 +17,7 @@ G-097
 
 #取消删除
 G-106
-	Click And Wait  //section/header/h3/a[text()="clustermmj"]
-	Click Element   delete-cluster
-	Click And Wait  //md-dialog-actions/button[@aria-label="取消"]
+	Click And Wait    //section/header/h3/a[text()="clustermmj"]
+	Click Element     delete-cluster
+	Click And Wait    //md-dialog-actions/button[@aria-label="取消"]
 	Page Should Contain    clustermmj

@@ -25,7 +25,7 @@ Deploy App  [Arguments]   ${network}   ${forceImage}   ${edhc}   ${status}
     #选择网络模式
     Run Keyword If   '${network}' == 'stackHost'   Click Element  stackHost
     #输入高级设置
-    Input Advanced App  ${edhc}
+    Input Advanced App  ${aedhc}
     #等待应用发布
     Click And Wait    stackFormCreate
     Sleep    ${SLEEP LONG TIME} 

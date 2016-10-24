@@ -93,18 +93,25 @@ Generate Name
     [Return]       ${app name}
 
 Input Advanced App  
-    [Arguments]   ${EDHC}
+    [Arguments]    ${AEDHC}
     Click Element  css=.fa-chevron-down
     Sleep   ${SLEEP TIME}
-
-    ${e} =   Get Substring   ${EDHC}   0  1
-    ${d} =   Get Substring   ${EDHC}   1  2
-    ${h} =   Get Substring   ${EDHC}   2  3
-    ${c} =   Get Substring   ${EDHC}   3
+    ${a} =   Get Substring   ${EDHC}   0  1
+    ${e} =   Get Substring   ${EDHC}   1  2
+    ${d} =   Get Substring   ${EDHC}   2  3
+    ${h} =   Get Substring   ${EDHC}   3  4
+    ${c} =   Get Substring   ${EDHC}   4
+    Run Keyword If  '${a}' == '1'   Add Address
     Run Keyword If  '${e}' == '1'   Add Environment
     Run Keyword If  '${d}' == '1'   Add Docker
     Run Keyword If  '${h}' == '1'   Add Healthchecks
     Run Keyword If  '${c}' == '1'   Add Command
+
+Add Address
+    Input Text     //*[@name='portMappings']/input[1]   80
+    Click Element  //*[@name='portMappings']/md-select
+    Click Element  //*[@value='HTTP']
+    Input Text     //*[@name='portMappings']/input[2]   8080 
 
 Add Environment
     Click Element  stackAddMountpoints

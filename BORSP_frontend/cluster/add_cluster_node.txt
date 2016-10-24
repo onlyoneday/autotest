@@ -1,0 +1,27 @@
+*** Settings ***
+
+Documentation   集群管理-超级管理员-添加集群的主机
+Resource        ../common/resources.txt
+Resource        ../common/cluster_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${HOME URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#必填项不填
+G-110
+	Add Cluster Node     ${MMJ CLUSTER}
+	Click Element        md-dialog-actions > button:nth-child(3)
+	Page Should Contain  请选择主机
+
+#添加主机
+G-107
+	${row1} =            Get Matching Xpath Count    //table/tbody/tr[*]
+	Add Cluster Node     ${MMJ CLUSTER}
+	Click Element        md-dialog-actions > button:nth-child(3)
+	${row1} =            Get Matching Xpath Count    //table/tbody/tr[*]
+	Return From Keyword If  ${row2} > ${row1}  Fail
+
+Delete Node After Testing
+	Delete Node  0

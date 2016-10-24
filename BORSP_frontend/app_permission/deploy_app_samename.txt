@@ -26,6 +26,7 @@ G-151
     Page Should Contain  创建成功
 
 Delete App Cluster After Testing
+	Go To Page      ${APP_ALL URL} 
 	Delete App By Name   ${TEST APP} 
 	Delete App By Name   ${TEST APP} 
 	Go To Page		${HOME URL}

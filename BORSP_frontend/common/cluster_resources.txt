@@ -27,3 +27,22 @@ Delete Cluster
 	Click Element   delete-cluster
 	Click And Wait  css=md-dialog-actions > button:nth-child(2)
 
+Add Cluster Node
+	[Arguments]     ${name}
+	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
+	Click And Wait  ${link}
+	Click And Wait  add-cluster-node
+
+Select Cluster Node
+	Click Element   select_8
+	@{path} =       Get Webelements  //*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div
+	Click Element   ${path[1]}
+	Click And Wait  md-input-container:nth-child(2) 
+
+Delete Node
+	[Arguments]     ${index}
+	${path} =       Evaluate   'nodeSelectInstance'+'${index}'
+	Click Element   ${path}
+	Click Element   cluster-nodes-delete  
+	Click And Wait  css=md-dialog > md-dialog-actions > button:nth-child(2) 
+
