@@ -41,6 +41,16 @@
 |    | ${admintoken}= | Evaluate | '${resp.json()['data']}' |
 |    | ${adminheaders}= | Create Dictionary | Authorization=${admintoken} |
 |    | Set Global Variable | ${adminheaders} |
+|    | # | 获取nodeip |
+|    | ${resp}= | Get All Nodes | ${adminheaders} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${nodeip}= | Evaluate | '${resp.json()['data']['masters'][0]['ip']}' |
+|    | Set Global Variable | ${nodeip} |
+|    | # | 获取instanceid |
+|    | ${resp}= | Get Instances Info By Id | ${nodeip} | ${adminheaders} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${instanceid}= | Evaluate | '${resp.json()['data'][0]['Id']}' |
+|    | Set Global Variable | ${instanceid} |
 |    | # | 创建用户组1 |
 |    | ${groupname1}= | Get Randomstring |
 |    | ${data} = | Set Variable | {"name": "${groupname1}" , "description": "cdscds"} |

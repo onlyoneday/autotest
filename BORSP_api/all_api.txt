@@ -59,6 +59,68 @@
 |    | log | ${resp.text} |
 |    | [Return] | ${resp} |
 
+| Get All Nodes |
+|    | [Arguments] | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Get Request | shurenyun | /v1/nodes | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Node Info By Id |
+|    | [Arguments] | ${nodeip} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/nodes/'+'${nodeip}'+'/info' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Instances Info By Id |
+|    | [Arguments] | ${nodeip} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/nodes/'+'${nodeip}'+'/instances' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Images Info By Id |
+|    | [Arguments] | ${nodeip} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/nodes/'+'${nodeip}'+'/images' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Instance Info By Id |
+|    | [Arguments] | ${instanceid} | ${nodeip} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/nodes/'+'${nodeip}'+'/instances/'+'${instanceid}'+'/info' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Image Info By Id |
+|    | [Arguments] | ${nodeip} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/nodes/'+'${nodeip}'+'/images' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Delete Image By Id |
+|    | [Arguments] | ${imageid} | ${nodeip} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | 'v1/nodes/'+'${nodeip}'+'/images/'+'${imageid}' |
+|    | ${resp}= | Delete Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get All Metrics |
+|    | [Arguments] | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Get Request | shurenyun | /v1/metrics/snapshot | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
 | Get Cluster By Id |
 |    | [Arguments] | ${groupid} | ${headers} |
 |    | Create Session | shurenyun | ${SERVER} |
