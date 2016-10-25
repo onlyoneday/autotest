@@ -82,6 +82,14 @@
 |    | log | ${resp.text} |
 |    | [Return] | ${resp} |
 
+| Get Service By Id |
+|    | [Arguments] | ${nodeip} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/nodes/'+'${nodeip}'+'/services' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
 | Get Images Info By Id |
 |    | [Arguments] | ${nodeip} | ${headers} |
 |    | Create Session | shurenyun | ${SERVER} |

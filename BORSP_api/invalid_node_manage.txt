@@ -108,10 +108,14 @@
 |    | ${resp}= | Get Instance Info By Id | ${instanceid} | ${nodeip} | ${testheaders2} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 403 |
 
-| 主机管理-获取主机上服务的状态 |
+| 主机管理-获取主机上服务的状态-没有权限 |
 |    | [Tags] | 主机管理 |
-|    | Create Session | shurenyun | ${SERVER} |
-|    | ${path}= | Evaluate | '/v1/nodes/'+'${nodeip}'+'/services' |
-|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
-|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
-|    | log | ${resp.text} |
+|    | ${resp}= | Get Service By Id | ${nodeip} | ${testheaders1} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 403 |
+|    | ${resp}= | Get Service By Id | ${nodeip} | ${testheaders2} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 403 |
+
+| 主机管理-获取主机上服务的状态-主机不存在 |
+|    | [Tags] | 主机管理 |
+|    | ${resp}= | Get Service By Id | 9999 | ${adminheaders} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 404 |
