@@ -30,6 +30,51 @@
 |    | log | ${resp.text} |
 |    | [Return] | ${resp} |
 
+| Create Cluster |
+|    | [Arguments] | ${data} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Post Request | ${domain} | /v1/clusters | data=${data} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Delete Cluster |
+|    | [Arguments] | ${clusterid} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/clusters/'+str(${clusterid}) |
+|    | ${resp}= | Delete Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Cluster List |
+|    | [Arguments] | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Get Request | shurenyun | /v1/clusters | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Nodes |
+|    | [Arguments] | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Get Request | shurenyun | /v1/nodes_group_by_vclusters | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Cluster By Id |
+|    | [Arguments] | ${groupid} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/groups/'+'${groupid}'+'/clusters' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Cluster By Group Id |
+|    | [Arguments] | ${groupid} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/groups/'+'${groupid}'+'/clusters' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
 | Join User Group |
 |    | [Arguments] | ${data} | ${headers} |
 |    | Create Session | shurenyun | ${SERVER} |

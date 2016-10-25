@@ -86,10 +86,18 @@
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | ${userid2}= | Evaluate | '${resp.json()['data']['id']}' |
 |    | Set Global Variable | ${userid2} |
+|    | # | 创建集群1 |
+|    | ${clustername}= | Get Randomstring |
+|    | ${data}= | Set Variable | {"groupId":${groupid1},"clusterLabel":"${clustername}","desc": "xsaxas"} |
+|    | ${resp}= | Create Cluster | ${data} | ${adminheaders} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${clusterid1}= | Evaluate | '${resp.json()['data']}' |
+|    | Set Global Variable | ${clusterid1} |
 
 | Delete Test Data |
 |    | Delete User | ${userid1} | ${adminheaders} |
 |    | Delete User | ${userid2} | ${adminheaders} |
+|    | Delete Cluster | ${clusterid1} | ${adminheaders} |
 |    | Delete User Group | ${groupid1} | ${adminheaders} |
 |    | Delete User Group | ${groupid2} | ${adminheaders} |
 |    | Delete All Sessions |
