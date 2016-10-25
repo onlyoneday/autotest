@@ -36,7 +36,7 @@
 | Create Test Data |
 |    | # 登录超级用户 |
 |    | ${data}= | Set Variable | {"userName":"${adminname}","password":"${adminpasswd}"} |
-|    | ${resp}= | Login | ${data} |
+|    | ${resp}= | Login Sry | ${data} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | ${admintoken}= | Evaluate | '${resp.json()['data']}' |
 |    | ${adminheaders}= | Create Dictionary | Authorization=${admintoken} |
@@ -63,7 +63,7 @@
 |    | ${data}= | Set Variable | {"email":"${email}","password":"admin1234","title":"职位, 可不填","userName":"${username1}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${groupid1},"role":"owner"}]} |
 |    | ${resp}= | Create User | data=${data} | headers=${adminheaders} |
 |    | ${data} = | Set Variable | {"username":"${username1}","password":"admin1234"} |
-|    | ${resp}= | Login | ${data} |
+|    | ${resp}= | Login Sry | ${data} |
 |    | ${testtoken1}= | Evaluate | '${resp.json()['data']}' |
 |    | ${testheaders1}= | Create Dictionary | Authorization=${testtoken1} |
 |    | Set Global Variable | ${testheaders1} |
@@ -78,7 +78,7 @@
 |    | ${data}= | Set Variable | {"email":"${email}","password":"admin1234","title":"职位, 可不填","userName":"${username2}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${groupid2},"role":"member"}]} |
 |    | ${resp}= | Create User | data=${data} | headers=${adminheaders} |
 |    | ${data} = | Set Variable | {"userName":"${username2}","password":"admin1234"} |
-|    | ${resp}= | Login | ${data} |
+|    | ${resp}= | Login Sry | ${data} |
 |    | ${testtoken2}= | Evaluate | '${resp.json()['data']}' |
 |    | ${testheaders2}= | Create Dictionary | Authorization=${testtoken2} |
 |    | Set Global Variable | ${testheaders2} |

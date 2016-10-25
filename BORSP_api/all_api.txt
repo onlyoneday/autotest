@@ -9,7 +9,7 @@
 | Resource       | config.txt |
 
 | *** Keywords *** |
-| Login |
+| Login Sry |
 |    | [Arguments] | ${data} |
 |    | Create Session | shurenyun | ${SERVER} |
 |    | ${resp}= | Post Request | shurenyun | /v1/login | data=${data} |
