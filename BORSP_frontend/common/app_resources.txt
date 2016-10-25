@@ -9,7 +9,7 @@ Resource       ../common/resources.txt
 
 Delete App From Button
     #从应用列表的Button删除应用
-    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[8]/md-menu/button
+    Mouse Up        //*[@id='stackListApp']/tbody/tr[1]/td[8]
     Click Element   stackListDelete0
     Click And Wait  css=button:nth-child(2)>span.ng-binding
 
@@ -22,8 +22,8 @@ Delete App From Detail
 Delete App By Name
     [Arguments]     ${appname}
     ${index} =      Get App Index    ${appname}
-    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]/md-menu/button'
-    Click Element   ${path}
+    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
+    Mouse Up        ${path}
     ${index} =      Evaluate   ${index}-1
     ${button} =     Evaluate  'stackListDelete'+'${index}'
     Click Element   ${button}
@@ -32,8 +32,8 @@ Delete App By Name
 Update App By Name
     [Arguments]     ${appname}
     ${index} =      Get App Index    ${appname}
-    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]/md-menu/button'
-    Click Element   ${path}
+    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
+    Mouse Up        ${path}
     ${index} =      Evaluate   ${index}-1
     ${button} =     Evaluate  'stackListUpdate'+'${index}'
     Click And Wait  ${button}
@@ -41,8 +41,8 @@ Update App By Name
 Change App Owner
     [Arguments]     ${appname}
     ${index} =      Get App Index    ${appname}
-    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]/md-menu/button'
-    Click Element   ${path}
+    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
+    Mouse Up        ${path}
     ${index} =      Evaluate   ${index}-1
     ${button} =     Evaluate  'stackLisChangeAppUser'+'${index}'
     Click And Wait  ${button}
@@ -51,11 +51,11 @@ Get App Index
     [Arguments]     ${name}
     ${row} =        Get Matching Xpath Count    //*[@id='stackListApp']/tbody/tr[*]
     ${row} =        Evaluate  ${row}+1
-    :FOR    ${index}   IN RANGE   1  ${row}
+    :FOR    ${index}      IN RANGE   1  ${row}
     \       ${path} =     Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[1]'
-    \       ${cuser} =    Get Text   ${path}
-    \       ${user} =     Fetch From Right  ${cuser}  -
-    \       Return From Keyword If   "${user}" == "${name}"   ${index}
+    \       ${capp} =     Get Text   ${path}
+    \       ${appname} =  Fetch From Right  ${capp}  -
+    \       Return From Keyword If   "${appname}" == "${name}"   ${index}
 
 Create App
     [Arguments]     ${name}    ${cluster}
@@ -96,11 +96,11 @@ Input Advanced App
     [Arguments]    ${AEDHC}
     Click Element  css=.fa-chevron-down
     Sleep   ${SLEEP TIME}
-    ${a} =   Get Substring   ${EDHC}   0  1
-    ${e} =   Get Substring   ${EDHC}   1  2
-    ${d} =   Get Substring   ${EDHC}   2  3
-    ${h} =   Get Substring   ${EDHC}   3  4
-    ${c} =   Get Substring   ${EDHC}   4
+    ${a} =   Get Substring   ${AEDHC}   0  1
+    ${e} =   Get Substring   ${AEDHC}   1  2
+    ${d} =   Get Substring   ${AEDHC}   2  3
+    ${h} =   Get Substring   ${AEDHC}   3  4
+    ${c} =   Get Substring   ${AEDHC}   4
     Run Keyword If  '${a}' == '1'   Add Address
     Run Keyword If  '${e}' == '1'   Add Environment
     Run Keyword If  '${d}' == '1'   Add Docker
@@ -138,8 +138,11 @@ Add Healthchecks
     Input Text     stackTimeoutSeconds-0  10
     #最多持续失败次数
     Input Text     stackMaxConsecutiveFailures-0  5
-    #端口组索引
-    Input Text     stackPortIndex-0  0
+    #端口类型
+    Click Element  stackPortSelect-0
+    Click Element  stackPortOption-1
+    #端口号
+    Input Text     stackHealthPort-0  80
 
 Add Command
     Input Text     stackCMD    ${CMD TEXT}

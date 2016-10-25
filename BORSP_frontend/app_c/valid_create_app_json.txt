@@ -21,17 +21,23 @@ Verify Json Template    [Arguments]   ${template}
     #切换到json模式
     Click And Wait    css=md-tab-item:nth-child(2)
     #试试看
-    Click And Wait    stackTrySee
+    Click Element     stackTrySee
     Click And Wait    ${template}
+    #去表单模式选择集群
+    Click And Wait    css=md-tab-item:nth-child(1) 
+    Click Element     //*[@name="staticForm"]/div/div/div/md-select
+    Click And Wait    //*[@value="clustermmj"]
+    #切换到json模式
+    Click And Wait    css=md-tab-item:nth-child(2)
     #等待应用发布
     Click And Wait    stackJsonCreate
     Sleep   ${SLEEP LONG TIME} 
     #验证应用是否部署成功
     ${name}   Run Keyword If     '${template}' == 'stackSimpleModel'   set variable   simple-template
-    ...       ELSE    set variable    advanced-template
+    ...       ELSE    set variable  advanced-template
     ${app name} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Be Equal As Strings   ${app name}     ${name}
-    ${app status} =   Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[3]
-    Should Be Equal As Strings   ${app status}   Running
+    Should Be Equal As Strings    ${app name}     ${name}
+    ${app status} =   Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+    Should Be Equal As Strings    ${app status}   Running
     #删除该应用（避免垃圾数据）
     Delete App From Button

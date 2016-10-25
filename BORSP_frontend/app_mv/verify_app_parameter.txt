@@ -23,7 +23,7 @@ app_m_5-7,9-11,15-21,23
     #改名、输入高级设置
     ${name} =        Generate Name
     Input Text       stackAppName    ${name}
-    Input Advanced App      1100
+    Input Advanced App      11100
     #等待应用发布
     Click And Wait   stackFormCreate
     Sleep  ${SLEEP LONG TIME}
@@ -166,6 +166,4 @@ Verify Debug
     #Debug信息
     Click And Wait  css=md-tab-item:nth-child(3)
     Page Should Contain    Failed to run 'docker -H unix:///var/run/docker.sock pull nginx:latestt'
-
-
 

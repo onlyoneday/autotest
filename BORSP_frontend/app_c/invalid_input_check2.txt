@@ -15,7 +15,9 @@ app_c_18-2           stackEnvsValue0        中文
 app_c_19             stackDockerKey-0       中文
 app_c_19-2           stackDockerValue-0     中文
 app_c_20             stackTimeoutSeconds-0  Invalid
-app_c_20-2           stackPortIndex-0       Invalid 
+app_c_20-2           stackPortIndex-0       Invalid
+app_c_34             //*[@name='portMappings']/input[1]  Invalid
+app_c_34-2           //*[@name='portMappings']/input[1]  Invalid 
 
 *** Keywords ***
 
@@ -23,7 +25,7 @@ Input Check2  [Arguments]  ${input}   ${text}
     #输入最简参数
     Input Simple App
     #输入高级设置
-    Input Advanced App  1110
+    Input Advanced App  11110
     #输入异常内容
     Input Text  ${input}  ${text}
     #验证

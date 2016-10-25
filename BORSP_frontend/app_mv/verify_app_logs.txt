@@ -14,9 +14,9 @@ app_m_12
     #新建应用
     Click And Wait  stackCreate
     #输入最简参数
-    ${name} =   Input Simple App
+    ${name} =       Input Simple App
     #输入高级设置
-    Input Advanced App    0001
+    Input Advanced App    00001
     #等待应用发布
     Click And Wait  stackFormCreate
     #验证logs
@@ -31,13 +31,13 @@ Verify Log
     Sleep  ${SLEEP LONG TIME}
     #转到配置tab
     Click And Wait  css=md-tab-item:nth-child(2)
-    ${cmd} =   Get Text   css=div.flex-75 > div > dl:nth-child(5) > dd
-    Should Be Equal As Strings   ${cmd}   ${CMD TEXT} 
+    ${cmd} =        Get Text     css=div.flex-75 > div > dl:nth-child(5) > dd
+    Should Be Equal As Strings   ${cmd}   ${CMD TEXT}
     #转到日志tab
     Click Element   css=md-tab-item:nth-child(4)
     Wait Until Page Contains     BORSP
-    ${logrow0} =    Get Matching Xpath Count  //*[@id='appLog']/ul/li[*]
+    ${logrow0} =    Get Matching Xpath Count  //*[@id='serviceLog']/ul/li[*]
     Should Be Equal As Strings   ${logrow0}   10
     Sleep   10
-    ${logrow1} =    Get Matching Xpath Count  //*[@id='appLog']/ul/li[*]
+    ${logrow1} =    Get Matching Xpath Count  //*[@id='serviceLog']/ul/li[*]
     Should Be Equal As Strings   ${logrow1}   11

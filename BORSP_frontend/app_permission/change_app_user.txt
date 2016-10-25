@@ -10,9 +10,9 @@ Suite Teardown  Close All Browsers
 
 Create App Before Testing
 	Login Mmj 
-    Go To Page          ${APP_CREATE URL} 
-    Create App          appmmj  ${MMJ CLUSTER}
-    Click And Wait      stackFormCreate
+    Go To Page        ${APP_CREATE URL} 
+    Create App        appmmj  ${MMJ CLUSTER}
+    Click And Wait    stackFormCreate
 
 #组管理员-修改所属用户
 G-147

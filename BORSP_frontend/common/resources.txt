@@ -80,8 +80,8 @@ Go To Page
 
 Click And Wait  
     [Arguments]  ${ELEMENT}
-    Click Element   ${ELEMENT}
-    Sleep   ${SLEEP TIME} 
+    Click Element  ${ELEMENT}
+    Sleep   ${SLEEP TIME}
 
 Get Lower String
     ${Random} =    Generate Random String    6

@@ -12,44 +12,43 @@ Suite Teardown  Close All Browsers
 app_m_4,22
     #创建应用
     Click And Wait  stackCreate
-    ${app name} =   Input Simple App
+    ${name} =       Input Simple App
     #等待应用发布
     Click And Wait  stackFormCreate   
     #验证应用是否部署成功
-    ${apname} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Be Equal As Strings   ${apname}   ${app name}
-    ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
+    ${apname} =     Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Contain  ${apname}   ${name}
+    ${status} =     Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[4]
     Should Be Equal As Strings   ${status}   Running
     #更新应用
-    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[8]/md-menu/button
+    Mouse Up        //*[@id='stackListApp']/tbody/tr[1]/td[8]
     Click And Wait  stackListUpdate0
     #打开高级设置
-    Input Advanced App  0001
+    Input Advanced App  00001
     #等待应用更新
     Click And Wait  stackFormUpdate
     #验证应用是否部署成功
-    ${apname} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Be Equal As Strings   ${apname}   ${app name}
-    ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
-    Should Be Equal As Strings   ${status}   Running
+    ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Contain  ${apname}   ${name}
+    ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+    Should Be Equal As Strings  ${status}   Running
     #停止应用
+    Mouse Up        //*[@id='stackListApp']/tbody/tr[1]/td[8]
     Click And Wait  stackListSuspended0
     #验证应用是否停止
-    ${apname} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Be Equal As Strings   ${apname}   ${app name}
-    ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
-    Should Be Equal As Strings   ${status}   Suspended
+    ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Contain  ${apname}   ${name}
+    ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+    Should Be Equal As Strings  ${status}   Suspended
     #扩展应用
+    Mouse Up        //*[@id='stackListApp']/tbody/tr[1]/td[8]
     Click Element   stackListExtend0
-    Input Text      name=containerNum  1
+    Input Text      name=containerNum   1
     Click And Wait  css=md-dialog-actions > button:nth-child(3)
     #验证应用是否扩展成功
-    ${apname} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Be Equal As Strings   ${apname}   ${app name}
-    ${status} =  Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[3]
-    Should Be Equal As Strings   ${status}   Running
+    ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Contain  ${apname}   ${name}
+    ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+    Should Be Equal As Strings  ${status}   Running
     #删除该应用（避免垃圾数据）
     Delete App From Button
-
-
-

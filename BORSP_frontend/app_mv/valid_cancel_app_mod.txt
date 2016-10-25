@@ -13,39 +13,32 @@ app_m_37
     #新建应用
     Click And Wait  stackCreate
     #输入最简参数
-    ${name} =    Input Simple App
+    ${name} =       Input Simple App
     #等待应用发布
     Click And Wait  stackFormCreate
-    ${time1} =   Get Text  xpath=//*[@id='stackListApp']/tbody/tr[1]/td[4]
+    ${time1} =      Get Text  //*[@id='stackListApp']/tbody/tr[1]/td[7]
     #更新应用
-    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[8]/md-menu/button
+    Mouse Up        //*[@id='stackListApp']/tbody/tr[1]/td[8]
     Click And Wait  stackListUpdate0
     #更新CPU
     Input Text      stackCpus   0.3
     #点击取消
     Click And Wait  stackFormCancel
     #验证应用是否更新（时间）
-    ${index} =    Get Matching Xpath Count   //*[@id="stackListApp"]/tbody/tr[*]
-    :FOR    ${li}   IN RANGE   ${index} 
-    \    ${li} =    Evaluate   ${li} + 1
-    \    ${path} =  Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${li}'+']/td[1]'
-    \    ${app name} =   Get Text   ${path}
-    \    Run Keyword If   '${app name}' == '${name}'    Not Update  ${li}  ${time1}
+    ${index} =      Get App Index  ${name}
+    Not Update      ${index}   ${time1}
 
-*** Keywords ***
-
+*** Keywords *** 
 Not Update    [Arguments]   ${i}   ${time}    
     #验证应用是否更新（CPU）
-    ${patht} =  Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${i}'+']/td[4]'
-    ${time2} =  Get Text    ${patht}
-    Should Be Equal As Strings    ${time2}   ${time} 
-    ${patha} =  Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${i}'+']/td[1]/a'
-    Click And Wait  xpath=${patha}
-    Click And Wait  css=md-tab-item:nth-child(2)
-    ${cpu} =    Get Text   css=div.flex-75 > div > dl:nth-child(2) > dd
-    Should Be Equal As Strings    ${cpu}    0.2
+    ${patht} =      Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${i}'+']/td[7]'
+    ${time2} =      Get Text    ${patht}
+    Should Be Equal As Strings  ${time2}  ${time} 
+    ${patha} =      Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${i}'+']/td[1]/a'
+    Click And Wait  ${patha}
+    Click And Wait  css=md-tab-item:nth-child(2) 
+    ${cpu} =        Get Text    css=div.flex-75 > div > dl:nth-child(2) > dd
+    Should Be Equal As Strings  ${cpu}    0.2
     #删除该应用（避免垃圾数据）
     Delete App From Detail
-    Exit For Loop
 
-    

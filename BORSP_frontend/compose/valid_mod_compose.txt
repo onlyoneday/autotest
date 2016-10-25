@@ -20,10 +20,10 @@ compose_10
     ${task1} =   Get Text        //*[@id='rolexStackServices']/tbody/tr[1]/td[2]
     ${run} =   Get Substring     ${task1}   0    1
     ${sum} =   Get Substring     ${task1}   2
-    Should Be Equal As Strings   ${run}    ${sum}
+    Should Be Equal As Strings   ${run}     ${sum}
     #修改任务数
     Click Element   upServiceScale0
-    Input Text      rolex-scale    2
+    Input Text      rolex-scale  2
     Click And Wait  rolex-confirm
     #验证编排是否扩展成功
     ${task1} =   Get Text    //*[@id='rolexStackServices']/tbody/tr[1]/td[2]

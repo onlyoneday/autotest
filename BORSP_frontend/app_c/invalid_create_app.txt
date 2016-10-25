@@ -15,8 +15,8 @@ G-135
     Input Simple App
     Clear Element Text    stackAppName
     Clear Element Text    stackImageAddress
-    Result Web            div:nth-child(1) > div.layout-column.flex-50 > p:nth-child(2) > small  ${message1}
-    Result Web            div:nth-child(2) > div.layout-column.flex-50 > p:nth-child(2) > small  ${message2}
+    Result Web            div:nth-child(1) > div.layout-column > p:nth-child(2)  ${message1}
+    Result Web            div:nth-child(2) > div.layout-column > p  ${message2}
     #JSON模式
     Click Element         css=md-tab-item:nth-child(2)
     Result Api            stackJsonCreate    ${message31}

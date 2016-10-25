@@ -61,10 +61,10 @@ D-141
 
 *** Keywords ***
 Deploy App
-	[Arguments]         ${name}  ${cluster}
-    Go To Page          ${APP_CREATE URL} 
-    Create App          ${name}  ${cluster}
-    Click And Wait      stackFormCreate
+	[Arguments]          ${name}  ${cluster}
+    Go To Page           ${APP_CREATE URL} 
+    Create App           ${name}  ${cluster}
+    Click And Wait       stackFormCreate
 
 Super Check App
 	Go To Page           ${APP_ALL URL}

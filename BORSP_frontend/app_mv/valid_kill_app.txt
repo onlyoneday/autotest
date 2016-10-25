@@ -12,33 +12,31 @@ Library         DateTime
 
 app_m_5,8
     #新建应用
-    Click And Wait    stackCreate
+    Click And Wait      stackCreate
     #输入最简参数
-    ${name} =         Input Simple App
+    ${name} =           Input Simple App
+    Input Advanced App  10000
     #更新容器个数
-    Input Text        stackInstanceNumber   2   
+    Input Text          stackInstanceNumber   2   
     #等待应用发布
-    Click And Wait    stackFormCreate
+    Click And Wait      stackFormCreate
     Sleep  ${SLEEP LONG TIME} 
     #跳转到详情页面
-    Click And Wait    xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
+    Click And Wait    //*[@id='stackListApp']/tbody/tr[1]/td[1]/a
     #KILL
     Click And Wait    stackInstanceRefresh
-    Click Element     stackSelectInstance0
+    Click Element     /*[@id='stackInstanceList']/tbody/tr/td[1]/md-checkbox
     Click And Wait    stackInstanceKilTack
-    Click And Wait    css=.md-dialog-container.ng-scope > md-dialog > md-dialog-actions > button:nth-child(2)
+    Click And Wait    css=md-dialog-actions > button:nth-child(2)
     ${index} =        Get Matching Xpath Count   //*[@id="stackInstanceList"]/tbody/tr[*] 
     Should Be Equal   ${index}   2
     #KILL&SCALE
     Click And Wait    stackInstanceRefresh
-    Click Element     stackSelectInstance0
+    Click Element     /*[@id='stackInstanceList']/tbody/tr/td[1]/md-checkbox
     Click And Wait    stackInstanceKilOrTack
-    Click And Wait    css=.md-dialog-container.ng-scope > md-dialog > md-dialog-actions > button:nth-child(2)
+    Click And Wait    css=md-dialog-actions > button:nth-child(2)
     ${index} =        Get Matching Xpath Count   //*[@id="stackInstanceList"]/tbody/tr[*] 
     Should Be Equal   ${index}   1
     #删除该应用（避免垃圾数据）
     Delete App From Detail
-
-
-
 

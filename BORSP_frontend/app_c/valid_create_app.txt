@@ -10,12 +10,12 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***   Network     forceImage    edhc     status
 
-app_c_02,04,06,12    ${EMPTY}    ${EMPTY}      0010     Deploying
-app_c_05,07,09-11    stackHost   image         1101     Running
+app_c_02,04,06,12    ${EMPTY}    ${EMPTY}      10010     Deploying
+app_c_05,07,09-11    stackHost   image         01101     Running
 
 *** Keywords ***
 
-Deploy App  [Arguments]   ${network}   ${forceImage}   ${edhc}   ${status}   
+Deploy App  [Arguments]   ${network}   ${forceImage}   ${aedhc}   ${status}   
     #新建应用
     Click And Wait    stackCreate
     #输入最简参数
@@ -30,9 +30,9 @@ Deploy App  [Arguments]   ${network}   ${forceImage}   ${edhc}   ${status}
     Click And Wait    stackFormCreate
     Sleep    ${SLEEP LONG TIME} 
     #验证应用是否部署成功
-    ${app name} =     Get Text   //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Be Equal As Strings   ${app name}     ${name}
-    ${app status} =   Get Text   //*[@id="stackListApp"]/tbody/tr[1]/td[3]
-    Should Be Equal As Strings   ${app status}   ${status}
+    ${app name} =     Get Text     //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Contain    ${app name}  ${name}
+    ${app status} =   Get Text     //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+    Should Be Equal As Strings     ${app status}   ${status}
     #删除该应用（避免垃圾数据）
     Delete App From Button
