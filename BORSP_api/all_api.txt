@@ -37,6 +37,13 @@
 |    | log | ${resp.text} |
 |    | [Return] | ${resp} |
 
+| Get App List |
+|    | [Arguments] | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Get Request | shurenyun | /v1/apps | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
 | Delete Cluster |
 |    | [Arguments] | ${clusterid} | ${headers} |
 |    | Create Session | shurenyun | ${SERVER} |
