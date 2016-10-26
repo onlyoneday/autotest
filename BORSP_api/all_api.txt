@@ -44,6 +44,49 @@
 |    | log | ${resp.text} |
 |    | [Return] | ${resp} |
 
+| Get App By Appid |
+|    | [Arguments] | ${appid} | ${headers} |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appid}' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Containers By Appid |
+|    | [Arguments] | ${appid} | ${headers} |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appid}'+'/containers' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Tasks By Appid |
+|    | [Arguments] | ${appid} | ${headers} |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appid}'+'/tasks' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Get Versions By Appid |
+|    | [Arguments] | ${appid} | ${headers} |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appid}'+'/versions' |
+|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Create App |
+|    | [Arguments] | ${data} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${resp}= | Post Request | shurenyun | /v1/apps | data=${data} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Update App |
+|    | [Arguments] | ${appid} | ${data} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/apps/'+'${appid}' |
+|    | ${resp}= | Put Request | shurenyun | ${path} | data=${data} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
 | Delete Cluster |
 |    | [Arguments] | ${clusterid} | ${headers} |
 |    | Create Session | shurenyun | ${SERVER} |
