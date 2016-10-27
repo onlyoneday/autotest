@@ -80,8 +80,8 @@ G-047/055
 
 #删除有应用的组成员
 G-039
-	Delete User        ${TEST ID}
-	Go To Page         ${APP_ALL URL}
+	Delete User       ${TEST ID}
+	Go To Page        ${APP_ALL URL}
 	Delete App From Button
 
 *** Keywords ***

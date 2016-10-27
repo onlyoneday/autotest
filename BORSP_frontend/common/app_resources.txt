@@ -9,7 +9,7 @@ Resource       ../common/resources.txt
 
 Delete App From Button
     #从应用列表的Button删除应用
-    Mouse Up        //*[@id='stackListApp']/tbody/tr[1]/td[8]
+    Click Element   //*[@id='stackListApp']/tbody/tr[1]/td[8]
     Click Element   stackListDelete0
     Click And Wait  css=button:nth-child(2)>span.ng-binding
 
@@ -23,7 +23,7 @@ Delete App By Name
     [Arguments]     ${appname}
     ${index} =      Get App Index    ${appname}
     ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
-    Mouse Up        ${path}
+    Click Element   ${path}
     ${index} =      Evaluate   ${index}-1
     ${button} =     Evaluate  'stackListDelete'+'${index}'
     Click Element   ${button}
@@ -33,7 +33,7 @@ Update App By Name
     [Arguments]     ${appname}
     ${index} =      Get App Index    ${appname}
     ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
-    Mouse Up        ${path}
+    Click Element   ${path}
     ${index} =      Evaluate   ${index}-1
     ${button} =     Evaluate  'stackListUpdate'+'${index}'
     Click And Wait  ${button}
@@ -42,11 +42,29 @@ Change App Owner
     [Arguments]     ${appname}
     ${index} =      Get App Index    ${appname}
     ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
-    Mouse Up        ${path}
+    Click Element   ${path}
     ${index} =      Evaluate   ${index}-1
     ${button} =     Evaluate  'stackLisChangeAppUser'+'${index}'
     Click And Wait  ${button}
 
+Suspended App By Name
+    [Arguments]     ${appname}
+    ${index} =      Get App Index    ${appname}
+    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
+    Click Element   ${path}
+    ${index} =      Evaluate   ${index}-1
+    ${button} =     Evaluate  'stackListSuspended'+'${index}'
+    Click And Wait  ${button}
+
+Extend App By Name
+    [Arguments]     ${appname}
+    ${index} =      Get App Index    ${appname}
+    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
+    Click Element   ${path}
+    ${index} =      Evaluate   ${index}-1
+    ${button} =     Evaluate  'stackListExtend'+'${index}'
+    Click And Wait  ${button}
+    
 Get App Index
     [Arguments]     ${name}
     ${row} =        Get Matching Xpath Count    //*[@id='stackListApp']/tbody/tr[*]

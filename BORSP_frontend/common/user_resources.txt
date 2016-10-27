@@ -97,6 +97,8 @@ Enable User
 
 Get User Index
     [Arguments]     ${name}
+    Input Text      stackListSearch    ${name}
+    Sleep  2
     ${row} =        Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
     :FOR    ${index}   IN RANGE   ${row}
     \       ${li} =    Evaluate   ${row}-${index}

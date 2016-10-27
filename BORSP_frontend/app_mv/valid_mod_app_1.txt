@@ -19,10 +19,9 @@ app_m_4,22
     ${apname} =     Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
     Should Contain  ${apname}   ${name}
     ${status} =     Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[4]
-    Should Be Equal As Strings   ${status}   Running
+    Should Be Equal As Strings  ${status}   Running
     #更新应用
-    Mouse Up        //*[@id='stackListApp']/tbody/tr[1]/td[8]
-    Click And Wait  stackListUpdate0
+    Update App By Name  ${name}
     #打开高级设置
     Input Advanced App  00001
     #等待应用更新
@@ -33,16 +32,14 @@ app_m_4,22
     ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
     Should Be Equal As Strings  ${status}   Running
     #停止应用
-    Mouse Up        //*[@id='stackListApp']/tbody/tr[1]/td[8]
-    Click And Wait  stackListSuspended0
+    Suspended App By Name       ${name}
     #验证应用是否停止
     ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
     Should Contain  ${apname}   ${name}
     ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
     Should Be Equal As Strings  ${status}   Suspended
     #扩展应用
-    Mouse Up        //*[@id='stackListApp']/tbody/tr[1]/td[8]
-    Click Element   stackListExtend0
+    Extend App By Name  ${name}
     Input Text      name=containerNum   1
     Click And Wait  css=md-dialog-actions > button:nth-child(3)
     #验证应用是否扩展成功

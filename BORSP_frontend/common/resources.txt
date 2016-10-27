@@ -32,7 +32,7 @@ ${USERNAME FIELD}        //input[@name="userName"]
 ${PASSWORD FIELD}        //input[@name="Password"]
 
 #--------------------USER--------------------
-${VALID USER}            admin@dataman-inc.com
+${VALID USER}            administratormmj
 ${VALID PASSWD}          Dataman1234
 
 ${MMJ USER}              mmj
@@ -132,9 +132,6 @@ Login
 Choose Group
     [Arguments]     ${GROUP} 
     Click Element   select_value_label_0
-    ${LABLE} =      Evaluate   '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${GROUP}"'+')]'
-    Click Element   ${LABLE}
-    Sleep  2
 
 Logout
     Click Button  open-user-menu
@@ -142,9 +139,3 @@ Logout
     Sleep  ${SLEEP TIME} 
 
     
-
-
-
-
-
-
