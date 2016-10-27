@@ -12,16 +12,14 @@ Suite Teardown  Close All Browsers
 #必填项不填
 G-110
 	Add Cluster Node     ${MMJ CLUSTER}
-	Click Element        md-dialog-actions > button:nth-child(3)
+	Click Element        css=md-dialog-actions > button:nth-child(3)
 	Page Should Contain  请选择主机
 
 #添加主机
 G-107
-	${row1} =            Get Matching Xpath Count    //table/tbody/tr[*]
 	Add Cluster Node     ${MMJ CLUSTER}
-	Click Element        md-dialog-actions > button:nth-child(3)
-	${row1} =            Get Matching Xpath Count    //table/tbody/tr[*]
-	Return From Keyword If  ${row2} > ${row1}  Fail
+	Select Cluster Node
+	Page Should Contain  正在添加主机
 
 Delete Node After Testing
-	Delete Node  0
+	Delete Node   1

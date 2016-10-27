@@ -14,7 +14,7 @@ Add Node Before Testing
 	Login Adm
 	#添加主机
 	Add Cluster Node  ${MMJ CLUSTER}
-	Click Element     md-dialog-actions > button:nth-child(3)
+	Select Cluster Node
 	#将用户加入多个用户组
 	Go To Page        ${USER_MANG URL}
 	Manage Group      test         2

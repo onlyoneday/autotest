@@ -14,9 +14,9 @@ cluster-2,4-5,10-11
 	${index} =      Get Matching Xpath Count   //*[@id="node-list"]/tbody/tr[*] 
 	:FOR    ${li}   IN RANGE   ${index}
 	\   ${li} =     Evaluate   ${li} + 1
-	\   ${path3} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[3]'
-	\   ${path4} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[4]'
-	\   ${path6} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[6]'
+	\   ${path3} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[2]'
+	\   ${path4} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[3]'
+	\   ${path6} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[5]'
 	\   ${role} =    Get Text   ${path3}
 	\	${status} =  Get Text   ${path4}
 	\	${mesos} =   Get Text   ${path6}
@@ -34,11 +34,11 @@ cluster-2,4-5,10-11
     Page Should Contain   Slave
     #返回主机管理标签
     Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(1)
-    ${master ip} =  Get Text   xpath=//*[@id='node-list']/tbody/tr[1]/td[2]
+    ${master ip} =  Get Text   xpath=//*[@id='node-list']/tbody/tr[1]/td[1]
     #跳转到容器列表
     Click And Wait  xpath=//*[@id='node-list']/tbody/tr[1]/td[1]/a
     #验证header信息
-    ${ip add} =     Get Text   node-detail-ip
+    ${ip add} =     Get Text   //h2
     ${system} =     Get Text   node-detail-system
     ${container} =  Get Text   node-detail-container-running
     ${count} =      Get Matching Xpath Count   //*[@id="node-container-list"]/tbody/tr[*] 

@@ -18,7 +18,7 @@ G-090
 G-093
 	Input Cluster       c  ${MMJ GROUP}  ${EMPTY}
 	Clear Element text  input-clustername
-	Result Web          div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(2)  ${message1}
+	Result Web          div.layout-column > p:nth-child(2)  ${message1}
 	Element Should Be Disabled       ${button}
 
 #集群名称重复
@@ -29,13 +29,13 @@ G-094
 #输入上边界外侧
 G-095
 	Input Cluster       ${STR 256}   ${MMJ GROUP}  ${STR 256}
-	Result Web          div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(3)  ${message0}
-	Result Web          div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(3)  ${message0}
+	Result Web          div:nth-child(1) > div.layout-column > p:nth-child(3)  ${message0}
+	Result Web          div:nth-child(3) > div.layout-column > p  ${message0}
 	Element Should Be Disabled       ${button}
 
 *** Variables ***
 ${message0}        最大长度255个字符
 ${message1}        名称不能为空
-${message2}		   invalid GroupId
+${message2}		   record not found
 ${message3}		   Error 1062
 ${button}          submit-create-cluster

@@ -6,12 +6,12 @@ Library        String
 
 *** Variables ***
 
-${SERVER}                http://192.168.1.155:9999/ui
+${SERVER}                http://192.168.1.155:5013/ui
 ${BROWSER}               Firefox
 #${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
-${SLEEP TIME}            6
-${SLEEP LONG TIME}       60
+${SLEEP TIME}            5
+${SLEEP LONG TIME}       30
 
 #--------------------URL--------------------
 ${LOGIN URL}             ${SERVER}/auth/login
@@ -23,6 +23,7 @@ ${NODE URL}              ${SERVER}/node/list&clusterInfo
 ${RSTACK URL}            ${SERVER}/rolexStack/list
 ${USER_ME URL}           ${SERVER}/user/aboutme
 ${USER_PWD URL}          ${SERVER}/user/password
+${USER_RG URL}          ${SERVER}//user/registry
 ${USER_MANU URL}         ${SERVER}/user-manage/list/user
 ${USER_MANG URL}         ${SERVER}/user-manage/list/group
 
@@ -47,11 +48,16 @@ ${GM DBID}               123
 
 ${SUPER}                 SuperGroup
 
-${TEST ID}               UserForEditing
-${TEST EML}              UserForEditing@u.com
-${TEST GRP}              GroupForEditing
-${TEST CLU}              ClusterForEditing
+${TEST ID}               userForEditing
+${TEST EML}              userforediting@u.com
+${TEST GRP}              groupforediting
+${TEST CLU}              clusterforediting
 ${TEST APP}              applicationforediting
+
+${RG IMAGE}              demoregistry.dataman-inc.com/zhfang/blackicebird-2048
+${RG ADD}                demoregistry.dataman-inc.com
+${RG NAME}               zhfang
+${RG PWD}                Fzh12345
 
 #--------------------STRING------------------
 ${CMD TEXT}              while [ true ]; do echo BORSP; sleep 10; done
@@ -60,6 +66,7 @@ ${STR 7}                 M012345
 ${STR 8}                 M0123456
 ${STR 16}                M012345678901234
 ${STR 17}                M0123456789012345
+${STR 49}                0123456789012345678901234567890123456789012345678
 
 ${STR 255}               012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234
 ${STR 256}               0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
@@ -114,7 +121,7 @@ Open Browser And Login Mmj
 
 Login Adm
     Login   ${VALID USER}   ${VALID PASSWD} 
-    Choose Group    ${SUPER} 
+    #Choose Group    ${SUPER} 
 
 Login Gm
     Login   ${GM USER}   ${GM PASSWD}    
@@ -132,6 +139,7 @@ Login
 Choose Group
     [Arguments]     ${GROUP} 
     Click Element   select_value_label_0
+    Click Element   ${GROUP}
 
 Logout
     Click Button  open-user-menu

@@ -9,19 +9,20 @@ Resource       ../common/resources.txt
 
 Input Cluster
     [Arguments]   	${clustername}  ${group}  ${description}
-    Click And Wait  cluster-create
+    Click And Wait  //*[@id='cluster-create']
 	Input Text		input-clustername	 ${clustername}
 	Run Keyword If  '${group}' <> '${EMPTY}'    Select Cluster Group  ${group}
-	Input Text		clusterDesc          ${description}
+	Input Text		clusterDesc    ${description}
 
 Select Cluster Group
 	[Arguments]   	${group}
 	Click Element   select-userGroup
-	${path} =       Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${group}"'+')]'
+	${path} =       Evaluate   '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${group}"'+')]'
 	Click Element   ${path}
 
 Delete Cluster
 	[Arguments]     ${name}
+	Input Text		//input    ${name}
 	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
 	Click And Wait  ${link}
 	Click Element   delete-cluster
@@ -29,20 +30,21 @@ Delete Cluster
 
 Add Cluster Node
 	[Arguments]     ${name}
+	Input Text		//input    ${name}
+	Sleep   2
 	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
 	Click And Wait  ${link}
 	Click And Wait  add-cluster-node
 
 Select Cluster Node
-	Click Element   select_8
-	@{path} =       Get Webelements  //*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div
-	Click Element   ${path[1]}
-	Click And Wait  md-input-container:nth-child(2) 
+	Click Element   //md-input-container/md-select
+	Click Element   //*[@aria-hidden="false"]/md-select-menu/md-content/md-option[1]
+	Click Element   css=md-input-container:nth-child(2) > button
+	Click And Wait  css=md-dialog-actions > button:nth-child(3)
 
 Delete Node
 	[Arguments]     ${index}
-	${path} =       Evaluate   'nodeSelectInstance'+'${index}'
+	${path} =       Evaluate   'node-detail-list-del'+'${index}'
 	Click Element   ${path}
-	Click Element   cluster-nodes-delete  
 	Click And Wait  css=md-dialog > md-dialog-actions > button:nth-child(2) 
 

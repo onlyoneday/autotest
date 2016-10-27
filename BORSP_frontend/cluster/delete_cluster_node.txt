@@ -3,6 +3,7 @@
 Documentation   删除集群/主机
 Resource        ../common/resources.txt
 Resource        ../common/cluster_resources.txt
+Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Adm
 Test Setup      Go To Page   ${HOME URL}
 Suite Teardown  Close All Browsers
@@ -11,15 +12,14 @@ Suite Teardown  Close All Browsers
 
 Add Node Before Testing
 	Add Cluster Node  ${MMJ CLUSTER}
-	Click Element     css=md-dialog-actions > button:nth-child(3)
+	Select Cluster Node
+	#Sleep  ${SLEEP LONG TIME} 
 
 #集群上有主机无应用
 G-104
-	${link} =         Evaluate   '//section/header/h3/a[text()='+'"${MMJ CLUSTER}"'+']'
 	Click And Wait    ${link}
 	Click Element     delete-cluster
-	Click Element     css=md-dialog-actions > button:nth-child(2)
-	Page Should Contain  不能删除集群
+	Page Should Contain  集群内有主机的时候不能删除集群
 
 Deploy App Before Testing
 	Go To Page        ${APP_CREATE URL} 
@@ -28,29 +28,32 @@ Deploy App Before Testing
 
 #集群上有主机有应用
 G-105
-	${link} =         Evaluate   '//section/header/h3/a[text()='+'"${MMJ CLUSTER}"'+']'
 	Click And Wait    ${link}
 	Click Element     delete-cluster
-	Click Element     css=md-dialog-actions > button:nth-child(2)
-	Page Should Contain  不能删除集群
+	Page Should Contain  集群内有应用的时候不能删除集群
+	Page Should Contain  集群内有主机的时候不能删除集群
 
 #取消删除主机
 G-116
-	Click Element     nodeSelectInstance0
-	Click Element     cluster-nodes-delete 
+	Click And Wait    ${link}
+	Click Element     node-detail-list-del0
 	Click Element     css=md-dialog > md-dialog-actions > button:nth-child(1)
 	${row1} =         Get Matching Xpath Count    //table/tbody/tr[*]
-	Return From Keyword If   '${row1}' == ${0}    Fail
+	Run Keyword If    ${row1} == ${1}    Fail
 
 #删除任意集群的任意主机
 G-115
-	Delete Node  0
-	${row1} =         Get Matching Xpath Count    //table/tbody/tr[*]
-	Should Be Equal As Strings  ${row1}  0
+	Click And Wait    ${link}
+	Delete Node       1
+	${row2} =         Get Matching Xpath Count    //table/tbody/tr[*]
+	Should Be Equal As Strings  ${row2}  1
 
 Delete App After Testing
 	Go To Page        ${APP_MY URL} 
-	Delete App By Name   ${TEST APP} 
+	Delete App By Name  ${TEST APP} 
 
+*** Variables ***
+
+${link}		//section/header/h3/a[text()="clustermmj"]
 
 

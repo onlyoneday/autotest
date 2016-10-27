@@ -11,9 +11,9 @@ Suite Teardown  Close All Browsers
 
 #填写用户组/信息填写上边界值
 G-089/091
-	Input Cluster    c  test  c
+	Input Cluster    c  test  ${EMPTY}
 	Click And Wait   submit-create-cluster
-	Result Group	 c  test  c
+	Result Group	 c  test  ${EMPTY}
 
 #信息填写下边界值/删除无主机无应用集群
 G-092
@@ -27,9 +27,9 @@ Result Group
 	[Arguments]     ${name}    ${group}    ${description}
 	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
 	Click And Wait  ${link}
-	${cdscp} =      Get Text    css=div.info.flex > dl:nth-child(3) > dd
+	${cdscp} =      Get Text    css=dl:nth-child(4) > dd
 	Should Be Equal As Strings  ${cdscp}   ${description}  
 	#删除
-	Click Element   delete-cluster
+	Click And Wait  delete-cluster
 	Click And Wait  css=md-dialog-actions > button:nth-child(2)
 	
