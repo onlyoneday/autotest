@@ -8,10 +8,10 @@ Test Setup      Go To Page   ${APP_MY URL}
 Test Template   Deploy App
 Suite Teardown  Close All Browsers
 
-*** Test Cases ***   Network     forceImage    edhc     status
+*** Test Cases ***       Network     forceImage    edhc     status
 
-app_c_02,04,06,12    ${EMPTY}    ${EMPTY}      10010     Deploying
-app_c_05,07,09-11    stackHost   image         01101     Running
+app_c_02,04,06,12,G-201  ${EMPTY}    ${EMPTY}      10010     Deploying
+app_c_05,07,09-11        stackHost   image         01101     Running
 
 *** Keywords ***
 

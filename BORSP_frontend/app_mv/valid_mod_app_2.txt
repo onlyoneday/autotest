@@ -14,7 +14,8 @@ app_m_14
     Click And Wait  stackCreate
     ${name} =       Input Simple App
     #等待应用发布
-    Click And Wait  stackFormCreate   
+    Click And Wait  stackFormCreate
+    Sleep  ${SLEEP LONG TIME} 
     #验证应用是否部署成功
     ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
     Should Contain  ${apname}   ${name}
@@ -25,9 +26,10 @@ app_m_14
     Click And Wait  stackDetailMenu
     Click And Wait  stackDetailUpdate  
     #更新CPU
-    Input Text      stackCpus   0.3
+    Input Text      stackCpus   0.1
     #等待应用更新
     Click And Wait  stackFormUpdate
+    Sleep  ${SLEEP LONG TIME} 
     #验证应用是否部署
     ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
     Should Contain  ${apname}   ${name}
@@ -45,6 +47,7 @@ app_m_14
     Click And Wait  stackDetailExtend
     Input Text      name=containerNum   1
     Click And Wait  css=md-dialog-actions > button:nth-child(3)
+    Sleep  ${SLEEP LONG TIME}
     #验证应用是否扩展成功
     ${status} =     Get Text    css=dl:nth-child(1) > dd
     Should Be Equal As Strings  ${status}   Running

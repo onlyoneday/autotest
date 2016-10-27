@@ -19,12 +19,22 @@ Delete App From Detail
     Click And Wait  stackDetailDelete
     Click And Wait  css=button:nth-child(2)>span.ng-binding
 
+
+Suspended App By Name
+    [Arguments]     ${appname}
+    ${index} =      Get App Index    ${appname}
+    ${index} =      Evaluate   ${index}-1
+    #${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
+    #Click Element   ${path}
+    ${button} =     Evaluate  'stackListSuspended'+'${index}'
+    Click And Wait  ${button}
+
 Delete App By Name
     [Arguments]     ${appname}
     ${index} =      Get App Index    ${appname}
-    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
-    Click Element   ${path}
     ${index} =      Evaluate   ${index}-1
+    ${menu} =       Evaluate  'node-list-menu-'+'${index}'
+    Click Element   ${menu}
     ${button} =     Evaluate  'stackListDelete'+'${index}'
     Click Element   ${button}
     Click And Wait  css=button:nth-child(2)>span.ng-binding
@@ -32,41 +42,33 @@ Delete App By Name
 Update App By Name
     [Arguments]     ${appname}
     ${index} =      Get App Index    ${appname}
-    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
-    Click Element   ${path}
     ${index} =      Evaluate   ${index}-1
+    ${menu} =       Evaluate  'node-list-menu-'+'${index}'
+    Click Element   ${menu}
     ${button} =     Evaluate  'stackListUpdate'+'${index}'
     Click And Wait  ${button}
 
 Change App Owner
     [Arguments]     ${appname}
     ${index} =      Get App Index    ${appname}
-    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
-    Click Element   ${path}
     ${index} =      Evaluate   ${index}-1
+    ${menu} =       Evaluate  'node-list-menu-'+'${index}'
+    Click Element   ${menu}
     ${button} =     Evaluate  'stackLisChangeAppUser'+'${index}'
-    Click And Wait  ${button}
-
-Suspended App By Name
-    [Arguments]     ${appname}
-    ${index} =      Get App Index    ${appname}
-    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
-    Click Element   ${path}
-    ${index} =      Evaluate   ${index}-1
-    ${button} =     Evaluate  'stackListSuspended'+'${index}'
     Click And Wait  ${button}
 
 Extend App By Name
     [Arguments]     ${appname}
     ${index} =      Get App Index    ${appname}
-    ${path} =       Evaluate  '//*[@id="stackListApp"]/tbody/tr['+'${index}'+']/td[8]'
-    Click Element   ${path}
     ${index} =      Evaluate   ${index}-1
+    ${menu} =       Evaluate  'node-list-menu-'+'${index}'
+    Click Element   ${menu}
     ${button} =     Evaluate  'stackListExtend'+'${index}'
     Click And Wait  ${button}
     
 Get App Index
     [Arguments]     ${name}
+    Input Text      stackListSearch  ${name}
     ${row} =        Get Matching Xpath Count    //*[@id='stackListApp']/tbody/tr[*]
     ${row} =        Evaluate  ${row}+1
     :FOR    ${index}      IN RANGE   1  ${row}
@@ -129,7 +131,7 @@ Add Address
     Input Text     //*[@name='portMappings']/input[1]   80
     Click Element  //*[@name='portMappings']/md-select
     Click Element  //*[@value='HTTP']
-    Input Text     //*[@name='portMappings']/input[2]   8080 
+    Input Text     //*[@name='portMappings']/input[2]   8681
 
 Add Environment
     Click Element  stackAddMountpoints

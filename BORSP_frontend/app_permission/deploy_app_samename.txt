@@ -1,6 +1,6 @@
 *** Settings ***
 
-Documentation   禁用的用户删除其所在用户组-启用后自动失去组身份
+Documentation   在不同集群发名称相同的应用
 Resource        ../common/resources.txt
 Resource        ../common/cluster_resources.txt
 Resource        ../common/app_resources.txt
@@ -17,13 +17,10 @@ Create Cluster Before Testing
 G-151
 	Go To Page      ${APP_CREATE URL} 
 	Create App      ${TEST APP}    ${MMJ CLUSTER}
-    Click Element	stackFormCreate
-    Sleep 0.5
-    Page Should Contain  创建成功
+    Click And Wait  stackFormCreate
     Go To Page		${APP_CREATE URL} 
     Create App      ${TEST APP}    ${TEST CLU}
-    Click Element	stackFormCreate
-    Page Should Contain  创建成功
+    Click And Wait  stackFormCreate
 
 Delete App Cluster After Testing
 	Go To Page      ${APP_ALL URL} 

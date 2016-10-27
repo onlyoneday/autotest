@@ -21,7 +21,7 @@ app_m_12
     Click And Wait  stackFormCreate
     #验证logs
     Click And Wait  xpath=//*[@id="stackListApp"]/tbody/tr[1]/td[1]/a
-    Verify Log 
+    #Verify Log 
     #删除该应用（避免垃圾数据）
     Delete App From Detail
 
