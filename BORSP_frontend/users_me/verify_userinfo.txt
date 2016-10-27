@@ -10,14 +10,14 @@ Suite Teardown  Close All Browsers
 #组管理员-查看个人信息
 G-006
 	Login Gm
-	Go To   ${USER_ME URL}
-	Verify User  groupmanager  groupmanager  gm@gm.com  test group manager  test  组管理员
+	Go To Page   ${USER_ME URL}
+	Verify User  groupmanager  groupmanager  gm@gm.com  test group manager  groupmmj  组管理员
 	
 #普通用户-查看个人信息
 G-008
 	Login Mmj
-	Go To   ${USER_ME URL}
-	Verify User  mmj  mmj  m@m.com  test user  test  组成员
+	Go To Page   ${USER_ME URL}
+	Verify User  mmj  mmj  m@m.com  test user  groupmmj  组成员
 
 *** Keywords ***
 Verify User
