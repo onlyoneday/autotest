@@ -78,7 +78,7 @@
 |    | Login | ${USERNAME} | ${PASSWORD} |
 |    | ${output}= | Execute Command | docker load < /root/alpine.tar &&docker run --name=test -d alpine:3.1 sh &&docker ps -a |
 |    | ${imageid}= | Evaluate | 'sha256:4d8dee4f28726c036f35eacd25ec6606d43e39a7252b2f8b328ac3c16509fab1' |
-|    | ${resp}= | Delete Image By Id | ${imageid} | ${nodeip} | ${testheaders1} |
+|    | ${resp}= | Delete Image By Id | ${imageid} | ${nodeip} | ${adminheaders} |
 |    | ${output}= | Execute Command | docker rm -f test |
 |    | Should Be Equal As Strings | ${resp.status_code} | 409 |
 

@@ -37,7 +37,7 @@
 
 | 集群管理-获取单个集群-集群不存在 |
 |    | [Tags] | 获取单个集群 |
-|    | ${resp}= | Get Cluster By Id | ${clusterid1} | ${adminheaders} |
+|    | ${resp}= | Get Cluster By Id | 999 | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 404 |
 
 | 集群管理-获得按vcluster分组的node列表-权限不足 |

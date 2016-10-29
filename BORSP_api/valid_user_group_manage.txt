@@ -12,82 +12,71 @@
 | *** Test Cases *** |
 | 用户管理-登录 |
 |    | [Tags] | 用户管理 |
-|    | Create Session | shurenyun | ${SERVER} |
 |    | ${data}= | Set Variable | {"userName":"${adminname}","password":"${adminpasswd}"} |
-|    | ${resp}= | Post Request | shurenyun | /v1/login | data=${data} |
+|    | ${resp}= | Login Sry | ${data} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | ${token}= | Evaluate | '${resp.json()['data']}' |
-|    | ${headers}= | Create Dictionary | Authorization=${token} |
-|    | Set Global Variable | ${headers} |
+|    | ${adminheaders}= | Create Dictionary | Authorization=${token} |
+|    | Set Global Variable | ${adminheaders} |
 
 | 用户组管理-超级管理员-创建用户组 |
 |    | [Tags] | 用户组管理 |
-|    | Create Session | ${domain} | ${SERVER} |
 |    | ${groupName}= | Get Randomstring |
-|    | ${CrarteGroup} = | Set Variable | {"name": "${groupName}" , "description": "cdscds"} |
-|    | ${resp}= | Post Request | ${domain} | /v1/groups | data=${CrarteGroup} | headers=${headers} |
-|    | log | ${resp.text} |
+|    | ${data} = | Set Variable | {"name": "${groupName}" , "description": "cdscds"} |
+|    | ${resp}= | Create User Group | ${data} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
-|    | ${GroupId}= | Evaluate | '${resp.json()['data']['id']}' |
-|    | Set Global Variable | ${GroupId} |
+|    | ${groupid}= | Evaluate | '${resp.json()['data']['id']}' |
+|    | Set Global Variable | ${groupid} |
 
 | 用户管理-超级管理员-创建用户 |
 |    | [Tags] | 用户管理 |
-|    | Create Session | shurenyun | ${SERVER} |
 |    | ${username}= | Get Randomstring |
 |    | Set Global Variable | ${username} |
 |    | ${email}= | Evaluate | '${username}'+ '@dataman-inc.com' |
-|    | ${Createuser}= | Set Variable | {"email":"${email}","password":"admin1234","title":"职位, 可不填","userName":"${username}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${GroupId},"role":"owner"}]} |
-|    | ${resp}= | Post Request | shurenyun | /v1/accounts | data=${Createuser} | headers=${headers} |
+|    | Set Global Variable | ${email} |
+|    | ${data}= | Set Variable | {"email":"${email}","password":"admin1234","title":"职位, 可不填","userName":"${username}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${groupid},"role":"owner"}]} |
+|    | ${resp}= | Create User | ${data} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户管理-获取当前用户信息 |
 |    | [Tags] | 用户管理 |
-|    | Create Session | shurenyun | ${SERVER} |
 |    | ${data} = | Set Variable | {"userName":"${username}","password":"admin1234"} |
-|    | ${resp}= | Post Request | shurenyun | /v1/login | data=${data} |
+|    | ${resp}= | Login Sry | ${data} |
 |    | ${testtoken}= | Evaluate | '${resp.json()['data']}' |
 |    | ${testheaders}= | Create Dictionary | Authorization=${testtoken} |
 |    | Set Global Variable | ${testheaders} |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${resp}= | Get Request | ${domain} | /v1/aboutme | headers=${testheaders} |
+|    | ${resp}= | Get Aboutme | ${testheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
-|    | ${UserId}= | Evaluate | '${resp.json()['data']['id']}' |
-|    | Set Global Variable | ${UserId} |
+|    | ${userid}= | Evaluate | '${resp.json()['data']['id']}' |
+|    | Set Global Variable | ${userid} |
 
 | 用户组管理-超级管理员-更新用户组 |
 |    | [Tags] | 用户组管理 |
 |    | Create Session | ${domain} | ${SERVER} |
-|    | ${groupName}= | Get Randomstring |
-|    | ${UpdateGroup} = | Set Variable | {"id":${GroupId},"name": "${groupName}" , "description": "cdscds"} |
-|    | ${resp}= | Put Request | ${domain} | /v1/groups | data=${UpdateGroup} | headers=${headers} |
+|    | ${groupname}= | Get Randomstring |
+|    | ${data} = | Set Variable | {"id":${groupid},"name": "${groupname}" , "description": "cdscds"} |
+|    | ${resp}= | Update User Group | ${data} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户组管理-超级管理员-获取所有用户组 |
 |    | [Tags] | 用户组管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${resp}= | Get Request | ${domain} | /v1/groups | headers=${headers} |
+|    | ${resp}= | Get All User Group | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户组管理-超级管理员-获取指定用户组 |
 |    | [Tags] | 用户组管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${path}= | Evaluate | c |
-|    | ${resp}= | GET Request | ${domain} | ${path} | headers=${headers} |
+|    | ${resp}= | Get User Group By Id | ${groupid} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户组管理-超级管理员-获取指定用户组的所有用户 |
 |    | [Tags] | 用户组管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${path}= | Evaluate | '/v1/groups/'+str(${GroupId})+'/accounts' |
-|    | ${resp}= | GET Request | ${domain} | ${path} | headers=${headers} |
+|    | ${resp}= | Get All User Group Accounts By Id | ${groupid} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户管理-修改密码 |
 |    | [Tags] | 用户管理 |
-|    | Create Session | ${domain} | ${SERVER} |
 |    | ${data} = | Set Variable | {"oldPassword":"admin1234","password":"admin12345"} |
-|    | ${resp}= | Put Request | ${domain} | /v1/password | data=${data} | headers=${testheaders} |
+|    | ${resp}= | Change Password | data=${data} | headers=${testheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | ${return.status_code}= | Test Login | ${username} | admin1234 |
 |    | Should Be Equal As Strings | ${return.status_code} | 400 |
@@ -96,92 +85,78 @@
 
 | 用户管理-超级管理员-更新用户 |
 |    | [Tags] | 用户管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${data} = | Set Variable | {"id":${UserId},"email":"test@admin.com","userName":"用户名填","name":"真实名"} |
-|    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId})+'/resetpassword' |
-|    | ${resp}= | Put Request | ${domain} | ${path} | data=${data} | headers=${headers} |
-|    | log | ${resp.json()} |
+|    | ${data} = | Set Variable | {"id":${userid},"email":"${email}","userName":"${username} ","name":"真实名"} |
+|    | ${resp}= | Update User | data=${data} | headers=${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户管理-超级管理员-重置密码 |
 |    | [Tags] | 用户管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${data} = | Set Variable | {"password": "123"} |
-|    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId})+'/resetpassword' |
-|    | ${resp}= | Put Request | ${domain} | ${path} | data=${data} | headers=${headers} |
+|    | ${data} = | Set Variable | {"password": "Fzh12345"} |
+|    | ${resp}= | Reset Password | ${userid} | ${data} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | ${return.status_code}= | Test Login | ${username} | admin12345 |
 |    | Should Be Equal As Strings | ${return.status_code} | 400 |
-|    | ${return.status_code}= | Test Login | ${username} | 123 |
+|    | ${return.status_code}= | Test Login | ${username} | Fzh12345 |
 |    | Should Be Equal As Strings | ${return.status_code} | 200 |
 
 | 用户管理-超级管理员-加入一个用户组 |
 |    | [Tags] | 用户组管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${groupName}= | Get Randomstring |
-|    | ${CrarteGroup} = | Set Variable | {"name": "${groupName}" , "description": "cdscds"} |
-|    | ${resp}= | Post Request | ${domain} | /v1/groups | data=${CrarteGroup} | headers=${headers} |
+|    | ${groupname}= | Get Randomstring |
+|    | ${data} = | Set Variable | {"name": "${groupname}" , "description": "cdscds"} |
+|    | ${resp}= | Create User Group | ${data} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
-|    | ${testGroupId}= | Evaluate | '${resp.json()['data']['id']}' |
-|    | Set Global Variable | ${testGroupId} |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${data} = | Set Variable | {"accountId":${UserId},"groupId":${testGroupId},"role":"member"} |
-|    | ${resp}= | Post Request | ${domain} | /v1/accounts/joingroup | data=${data} | headers=${headers} |
+|    | ${testgroupid}= | Evaluate | '${resp.json()['data']['id']}' |
+|    | Set Global Variable | ${testgroupid} |
+|    | ${data} = | Set Variable | {"accountId":${userid},"groupId":${testgroupid},"role":"member"} |
+|    | ${resp}= | Join User Group | ${data} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
-|    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId})+'/groups/'+str(${testGroupId}) |
-|    | ${resp}= | Delete Request | ${domain} | ${path} | headers=${headers} |
-|    | log | ${resp.json()} |
+|    | ${resp}= | Leave User Group | ${userid} | ${testgroupid} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户管理-超级管理员-获取所有用户 |
 |    | [Tags] | 用户管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${resp}= | Get Request | ${domain} | /v1/accounts | headers=${headers} |
+|    | ${resp}= | Get All User | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户管理-超级管理员-获取指定用户信息 |
 |    | [Tags] | 用组管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId}) |
-|    | ${resp}= | Get Request | ${domain} | ${path} | headers=${headers} |
-|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
-
-| 用户管理-离开一个用户组 |
-|    | [Tags] | 用户组管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId})+'/groups/'+str(${GroupId}) |
-|    | ${resp}= | Delete Request | ${domain} | ${path} | headers=${headers} |
+|    | ${resp}= | Get User By Id | ${userid} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户组管理-超级管理员-禁用一个用户 |
 |    | [Tags] | 用户管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId})+'/disable' |
-|    | ${resp}= | Put Request | ${domain} | ${path} | headers=${headers} |
+|    | ${resp}= | Disable User | ${userid} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
-|    | ${return.status_code}= | Test Login | ${username} | 123 |
+|    | ${return.status_code}= | Test Login | ${username} | Fzh12345 |
 |    | Should Be Equal As Strings | ${return.status_code} | 400 |
+
+| 用户组管理-超级管理员-启用一个用户 |
+|    | [Tags] | 用户管理 |
+|    | ${resp}= | Enable User | ${userid} | ${adminheaders} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
+|    | ${return.status_code}= | Test Login | ${username} | Fzh12345 |
+|    | Should Be Equal As Strings | ${return.status_code} | 200 |
+
+| 用户管理-离开一个用户组 |
+|    | [Tags] | 用户组管理 |
+|    | ${resp}= | Leave User Group | ${userid} | ${groupid} | ${adminheaders} |
+|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户组管理-超级管理员-删除用户 |
 |    | [Tags] | 用户管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${path}= | Evaluate | '/v1/accounts/'+str(${UserId}) |
-|    | ${resp}= | Delete Request | ${domain} | ${path} | headers=${headers} |
-|    | Log | ${resp.json()} |
+|    | ${resp}= | Delete User | ${userid} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | ${return.status_code}= | Test Login | ${username} | admin1234 |
 |    | Should Be Equal As Strings | ${return.status_code} | 400 |
 
-| 用户组管理-超级管理员-删除用户组 |
+| 镜像仓库管理-超级管理员-添加第三方镜像仓库 |
 |    | [Tags] | 用户组管理 |
-|    | Create Session | ${domain} | ${SERVER} |
-|    | ${path}= | Evaluate | '/v1/groups/'+str(${GroupId}) |
-|    | ${resp}= | Delete Request | ${domain} | ${path} | headers=${headers} |
-|    | Log | ${resp.json()} |
+|    | ${name}= | Get Randomstring |
+|    | ${data} = | Set Variable | {"name":"${name}","userName":"zhfang","password":"Fzh12345","addr":"demoregistry.dataman-inc.com"} |
+|    | ${resp}= | Add Registry Auth | ${data} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 用户管理-登出 |
 |    | [Tags] | 用户管理 |
-|    | Create Session | shurenyun | ${SERVER} |
-|    | ${resp}= | Post Request | shurenyun | /v1/logout | headers=${headers} |
+|    | ${resp}= | Logout | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |

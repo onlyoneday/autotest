@@ -53,6 +53,7 @@
 |    | Set Global Variable | ${instanceid} |
 |    | # | 创建用户组1 |
 |    | ${groupname1}= | Get Randomstring |
+|    | Set Global Variable | ${groupname1} |
 |    | ${data} = | Set Variable | {"name": "${groupname1}" , "description": "cdscds"} |
 |    | ${resp}= | Create User Group | ${data} | ${adminheaders} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |

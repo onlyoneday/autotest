@@ -20,7 +20,8 @@
 
 | 应用管理-新建应用 |
 |    | [Tags] | 应用管理 |
-|    | ${appname}= | Get Randomstring |
+|    | ${name}= | Get Randomstring |
+|    | ${appname}= | Evaluate | 'dev-' + '${name}' |
 |    | Set Global Variable | ${appname} |
 |    | ${appjson}= | Get Binary File | ${CURDIR}${/}json/valid_app.json |
 |    | ${data} = | Replace Variables | ${appjson} |
@@ -41,25 +42,13 @@
 |    | Log | ${resp.text} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
-| 应用管理-获取指定应用的状态 |
-|    | [Tags] | 应用管理 |
-|    | ${path}= | Evaluate | '/v1/apps/'+'bd7nqi'+'/stats' |
-|    | ${stream}= | Convert To Boolean | True |
-|    | &{headers}= | Create Dictionary | Authorization=${token} | Accept=text/event-stream |
-|    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
-|    | Should Be Equal As Strings | ${resp.status_code} | 200 |
-|    | ${index}= | Set Variable | 0 |
-|    | : FOR | ${i} | IN | @{resp.iter_lines()} |
-|    |    | Log | ${i} |
-|    |    | ${index}= | Evaluate | ${index}+1 |
-|    |    | Run Keyword If | '${index}' == '4' | Exit For Loop |
-
 | 应用管理-更新指定应用 |
 |    | [Tags] | 应用管理 |
 |    | ${appjson}= | Get Binary File | ${CURDIR}${/}json/valid_app_update.json |
 |    | ${data} = | Replace Variables | ${appjson} |
 |    | ${path}= | Evaluate | '/v1/apps/'+'${appname}' |
 |    | ${resp}= | Put Request | shurenyun | ${path} | data=${data} | headers=${headers} |
+|    | log | ${resp.json()} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 
 | 应用管理-获取指定应用所有实例 |

@@ -179,7 +179,7 @@
 |    | log | ${resp.text} |
 |    | [Return] | ${resp} |
 
-| Get Cluster By Id |
+| Get Cluster By Group Id |
 |    | [Arguments] | ${groupid} | ${headers} |
 |    | Create Session | shurenyun | ${SERVER} |
 |    | ${path}= | Evaluate | '/v1/groups/'+'${groupid}'+'/clusters' |
@@ -187,10 +187,10 @@
 |    | log | ${resp.text} |
 |    | [Return] | ${resp} |
 
-| Get Cluster By Group Id |
-|    | [Arguments] | ${groupid} | ${headers} |
+| Get Cluster By Id |
+|    | [Arguments] | ${cluster_id} | ${headers} |
 |    | Create Session | shurenyun | ${SERVER} |
-|    | ${path}= | Evaluate | '/v1/groups/'+'${groupid}'+'/clusters' |
+|    | ${path}= | Evaluate | '/v1/clusters/'+str(${cluster_id}) |
 |    | ${resp}= | Get Request | shurenyun | ${path} | headers=${headers} |
 |    | log | ${resp.text} |
 |    | [Return] | ${resp} |
@@ -293,6 +293,14 @@
 |    | log | ${resp.text} |
 |    | [Return] | ${resp} |
 
+| Enable User |
+|    | [Arguments] | ${userid} | ${headers} |
+|    | Create Session | shurenyun | ${SERVER} |
+|    | ${path}= | Evaluate | '/v1/accounts/' + str(${userid})+'/enable' |
+|    | ${resp}= | Put Request | ${domain} | ${path} | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
 | Update User |
 |    | [Arguments] | ${data} | ${headers} |
 |    | Create Session | shurenyun | ${SERVER} |
@@ -302,7 +310,6 @@
 
 | Delete User |
 |    | [Arguments] | ${userid} | ${headers} |
-|    | Create Session | shurenyun | ${SERVER} |
 |    | ${path}= | Evaluate | '/v1/accounts/' + str(${userid}) |
 |    | ${resp}= | Delete Request | ${domain} | ${path} | headers=${headers} |
 |    | log | ${resp.text} |
@@ -310,7 +317,13 @@
 
 | Get Aboutme |
 |    | [Arguments] | ${headers} |
-|    | Create Session | shurenyun | ${SERVER} |
 |    | ${resp}= | Get Request | ${domain} | /v1/aboutme | headers=${headers} |
+|    | log | ${resp.text} |
+|    | [Return] | ${resp} |
+
+| Add Registry Auth |
+|    | [Arguments] | ${data} | ${headers} |
+|    | log | "cdscds" |
+|    | ${resp}= | Post Request | ${domain} | /v1/external_registries | data=${data} | headers=${headers} |
 |    | log | ${resp.text} |
 |    | [Return] | ${resp} |
