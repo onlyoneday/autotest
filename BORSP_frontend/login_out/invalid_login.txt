@@ -29,4 +29,4 @@ Invalid Login
 
 *** Variables ***
 
-${no record}    record not found
+${no record}     not correct

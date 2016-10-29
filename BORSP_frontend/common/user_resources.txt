@@ -44,16 +44,20 @@ Select User Group2
 Edit User Info
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
-	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	${no} =         Evaluate   ${index}-1
+	${path} =       Evaluate   'node-list-menu-'+'${no}'
 	Click Element   ${path}
-	Click And Wait  //*[@aria-hidden='false']/md-menu-content/md-menu-item/a
+	${button} =     Evaluate   'editUserInfo'+'${no}'
+	Click And Wait  ${button} 
 
 Edit User Group
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
-	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	${no} =         Evaluate   ${index}-1
+	${path} =       Evaluate   'node-list-menu-'+'${no}'
 	Click Element   ${path}
-	Click And Wait  //*[@aria-hidden='false']/md-menu-content/md-menu-item[2]/button
+	${button} =     Evaluate   'editUserGroup'+'${no}'
+	Click And Wait  ${button} 
 
 Add User Group
 	[Arguments]   	${group}  ${role}
@@ -67,9 +71,11 @@ Add User Group
 Edit User Password
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
-	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	${no} =         Evaluate   ${index}-1
+	${path} =       Evaluate   'node-list-menu-'+'${no}'
 	Click Element   ${path}
-	Click And Wait  //*[@aria-hidden='false']/md-menu-content/md-menu-item[4]/button
+	${button} =     Evaluate   'changePassword'+'${no}'
+	Click And Wait  ${button} 
 
 Change User Password
     [Arguments]   	${newpassword}  ${repassword}
@@ -79,23 +85,29 @@ Change User Password
 Delete User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
-	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+	${no} =         Evaluate   ${index}-1
+	${path} =       Evaluate   'node-list-menu-'+'${no}'
 	Click Element   ${path}
-	Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item[3]/button
+	${button} =     Evaluate   'deleteUser'+'${no}'
+	Click And Wait  ${button} 
 	Click And Wait  css=md-dialog-actions > button:nth-child(2)
 
 Disable User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
-	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button[1]'
-	Click Element   ${path} 
+	${no} =         Evaluate   ${index}-1
+	${button} =     Evaluate   'disableUser'+'${no}'
+	Click And Wait  ${button} 
 	Click And Wait  css=md-dialog-actions > button:nth-child(2)
+	Sleep  10
 
 Enable User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
-	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button[2]'
-	Click And Wait  ${path} 
+	${no} =         Evaluate   ${index}-1
+	${button} =     Evaluate   'enableUser'+'${no}'
+	Click And Wait  ${button} 
+	Sleep  10
 
 Get User Index
     [Arguments]     ${name}
@@ -108,11 +120,11 @@ Get User Index
     \       ${uname} =    Get Text   ${path}
     \       Return From Keyword If   "${uname}" == "${name}"   ${li}
 
-Create Registry
-    [Arguments]     ${addr}    ${userName}  ${userName}
-	Click Element   createUserRegistry
-	Input Text      create-registry-addr
-	Input Text      create-registry-userName
-	Input Text      create-registry-userName
+Input Registry
+    [Arguments]     ${name}  ${addr}  ${userName}  ${password}
+	Input Text      create-registry-name  ${name}
+	Input Text      create-registry-addr  ${addr}
+	Input Text      create-registry-userName  ${userName}
+	Input Text      create-registry-password  ${password}
 
 

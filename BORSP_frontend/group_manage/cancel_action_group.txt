@@ -27,8 +27,6 @@ G-081
 #取消删除
 G-088
 	${index} =        Get Group Index    test
-	${menu} =         Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
-	Click Element     ${menu}
 	${no} =           Evaluate    ${index}-1
 	${path} =         Evaluate   'delete-group'+'${no}'
 	Click Element     ${path}

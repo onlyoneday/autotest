@@ -42,5 +42,3 @@ G-024
 Delete Test User After Edition
 	Delete User        ${TEST ID}
 
-
-

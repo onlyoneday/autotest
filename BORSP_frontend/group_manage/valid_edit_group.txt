@@ -12,20 +12,20 @@ Suite Teardown  Close All Browsers
 #测试前准备
 Creat Test Group For Edition
 	Input Group       ${TEST GRP}   ${EMPTY}
-	Click Element     submit-create-user
+	Click And Wait    submit-create-user
 
 #修改用户组（修改组名、描述）
 G-068
 	Edit Group        ${TEST GRP}
 	Edit Group Info   GroupForEditingName  GroupForEditingDescription
-	Click Element     submit-update-user
+	Click And Wait    submit-update-user
 	Result Group      GroupForEditingName  GroupForEditingDescription
 
 *** Keywords ***
 Result Group
 	[Arguments]     ${groupname}    ${description}
 	#验证组
-	${index} =      Get Matching Xpath Count   //*[@id='user-list-table']/tbody/tr[*]
+	${index} =      Get Group Index   ${groupname}
 	${path2} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
 	${path5} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[5]'
 	${name} =       Get Text    ${path2}

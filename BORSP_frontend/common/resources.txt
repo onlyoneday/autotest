@@ -10,7 +10,7 @@ ${SERVER}                http://192.168.1.155:5013/ui
 ${BROWSER}               Firefox
 #${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
-${SLEEP TIME}            5
+${SLEEP TIME}            6
 ${SLEEP LONG TIME}       30
 
 #--------------------URL--------------------
@@ -23,7 +23,7 @@ ${NODE URL}              ${SERVER}/node/list&clusterInfo
 ${RSTACK URL}            ${SERVER}/rolexStack/list
 ${USER_ME URL}           ${SERVER}/user/aboutme
 ${USER_PWD URL}          ${SERVER}/user/password
-${USER_RG URL}          ${SERVER}//user/registry
+${USER_RG URL}           ${SERVER}/user/registry
 ${USER_MANU URL}         ${SERVER}/user-manage/list/user
 ${USER_MANG URL}         ${SERVER}/user-manage/list/group
 
@@ -33,14 +33,15 @@ ${USERNAME FIELD}        //input[@name="userName"]
 ${PASSWORD FIELD}        //input[@name="Password"]
 
 #--------------------USER--------------------
-${VALID USER}            administratormmj
-${VALID PASSWD}          Dataman1234
+${VALID USER}            superadmin
+${VALID PASSWD}          MMMMMMMM
 
 ${MMJ USER}              mmj
 ${MMJ PASSWD}            M12345678
 ${MMJ DBID}              122
 ${MMJ GROUP}             groupmmj
 ${MMJ CLUSTER}           clustermmj
+${MMJ R}                 registrymmj
 
 ${GM USER}               groupmanager   
 ${GM PASSWD}             M1234567
@@ -67,11 +68,12 @@ ${STR 8}                 M0123456
 ${STR 16}                M012345678901234
 ${STR 17}                M0123456789012345
 ${STR 49}                0123456789012345678901234567890123456789012345678
-
+${STR 50}                01234567890123456789012345678901234567890123456789
+${STR 51}                012345678901234567890123456789012345678901234567890
 ${STR 255}               012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234
 ${STR 256}               0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
-${EML 255}               0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789@d.cn
-${EML 256}               01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890@d.cn
+${EML 255}               0123456789012345678901234567890123456789012345678901234567890123@abcde.cn
+${EML 256}               01234567890123456789012345678901234567890123456789012345678901234@abcde.cn
 
 
 
@@ -104,6 +106,7 @@ Result Web
 Result Api
     [Arguments]     ${LOC}  ${APIMSG}
     Click Element   ${LOC}
+    Sleep   0.5
     Page Should Contain     ${APIMSG}
 
 #--------------------LOGIN------------------
@@ -121,7 +124,6 @@ Open Browser And Login Mmj
 
 Login Adm
     Login   ${VALID USER}   ${VALID PASSWD} 
-    #Choose Group    ${SUPER} 
 
 Login Gm
     Login   ${GM USER}   ${GM PASSWD}    
@@ -130,20 +132,15 @@ Login Mmj
     Login   ${MMJ USER}  ${MMJ PASSWD}
 
 Login  
-    [Arguments]     ${USER}   ${PASSWD}
-    Input Text      ${USERNAME FIELD}   ${USER}
-    Input Text      ${PASSWORD FIELD}   ${PASSWD}
-    Click Button    ${LOGIN BTN}
+    [Arguments]    ${USER}   ${PASSWD}
+    Input Text     ${USERNAME FIELD}   ${USER}
+    Input Text     ${PASSWORD FIELD}   ${PASSWD}
+    Click Button   ${LOGIN BTN}
     Sleep  ${SLEEP TIME}
 
-Choose Group
-    [Arguments]     ${GROUP} 
-    Click Element   select_value_label_0
-    Click Element   ${GROUP}
-
 Logout
-    Click Button  open-user-menu
-    Click Button  logout
+    Click Button   open-user-menu
+    Click Button   logout
     Sleep  ${SLEEP TIME} 
 
     

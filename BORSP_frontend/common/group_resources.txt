@@ -7,6 +7,26 @@ Resource       ../common/resources.txt
 
 *** Keywords ***
 
+Add Menmber Before Testing
+	Login Adm
+	#将用户加入多个用户组
+	Go To Page        ${USER_MANG URL}
+	Manage Group      test  2
+	Add Group User    ${MMJ USER}  member
+	Add Group User    ${GM USER}   owner
+
+Choose Group Super
+    Click Element   select_value_label_0
+    Click And Wait  //md-option[@value="112"]
+     
+Choose Group Test
+    Click Element   select_value_label_0
+    Click And Wait  //md-option[@value="44"]
+
+Choose Group Groupmmj
+    Click Element   select_value_label_0
+    Click And Wait  //md-option[@value="1232"]
+
 Input Group
     [Arguments]   	${username}  ${description}
     Click And Wait  stackCreate
@@ -16,11 +36,9 @@ Input Group
 Edit Group
     [Arguments]   	${name}
 	${index} =      Get Group Index    ${name}
-	${menu} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
-	Click Element   ${menu}
 	${no} =         Evaluate    ${index}-1
 	${path} =       Evaluate   'edit-group'+'${no}'
-	Click Element   ${path}
+	Click And Wait  ${path}
 
 Edit Group Info
 	[Arguments]   	${username}  ${description}
@@ -30,14 +48,14 @@ Edit Group Info
 Manage Group 
 	[Arguments]   	${name}  ${tab}
 	${index} =      Get Group Index    ${name}
-	${menu} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
-	Click And Wait  ${menu}
+	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button[1]'
+	Click And Wait  ${path}
 	Run Keyword If  '${tab}' == '2'    Click And Wait  css=md-tab-item:nth-child(2) > span
 
 Add Group User
 	[Arguments]   	${user}  ${role}
 	Click And Wait  accountGroupCreate
-	${upath} =      Evaluate  '//*[@value='+'"${user}"'+']'
+	${upath} =      Evaluate  '//md-content/md-option/div[contains(text(),'+'"${user}"'+')]'
 	${rpath} =  	Evaluate  '//*[@value='+'"${role}"'+']'
 	Click Element   update-select-group
 	Click Element   xpath=${upath}
@@ -55,8 +73,6 @@ Delete Group User
 Delete Group
 	[Arguments]     ${name}
 	${index} =      Get Group Index    ${name}
-	${menu} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
-	Click Element   ${menu}
 	${no} =         Evaluate    ${index}-1
 	${path} =       Evaluate   'delete-group'+'${no}'
 	Click Element   ${path}

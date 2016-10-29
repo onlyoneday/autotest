@@ -19,14 +19,14 @@ G-069
 	Edit Group           ${TEST GRP}
 	Edit Group Info      g    ${EMPTY}
 	Clear Element text   input-username
-	Result Web           ${gname css}    ${message1} 
+	Result Web           div:nth-child(1) > p:nth-child(3)    ${message1} 
 	Element Should Be Disabled      ${button} 
 
 #输入项上边外侧界(用户名)
 G-070
 	Edit Group           ${TEST GRP}
 	Edit Group Info      ${STR 256}      ${EMPTY}
-	Result Web           p:nth-child(3) > small    ${message0} 
+	Result Web           div:nth-child(1) > p:nth-child(4)    ${message0} 
 	Element Should Be Disabled      ${button} 
 
 #输入项上边外侧界(用户描述)
@@ -46,7 +46,6 @@ Delete Test Group After Edition
 	Delete Group   ${TEST GRP}
 
 *** Variables ***
-${gname css}       p:nth-child(2) > small 
 ${message0}        最大长度255个字符
 ${message1}        用户名不能为空
 ${message2}		   Error 1406

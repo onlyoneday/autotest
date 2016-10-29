@@ -13,14 +13,16 @@ Suite Teardown  Close All Browsers
 G-041
 	Go To Page     ${USER_MANU URL}
 	Delete User    ${VALID USER}
-	Page Should Contain   can't delete yourself account
+	Page Should Contain   ${VALID USER}
 
 #用户管理-禁用自己
 G-051
 	Go To Page     ${USER_MANU URL}
 	Disable User   ${VALID USER}
-	Sleep   0.5
-	Page Should Contain   can't disable yourself account
+	${index} =     Get User Index   ${VALID USER}
+	${no} =         Evaluate    ${index}-1
+	${button} =     Evaluate   'disableUser'+'${no}'
+	Element Should Be Enabled   ${button} 
 
 #查看查看任意组成员列表
 G-067
@@ -39,7 +41,7 @@ G-079
 	Go To Page     ${USER_MANG URL}
 	Manage Group    ${SUPER}  2
 	Add Group User  ${MMJ DBID}  superuser
-	Page Should Contain   ${MMJ USER} 
+	Page Should Contain   ${MMJ USER}
 	#删除其他超级管理员
 	Delete Group User     ${MMJ USER}
 

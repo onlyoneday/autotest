@@ -13,13 +13,13 @@ Suite Teardown  Close All Browsers
 G-062
 	Input Group    g     ${EMPTY}
 	Clear Element text   input-username
-	Result Web     p:nth-child(2) > small    ${message1} 
+	Result Web     div:nth-child(1) > p:nth-child(3)    ${message1} 
 	Element Should Be Disabled     ${button} 
 
 #输入项上边外侧界(用户名)
 G-063
 	Input Group    ${STR 256}      ${EMPTY}
-	Result Web     p:nth-child(3) > small    ${message0} 
+	Result Web     div:nth-child(1) > p:nth-child(4)    ${message0} 
 	Element Should Be Disabled     ${button} 
 
 #输入项上边外侧界(用户描述)

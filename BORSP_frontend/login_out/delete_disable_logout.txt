@@ -1,14 +1,13 @@
-d*** Settings ***
+*** Settings ***
 
 Documentation   用户管理-正在登陆的用户被删除或禁用-自动退出登陆
 Resource        ../common/resources.txt
 Resource        ../common/user_resources.txt
-Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
 #正在登陆的用户被删除-自动退出登陆
-G-150-1
+G-150
     Set Selenium Speed  ${DELAY}
     Open Browser        ${LOGIN URL}  ${BROWSER}   B1
     Sleep   2

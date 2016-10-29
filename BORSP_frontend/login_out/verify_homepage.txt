@@ -8,29 +8,29 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 Verify Cluster Button
-    Click Link    index-to-cluster
-    Page Should Contain   集群列表
+    Click And Wait  index-to-cluster
+    Page Should Contain   新建集群
 
 Verify App Button
-    Click Link    index-to-stack
+    Click And Wait  index-to-stack
     Page Should Contain   我的应用
 
 Verify Node Button
-    Click Link    index-to-node
-    Page Should Contain   集群信息
+    Click And Wait  index-to-node
+    Page Should Contain   主机管理
 
 Verify Rstack Button
-    Click Link    index-to-rolexStack
+    Click And Wait  index-to-rolexStack
     Page Should Contain   应用编排
 
 Verify User Button
-    Click Button  open-user-menu
-    Click Link    index-to-user-list
+    Click Button    open-user-menu
+    Click And Wait  index-to-user-list
     Page Should Contain   用户中心
 
 Verify User_manage Button
-    Click Button  open-user-menu
-    Click Link    index-to-user-manage
+    Click Button    open-user-menu
+    Click And Wait  index-to-user-manage
     Page Should Contain   用户管理
 
 

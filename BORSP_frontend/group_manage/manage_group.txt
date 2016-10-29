@@ -14,15 +14,15 @@ Suite Teardown  Close All Browsers
 #测试前准备
 Creat Test Group For Edition
 	Input Group     ${TEST GRP}   ${EMPTY}
-	Click Element   submit-create-user
+	Click And Wait  submit-create-user
 	Input Group     ${TEST ID}    ${EMPTY}
-	Click Element   submit-create-user
+	Click And Wait  submit-create-user
 
 #添加多个组成员/将一个用户加入多个用户组
 G-073/75
 	Manage Group    ${TEST GRP}  2
-	Add Group User  ${MMJ DBID}  member
-	Add Group User  ${GM DBID}   member
+	Add Group User  ${MMJ USER}  member
+	Add Group User  ${GM USER}   member
 	Page Should Contain   ${MMJ USER} 
 	Page Should Contain   ${GM USER}
 	Page Should Contain   组成员    
@@ -30,8 +30,8 @@ G-073/75
 #添加多个组管理员/将一个用户加入多个用户组
 G-074/75
 	Manage Group    ${TEST ID}   2
-	Add Group User  ${MMJ DBID}  owner
-	Add Group User  ${GM DBID}   owner
+	Add Group User  ${MMJ USER}  owner
+	Add Group User  ${GM USER}   owner
 	Page Should Contain   ${MMJ USER} 
 	Page Should Contain   ${GM USER}
 	Page Should Contain   组管理员
@@ -39,16 +39,25 @@ G-074/75
 #删除有用户的用户组
 G-083
 	Delete Group    ${TEST GRP}
-	Page Should Contain    there are users in group
-	
+	Page Should Contain    ${TEST GRP}
+
+#删除所有的组管理员
+G-078
+	Manage Group    ${TEST ID}   2
+	Delete Group User    ${MMJ USER} 
+	Delete Group User    ${GM USER}
+
+#删除无用户的用户组
+G-082
+	Delete Group    ${TEST ID}
+	Page Should Not Contain  ${TEST ID}
+
 Creat Test App For Edition
 	Go To Page       ${HOME URL} 
 	Input Cluster    ${TEST CLU}  ${TEST GRP}  ${TEST CLU}
 	Click And Wait   submit-create-cluster
 	Logout
 	Login Mmj
-	Click Element    select_value_label_0
-    Click Element    xpath=//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'GroupForEditing')]
 	Go To Page       ${APP_CREATE URL} 
 	Create App       ${TEST APP}  ${TEST CLU}
 	Click And Wait   stackFormCreate
@@ -61,22 +70,11 @@ G-076/077
 	Delete Group User    ${MMJ USER} 
 	Delete Group User    ${GM USER}
 
-#删除所有的组管理员
-G-078
-	Manage Group    ${TEST ID}   2
-	Delete Group User    ${MMJ USER} 
-	Delete Group User    ${GM USER}
-
-#删除无用户的用户组
-G-082
-	Delete Group    ${TEST GRP}
-	Delete Group    ${TEST ID}
-
 #删除没有主机有应用的集群
 G-103
-	#Go To Page      ${HOME URL}
-	#Delete Cluster  ${TEST CLU}
-	#Page Should Contain
+	Go To Page      ${HOME URL}
+	Delete Cluster  ${TEST CLU}
+	Page Should Contain   ${TEST CLU}
 
 #删除应用
 Delete Test App For Edition
@@ -84,4 +82,6 @@ Delete Test App For Edition
 	Delete App By Name  ${TEST APP}
 	Go To Page      ${HOME URL}
 	Delete Cluster  ${TEST CLU} 
+	Go To Page      ${USER_MANG URL}
+	Delete Group    ${TEST GRP}
 

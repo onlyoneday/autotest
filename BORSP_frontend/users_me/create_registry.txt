@@ -1,0 +1,68 @@
+*** Settings ***
+
+Documentation   创建第三方镜像仓库
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Suite Setup     Open Browser And Login Gm
+Test Setup      Go To Page   ${USER_RG URL} 
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#必填项不填
+G-212
+	Click Element         createUserRegistry
+	Input Registry        1  1  1  1
+	Clear Element text    create-registry-name
+	Clear Element text    create-registry-addr
+	Clear Element text    create-registry-userName
+	Clear Element text    create-registry-password
+	Result Web     div:nth-child(1) > div.layout-column.flex-60 > p:nth-child(2) > small    ${message0} 
+	Result Web     div:nth-child(2) > div.layout-column.flex-60 > p:nth-child(2) > small    ${message1} 
+	Result Web     div:nth-child(3) > div.layout-column.flex-60 > p:nth-child(2) > small    ${message2} 
+	Result Web     div:nth-child(4) > div.layout-column.flex-60 > p:nth-child(2) > small    ${message3}
+
+#超过上限
+G-213
+	Click Element  createUserRegistry
+	Input Registry        ${STR 256}  ${STR 256}  ${STR 51}  ${STR 51}
+	Result Web     div:nth-child(1) > div.layout-column.flex-60 > p:nth-child(3) > small    ${message4} 
+	Result Web     div:nth-child(2) > div.layout-column.flex-60 > p:nth-child(3) > small    ${message5} 
+	Result Web     div:nth-child(3) > div.layout-column.flex-60 > p:nth-child(3) > small    ${message6} 
+	Result Web     div:nth-child(4) > div.layout-column.flex-60 > p:nth-child(3) > small    ${message7}
+
+#创建取消
+G-216
+	Click Element   createUserRegistry
+	Input Registry  ${MMJ RG}  ${RG ADD}  ${RG NAME}  ${RG PWD} 
+	Click And Wait  css=md-dialog-actions > button:nth-child(2)
+	Page Should Not Contain   ${MMJ RG}
+
+#创建（上限）
+G-211
+	Click Element   createUserRegistry
+	Input Registry  ${STR 255}  ${STR 255}  ${STR 50}  ${STR 50}
+	Click And Wait  css=md-dialog-actions > button:nth-child(3)
+	Page Should Contain   ${STR 255}
+
+#取消删除
+G-228
+	Click Element   userRegistryDelete0
+	Click And Wait  //button[@aria-label="取消"]
+	Page Should Contain   ${STR 255}
+
+#删除
+G-227
+	Click Element   userRegistryDelete0
+	Click And Wait  //button[@aria-label="确定"]
+	Page Should Not Contain   ${STR 255}
+
+*** Variables ***
+${message0}        名称不能为空
+${message1}        镜像地址不能为空
+${message2}        用户名不能为空
+${message3}        密码不能为空
+${message4}        名称最大长度不超过 255 个字符
+${message5}        镜像地址最大长度不超过 255 个字符
+${message6}        用户名最大长度不超过 50 个字符
+${message7}        密码最大长度不超过 50 个字符

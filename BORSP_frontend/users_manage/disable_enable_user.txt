@@ -23,6 +23,7 @@ G-045/053
 	Login               ${TEST ID}  ${STR 8}
 	Location Should Be  ${LOGIN URL}
 	#删除用户
+	Login Adm
 	Go To Page          ${USER_MANU URL}
 	Delete User         ${TEST ID}
 
@@ -87,6 +88,7 @@ G-039
 *** Keywords ***
 Disable Enable
 	[Arguments]       ${name}  ${password}
+	Go To Page        ${USER_MANU URL}
 	#禁用
 	Disable User      ${name}
 	Logout

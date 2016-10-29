@@ -13,15 +13,13 @@ Suite Teardown  Close All Browsers
 Creat Test User For Changing Password
 	Create User           ${TEST ID}  U  ${TEST EML}  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
 	Select User Group     ${MMJ GROUP}   member
-	Click Element   submit-create-user
+	Click And Wait        submit-create-user
 
 #上边界值
 G-030
 	Edit User Password    ${TEST ID}
 	Change User Password  ${STR 16}   ${STR 16}
-	Click Element   css=md-dialog-actions > button:nth-child(3) > span
-	Sleep    0.5
-	Page Should Contain   密码修改成功
+	Click And Wait        css=md-dialog-actions > button:nth-child(3) > span
 	Logout
 	Login    ${TEST ID}   ${STR 16} 
 	Location Should Be    ${HOME URL}
@@ -31,12 +29,10 @@ G-030
 #下边界值
 G-031
 	Edit User Password    ${TEST ID}
-	Change User Password  ${STR 7}   ${STR 7}
-	Click Element   css=md-dialog-actions > button:nth-child(3) > span
-	Sleep    0.5
-	Page Should Contain   密码修改成功
+	Change User Password  ${STR 8}   ${STR 8}
+	Click And Wait        css=md-dialog-actions > button:nth-child(3) > span
 	Logout
-	Login    ${TEST ID}   ${STR 8} 
+	Login    ${TEST ID}   ${STR 8}
 	Location Should Be    ${HOME URL}
 	Logout
 	Login Adm

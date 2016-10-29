@@ -1,0 +1,40 @@
+*** Settings ***
+
+Documentation   创建第三方镜像仓库
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${USER_RG URL} 
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+G-218
+	Click And Wait        userRegistryUpdate0
+	Clear Element text    create-registry-name
+	Clear Element text    create-registry-addr
+	Clear Element text    create-registry-userName
+	Clear Element text    create-registry-password
+	Result Web     div:nth-child(1) > div.layout-column.flex-60 > p:nth-child(2) > small    ${message0} 
+	Result Web     div:nth-child(2) > div.layout-column.flex-60 > p:nth-child(2) > small    ${message1} 
+	Result Web     div:nth-child(3) > div.layout-column.flex-60 > p:nth-child(2) > small    ${message2} 
+
+#超过上限
+G-219
+	Click And Wait       userRegistryUpdate0
+	Input Registry       ${STR 256}  ${STR 256}  ${STR 51}  ${STR 51}
+	Result Web     div:nth-child(1) > div.layout-column.flex-60 > p:nth-child(3) > small    ${message4} 
+	Result Web     div:nth-child(2) > div.layout-column.flex-60 > p:nth-child(3) > small    ${message5} 
+	Result Web     div:nth-child(3) > div.layout-column.flex-60 > p:nth-child(3) > small    ${message6} 
+	Result Web     div:nth-child(4) > div.layout-column.flex-60 > p:nth-child(3) > small    ${message7}
+
+*** Variables ***
+${message0}        名称不能为空
+${message1}        镜像地址不能为空
+${message2}        用户名不能为空
+${message3}        密码不能为空
+${message4}        名称最大长度不超过 255 个字符
+${message5}        镜像地址最大长度不超过 255 个字符
+${message6}        用户名最大长度不超过 255 个字符
+${message7}        密码最大长度不超过 255 个字符
+

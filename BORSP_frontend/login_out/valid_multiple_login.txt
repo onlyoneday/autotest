@@ -16,7 +16,6 @@ login_out_10
     Open Browser  ${LOGIN URL}  ${BROWSER}   B2
     Sleep  ${SLEEP TIME}
     Login Mmj
-    Logout
 
     Switch Browser   B1
     Sleep  ${SLEEP TIME}

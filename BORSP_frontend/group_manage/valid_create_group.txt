@@ -12,20 +12,20 @@ Suite Teardown  Close All Browsers
 #输入项上边界值
 G-060/082
 	Input Group     ${STR 255}    ${STR 255}
-	Click Element   submit-create-user
+	Click And Wait  submit-create-user
 	Result Group    ${STR 255}    ${STR 255}
 
 #输入项下边界值
 G-061/082
 	Input Group     G    ${EMPTY}
-	Click Element   submit-create-user
+	Click And Wait  submit-create-user
 	Result Group    G    ${EMPTY}
 
 *** Keywords ***
 Result Group
 	[Arguments]     ${groupname}    ${description}
 	#验证组
-	${index} =      Get Matching Xpath Count   //*[@id='user-list-table']/tbody/tr[*]
+	${index} =      Get Group Index   ${groupname}
 	${path2} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
 	${path5} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[5]'
 	${name} =       Get Text    ${path2}

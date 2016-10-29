@@ -10,42 +10,38 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-Add Node Before Testing
+Add Menmber Before Testing
 	Login Adm
-	#添加主机
-	Add Cluster Node  ${MMJ CLUSTER}
-	Select Cluster Node
 	#将用户加入多个用户组
 	Go To Page        ${USER_MANG URL}
-	Manage Group      test         2
-	Add Group User    ${MMJ DBID}  member
-	Add Group User    ${GM DBID}   owner
+	Manage Group      test  2
+	Add Group User    ${MMJ USER}  member
+	Add Group User    ${GM USER}   owner
 
 #组管理员-属于多个组-查看多个组下的多个集群和主机
 G-100/121
 	Login Gm
-	Choose Group      ${MMJ GROUP}
-	Page Should Contain      ${MMJ CLUSTER}
-	Check Cluster And Node
-	Choose Group      test
+	Choose Group Test
 	Page Should Not Contain  ${MMJ CLUSTER}
+	Check Cluster And Node
+	Choose Group Groupmmj
+	Page Should Contain      ${MMJ CLUSTER}
 	Check Cluster And Node
 
 #组管理员-属于多个组-查看多个组下的多个集群和主机
 G-101/122
 	Login Mmj
-	Choose Group      ${MMJ GROUP}
-	Page Should Contain      ${MMJ CLUSTER}
-	Check Cluster And Node
-	Choose Group      test
+	Choose Group Test
 	Page Should Not Contain  ${MMJ CLUSTER}
+	Check Cluster And Node
+	Choose Group Groupmmj
+	Page Should Contain      ${MMJ CLUSTER}
 	Check Cluster And Node
 
 Delete Node Before Testing
 	Login Adm
-	Delete Node        0
 	Go To Page         ${USER_MANG URL}
-	Manage Group       test         2
+	Manage Group       test  2
 	Delete Group User  ${MMJ USER}
 	Delete Group User  ${GM USER}
 
@@ -61,21 +57,20 @@ Check Cluster
 	[Arguments]   ${index}
 	${index} =    Evaluate  ${index}+2
 	${path} =     Evaluate  'section:nth-child('+'${index}'+') > header > h3 > a'
-	Click And Wait  css=${path}   
+	${name} =     Get Text  css=${path}
+	Input Text    //input   ${name}
+	${link} =     Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
+	Click And Wait  ${link}
 	Page Should Contain  集群详情
 	
 Check Node2
 	${row} =      Get Matching Xpath Count   //table/tbody/tr[*]
 	${noderow} =  Evaluate   ${row}+1
 	:FOR  ${lr}   IN RANGE   1   ${noderow}
-	\     ${link} =      Evaluate   '//table/tbody/tr['+'"${lr}"'+']/td[2]/a'
-	\	  Click Element  ${link}   
+	\     ${link} =   Evaluate   '//table/tbody/tr['+'${lr}'+']/td[1]/a'
+	\	  Click And Wait       ${link} 
 	\     Page Should Contain  主机详情
-	\     Click Element  
-	\     Page Should Contain  容器详情
-	\     Go Back
-	\     Click Element
-	\     Page Should Contain  应用状态  
 	\     Go Back
 	\     Go Back
+	\     Sleep   ${SLEEP TIME} 
 	Go To Page    ${HOME URL}

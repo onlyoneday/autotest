@@ -14,7 +14,7 @@ G-014
 	Create User     ${TEST ID}  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group     ${MMJ GROUP}  member
 	Select User Group2    testing       member
-	Click Element   submit-create-user
+	Click And Wait  submit-create-user
 
 #查看用户信息/修改用户信息
 G-021/022
@@ -22,23 +22,22 @@ G-021/022
 	Input Text	    input-name              testU
 	Input Text	    input-email             testu@u.cn
 	Input Text	    input-userDescription   test
-	Click Element   submit-update-user
-	Result User     testU  testu@u.cn  test
+	Click And Wait  submit-update-user
+	Result User     ${TEST ID}  testU  testu@u.cn  test
 
 #删除
 Delete Test User After Edition
-	Delete User    ${TEST ID}
+	Delete User     ${TEST ID}
 
 *** Keywords ***
 Result User
-	[Arguments]     ${username}    ${useremail}    ${userdscp}
+	[Arguments]     ${id}  ${username}  ${useremail}  ${userdscp}
 	#验证用户信息
-	${usereml} =    Evaluate   '('+'${useremail}'+')'
-	${index} =      Get Matching Xpath Count   //*[@id='user-list-table']/tbody/tr[*]
-	${path12} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[1]/small'
+	${index} =      Get User Index  ${id}
+	${path12} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[1]/i/small'
 	${path2} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
 	${email} =      Get Text    ${path12}
 	${name} =       Get Text    ${path2}
-	Should Be Equal As Strings  ${email}   ${usereml}
+	Should Be Equal As Strings  ${email}   ${useremail}
 	Should Be Equal As Strings  ${name}    ${username}
 

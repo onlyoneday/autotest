@@ -14,7 +14,7 @@ G-015
 	Click Element  stackCreate
 	Select User Group    ${MMJ GROUP}   owner
 	Select User Group2   ${MMJ GROUP}   member
-	Result Web     ${group css}    ${message10} 
+	Result Web     div.layout-column > div:nth-child(2) > p  ${message10}
 
 #必填项不填
 G-017
@@ -23,32 +23,32 @@ G-017
 	Clear Element text    input-name
 	Clear Element text    input-email
 	Clear Element text    input-password
-	Result Web     div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(2) > small    ${message1} 
-	Result Web     div:nth-child(2) > div.layout-column.flex-40 > p:nth-child(2) > small    ${message2} 
-	Result Web     div:nth-child(3) > div.layout-column.flex-40 > p:nth-child(2) > small    ${message3} 
-	Result Web     div:nth-child(4) > div > p:nth-child(3) > small      ${message4} 
+	Result Web     div:nth-child(1) > p:nth-child(3)    ${message1} 
+	Result Web     div:nth-child(2) > p:nth-child(3)    ${message2} 
+	Result Web     div:nth-child(3) > p:nth-child(3)    ${message3} 
+	Result Web     div:nth-child(4) > p:nth-child(4)    ${message4} 
 	Element Should Be Disabled     ${button}
 
 #输入项上边外侧界(用户名、姓名、邮箱、密码、确认密码、用户描述)
 G-018
 	Create User    ${STR 256}  ${STR 256}  ${EML 256}  ${STR 17}  ${STR 17}  ${STR 256}  ${EMPTY}
-	Result Web     div:nth-child(1) > div.layout-column.flex-40 > p:nth-child(3) > small    ${message0} 
-	Result Web     div:nth-child(2) > div.layout-column.flex-40 > p:nth-child(3) > small    ${message0} 
-	Result Web     div:nth-child(3) > div.layout-column.flex-40 > p:nth-child(4) > small    ${message0} 
-	Result Web     div:nth-child(4) > div > p:nth-child(2) > span      ${message5} 
+	Result Web     div:nth-child(1) > p:nth-child(4)   ${message0} 
+	Result Web     div:nth-child(2) > p:nth-child(4)   ${message0} 
+	Result Web     div:nth-child(3) > p:nth-child(4)   ${message0} 
+	Result Web     div:nth-child(4) > p:nth-child(3)   ${message5} 
 	Element Should Be Disabled     ${button}
 
 #输入项下边外侧界(密码)
 G-019
 	Create User    u  u  ${MMJ USER}  ${STR 7}  ${STR 7}  ${EMPTY}  ${EMPTY}
-	Result Web     div:nth-child(4) > div > p:nth-child(2) > span      ${message5} 
+	Result Web     div:nth-child(4) > p:nth-child(3)  ${message5} 
 	Element Should Be Disabled     ${button}
 
 #输入项不符合格式规范(邮箱)
 G-020
 	#格式
-	Create User     u  u  m@m.m  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
-	Result Web      div:nth-child(3) > div.layout-column.flex-40 > p:nth-child(3) > small   ${message7} 
+	Create User     u  u  m@  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
+	Result Web      div:nth-child(3) > p:nth-child(4)  ${message7} 
 	Element Should Be Disabled      ${button}
 	#重复用户名
 	Input Text		input-username  mmj
@@ -60,7 +60,6 @@ G-020
 	Result Api      ${button}       ${message9} 
 
 *** Variables ***
-${group css}        div:nth-child(3) > p
 ${message0}         最大长度255个字符
 ${message1}         用户名不能为空
 ${message2}         姓名不能为空

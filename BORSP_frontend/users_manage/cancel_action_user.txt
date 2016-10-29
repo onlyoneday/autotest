@@ -24,7 +24,7 @@ G-025
     ${index} =      Get User Index    ${MMJ USER}
     ${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
     ${name} =       Get Text    ${path}
-    Run Keyword If  '${name}' == 'Cancel'    Fail
+    Run Keyword If  '${name}' == 'Cancel'   Fail
 
 #取消删除
 G-042

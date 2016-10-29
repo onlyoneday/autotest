@@ -11,10 +11,10 @@ Suite Teardown  Close All Browsers
 G-098/G-119
 	@{path} =     Get WebElements  //section/header/h3/a
 	${index} =    Get Length   ${path}
-	${no} =	      Set Variable If  ${index} > ${5}  ${5}
-	:FOR  ${li}   IN RANGE     ${no}
+	:FOR  ${li}   IN RANGE     ${index}
 	\     Check Cluster  ${li}
 	\     Check Node
+	\     Run Keyword IF  ${li} == ${5}  Exit For Loop
 
 *** Keywords ***
 
@@ -32,8 +32,10 @@ Check Node
 	${row} =      Get Matching Xpath Count   //table/tbody/tr[*]
 	${noderow} =  Evaluate   ${row}+1
 	:FOR  ${lr}   IN RANGE   1   ${noderow}
-	\     ${link} =       Evaluate   '//table/tbody/tr['+'"${lr}"'+']/td[2]/a'
+	\     ${link} =       Evaluate   '//table/tbody/tr['+'${lr}'+']/td[2]/a'
 	\	  Click And Wait  ${link}   
 	\     Page Should Contain  主机详情
 	\     Go Back
+	\     Go Back
+	\     Sleep   ${SLEEP TIME} 
 	Go To Page    ${HOME URL}
