@@ -13,7 +13,6 @@ Suite Teardown  Close All Browsers
 Add Node Before Testing
 	Add Cluster Node  ${MMJ CLUSTER}
 	Select Cluster Node
-	#Sleep  ${SLEEP LONG TIME} 
 
 #集群上有主机无应用
 G-104

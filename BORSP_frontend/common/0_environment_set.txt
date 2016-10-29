@@ -1,4 +1,4 @@
-*** Settings ***
+cluster/verify_resource_info.txt*** Settings ***
 
 Documentation   初始化环境
 Resource        ../common/resources.txt
@@ -8,9 +8,9 @@ Resource        ../common/cluster_resources.txt
 Suite Setup     Open Browser To Login Page
 Suite Teardown  Close All Browsers
 
-*** Keywords ***
+*** Test Cases ***
 
-Setting 
+Setting
 	Login  ${USER}  ${PASSWD} 
 	#创建组
 	Go To Page      ${USER_MANG URL}
@@ -20,10 +20,10 @@ Setting
 	Click And Wait  submit-create-user
 	#创建用户
 	Go To Page         ${USER_MANU URL}
-	Create User        ${MMJ USER}   ${MMJ USER}  m@m.com  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
+	Create User        ${MMJ USER}   ${MMJ USER}  m@m.com  ${MMJ PASSWD}  ${MMJ PASSWD}  test user  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  member
 	Click And Wait     submit-create-user
-	Create User        ${GM USER}    ${GM USER}  gm@gm.com  ${GM PASSWD}  ${GM PASSWD}  ${EMPTY}  ${EMPTY}
+	Create User        ${GM USER}    ${GM USER}  gm@gm.com  ${GM PASSWD}  ${GM PASSWD}  test group manager  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  owner
 	Click And Wait     submit-create-user
 	#创建集群
@@ -33,3 +33,10 @@ Setting
 	#添加主机
 	Add Cluster Node   ${MMJ CLUSTER}
 	Select Cluster Node
+	Logout
+    #mmj添加镜像仓库
+    Login Mmj
+    Go To Page      ${USER_RG URL} 
+    Click Element   createUserRegistry
+	Input Registry  ${MMJ RG}  ${RG ADD}  ${RG NAME}  ${RG PWD}
+	Click And Wait  css=md-dialog-actions > button:nth-child(3)

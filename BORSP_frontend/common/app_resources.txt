@@ -1,4 +1,4 @@
-*** Settings ***
+common/0_environment_set.txt*** Settings ***
 
 Documentation  A resource file containing the specific keywords and variables for application
 Library        Selenium2Library
@@ -36,7 +36,7 @@ Delete App By Name
     Click Element   ${menu}
     ${button} =     Evaluate  'stackListDelete'+'${index}'
     Click Element   ${button}
-    Click And Wait  css=button:nth-child(2)>span.ng-binding
+    Click And Wait  //button[@aria-label="确定"]
 
 Update App By Name
     [Arguments]     ${appname}

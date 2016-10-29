@@ -23,7 +23,7 @@ ${NODE URL}              ${SERVER}/node/list&clusterInfo
 ${RSTACK URL}            ${SERVER}/rolexStack/list
 ${USER_ME URL}           ${SERVER}/user/aboutme
 ${USER_PWD URL}          ${SERVER}/user/password
-${USER_RG URL}           ${SERVER}/user/registrytesttest
+${USER_RG URL}           ${SERVER}/user/registry
 ${USER_MANU URL}         ${SERVER}/user-manage/list/user
 ${USER_MANG URL}         ${SERVER}/user-manage/list/group
 

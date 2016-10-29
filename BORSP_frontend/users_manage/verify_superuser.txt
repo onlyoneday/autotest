@@ -28,7 +28,7 @@ G-051
 G-067
 	Go To Page    ${USER_MANG URL}
 	${row} =      Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
-	:FOR    ${index}      IN RANGE    1  ${row}  5
+	:FOR    ${index}      IN RANGE    1  ${row}  10
     \       ${path} =     Evaluate    '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
     \       ${group} =    Get Text    ${path}
 	\		Manage Group  ${group}    2

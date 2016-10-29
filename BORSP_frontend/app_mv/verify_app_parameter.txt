@@ -75,7 +75,7 @@ Modify Parameter
 Verify Header
     #Header-更新时间
     ${cur date} =     Get Current Date
-    ${app date} =     Get Text   css=dl:nth-child(2) > dd:nth-child(2)
+    ${app date} =     Get Text   css=div.flex > dl:nth-child(3) > dd
     ${cd} =   Get Substring   ${cur date}   0  13
     ${ad} =   Get Substring   ${app date}   0  13
     Should Be Equal As Strings   ${cd}   ${ad}

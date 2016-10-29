@@ -24,14 +24,14 @@ G-027
 	Input Text		input-name      ${STR 256}
 	Input Text		input-email     ${EML 256}
 	Result Web      div:nth-child(1) > p:nth-child(4)    ${message0} 
-	Result Web      div:nth-child(2) > p:nth-child(4)    ${message0} 
+	Result Web      div:nth-child(2) > p:nth-child(4)    ${message7} 
 	Element Should Be Disabled      ${button}
 
 #输入项上边外侧界(用户描述)
 G-027-2
 	Edit User Info  mmj
 	Input Text		userDescription  ${STR 256}
-	Result Web      div:nth-child(1) > p:nth-child(3)    ${message8} 
+	Result Web      div:nth-child(1) > p:nth-child(3)    ${message0} 
 
 #输入项不符合格式规范(邮箱)
 G-029

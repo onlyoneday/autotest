@@ -1,3 +1,4 @@
+
 *** Settings ***
 
 Documentation   验证集群信息
@@ -68,5 +69,4 @@ cluster-2,4-5,10-11
     Should Be Equal As Strings    ${driver}    overlay
     Page Should Contain   基础信息
     Page Should Contain   环境变量
-
 
