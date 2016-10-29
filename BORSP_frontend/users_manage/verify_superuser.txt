@@ -20,8 +20,8 @@ G-051
 	Go To Page     ${USER_MANU URL}
 	Disable User   ${VALID USER}
 	${index} =     Get User Index   ${VALID USER}
-	${no} =         Evaluate    ${index}-1
-	${button} =     Evaluate   'disableUser'+'${no}'
+	${no} =        Evaluate    ${index}-1
+	${button} =    Evaluate   'disableUser'+'${no}'
 	Element Should Be Enabled   ${button} 
 
 #查看查看任意组成员列表
@@ -44,6 +44,7 @@ G-079
 	Page Should Contain   ${MMJ USER}
 	#删除其他超级管理员
 	Delete Group User     ${MMJ USER}
+	Page Should Not Contain   ${MMJ USER}
 
 #管理超级用户组-删除自己
 G-080
