@@ -18,7 +18,7 @@ G-066
 
 #取消修改
 G-081
-	Edit Group        test
+	Edit Group        ${TGROUP}
 	Edit Group Info   Cancel   ${EMPTY}
 	Click Element     cancel-create-user
 	${index} =        Get Group Index     Cancel
@@ -26,10 +26,10 @@ G-081
 
 #取消删除
 G-088
-	${index} =        Get Group Index    test
+	${index} =        Get Group Index    ${TGROUP}
 	${no} =           Evaluate    ${index}-1
 	${path} =         Evaluate   'delete-group'+'${no}'
 	Click Element     ${path}
 	Click Element     //md-dialog-actions/button[@aria-label="取消"]
-	${index} =        Get Group Index    test
+	${index} =        Get Group Index    ${TGROUP}
     Run Keyword If   '${index}' == 'None'   Fail

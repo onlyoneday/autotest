@@ -7,25 +7,15 @@ Resource       ../common/resources.txt
 
 *** Keywords ***
 
-Add Menmber Before Testing
-	Login Adm
-	#将用户加入多个用户组
-	Go To Page        ${USER_MANG URL}
-	Manage Group      test  2
-	Add Group User    ${MMJ USER}  member
-	Add Group User    ${GM USER}   owner
-
 Choose Group Super
     Click Element   select_value_label_0
     Click And Wait  //md-option[@value="112"]
-     
-Choose Group Test
-    Click Element   select_value_label_0
-    Click And Wait  //md-option[@value="44"]
-
 Choose Group Groupmmj
     Click Element   select_value_label_0
     Click And Wait  //md-option[@value="1232"]
+Choose Group Tgroup
+    Click Element   select_value_label_0
+    Click And Wait  //md-option[@value="1233"]
 
 Input Group
     [Arguments]   	${username}  ${description}

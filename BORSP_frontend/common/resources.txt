@@ -23,7 +23,7 @@ ${NODE URL}              ${SERVER}/node/list&clusterInfo
 ${RSTACK URL}            ${SERVER}/rolexStack/list
 ${USER_ME URL}           ${SERVER}/user/aboutme
 ${USER_PWD URL}          ${SERVER}/user/password
-${USER_RG URL}           ${SERVER}/user/registry
+${USER_RG URL}           ${SERVER}/user/registrytesttest
 ${USER_MANU URL}         ${SERVER}/user-manage/list/user
 ${USER_MANG URL}         ${SERVER}/user-manage/list/group
 
@@ -38,16 +38,15 @@ ${VALID PASSWD}          MMMMMMMM
 
 ${MMJ USER}              mmj
 ${MMJ PASSWD}            M12345678
-${MMJ DBID}              122
 ${MMJ GROUP}             groupmmj
 ${MMJ CLUSTER}           clustermmj
-${MMJ R}                 registrymmj
+${MMJ RG}                registrymmj
 
 ${GM USER}               groupmanager   
 ${GM PASSWD}             M1234567
-${GM DBID}               123
 
 ${SUPER}                 SuperGroup
+${TGROUP}                testgroup
 
 ${TEST ID}               userForEditing
 ${TEST EML}              userforediting@u.com

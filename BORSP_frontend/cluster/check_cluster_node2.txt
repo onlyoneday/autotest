@@ -14,14 +14,14 @@ Add Menmber Before Testing
 	Login Adm
 	#将用户加入多个用户组
 	Go To Page        ${USER_MANG URL}
-	Manage Group      test  2
+	Manage Group      ${TGROUP}  2
 	Add Group User    ${MMJ USER}  member
 	Add Group User    ${GM USER}   owner
 
 #组管理员-属于多个组-查看多个组下的多个集群和主机
 G-100/121
 	Login Gm
-	Choose Group Test
+	Choose Group Tgroup
 	Page Should Not Contain  ${MMJ CLUSTER}
 	Check Cluster And Node
 	Choose Group Groupmmj
@@ -31,7 +31,7 @@ G-100/121
 #组管理员-属于多个组-查看多个组下的多个集群和主机
 G-101/122
 	Login Mmj
-	Choose Group Test
+	Choose Group Tgroup
 	Page Should Not Contain  ${MMJ CLUSTER}
 	Check Cluster And Node
 	Choose Group Groupmmj
@@ -41,7 +41,7 @@ G-101/122
 Delete Node Before Testing
 	Login Adm
 	Go To Page         ${USER_MANG URL}
-	Manage Group       test  2
+	Manage Group       ${TGROUP}  2
 	Delete Group User  ${MMJ USER}
 	Delete Group User  ${GM USER}
 

@@ -1,0 +1,35 @@
+*** Settings ***
+
+Documentation   初始化环境
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Resource        ../common/group_resources.txt
+Resource        ../common/cluster_resources.txt
+Suite Setup     Open Browser To Login Page
+Suite Teardown  Close All Browsers
+
+*** Keywords ***
+
+Setting 
+	Login  ${USER}  ${PASSWD} 
+	#创建组
+	Go To Page      ${USER_MANG URL}
+	Input Group     ${MMJ GROUP}    ${EMPTY}
+	Click And Wait  submit-create-user
+	Input Group     ${TGROUP}    ${EMPTY}
+	Click And Wait  submit-create-user
+	#创建用户
+	Go To Page         ${USER_MANU URL}
+	Create User        ${MMJ USER}   ${MMJ USER}  m@m.com  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
+	Select User Group  ${MMJ GROUP}  member
+	Click And Wait     submit-create-user
+	Create User        ${GM USER}    ${GM USER}  gm@gm.com  ${GM PASSWD}  ${GM PASSWD}  ${EMPTY}  ${EMPTY}
+	Select User Group  ${MMJ GROUP}  owner
+	Click And Wait     submit-create-user
+	#创建集群
+	Go To Page         ${HOME URL}
+	Input Cluster      ${MMJ CLUSTER}  ${MMJ GROUP}  ${EMPTY}
+	Click And Wait     submit-create-cluster
+	#添加主机
+	Add Cluster Node   ${MMJ CLUSTER}
+	Select Cluster Node

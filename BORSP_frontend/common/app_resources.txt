@@ -127,10 +127,12 @@ Input Advanced App
     Run Keyword If  '${c}' == '1'   Add Command
 
 Add Address
-    Input Text     //*[@name='portMappings']/input[1]   80
-    Click Element  //*[@name='portMappings']/md-select
-    Click Element  //*[@value='HTTP']
-    Input Text     //*[@name='portMappings']/input[2]   8681
+    Click Element  stackAddPortMapping
+    Input Text     containerPort0  80
+    Click Element  //*[@name="portMap"]/md-select
+    Click Element  //md-option/div[contains(text(),"tcp")]
+    Click Element  //*[@name="portMap"]/md-radio-button
+    Input Text     mapPort0  8681
 
 Add Environment
     Click Element  stackAddMountpoints

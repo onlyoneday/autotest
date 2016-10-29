@@ -11,7 +11,7 @@ Suite Teardown  Close All Browsers
 
 #取消创建
 G-097
-	Input Cluster     Cancel  test  Cancel
+	Input Cluster     Cancel  ${TGROUP}  Cancel
 	Click Element     cancel-create-cluster
 	Page Should Not Contain   Cancel
 

@@ -16,8 +16,8 @@ app_c_19             stackDockerKey-0       中文
 app_c_19-2           stackDockerValue-0     中文
 app_c_20             stackTimeoutSeconds-0  Invalid
 app_c_20-2           stackMaxConsecutiveFailures-0       Invalid
-app_c_34             //*[@name='portMappings']/input[1]  Invalid
-app_c_34-2           //*[@name='portMappings']/input[1]  Invalid 
+app_c_34             containerPort0         Invalid
+app_c_34-2           mapPort0               Invalid 
 
 *** Keywords ***
 

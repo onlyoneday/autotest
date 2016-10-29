@@ -38,16 +38,16 @@ G-067
 #管理超级用户组
 G-079
 	#添加其他超级管理员
-	Go To Page     ${USER_MANG URL}
+	Go To Page      ${USER_MANG URL}
 	Manage Group    ${SUPER}  2
-	Add Group User  ${MMJ DBID}  superuser
+	Add Group User  ${MMJ USER}  superuser
 	Page Should Contain   ${MMJ USER}
 	#删除其他超级管理员
 	Delete Group User     ${MMJ USER}
 
 #管理超级用户组-删除自己
 G-080
-	Go To Page     ${USER_MANG URL}
+	Go To Page      ${USER_MANG URL}
 	Manage Group    ${SUPER}  2
 	Delete Group User     ${VALID USER}
 	Page Should Contain   ${VALID USER}

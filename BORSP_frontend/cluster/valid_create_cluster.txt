@@ -11,15 +11,15 @@ Suite Teardown  Close All Browsers
 
 #填写用户组/信息填写上边界值
 G-089/091
-	Input Cluster    c  test  ${EMPTY}
+	Input Cluster    c  ${TGROUP}  ${EMPTY}
 	Click And Wait   submit-create-cluster
-	Result Group	 c  test  ${EMPTY}
+	Result Group	 c  ${TGROUP}  ${EMPTY}
 
 #信息填写下边界值/删除无主机无应用集群
 G-092
-	Input Cluster    ${STR 255}  test  ${STR 255}
+	Input Cluster    ${STR 255}  ${TGROUP}  ${STR 255}
 	Click And Wait   submit-create-cluster
-	Result Group	 ${STR 255}  test  ${STR 255}
+	Result Group	 ${STR 255}  ${TGROUP}  ${STR 255}
 
 *** Keywords ***
 
