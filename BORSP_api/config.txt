@@ -3,7 +3,7 @@
 | Resource       | ./all_api.txt |
 
 | *** Variables *** |
-| ${SERVER}      | http://192.168.1.155:9999 |
+| ${SERVER}      | http://192.168.1.163:9999 |
 | ${domain}      | shurenyun |
 | ${adminname}   | zhfang |
 | ${adminpasswd} | Fzh12345 |
