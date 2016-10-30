@@ -15,36 +15,36 @@ G-033
 	Change User Password   ${STR 7}  ${STR 7}
 	Clear Element text     modals-new-password
 	Clear Element text     modals-again-password
-	Result Web     div:nth-child(1) > div.layout-column.flex-60 > p:nth-child(2) > small     ${message1}
-	Result Web     div:nth-child(2) > div.layout-column.flex-60 > p:nth-child(2) > small     ${message1}
-	Element Should Be Disabled   css=md-dialog-actions > button:nth-child(3)
+	Result Web     div:nth-child(1) > div.layout-column > p:nth-child(2)     ${message1}
+	Result Web     div:nth-child(2) > p:nth-child(3) > small     ${message1}
+	Element Should Be Disabled   ${button} 
 
 #输入项上、下边外侧界
 G-035
 	Edit User Password     mmj
 	Change User Password   ${STR 17}  ${STR 17}
 	Result Web     ${newpwd css}      ${message2}
-	Element Should Be Disabled   css=md-dialog-actions > button:nth-child(3)
+	Element Should Be Disabled   ${button} 
 	Change User Password   ${STR 7}   ${STR 7}
 	Result Web     ${newpwd css}      ${message2}
-	Element Should Be Disabled   css=md-dialog-actions > button:nth-child(3)
+	Element Should Be Disabled   ${button} 
 
 #密码格式不正确
 G-036
 	Edit User Password     mmj
 	Change User Password   m1234567   m1234567
 	Result Web     ${newpwd css}      ${message2}
-	Element Should Be Disabled   css=md-dialog-actions > button:nth-child(3)
+	Element Should Be Disabled   ${button} 
 	Change User Password   whatever   Whatever
 	Result Web     ${newpwd css}      ${message2}
 	Result Web     ${repwd css}       ${message3}
-	Element Should Be Disabled   css=md-dialog-actions > button:nth-child(3)
+	Element Should Be Disabled   ${button} 
 
 *** Variables ***
-${newpwd css}       div:nth-child(1) > div.layout-column.flex-60 > p:nth-child(3) > small
-${repwd css}        div:nth-child(2) > div.layout-column.flex-60 > p:nth-child(3) > small
+${newpwd css}       div:nth-child(1) > div.layout-column > p:nth-child(3)
+${repwd css}        div:nth-child(2) > p:nth-child(4) > small
 ${message1}         密码不能为空
 ${message2}         密码只能包含英文字母、数字、标点符号且必须包含大写字母，长度为8-16位。
 ${message3}         两次输入密码不一致
 ${message4}		    modification not allowed
-${button}           md-dialog-actions > button:nth-child(3)
+${button}           //button[@aria-label="ok"]

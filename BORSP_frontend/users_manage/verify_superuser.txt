@@ -33,7 +33,7 @@ G-067
     \       ${group} =    Get Text    ${path}
 	\		Manage Group  ${group}    2
 	\		Page Should Contain       成员名称
-	\		Go To Page    ${USER_MANG URL}
+	\		Go Back
 
 #管理超级用户组
 G-079

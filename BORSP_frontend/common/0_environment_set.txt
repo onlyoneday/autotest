@@ -11,10 +11,10 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 Setting
-	Login  superadmin  MMMMMMMM
+	#Login  superadmin  MMMMMMMM
 	#CREATE GROUP
 	#GREATE USER
-	GREATE CLUSTER
+	#GREATE CLUSTER
 	#CREATE REGISTRY
 
 *** Keywords ***

@@ -19,7 +19,7 @@ Creat Test User For Changing Password
 G-030
 	Edit User Password    ${TEST ID}
 	Change User Password  ${STR 16}   ${STR 16}
-	Click And Wait        css=md-dialog-actions > button:nth-child(3) > span
+	Click And Wait        //button[@aria-label="ok"]
 	Logout
 	Login    ${TEST ID}   ${STR 16} 
 	Location Should Be    ${HOME URL}
@@ -30,7 +30,7 @@ G-030
 G-031
 	Edit User Password    ${TEST ID}
 	Change User Password  ${STR 8}   ${STR 8}
-	Click And Wait        css=md-dialog-actions > button:nth-child(3) > span
+	Click And Wait        //button[@aria-label="ok"]
 	Logout
 	Login    ${TEST ID}   ${STR 8}
 	Location Should Be    ${HOME URL}
