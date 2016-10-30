@@ -10,10 +10,6 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-Add Node Before Testing
-	Add Cluster Node  ${MMJ CLUSTER}
-	Select Cluster Node
-
 #集群上有主机无应用
 G-104
 	Click And Wait    ${link}
@@ -43,9 +39,13 @@ G-116
 #删除任意集群的任意主机
 G-115
 	Click And Wait    ${link}
-	Delete Node       1
+	Delete Node       0
 	${row2} =         Get Matching Xpath Count    //table/tbody/tr[*]
-	Should Be Equal As Strings  ${row2}  1
+	Should Be Equal As Strings  ${row2}  0
+
+Add Node After Testing
+	Add Cluster Node  ${MMJ CLUSTER}
+	Select Cluster Node
 
 Delete App After Testing
 	Go To Page        ${APP_MY URL} 

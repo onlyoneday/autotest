@@ -23,10 +23,10 @@ Verify Json Template    [Arguments]   ${template}
     #试试看
     Click Element     stackTrySee
     Click And Wait    ${template}
-    #去表单模式选择集群
+    #去表单模式
     Click And Wait    css=md-tab-item:nth-child(1) 
-    Click Element     //*[@name="staticForm"]/div/div/div/md-select
-    Click And Wait    //*[@value="clustermmj"]
+    Click Element     //form[@name="staticForm"]/div/div[4]/div/md-select
+    Click Element     //*[@value="clustermmj"]
     #切换到json模式
     Click And Wait    css=md-tab-item:nth-child(2)
     #等待应用发布

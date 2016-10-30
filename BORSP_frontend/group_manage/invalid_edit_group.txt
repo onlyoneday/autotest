@@ -33,7 +33,8 @@ G-070
 G-070-2
 	Edit Group           ${TEST GRP}
 	Edit Group Info      g    ${STR 256}
-	Result Api           ${button}   ${message2} 
+	#Result Web     div:nth-child(1) > p:nth-child(4)    ${message0} 
+	Element Should Be Disabled     ${button} 
 
 #输入项不符合规范(重复)
 G-072

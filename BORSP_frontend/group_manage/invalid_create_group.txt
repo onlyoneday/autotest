@@ -25,7 +25,8 @@ G-063
 #输入项上边外侧界(用户描述)
 G-063-2
 	Input Group    g    ${STR 256}
-	Result Api     ${button}   ${message2} 
+	#Result Web     div:nth-child(1) > p:nth-child(4)    ${message0} 
+	Element Should Be Disabled     ${button} 
 
 #输入项不符合规范(重复)
 G-065

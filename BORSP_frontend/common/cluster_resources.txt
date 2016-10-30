@@ -34,13 +34,20 @@ Add Cluster Node
 	Sleep   2
 	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
 	Click And Wait  ${link}
-	Click And Wait  add-cluster-node
 
 Select Cluster Node
+
 	Click Element   //md-input-container/md-select
 	Click Element   //*[@aria-hidden="false"]/md-select-menu/md-content/md-option[1]
-	Click Element   css=md-input-container:nth-child(2) > button
-	Click And Wait  css=md-dialog-actions > button:nth-child(3)
+	Click Element   //button[@aria-label="选择需要添加的主机"]
+	Click And Wait  //button[@aria-label="ok"]
+
+Enter Cluster
+	[Arguments]     ${name}
+	Input Text		//input    ${name}
+	Sleep   2
+	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
+	Click And Wait  ${link}
 
 Delete Node
 	[Arguments]     ${index}

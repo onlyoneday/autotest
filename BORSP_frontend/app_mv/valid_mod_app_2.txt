@@ -39,6 +39,7 @@ app_m_14
     Click And Wait  //*[@id='stackListApp']/tbody/tr[1]/td[1]/a
     Click And Wait  stackDetailMenu
     Click And Wait  stackDetailSuspended
+    Sleep  ${SLEEP LONG TIME}
     #验证应用是否停止
     ${status} =     Get Text    css=dl:nth-child(1) > dd
     Should Be Equal As Strings  ${status}   Suspended

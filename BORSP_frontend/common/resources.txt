@@ -6,12 +6,12 @@ Library        String
 
 *** Variables ***
 
-${SERVER}                http://192.168.1.155:5013/ui
+${SERVER}                http://192.168.1.163:5013/ui
 ${BROWSER}               Firefox
 #${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
 ${SLEEP TIME}            6
-${SLEEP LONG TIME}       30
+${SLEEP LONG TIME}       60
 
 #--------------------URL--------------------
 ${LOGIN URL}             ${SERVER}/auth/login
@@ -46,7 +46,7 @@ ${GM USER}               groupmanager
 ${GM PASSWD}             M1234567
 
 ${SUPER}                 SuperGroup
-${TGROUP}                testgroup
+${TGROUP}                testGroup
 
 ${TEST ID}               userForEditing
 ${TEST EML}              userforediting@u.com

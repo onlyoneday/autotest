@@ -1,6 +1,6 @@
 *** Settings ***
 
-Documentation   超级管理员-查看任意集群任意主机
+Documentation   组管理员-查看任意集群任意主机
 Resource        ../common/resources.txt
 Resource        ../common/cluster_resources.txt
 Resource        ../common/group_resources.txt
@@ -70,7 +70,6 @@ Check Node2
 	\     ${link} =   Evaluate   '//table/tbody/tr['+'${lr}'+']/td[1]/a'
 	\	  Click And Wait       ${link} 
 	\     Page Should Contain  主机详情
-	\     Go Back
 	\     Go Back
 	\     Sleep   ${SLEEP TIME} 
 	Go To Page    ${HOME URL}

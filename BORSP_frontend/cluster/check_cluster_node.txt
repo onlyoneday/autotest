@@ -36,6 +36,5 @@ Check Node
 	\	  Click And Wait  ${link}   
 	\     Page Should Contain  主机详情
 	\     Go Back
-	\     Go Back
 	\     Sleep   ${SLEEP TIME} 
 	Go To Page    ${HOME URL}

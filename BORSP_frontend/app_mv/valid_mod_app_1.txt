@@ -35,6 +35,7 @@ app_m_4,22
     Should Be Equal As Strings  ${status}   Running
     #停止应用
     Suspended App By Name       ${name}
+    Sleep  ${SLEEP LONG TIME}
     #验证应用是否停止
     ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
     Should Contain  ${apname}   ${name}

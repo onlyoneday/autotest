@@ -1,31 +1,43 @@
-cluster/verify_resource_info.txt*** Settings ***
+*** Settings ***
 
 Documentation   初始化环境
-Resource        ../common/resources.txt
-Resource        ../common/user_resources.txt
-Resource        ../common/group_resources.txt
-Resource        ../common/cluster_resources.txt
+Resource        resources.txt
+Resource        user_resources.txt
+Resource        group_resources.txt
+Resource        cluster_resources.txt
 Suite Setup     Open Browser To Login Page
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
 Setting
-	Login  ${USER}  ${PASSWD} 
+	Login  superadmin  MMMMMMMM
+	#CREATE GROUP
+	#GREATE USER
+	GREATE CLUSTER
+	#CREATE REGISTRY
+
+*** Keywords ***
+
+CREATE GROUP
 	#创建组
-	Go To Page      ${USER_MANG URL}
-	Input Group     ${MMJ GROUP}    ${EMPTY}
-	Click And Wait  submit-create-user
-	Input Group     ${TGROUP}    ${EMPTY}
-	Click And Wait  submit-create-user
+	Go To Page         ${USER_MANG URL}
+	Input Group        ${MMJ GROUP}    ${EMPTY}
+	Click And Wait     submit-create-user
+	Input Group        ${TGROUP}    ${EMPTY}
+	Click And Wait     submit-create-user
+GREATE USER
 	#创建用户
 	Go To Page         ${USER_MANU URL}
+	Create User        ${VALID USER}  ${VALID USER}  su@su.comm  ${VALID PASSWD}  ${VALID PASSWD}  test super admin  True
+	Click And Wait     submit-create-user
 	Create User        ${MMJ USER}   ${MMJ USER}  m@m.com  ${MMJ PASSWD}  ${MMJ PASSWD}  test user  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  member
 	Click And Wait     submit-create-user
 	Create User        ${GM USER}    ${GM USER}  gm@gm.com  ${GM PASSWD}  ${GM PASSWD}  test group manager  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  owner
 	Click And Wait     submit-create-user
+GREATE CLUSTER
 	#创建集群
 	Go To Page         ${HOME URL}
 	Input Cluster      ${MMJ CLUSTER}  ${MMJ GROUP}  ${EMPTY}
@@ -34,9 +46,10 @@ Setting
 	Add Cluster Node   ${MMJ CLUSTER}
 	Select Cluster Node
 	Logout
+CREATE REGISTRY
     #mmj添加镜像仓库
     Login Mmj
-    Go To Page      ${USER_RG URL} 
-    Click Element   createUserRegistry
-	Input Registry  ${MMJ RG}  ${RG ADD}  ${RG NAME}  ${RG PWD}
-	Click And Wait  css=md-dialog-actions > button:nth-child(3)
+    Go To Page         ${USER_RG URL} 
+    Click Element      createUserRegistry
+	Input Registry     ${MMJ RG}  ${RG ADD}  ${RG NAME}  ${RG PWD}
+	Click And Wait     //button[@aria-label="ok"]

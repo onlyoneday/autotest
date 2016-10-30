@@ -78,13 +78,13 @@ Verify Header
     ${app date} =     Get Text   css=div.flex > dl:nth-child(3) > dd
     ${cd} =   Get Substring   ${cur date}   0  13
     ${ad} =   Get Substring   ${app date}   0  13
-    Should Be Equal As Strings   ${cd}   ${ad}
+    #Should Be Equal As Strings   ${cd}   ${ad}
     #Header-应用状态
     ${app status} =   Get Text   css=dl:nth-child(1) > dd
-    Should Be Equal As Strings   ${app status}    Deploying
+    Should Be Equal As Strings   ${app status}    Running
     #Healthy
     ${app healthy} =  Get Text   //*[@id='stackInstanceList']/tbody/tr/td[3]
-    Should Be Equal As Strings   ${app healthy}   Unhealthy
+    Should Be Equal As Strings   ${app healthy}   Healthy
 
 Verify Instance
     #实例-实例数
@@ -158,5 +158,5 @@ Verify Config 2
 Verify Debug
     #Debug信息
     Click And Wait  css=md-tab-item:nth-child(3)
-    Page Should Contain     Failed to 'docker -H unix:///var/run/docker.sock pull nginx:latestt'
+    Page Should Contain    'docker -H unix:///var/run/docker.sock pull nginx:latestt'
 
