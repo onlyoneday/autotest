@@ -21,7 +21,7 @@
 | 应用管理-新建应用 |
 |    | [Tags] | 应用管理 |
 |    | ${name}= | Get Randomstring |
-|    | ${appname}= | Evaluate | 'dev-' + '${name}' |
+|    | ${appname}= | Evaluate | 'cluster1-' + '${name}' |
 |    | Set Global Variable | ${appname} |
 |    | ${appjson}= | Get Binary File | ${CURDIR}${/}json/valid_app.json |
 |    | ${data} = | Replace Variables | ${appjson} |

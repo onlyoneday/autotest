@@ -7,7 +7,7 @@
 | ${domain}      | shurenyun |
 | ${adminname}   | zhfang |
 | ${adminpasswd} | Fzh12345 |
-| ${HOST}        | 192.168.1.155 |
+| ${HOST}        | 192.168.1.163 |
 | ${USERNAME}    | root |
 | ${PASSWORD}    | dev |
 
