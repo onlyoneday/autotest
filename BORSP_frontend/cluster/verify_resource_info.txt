@@ -22,7 +22,7 @@ cluster-2,4-5,10-11
 	\	${status} =  Get Text   ${path4}
 	\	${mesos} =   Get Text   ${path6}
     \   ${rolelist} =    Evaluate  'master'+'slave'
-    \   ${statuslist} =  Evaluate  'leader'+'active'
+    \   ${statuslist} =  Evaluate  'leader'+'active'+'standby'
     \   ${mesoslist} =   Evaluate  '1.0.1'+'0.28.2'
     \   Should Contain   ${rolelist}    ${role}
     \   Should Contain   ${statuslist}  ${status}
@@ -49,7 +49,7 @@ cluster-2,4-5,10-11
     #验证基本信息
     Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(2)
     ${docker} =     Get Text   docker-info-version
-    Should Be Equal As Strings   ${docker}    1.11.2
+    Should Be Equal As Strings   ${docker}    1.12.1
     Page Should Contain   Docker 信息
     Page Should Contain   主机信息
     Page Should Contain   服务信息

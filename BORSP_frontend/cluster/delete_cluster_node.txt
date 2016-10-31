@@ -34,20 +34,19 @@ G-116
 	Click Element     node-detail-list-del0
 	Click Element     css=md-dialog > md-dialog-actions > button:nth-child(1)
 	${row1} =         Get Matching Xpath Count    //table/tbody/tr[*]
-	Run Keyword If    ${row1} == ${1}    Fail
+	Run Keyword If    ${row1} == ${0}    Fail
 
 #删除任意集群的任意主机
 G-115
 	Click And Wait    ${link}
 	Delete Node       0
+	Wait Until Page Does Not Contain     192.168.1
 	${row2} =         Get Matching Xpath Count    //table/tbody/tr[*]
 	Should Be Equal As Strings  ${row2}  0
 
 Add Node After Testing
 	Add Cluster Node  ${MMJ CLUSTER}
 	Select Cluster Node
-
-Delete App After Testing
 	Go To Page        ${APP_MY URL} 
 	Delete App By Name  ${TEST APP} 
 

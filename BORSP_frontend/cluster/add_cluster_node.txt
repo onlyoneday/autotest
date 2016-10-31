@@ -15,13 +15,15 @@ G-110
 	Click Element        //button[@aria-label="ok"]
 	Page Should Contain  请选择主机
 
-Delete Node Before Testing
-	Enter Cluster        ${MMJ CLUSTER}
-	Delete Node          0
-
 #添加主机
 G-107
 	Add Cluster Node     ${MMJ CLUSTER}
 	Select Cluster Node
 	Page Should Contain  正在添加主机
+
+Delete Node Before Testing
+	Enter Cluster        ${MMJ CLUSTER}
+	Delete Node          1
+
+
 
