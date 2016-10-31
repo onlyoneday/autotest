@@ -18,7 +18,7 @@ app_m_5-7,9-11,15-21,23
     Input Advanced App      11110
     #等待应用发布
     Click And Wait   stackFormCreate
-    Sleep  ${SLEEP LONG TIME}
+    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
 
     #验证信息是否正确
     Click And Wait    xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
@@ -38,7 +38,7 @@ app_m_5-7,9-11,15-21,23
     Modify Parameter
     #等待应用发布
     Click And Wait    stackFormUpdate
-    Sleep  ${SLEEP LONG TIME}
+    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
 
     #验证信息是否正确
     Click And Wait    xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a

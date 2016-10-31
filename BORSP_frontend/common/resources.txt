@@ -1,4 +1,4 @@
-common/cluster_resources.txt*** Settings ***
+*** Settings ***
 
 Documentation  A resource file containing the specific keywords and variables for application
 Library        Selenium2Library
@@ -11,7 +11,7 @@ ${BROWSER}               Firefox
 #${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
 ${SLEEP TIME}            3
-${SLEEP LONG TIME}       60
+${LONG TIME}             180
 
 #--------------------URL--------------------
 ${LOGIN URL}             ${SERVER}/auth/login

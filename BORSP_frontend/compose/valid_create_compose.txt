@@ -20,7 +20,7 @@ Compose App  [Arguments]   ${template}
     Click And Wait  stack-create
     #新建编排
     Create Compose  ${template}
-    Sleep  ${SLEEP LONG TIME} 
+    Sleep  ${LONG TIME} 
     #验证编排是否发布成功
     Reload Page
     Sleep  3

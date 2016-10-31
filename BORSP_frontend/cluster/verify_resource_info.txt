@@ -1,4 +1,3 @@
-
 *** Settings ***
 
 Documentation   验证集群信息

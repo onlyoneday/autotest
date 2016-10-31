@@ -31,7 +31,7 @@ Verify Json Template    [Arguments]   ${template}
     Click And Wait    css=md-tab-item:nth-child(2)
     #等待应用发布
     Click And Wait    stackJsonCreate
-    Sleep   ${SLEEP LONG TIME} 
+    Wait Until Element Contains     //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
     #验证应用是否部署成功    
     ${app name} =     Get Text      //*[@id="stackListApp"]/tbody/tr[1]/td[1]
     Should Contain    ${app name}   template

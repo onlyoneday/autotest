@@ -11,7 +11,7 @@ Suite Teardown  Close All Browsers
 G-098/G-119
 	@{path} =     Get WebElements  //section/header/h3/a
 	${index} =    Get Length   ${path}
-	:FOR  ${li}   IN RANGE     ${index}
+	:FOR  ${li}   IN RANGE     0  ${index}  3
 	\     Check Cluster  ${li}
 	\     Check Node
 	\     Run Keyword IF  ${li} == ${5}  Exit For Loop
