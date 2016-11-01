@@ -26,7 +26,7 @@
 |    | ${clustername}= | Get Randomstring |
 |    | ${data}= | Set Variable | {"groupId":99999,"clusterLabel":"${clustername}","desc": "xsaxas"} |
 |    | ${resp}= | Create Cluster | ${data} | ${adminheaders} |
-|    | Should Be Equal As Strings | ${resp.status_code} | 404 |
+|    | Should Be Equal As Strings | ${resp.status_code} | 400 |
 
 | 集群管理-获取集群列表-权限不足 |
 |    | [Tags] | 获取集群列表 |
@@ -50,9 +50,9 @@
 | 集群管理-获得用户组的vcluster列表-权限不足 |
 |    | [Tags] | 获得用户组的vcluster列表 |
 |    | ${resp}= | Get Cluster By Id | ${groupid1} | ${testheaders1} |
-|    | Should Be Equal As Strings | ${resp.status_code} | 403 |
+|    | Should Be Equal As Strings | ${resp.status_code} | 404 |
 |    | ${resp}= | Get Cluster By Id | ${groupid1} | ${testheaders2} |
-|    | Should Be Equal As Strings | ${resp.status_code} | 403 |
+|    | Should Be Equal As Strings | ${resp.status_code} | 404 |
 
 | 集群管理-获得用户组的vcluster列表-组不存在 |
 |    | [Tags] | 获得用户组的vcluster列表 |

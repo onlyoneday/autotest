@@ -56,7 +56,7 @@
 |    | Open Connection | ${HOST} |
 |    | Login | ${USERNAME} | ${PASSWORD} |
 |    | ${output}= | Execute Command | docker load < /root/alpine.tar |
-|    | ${path}= | Evaluate | 'v1/nodes/'+'${nodeip}'+'/images/'+'sha256:4d8dee4f28726c036f35eacd25ec6606d43e39a7252b2f8b328ac3c16509fab1' |
+|    | ${path}= | Evaluate | 'v1/nodes/'+'172.16.1.1'+'/images/'+'sha256:4d8dee4f28726c036f35eacd25ec6606d43e39a7252b2f8b328ac3c16509fab1' |
 |    | ${resp}= | Delete Request | shurenyun | ${path} | headers=${headers} |
 |    | Should Be Equal As Strings | ${resp.status_code} | 200 |
 |    | log | ${resp.text} |
