@@ -1,0 +1,29 @@
+{
+    "id":"test-1",
+    "cmd":null,
+    "cpus":0.01,
+    "mem":16,
+    "disk":0,
+    "instances":15,
+    "constraints": [
+        [
+            "vcluster",
+            "LIKE",
+            "test"
+        ]
+    ],
+    "container":{
+        "type":"DOCKER",
+        "volumes":[],
+        "docker":{
+            "image":"offlineregistry.dataman-inc.com:5000/library/blackicebird-2048",
+            "network":"BRIDGE",
+            "portMappings":[],
+            "privileged":false,
+            "parameters":[],
+            "forcePullImage":false
+        }
+    },
+    "healthChecks":[],
+    "portDefinitions":[]
+}
