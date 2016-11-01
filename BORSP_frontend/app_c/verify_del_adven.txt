@@ -1,0 +1,70 @@
+*** Settings ***
+
+Documentation   删除高级设置
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page  ${APP_CREATE URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+app_c_08,13
+    Delete Empty
+app_m_35
+    Delete Run 
+
+*** Keywords ***
+
+Delete Empty
+    #打开收起高级设置
+    Click Element   css=.fa-chevron-down
+    Click Element   css=.fa-chevron-up
+    Click Element   css=.fa-chevron-down
+    #添加高级设置
+    Click Element   stackAddMountpoints
+    Click Element   stackAddMountpoints
+    Click Element   stackParametersAdd
+    Click Element   stackParametersAdd
+    Click Element   stackAddHealthChecks
+    Click Element   stackAddHealthChecks
+    #删除第二个高级设置
+    Click Element   stackEnvsDelete1
+    Click Element   stackDockerParametersDel-1
+    Click Element   deleteHealthChecks-1
+    #验证删除的高级设置不存在
+    Page Should Contain Element    stackEnvsKey0
+    Page Should Contain Element    stackDockerKey-0
+    Page Should Contain Element    stackGracePeriodSeconds-0
+    Page Should Not Contain Element    stackEnvsKey1
+    Page Should Not Contain Element    stackDockerKey-1
+    Page Should Not Contain Element    stackGracePeriodSeconds-1
+
+Delete Run
+    #输入最简参数
+    ${name} =   Input Simple App
+    #输入高级设置
+    Input Advanced App  11110
+    #新建应用
+    Click And Wait   stackFormCreate
+    #更新应用
+    Update App By Name  ${name}
+    #打开高级设置
+    Click And Wait   css=.fa-chevron-down
+    #删除第高级设置
+    Click Element    //*[@id="stackEnvsDelete0"]
+    Click Element    //*[@id="stackDockerParametersDel-0"]
+    Click Element    //*[@id="deleteHealthChecks-0"]
+    #应用更新
+    Click And Wait   stackFormUpdate
+    #打开高级设置
+    Update App By Name  ${name}
+    Click Element    css=.fa-chevron-down
+    #验证删除的高级设置不存在
+    Page Should Not Contain Element    stackEnvsKey0
+    Page Should Not Contain Element    stackDockerKey-1
+    Page Should Not Contain Element    stackGracePeriodSeconds-0
+    #删除该应用（避免垃圾数据）
+    Go To Page  ${APP_MY URL} 
+    Delete App From Button
+

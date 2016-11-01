@@ -1,0 +1,29 @@
+*** Settings ***
+
+Documentation   集群管理-超级管理员-添加集群的主机
+Resource        ../common/resources.txt
+Resource        ../common/cluster_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${HOME URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#必填项不填
+G-110
+	Add Cluster Node     ${MMJ CLUSTER}
+	Click Element        //button[@aria-label="ok"]
+	Page Should Contain  请选择主机
+
+#添加主机
+G-107
+	Add Cluster Node     ${MMJ CLUSTER}
+	Select Cluster Node
+	Page Should Contain  正在添加主机
+
+Delete Node Before Testing
+	Enter Cluster        ${MMJ CLUSTER}
+	Delete Node          1
+
+
+

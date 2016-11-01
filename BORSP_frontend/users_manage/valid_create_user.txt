@@ -1,0 +1,61 @@
+*** Settings ***
+
+Documentation   用户组管理-超级管理员-创建用户-正常
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${USER_MANU URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#输入项下边界值
+G-009/012/037
+	Create User        II  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Select User Group  ${MMJ GROUP}  member
+	Click And Wait     submit-create-user
+	Result User        II  U  u@u.cn  ${MMJ GROUP}  组成员
+
+#输入项下边界值
+G-010/038
+	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Select User Group  ${MMJ GROUP}  owner
+	Click And Wait     submit-create-user
+	Result User        ${TEST ID}  U  ${TEST EML}  ${MMJ GROUP}  组管理员
+
+#输入项上边界值
+G-011/013/042
+	Create User     ${STR 255}  ${STR 255}  ${EML 255}  ${STR 16}  ${STR 16}  ${STR 255}  True
+	Click And Wait  submit-create-user
+	Result User     ${STR 255}  ${STR 255}  ${EML 255}  ${SUPER}  超级管理员
+
+#创建/删除无组用户
+G-037
+	Create User     ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Click And Wait  submit-create-user
+	Result User     ${TEST ID}  U  ${TEST EML}  ${EMPTY}  ${EMPTY}
+
+*** Keywords ***
+Result User
+	[Arguments]     ${userid}   ${username}   ${useremail}   ${usergroup}   ${role}
+	#验证用户信息
+	${index} =      Get User Index   ${userid}
+	${path11} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[1]/p'
+	${path12} =     Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[1]/i/small'
+	${path2} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
+	${path3} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[3]'
+	${path4} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[4]'
+	${id} =         Get Text    ${path11}
+	${email} =      Get Text    ${path12}
+	${name} =       Get Text    ${path2}
+	${group} =      Get Text    ${path3}
+	${status} =     Get Text    ${path4}
+	Should Be Equal As Strings  ${id}     ${userid}
+	Should Be Equal As Strings  ${email}  ${useremail}
+	Should Be Equal As Strings  ${name}   ${username}
+	Should Contain  ${group}    ${usergroup}
+	Should Contain  ${group}    ${role}
+	Should Be Equal As Strings  ${status}  正常
+	#删除组
+	Delete User     ${userid}
+

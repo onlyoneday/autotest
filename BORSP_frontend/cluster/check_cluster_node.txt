@@ -1,0 +1,40 @@
+*** Settings ***
+
+Documentation   超级管理员-查看任意集群任意主机
+Resource        ../common/resources.txt
+Resource        ../common/cluster_resources.txt
+Suite Setup     Open Browser And Login Adm
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+G-098/G-119
+	@{path} =     Get WebElements  //section/header/h3/a
+	${index} =    Get Length   ${path}
+	:FOR  ${li}   IN RANGE     0  ${index}  3
+	\     Check Cluster  ${li}
+	\     Check Node
+	\     Run Keyword IF  ${li} == ${5}  Exit For Loop
+
+*** Keywords ***
+
+Check Cluster
+	[Arguments]   ${index}
+	${index} =    Evaluate  ${index}+2
+	${path} =     Evaluate  'section:nth-child('+'${index}'+') > header > h3 > a'
+	${name} =     Get Text  css=${path}
+	Input Text    //input   ${name}
+	${link} =     Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
+	Click And Wait  ${link}
+	Page Should Contain  集群详情
+	
+Check Node
+	${row} =      Get Matching Xpath Count   //table/tbody/tr[*]
+	${noderow} =  Evaluate   ${row}+1
+	:FOR  ${lr}   IN RANGE   1   ${noderow}
+	\     ${link} =       Evaluate   '//table/tbody/tr['+'${lr}'+']/td[2]/a'
+	\	  Click And Wait  ${link}   
+	\     Page Should Contain  主机详情
+	\     Go Back
+	\     Sleep   ${SLEEP TIME} 
+	Go To Page    ${HOME URL}

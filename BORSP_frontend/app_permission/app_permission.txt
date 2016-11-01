@@ -1,0 +1,80 @@
+*** Settings ***
+
+Documentation   应用管理-超级管理员、组管理员、组成员
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Suite Teardown  Close All Browsers
+
+*** Test Cases *** 
+
+#可以创建应用
+G-135     
+    Set Selenium Speed  ${DELAY}
+    Open Browser        ${LOGIN URL}  ${BROWSER}  B1
+    Sleep               ${SLEEP TIME}
+    Login Adm
+    Deploy App          appmmjadm  ${MMJ CLUSTER}
+G-139
+    Set Selenium Speed  ${DELAY}
+    Open Browser        ${LOGIN URL}  ${BROWSER}  B2
+    Sleep               ${SLEEP TIME}
+    Login Gm
+    Deploy App          appmmjgm   ${MMJ CLUSTER}
+G-143
+    Set Selenium Speed  ${DELAY}
+    Open Browser        ${LOGIN URL}  ${BROWSER}  B3
+    Sleep               ${SLEEP TIME}
+    Login Mmj
+    Deploy App          appmmjmmj  ${MMJ CLUSTER}
+
+#超级管理员可以查看、更新所有应用
+D-134/136
+    Switch Browser      B1
+    Check App
+    Update App          appmmjadm
+    Update App          appmmjgm
+    Update App          appmmjmmj
+
+#组管理员可以查看、更新本组用户发布的应用
+D-138/140
+    Switch Browser      B2 
+    Check App
+    Update App          appmmjgm
+    Update App          appmmjmmj
+
+#组成员可以查看本组用户发布的应用
+D-142
+    Switch Browser      B3
+    Check App
+	Element Should Not Be Visible  node-list-menu-0
+
+#超级管理员可以删除所有应用
+D-137
+    Switch Browser      B1
+    Delete App By Name  appmmjgm
+
+#组管理员可以删除本组的应用
+D-141
+    Switch Browser      B2 
+    Delete App By Name  appmmjadm
+    Delete App By Name  appmmjmmj
+
+*** Keywords ***
+Deploy App
+	[Arguments]          ${name}  ${cluster}
+    Go To Page           ${APP_CREATE URL} 
+    Create App           ${name}  ${cluster}
+    Click And Wait       stackFormCreate
+
+Check App
+	Go To Page           ${APP_ALL URL}
+	Page Should Contain  appmmjadm
+	Page Should Contain  appmmjgm
+	Page Should Contain  appmmjmmj
+
+Update App
+	[Arguments]          ${name}
+	Update App By Name   ${name}
+	Element Should Be Enabled  stackFormUpdate
+	Go Back
+

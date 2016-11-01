@@ -1,4 +1,3 @@
-
 *** Settings ***
 
 Documentation  A resource file containing the specific keywords and variables for application
@@ -7,95 +6,146 @@ Library        String
 
 *** Variables ***
 
-${SERVER}                http://192.168.1.155:9999/ui
+${SERVER}                http://192.168.1.163:5013/ui
 ${BROWSER}               Firefox
 #${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
-${SLEEP TIME}            10
-${SLEEP LONG TIME}       60
+${SLEEP TIME}            3
+${LONG TIME}             180
 
 #--------------------URL--------------------
 ${LOGIN URL}             ${SERVER}/auth/login
-${HOME URL}              ${SERVER}/app/list/my
+${HOME URL}              ${SERVER}/cluster/list
 ${APP_MY URL}            ${SERVER}/app/list/my
 ${APP_ALL URL}           ${SERVER}/app/list/all
 ${APP_CREATE URL}        ${SERVER}/app/create
 ${NODE URL}              ${SERVER}/node/list&clusterInfo
 ${RSTACK URL}            ${SERVER}/rolexStack/list
-${USER_U URL}            ${SERVER}/user/users
-${USER_U_CREATE URL}     ${SERVER}/users/create
-${USER_P URL}            ${SERVER}/user/password
+${USER_ME URL}           ${SERVER}/user/aboutme
+${USER_PWD URL}          ${SERVER}/user/password
+${USER_RG URL}           ${SERVER}/user/registry
+${USER_MANU URL}         ${SERVER}/user-manage/list/user
+${USER_MANG URL}         ${SERVER}/user-manage/list/group
 
-
-#----- LOCATION ---------
+#--------------------LOCATION----------------
 ${LOGIN BTN}             login-btn-login
-${USERNAME FIELD}        //input[@name="Email"]
+${USERNAME FIELD}        //input[@name="userName"]
 ${PASSWORD FIELD}        //input[@name="Password"]
 
-#---- DATA --------------
-${VALID USER}            admin@dataman-inc.com
-${VALID PASSWD}          Dataman1234
+#--------------------USER--------------------
+${VALID USER}            superadmin
+${VALID PASSWD}          MMMMMMMM
 
-${MMJ USER}              m@m.com
+${MMJ USER}              mmj
 ${MMJ PASSWD}            M12345678
-${MMJ NEWPASSWD}         M1234567
+${MMJ GROUP}             groupmmj
+${MMJ CLUSTER}           clustermmj
+${MMJ RG}                registrymmj
+
+${GM USER}               groupmanager   
+${GM PASSWD}             M1234567
+
+${SUPER}                 SuperGroup
+${TGROUP}                testGroup
+
+${TEST ID}               userForEditing
+${TEST EML}              userforediting@u.com
+${TEST GRP}              groupforediting
+${TEST CLU}              clusterforediting
+${TEST APP}              applicationforediting
+
+${RG IMAGE}              demoregistry.dataman-inc.com/zhfang/blackicebird-2048
+${RG ADD}                demoregistry.dataman-inc.com
+${RG NAME}               zhfang
+${RG PWD}                Fzh12345
+
+#--------------------STRING------------------
+${CMD TEXT}              while [ true ]; do echo BORSP; sleep 10; done
+
+${STR 7}                 M012345
+${STR 8}                 M0123456
+${STR 16}                M012345678901234
+${STR 17}                M0123456789012345
+${STR 49}                0123456789012345678901234567890123456789012345678
+${STR 50}                01234567890123456789012345678901234567890123456789
+${STR 51}                012345678901234567890123456789012345678901234567890
+${STR 255}               012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234
+${STR 256}               0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345
+${EML 255}               0123456789012345678901234567890123456789012345678901234567890123@abcde.cn
+${EML 256}               01234567890123456789012345678901234567890123456789012345678901234@abcde.cn
 
 
 
 *** Keywords ***
-
 Open Browser To Login Page
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}  #ff_profile_dir=${FF_PROFILE}
 
-Input Username  [Arguments]  ${USERNAME}
-    Input Text  ${USERNAME FIELD}  ${USERNAME}
+Go To Page  
+    [Arguments]  ${URL}
+    Go To   ${URL}
+    Sleep   ${SLEEP TIME} 
 
-Input Password  [Arguments]  ${PASSWORD}
-    Input Text  ${PASSWORD FIELD}  ${PASSWORD}
+Click And Wait  
+    [Arguments]  ${ELEMENT}
+    Click Element  ${ELEMENT}
+    Sleep   ${SLEEP TIME}
 
-Submit Credentials
-    Click Button  ${LOGIN BTN}
+Get Lower String
+    ${Random} =    Generate Random String    6
+    ${Name} =   Convert To Lowercase  ${Random}
+    [Return]    ${Name}
 
-Home Page Should Be Open
-    Location Should Be  ${HOME URL}
+Result Web
+    [Arguments]     ${CSS}  ${WEBMSG}
+    ${TEXT} =       Get Text  css=${CSS}
+    Should Be Equal As Strings    ${TEXT}   ${WEBMSG}
+    Element Should Be Visible     css=${CSS}
 
+<<<<<<< HEAD
 Go To Page  [Arguments]  ${URL}
     Go To   ${URL}
     Sleep   15
+=======
+Result Api
+    [Arguments]     ${LOC}  ${APIMSG}
+    Click Element   ${LOC}
+    Sleep   0.5
+    Page Should Contain     ${APIMSG}
 
-Click And Wait  [Arguments]  ${ELEMENT}
-    Click Element   ${ELEMENT}
-    Sleep   20
-    
-#--------------------
+#--------------------LOGIN------------------
+Open Browser And Login Adm
+    Open Browser To Login Page
+    Login Adm
+
+Open Browser And Login Gm
+    Open Browser To Login Page
+    Login Gm
+>>>>>>> origin/mj
+
 Open Browser And Login Mmj
     Open Browser To Login Page
     Login Mmj
 
+Login Adm
+    Login   ${VALID USER}   ${VALID PASSWD} 
+
+Login Gm
+    Login   ${GM USER}   ${GM PASSWD}    
+
 Login Mmj
     Login   ${MMJ USER}  ${MMJ PASSWD}
 
-Login  [Arguments]   ${USER}   ${PASSWD}
-    Input Username   ${USER}
-    Input Password   ${PASSWD}
-    Submit Credentials
+Login  
+    [Arguments]    ${USER}   ${PASSWD}
+    Input Text     ${USERNAME FIELD}   ${USER}
+    Input Text     ${PASSWORD FIELD}   ${PASSWD}
+    Click Button   ${LOGIN BTN}
     Sleep  ${SLEEP TIME}
 
 Logout
-    Click Button  open-user-menu
-    Click Button  logout
+    Click Button   open-user-menu
+    Click Button   logout
     Sleep  ${SLEEP TIME} 
 
-Get Lower String
-    ${Random} =    Generate Random String    6    
-    ${Name} =   Convert To Lowercase  ${Random}
-    [Return]    ${Name}
     
-
-
-
-
-
-
-

@@ -1,0 +1,43 @@
+*** Settings ***
+
+Documentation   更新-取消
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${APP_MY URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+app_m_37   
+    #新建应用
+    Click And Wait  stackCreate
+    #输入最简参数
+    ${name} =       Input Simple App
+    #等待应用发布
+    Click And Wait  stackFormCreate
+    ${time1} =      Get Text  //*[@id='stackListApp']/tbody/tr[1]/td[7]
+    #更新应用
+    Update App By Name  ${name}
+    #更新CPU
+    Input Text      stackCpus   0.3
+    #点击取消
+    Click And Wait  stackFormCancel
+    #验证应用是否更新（时间）
+    ${index} =      Get App Index  ${name}
+    Not Update      ${index}   ${time1}
+
+*** Keywords *** 
+Not Update    [Arguments]   ${i}   ${time}    
+    #验证应用是否更新（CPU）
+    ${patht} =      Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${i}'+']/td[7]'
+    ${time2} =      Get Text    ${patht}
+    Should Be Equal As Strings  ${time2}  ${time} 
+    ${patha} =      Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${i}'+']/td[1]/a'
+    Click And Wait  ${patha}
+    Click And Wait  css=md-tab-item:nth-child(2) 
+    ${cpu} =        Get Text    css=div.flex-75 > div > dl:nth-child(2) > dd
+    Should Be Equal As Strings  ${cpu}  0.2
+    #删除该应用（避免垃圾数据）
+    Delete App From Detail
+

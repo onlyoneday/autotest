@@ -1,0 +1,55 @@
+*** Settings ***
+
+Documentation   应用管理-修改所属用户
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Test Setup      Open Browser To Login Page
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+Create App Before Testing
+	Login Mmj 
+    Go To Page        ${APP_CREATE URL} 
+    Create App        appmmj  ${MMJ CLUSTER}
+    Click And Wait    stackFormCreate
+
+#组管理员-修改所属用户
+G-147
+	Login Gm 
+    Go To Page        ${APP_ALL URL} 
+    Change App Owner  appmmj
+    Change Owner      ${GM USER}
+
+#超级管理员-修改所属用户
+G-148
+	Login Adm 
+    Go To Page        ${APP_ALL URL} 
+    Change App Owner  appmmj
+    Change Owner      ${MMJ USER}
+
+#组成员-修改所属用户
+G-149
+	Login Mmj 
+    Go To Page        ${APP_MY URL} 
+    Change App Owner  appmmj
+    Change Owner      ${GM USER}
+
+Delete App After Testing
+	Login Gm 
+    Go To Page          ${APP_MY URL} 
+	Delete App By Name  appmmj
+
+    
+*** Keywords ***
+Change Owner
+	[Arguments]       ${name}  
+    Click Element     update-select-group
+    @{path} =         Get Webelements  //*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div
+    :FOR    ${path}   IN    @{path}
+    \       ${user} =       Get Text   ${path}
+    \       Should Contain  mmjgroupmanager  ${user}
+    ${path} =  Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${name}"'+')]'
+    Click Element     ${path}
+    Click And Wait    css=md-dialog-actions > button:nth-child(3)
+

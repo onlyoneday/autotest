@@ -1,0 +1,27 @@
+*** Settings ***
+
+Documentation   新建json-取消
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${APP_MY URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+app_c_32
+    #新建应用
+    Click And Wait  stackCreate
+    #输入最简参数
+    ${name} =   Input Simple App
+    #切换到json模式
+    Click And Wait  css=md-tab-item:nth-child(2)
+    #点击取消
+    Click And Wait  stackJsonCancel
+    #验证应用是否部署
+    ${index} =    Get Matching Xpath Count   //*[@id="stackListApp"]/tbody/tr[*]
+    :FOR    ${li}   IN RANGE   ${index} 
+    \    ${li} =    Evaluate   ${li} + 1
+    \    ${path} =  Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${li}'+']/td[1]'
+    \    ${app name} =   Get Text   ${path}
+    \    Should Not Be Equal As Strings   ${app name}   ${name} 

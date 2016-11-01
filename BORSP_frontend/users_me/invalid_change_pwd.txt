@@ -1,0 +1,59 @@
+*** Settings ***
+
+Documentation   用户管理-修改自己的密码-异常
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Suite Setup     Open Browser And Login Gm
+Test Setup      Go To Page   ${USER_PWD URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+#必填项不填
+G-002
+	Input Password   p   p   ${EMPTY}
+	Clear Element text   oldPassword
+	Clear Element text   newPassword
+	Result Web       div:nth-child(1) > div.layout-column > p    ${message1} 
+	Result Web       div:nth-child(2) > div.layout-column > p    ${message2} 
+	Element Should Be Disabled    ${button}
+
+#旧密码错误
+G-003
+	Input Password    ${VALID PASSWD}  ${VALID PASSWD}  ${VALID PASSWD}
+	Result Api        ${button}        ${message4} 	
+
+#输入项上边外侧界
+G-004
+	Input Password    ${GM PASSWD}      ${STR 17}   ${STR 17}
+	Result Web        div:nth-child(2) > div.layout-column > p     ${message2}
+	Element Should Be Disabled    ${button}
+
+#输入项下边外侧界
+G-004-2
+	Input Password    ${GM PASSWD}      ${STR 7}    ${EMPTY} 
+	Result Web        div:nth-child(2) > div.layout-column > p     ${message2}
+	Element Should Be Disabled    ${button}
+
+#密码格式不正确
+G-005
+	Input Password    ${GM PASSWD}      m1234567   m1234567
+	Result Web        div:nth-child(2) > div.layout-column > p     ${message2}
+	Element Should Be Disabled    ${button}
+	Input Password    ${GM PASSWD}      whatever   Whatever
+	Result Web        div:nth-child(2) > div.layout-column > p     ${message2}
+	Result Web        div:nth-child(3) > div.layout-column > p      ${message3}
+	Element Should Be Disabled    ${button}
+
+*** Keywords ***	
+Input Password
+    [Arguments]   	${oldpassword}  ${newpassword}  ${repassword}
+	Input Text		oldPassword	    ${oldpassword}
+	Input Text		newPassword     ${newpassword}
+	Input Text		newPasswordCompare    ${repassword}
+
+*** Variables ***
+${message1}         密码不能为空
+${message2}         密码必须包含大写字母，长度为8-16位。
+${message3}         两次输入密码不一致
+${message4}		    old password is not correct
+${button}           submit-update-password

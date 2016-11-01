@@ -1,0 +1,23 @@
+*** Settings ***
+
+Documentation   多点登录退出
+Resource        ../common/resources.txt
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+login_out_10
+    Set Selenium Speed  ${DELAY}
+    Open Browser  ${LOGIN URL}  ${BROWSER}   B1
+    Sleep  ${SLEEP TIME}
+    Login Mmj
+
+    Set Selenium Speed  ${DELAY}
+    Open Browser  ${LOGIN URL}  ${BROWSER}   B2
+    Sleep  ${SLEEP TIME}
+    Login Mmj
+
+    Switch Browser   B1
+    Sleep  ${SLEEP TIME}
+    Location Should Be  ${LOGIN URL} 
+    

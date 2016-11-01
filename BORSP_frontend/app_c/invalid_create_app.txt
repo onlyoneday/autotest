@@ -1,0 +1,49 @@
+*** Settings ***
+
+Documentation   应用管理-超级管理员-发布应用-必填项不填
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page  ${APP_CREATE URL} 
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#名称
+G-135
+	#表单模式
+    Input Simple App
+    Clear Element Text    stackAppName
+    Result Web            div:nth-child(1) > div.layout-column > p:nth-child(2)  ${message1}
+    #JSON模式
+    Click Element         css=md-tab-item:nth-child(2)
+    Result Api            stackJsonCreate    ${message31}
+
+#地址
+G-135-2
+    #表单模式
+    Input Simple App
+    Clear Element Text    stackImageAddress
+    Result Web            div:nth-child(2) > div.layout-column > p  ${message2}
+    #JSON模式
+    Click Element         css=md-tab-item:nth-child(2)
+    Result Api            stackJsonCreate    ${message32}
+
+#集群
+G-136
+	#表单模式
+	Create App        appmmj    ${EMPTY}
+    Element Should Be Disabled  stackFormCreate
+    #JSON模式
+    Click Element     css=md-tab-item:nth-child(2)
+    Result Api        stackJsonCreate    ${message4}
+
+*** Variables ***
+${message1}        应用名称不能为空
+${message2}		   镜像地址不能为空
+${message31}       id
+${message32}	   image
+${message4}		   have only one vCluster constraint
+
+
+

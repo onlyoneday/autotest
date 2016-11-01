@@ -1,0 +1,42 @@
+*** Settings ***
+
+Documentation   Kill和Kill&Scale按钮
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${APP_MY URL}
+Suite Teardown  Close All Browsers
+Library         DateTime
+
+*** Test Cases ***
+
+app_m_5,8
+    #新建应用
+    Click And Wait      stackCreate
+    #输入最简参数
+    ${name} =           Input Simple App
+    Input Advanced App  10000
+    #更新容器个数
+    Input Text          stackInstanceNumber   2   
+    #等待应用发布
+    Click And Wait      stackFormCreate
+    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    #跳转到详情页面
+    Click And Wait      //*[@id='stackListApp']/tbody/tr[1]/td[1]/a
+    #KILL
+    Click Element       //*[@id='stackInstanceList']/tbody/tr/td[1]/md-checkbox
+    Click Element       stackInstanceKilTack
+    Click And Wait      css=md-dialog-actions > button:nth-child(2)
+    Sleep               ${SLEEP TIME}
+    ${index} =          Get Matching Xpath Count   //*[@id="stackInstanceList"]/tbody/tr[*] 
+    Should Be Equal     ${index}   2
+    #KILL&SCALE
+    Click Element       //*[@id='stackInstanceList']/tbody/tr/td[1]/md-checkbox
+    Click Element       stackInstanceKilOrTack
+    Click And Wait      css=md-dialog-actions > button:nth-child(2)
+    Sleep               ${SLEEP TIME}
+    ${index} =          Get Matching Xpath Count   //*[@id="stackInstanceList"]/tbody/tr[*] 
+    Should Be Equal     ${index}   1
+    #删除该应用（避免垃圾数据）
+    Delete App From Detail
+

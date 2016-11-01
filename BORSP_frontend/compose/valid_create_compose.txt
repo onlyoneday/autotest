@@ -1,37 +1,29 @@
 *** Settings ***
 
-Documentation   App test cases
+Documentation   应用编排-测试使用试试看模板发布编排
 Resource        ../common/resources.txt
+Resource        ../common/comp_resources.txt
 Suite Setup     Open Browser And Login Mmj
 Test Setup      Go To Page   ${RSTACK URL}
 Test Template   Compose App
-Suite Teardown  Close Browser
-
+Suite Teardown  Close All Browsers
 
 *** Test Cases ***    template
 
-compose_2,6-7(2)      rolex-json-mysql
-compose_2,6-7(3)      rolex-json-wordpress
+compose_2,6,7,11      rolex-json-mysql
+compose_2,6,7,11-2    rolex-json-wordpress
 
 *** Keywords ***
 
 Compose App  [Arguments]   ${template}
-    
     #新建编排
     Click And Wait  stack-create
-    #输入编排名称
-    ${random} =   Get Lower String
-    ${name} =  Evaluate  'compose'+'${random}'
-    Input Text    rolex-stackName   ${name}
-    #选择试试看模板
-    Click Element    relox-try-menu
-    Click Element    ${template}
-    #等待编排发布
-    Click And Wait   rolex-json-create
-    Sleep  ${SLEEP LONG TIME} 
-    Sleep  ${SLEEP LONG TIME} 
+    #新建编排
+    Create Compose  ${template}
+    Sleep  ${LONG TIME} 
     #验证编排是否发布成功
     Reload Page
+    Sleep  3
     ${task1} =   Get Text    //*[@id='rolexStackServices']/tbody/tr[1]/td[2]
     ${run} =   Get Substring     ${task1}   0    1
     ${sum} =   Get Substring     ${task1}   2
@@ -41,6 +33,5 @@ Compose App  [Arguments]   ${template}
     ${sum} =   Get Substring     ${task2}   2
     Should Be Equal As Strings   ${run}    ${sum}
     #删除编排
-    Click And Wait   delete-stack
-    Click And Wait   css=md-dialog > md-dialog-actions > button:nth-child(2)
+    Delete Compose
 

@@ -1,0 +1,55 @@
+*** Settings ***
+
+Documentation   应用管理列表界面停止、扩展、删除、更新可用
+Resource        ../common/resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${APP_MY URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+app_m_4,22
+    #创建应用
+    Click And Wait  stackCreate
+    ${name} =       Input Simple App
+    #等待应用发布
+    Click And Wait  stackFormCreate
+    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    #验证应用是否部署成功
+    ${apname} =     Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Contain  ${apname}   ${name}
+    ${status} =     Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+    Should Be Equal As Strings  ${status}   Running
+    #更新应用
+    Update App By Name  ${name}
+    #打开高级设置
+    Input Advanced App  00001
+    #等待应用更新
+    Click And Wait  stackFormUpdate
+    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    #验证应用是否部署成功
+    ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Contain  ${apname}   ${name}
+    ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+    Should Be Equal As Strings  ${status}   Running
+    #停止应用
+    Suspended App By Name       ${name}
+    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Suspended  timeout=${LONG TIME} 
+    #验证应用是否停止
+    ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Contain  ${apname}   ${name}
+    ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+    Should Be Equal As Strings  ${status}   Suspended
+    #扩展应用
+    Extend App By Name  ${name}
+    Input Text      name=containerNum   1
+    Click And Wait  css=md-dialog-actions > button:nth-child(3)
+    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    #验证应用是否扩展成功
+    ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Contain  ${apname}   ${name}
+    ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+    Should Be Equal As Strings  ${status}   Running
+    #删除该应用（避免垃圾数据）
+    Delete App By Name          ${name}

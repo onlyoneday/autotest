@@ -1,0 +1,37 @@
+*** Settings ***
+
+Documentation   用户组管理-超级管理员-创建用户组-正常
+Resource        ../common/resources.txt
+Resource        ../common/group_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${USER_MANG URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#输入项上边界值
+G-060/082
+	Input Group     ${STR 255}    ${STR 255}
+	Click And Wait  submit-create-user
+	Result Group    ${STR 255}    ${STR 255}
+
+#输入项下边界值
+G-061/082
+	Input Group     G    ${EMPTY}
+	Click And Wait  submit-create-user
+	Result Group    G    ${EMPTY}
+
+*** Keywords ***
+Result Group
+	[Arguments]     ${groupname}    ${description}
+	#验证组
+	${index} =      Get Group Index   ${groupname}
+	${path2} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
+	${path5} =      Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[5]'
+	${name} =       Get Text    ${path2}
+	${dscp} =       Get Text    ${path5}
+	Should Be Equal As Strings  ${name}   ${groupname}
+	Should Be Equal As Strings  ${dscp}   ${description}
+	#删除组
+	Delete Group    ${groupname}
+

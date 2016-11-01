@@ -1,0 +1,37 @@
+*** Settings ***
+
+Documentation   左侧菜单可用（login_out_9）
+Resource        ../common/resources.txt
+Suite Setup     Open Browser And Login Adm
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+Verify Cluster Button
+    Click And Wait  index-to-cluster
+    Page Should Contain   新建集群
+
+Verify App Button
+    Click And Wait  index-to-stack
+    Page Should Contain   我的应用
+
+Verify Node Button
+    Click And Wait  index-to-node
+    Page Should Contain   主机管理
+
+Verify Rstack Button
+    Click And Wait  index-to-rolexStack
+    Page Should Contain   应用编排
+
+Verify User Button
+    Click Button    open-user-menu
+    Click And Wait  index-to-user-list
+    Page Should Contain   用户中心
+
+Verify User_manage Button
+    Click Button    open-user-menu
+    Click And Wait  index-to-user-manage
+    Page Should Contain   用户管理
+
+
+

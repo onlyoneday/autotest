@@ -1,0 +1,42 @@
+*** Settings ***
+
+Documentation   用户组管理-超级管理员-创建用户组-异常
+Resource        ../common/resources.txt
+Resource        ../common/group_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${USER_MANG URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#必填项不填
+G-062
+	Input Group    g     ${EMPTY}
+	Clear Element text   input-username
+	Result Web     div:nth-child(1) > p:nth-child(3)    ${message1} 
+	Element Should Be Disabled     ${button} 
+
+#输入项上边外侧界(用户名)
+G-063
+	Input Group    ${STR 256}      ${EMPTY}
+	Result Web     div:nth-child(1) > p:nth-child(4)    ${message0} 
+	Element Should Be Disabled     ${button} 
+
+#输入项上边外侧界(用户描述)
+G-063-2
+	Input Group    g    ${STR 256}
+	#Result Web     div:nth-child(1) > p:nth-child(4)    ${message0} 
+	Element Should Be Disabled     ${button} 
+
+#输入项不符合规范(重复)
+G-065
+	Input Group    ${SUPER}    ${EMPTY}
+	Result Api     ${button}   ${message3} 
+
+*** Variables ***
+${message0}        最大长度255个字符
+${message1}        用户名不能为空
+${message2}		   Error 1406
+${message3}		   group already exist
+${button}          submit-create-user
+

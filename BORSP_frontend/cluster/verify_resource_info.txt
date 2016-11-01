@@ -1,0 +1,71 @@
+*** Settings ***
+
+Documentation   验证集群信息
+Resource        ../common/resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${NODE URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+cluster-2,4-5,10-11
+	#验证主机信息
+    #集群角色和主机状态
+	${index} =      Get Matching Xpath Count   //*[@id="node-list"]/tbody/tr[*] 
+	:FOR    ${li}   IN RANGE   ${index}
+	\   ${li} =     Evaluate   ${li} + 1
+	\   ${path3} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[2]'
+	\   ${path4} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[3]'
+	\   ${path6} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[5]'
+	\   ${role} =    Get Text   ${path3}
+	\	${status} =  Get Text   ${path4}
+	\	${mesos} =   Get Text   ${path6}
+    \   ${rolelist} =    Evaluate  'master'+'slave'
+    \   ${statuslist} =  Evaluate  'leader'+'active'+'standby'
+    \   ${mesoslist} =   Evaluate  '1.0.1'+'0.28.2'
+    \   Should Contain   ${rolelist}    ${role}
+    \   Should Contain   ${statuslist}  ${status}
+    \   Should Contain   ${mesoslist}   ${mesos}
+
+	#验证集群状态信息
+    Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(2)
+    Page Should Contain   资源
+    Page Should Contain   任务
+    Page Should Contain   Slave
+    #返回主机管理标签
+    Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(1)
+    ${master ip} =  Get Text   xpath=//*[@id='node-list']/tbody/tr[1]/td[1]
+    #跳转到容器列表
+    Click And Wait  xpath=//*[@id='node-list']/tbody/tr[1]/td[1]/a
+    #验证header信息
+    ${ip add} =     Get Text   //h2
+    ${system} =     Get Text   node-detail-system
+    ${container} =  Get Text   node-detail-container-running
+    ${count} =      Get Matching Xpath Count   //*[@id="node-container-list"]/tbody/tr[*] 
+    Should Be Equal As Strings   ${ip add}     ${master ip}
+    Should Be Equal As Strings   ${system}     CentOS Linux 7 (Core)
+    Should Be Equal As Strings   ${container}  ${count} 
+    #验证基本信息
+    Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(2)
+    ${docker} =     Get Text   docker-info-version
+    Should Be Equal As Strings   ${docker}    1.12.1
+    Page Should Contain   Docker 信息
+    Page Should Contain   主机信息
+    Page Should Contain   服务信息
+    #验证镜像列表
+    Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(3)
+    Page Should Contain   删除
+    #返回容器列表
+    Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(1)
+    ${time} =       Get Text   xpath=//*[@id='node-container-list']/tbody/tr[1]/td[6]
+    #跳转到容器详情
+    Click And Wait  xpath=//*[@id='node-container-list']/tbody/tr[1]/td[1]/a
+    ${status} =     Get Text   instance-detail-status
+    ${created} =    Get Text   instance-detail-created
+    ${driver} =     Get Text   instance-detail-driver
+    Should Be Equal As Strings    ${status}    运行中
+    Should Be Equal As Strings    ${created}   ${time} 
+    Should Be Equal As Strings    ${driver}    overlay
+    Page Should Contain   基础信息
+    Page Should Contain   环境变量
+

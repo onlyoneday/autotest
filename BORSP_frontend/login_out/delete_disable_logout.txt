@@ -1,0 +1,59 @@
+*** Settings ***
+
+Documentation   用户管理-正在登陆的用户被删除或禁用-自动退出登陆
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+
+*** Test Cases ***
+
+#正在登陆的用户被删除-自动退出登陆
+G-150
+    Set Selenium Speed  ${DELAY}
+    Open Browser        ${LOGIN URL}  ${BROWSER}   B1
+    Sleep   2
+    Login Adm
+    Go To Page          ${USER_MANU URL}
+    Create User         ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+    Select User Group   ${MMJ GROUP}   member
+    Click And Wait      submit-create-user
+
+    Set Selenium Speed  ${DELAY}
+    Open Browser        ${LOGIN URL}  ${BROWSER}   B2
+    Sleep   2
+    Login   ${TEST ID}  ${STR 8}
+
+    Switch Browser      B1
+    Delete User         ${TEST ID}
+    Sleep   2
+
+    Switch Browser      B2
+    Location Should Be  ${LOGIN URL}
+    Close All Browsers
+
+#正在登陆的用户被禁用-自动退出登陆
+G-150-2
+    Set Selenium Speed  ${DELAY}
+    Open Browser        ${LOGIN URL}  ${BROWSER}   B1
+    Sleep   2
+    Login Adm
+    Go To Page          ${USER_MANU URL}
+    Create User         ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+    Select User Group   ${MMJ GROUP}   member
+    Click And Wait      submit-create-user
+
+    Set Selenium Speed  ${DELAY}
+    Open Browser        ${LOGIN URL}  ${BROWSER}   B2
+    Sleep   2
+    Login   ${TEST ID}  ${STR 8}
+
+    Switch Browser      B1
+    Disable User        ${TEST ID}
+    Sleep   2
+
+    Switch Browser      B2
+    Location Should Be  ${LOGIN URL}
+
+    Switch Browser      B1
+    Delete User         ${TEST ID}
+    Close All Browsers
+

@@ -1,0 +1,39 @@
+*** Settings ***
+
+Documentation   用户管理-修改自己的密码-正常
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Test Setup      Open Browser To Login Page
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+#用户管理-组管理员-修改自己的密码(上边界)
+G-001
+	Login Gm
+	Go To   ${USER_PWD URL}
+	Input Password  ${GM PASSWD}    ${STR 16}    ${STR 16}
+	Click Element   submit-update-password
+	Logout
+	Login   ${GM USER}    ${STR 16} 
+	Go To   ${USER_PWD URL}
+	Input Password  ${STR 16}    ${GM PASSWD}    ${GM PASSWD} 
+	Click Element   submit-update-password
+
+#用户管理-普通用户-修改自己密码（下边界）
+G-007
+	Login Mmj
+	Go To   ${USER_PWD URL}
+	Input Password  ${MMJ PASSWD}    ${STR 8}    ${STR 8} 
+	Click Element   submit-update-password
+	Logout
+	Login   ${MMJ USER}    ${STR 8} 
+	Go To   ${USER_PWD URL}
+	Input Password  ${STR 8}    ${MMJ PASSWD}    ${MMJ PASSWD}
+	Click Element   submit-update-password
+
+*** Keywords ***	
+Input Password
+    [Arguments]   	${oldpassword}  ${newpassword}  ${repassword}
+	Input Text		oldPassword	    ${oldpassword}
+	Input Text		newPassword     ${newpassword}
+	Input Text		newPasswordCompare    ${repassword}

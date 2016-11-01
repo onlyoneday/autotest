@@ -1,0 +1,54 @@
+*** Settings ***
+
+Documentation   超级管理员
+Resource        ../common/resources.txt
+Resource        ../common/user_resources.txt
+Resource        ../common/group_resources.txt
+Suite Setup     Open Browser And Login Adm
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#用户管理-删除自己
+G-041
+	Go To Page     ${USER_MANU URL}
+	Delete User    ${VALID USER}
+	Page Should Contain   ${VALID USER}
+
+#用户管理-禁用自己
+G-051
+	Go To Page     ${USER_MANU URL}
+	Disable User   ${VALID USER}
+	${index} =     Get User Index   ${VALID USER}
+	${no} =        Evaluate    ${index}-1
+	${button} =    Evaluate   'disableUser'+'${no}'
+	Element Should Be Enabled   ${button} 
+
+#查看查看任意组成员列表
+G-067
+	Go To Page    ${USER_MANG URL}
+	${row} =      Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
+	:FOR    ${index}      IN RANGE    1  ${row}  10
+    \       ${path} =     Evaluate    '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
+    \       ${group} =    Get Text    ${path}
+	\		Manage Group  ${group}    2
+	\		Page Should Contain       成员名称
+	\		Go Back
+
+#管理超级用户组
+G-079
+	#添加其他超级管理员
+	Go To Page      ${USER_MANG URL}
+	Manage Group    ${SUPER}  2
+	Add Group User  ${MMJ USER}  superuser
+	Page Should Contain   ${MMJ USER}
+	#删除其他超级管理员
+	Delete Group User     ${MMJ USER}
+	Page Should Not Contain   ${MMJ USER}
+
+#管理超级用户组-删除自己
+G-080
+	Go To Page      ${USER_MANG URL}
+	Manage Group    ${SUPER}  2
+	Delete Group User     ${VALID USER}
+	Page Should Contain   ${VALID USER}

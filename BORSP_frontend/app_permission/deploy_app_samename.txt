@@ -1,0 +1,30 @@
+*** Settings ***
+
+Documentation   在不同集群发名称相同的应用
+Resource        ../common/resources.txt
+Resource        ../common/cluster_resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Adm
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#创建集群
+Create Cluster Before Testing
+	Input Cluster   ${TEST CLU}  ${MMJ GROUP}  ${TEST CLU}
+	Click And Wait  submit-create-cluster
+
+G-151
+	Go To Page      ${APP_CREATE URL} 
+	Create App      ${TEST APP}    ${MMJ CLUSTER}
+    Click And Wait  stackFormCreate
+    Go To Page		${APP_CREATE URL} 
+    Create App      ${TEST APP}    ${TEST CLU}
+    Click And Wait  stackFormCreate
+
+Delete App Cluster After Testing
+	Go To Page      ${APP_ALL URL} 
+	Delete App By Name   ${TEST APP} 
+	Delete App By Name   ${TEST APP} 
+	Go To Page		${HOME URL}
+	Delete Cluster  ${TEST CLU}

@@ -1,0 +1,57 @@
+cluster/valid_create_cluster.txt *** Settings ***
+
+Documentation  A resource file containing the specific keywords and variables for application
+Library        Selenium2Library
+Library        String
+Resource       ../common/resources.txt
+
+*** Keywords ***
+
+Input Cluster
+    [Arguments]   	${clustername}  ${group}  ${description}
+    Click And Wait  //*[@id='cluster-create']
+	Input Text		input-clustername	 ${clustername}
+	Run Keyword If  '${group}' <> '${EMPTY}'    Select Cluster Group  ${group}
+	Input Text		clusterDesc    ${description}
+
+Select Cluster Group
+	[Arguments]   	${group}
+	Click Element   select-userGroup
+	${path} =       Evaluate   '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${group}"'+')]'
+	Click Element   ${path}
+
+Delete Cluster
+	[Arguments]     ${name}
+	Input Text		//input    ${name}
+	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
+	Click And Wait  ${link}
+	Click Element   delete-cluster
+	Click And Wait  css=md-dialog-actions > button:nth-child(2)
+
+Add Cluster Node
+	[Arguments]     ${name}
+	Input Text		//input    ${name}
+	Sleep   2
+	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
+	Click And Wait  ${link}
+	Click Element   add-cluster-node
+
+Select Cluster Node
+	Click And Wait  //md-input-container/md-select
+	Click Element   //md-option[@ng-value="nodeIp"][1]
+	Click Element   //button[@aria-label="选择需要添加的主机"]
+	Click And Wait  //button[@aria-label="ok"]
+
+Enter Cluster
+	[Arguments]     ${name}
+	Input Text		//input    ${name}
+	Sleep   2
+	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
+	Click And Wait  ${link}
+
+Delete Node
+	[Arguments]     ${index}
+	${path} =       Evaluate   'node-detail-list-del'+'${index}'
+	Click Element   ${path}
+	Click And Wait  css=md-dialog > md-dialog-actions > button:nth-child(2) 
+
