@@ -51,5 +51,7 @@ app_m_4,22
     Should Contain  ${apname}   ${name}
     ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
     Should Be Equal As Strings  ${status}   Running
+
+Delete App After Testing
     #删除该应用（避免垃圾数据）
     Delete App By Name          ${name}

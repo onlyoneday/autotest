@@ -52,7 +52,7 @@ G-048/056
 	Delete User        ${TEST ID}
 
 #禁用/启用超级管理员
-G-050/057
+G-049/057
 	#创建超级管理员
 	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  True
 	Click And Wait     submit-create-user

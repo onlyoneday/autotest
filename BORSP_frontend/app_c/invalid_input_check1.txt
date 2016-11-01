@@ -31,7 +31,8 @@ Input Check1  [Arguments]  ${input}   ${text}   ${active}
     #验证
     Run Keyword If  '${active}' == 'a'   Click Element   stackFormCreate
     ...              ELSE   Element Should Be Disabled   stackFormCreate
-    Location Should Be  ${APP_CREATE URL}  
+    Location Should Be  ${APP_CREATE URL} 
+    Capture Page Screenshot 
     
 
     

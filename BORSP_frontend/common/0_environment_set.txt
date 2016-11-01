@@ -10,8 +10,8 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-Setting
-	#Login  superadmin  MMMMMMMM
+#Setting
+	#Login  admin  dataman1234
 	#CREATE GROUP
 	#GREATE USER
 	#GREATE CLUSTER

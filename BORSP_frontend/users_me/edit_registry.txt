@@ -9,6 +9,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
+#必填项不填
 G-218
 	Click And Wait        userRegistryUpdate0
 	Clear Element text    create-registry-name

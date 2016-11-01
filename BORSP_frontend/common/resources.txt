@@ -7,11 +7,12 @@ Library        String
 *** Variables ***
 
 ${SERVER}                http://192.168.1.163:5013/ui
+#${SERVER}                http://192.168.1.124:81/ui
 ${BROWSER}               Firefox
 #${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
-${SLEEP TIME}            3
-${LONG TIME}             180
+${SLEEP TIME}            5
+${LONG TIME}             90
 
 #--------------------URL--------------------
 ${LOGIN URL}             ${SERVER}/auth/login

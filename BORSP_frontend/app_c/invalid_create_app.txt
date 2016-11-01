@@ -15,9 +15,11 @@ G-135
     Input Simple App
     Clear Element Text    stackAppName
     Result Web            div:nth-child(1) > div.layout-column > p:nth-child(2)  ${message1}
+    Capture Page Screenshot
     #JSON模式
     Click Element         css=md-tab-item:nth-child(2)
     Result Api            stackJsonCreate    ${message31}
+    Capture Page Screenshot
 
 #地址
 G-135-2
@@ -25,18 +27,22 @@ G-135-2
     Input Simple App
     Clear Element Text    stackImageAddress
     Result Web            div:nth-child(2) > div.layout-column > p  ${message2}
+    Capture Page Screenshot
     #JSON模式
     Click Element         css=md-tab-item:nth-child(2)
     Result Api            stackJsonCreate    ${message32}
+    Capture Page Screenshot
 
 #集群
 G-136
 	#表单模式
 	Create App        appmmj    ${EMPTY}
     Element Should Be Disabled  stackFormCreate
+    Capture Page Screenshot
     #JSON模式
     Click Element     css=md-tab-item:nth-child(2)
     Result Api        stackJsonCreate    ${message4}
+    Capture Page Screenshot
 
 *** Variables ***
 ${message1}        应用名称不能为空

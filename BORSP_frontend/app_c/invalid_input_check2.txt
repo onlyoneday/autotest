@@ -30,7 +30,7 @@ Input Check2  [Arguments]  ${input}   ${text}
     Input Text  ${input}  ${text}
     #验证
     Element Should Be Disabled   stackFormCreate
-    Location Should Be    ${APP_CREATE URL}  
+    Location Should Be    ${APP_CREATE URL} 
     
 
     
