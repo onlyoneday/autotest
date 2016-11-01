@@ -12,16 +12,15 @@ from apps import apps
 cf = configparser.ConfigParser()
 cf.read("test.conf")
 url = cf.get("all", "url")
-# url = cf.get("all", "qinghua_url")
 email = cf.get("auth","email")
-password = cf.get("auth","qinghua_passwd")
-# password = cf.get("auth","passwd")
+password = cf.get("auth","passwd")
 
 def gettoken( email , password):
     payload = {"email": email , "password": password}
     try:
         re = requests.post(url + "/v1/login" , data=json.dumps(payload))
-        # print(re.json()['data'])
+        print(re.json)
+        print(re.json()['data'])
         return re.json()['data']
     except:
         Logger.log_fail("Can't get token")
@@ -45,6 +44,7 @@ def create_app(num):
         payload["id"] = app_id
         a_re_2 = a.post_apps(payload)
         assert_status_code(a_re_2[0], 201)
+        print(a_re_2)
 
 def delete_app():
     a = apps()
@@ -60,6 +60,7 @@ def delete_app():
 
 
 if __name__ == '__main__':
-    # create_app(50)
+    # create_app(100)
     delete_app()
 
+    # pass

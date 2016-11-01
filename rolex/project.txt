@@ -1,0 +1,276 @@
+
+*** Settings ***
+
+Documentation   A test suite with a single test for info page.
+Resource        common.txt
+Suite Setup     Open Browser And Login With Admin
+Test Setup      Go To Project Page
+Suite Teardown  Close All Browsers
+
+*** Variables ***
+${Project Link}                      index-stack
+#=========创建项目=============
+#-----pre create--------
+${Create Project Div}             stack-create
+${DAB Create}                        //form[@name="staticForm"]/md-dialog-content/div[1]
+${Guide Create}                      //form[@name="staticForm"]/md-dialog-content/div[2]
+${Quick Create}                      //form[@name="staticForm"]/md-dialog-content/div[3]
+${Cancel Create}                     //button[@aria-label="cancel"]
+
+#------DAB create--------
+${Project Name Input}                //input[@name="Name"]
+${Project Json}                      //div[@class="CodeMirror-code"]/div[1]/pre
+
+#-----Guide Create------
+
+#------Quick Create------
+${Create S2048 Link}                 //a[@href="/registry/catalogDetail/1"]
+${Create Mysql Link}                 //a[@href="/registry/catalogDetail/2"]
+${Create Mywebsql Link}              //a[@href="/registry/catalogDetail/3"]
+${Create Wordpress Link}             //a[@href="/registry/catalogDetail/4"]
+${Quick Create Project Name Input}   //input[@name="stackName"]
+${Quick Create Button}               //button[@class="md-raised md-primary md-button md-ink-ripple"]
+
+${INFO}                              项目开始部署
+
+#======项目列表==========
+${Project Count Div}                 //div[@id="stack-list"]/div/div
+
+
+${Project Name Start}  stack
+${Project Name End}  -name
+
+#====服务列表=============
+${Project Name Xpath}               //header[@id="header-main"]/h1
+
+${Service Table Css}                css=.md-table.ng-isolate-scope
+
+
+${Service Table Row}                //table/tbody/tr
+
+${Service Table Row Start}          //table/tbody/tr[
+${Service Name End}                 ]/td[1]
+${Service instances End}            ]/td[2]
+${Service Create Time End}          ]/td[3]
+${Service Update Time End}          ]/td[4]
+${Service Table menu Button End}    ]/td[5]/md-menu/button
+
+
+${Delete Project BTN}               delete-stack
+
+${Delete Project Cancel BTN}        //md-dialog[@class="_md md-default-theme md-transition-in"]/md-dialog-actions/button[1]
+${Delete Project Confirm BTN}       //md-dialog[@class="_md md-default-theme md-transition-in"]/md-dialog-actions/button[2]
+
+#-----修改任务数-------
+${Update Service Quantity}          //div[@class="_md md-open-menu-container md-whiteframe-z2 md-active md-clickable"]/md-menu-content/md-menu-item[1]/button
+
+#-----更新-----------
+${Update Service}                   //div[@class="_md md-open-menu-container md-whiteframe-z2 md-active md-clickable"]/md-menu-content/md-menu-item[2]/button
+
+${Images Template BTN Start}        //div[@id="ngFlowGrid-itemid-
+${Images Template BTN End}          "]/md-card/md-card-actions/md-menu/button
+
+${Images Template Div Father}       //div[@class="layout-wrap ng-scope layout-row"]
+${Images Template Div}              //div[@class="flowGridColumn"]
+
+${Deploy Link Start}                //a[@href="/registry/catalogDetail/
+${Deploy Link End}                  "]
+
+*** Keywords ***
+
+Get Project Count
+    ${count}=  Get Matching Xpath Count    ${Project Count Div}
+    [return]  ${count}
+
+Find Project By Name
+    [Arguments]     ${name}
+    ${project number}=  Evaluate  0
+    ${project count}=      Get Project Count
+    :FOR    ${index}    IN RANGE    1  ${project count}+1
+    \  ${project name xpath}=  Set Variable  ${Project Name Start}${index}${Project Name End}
+    \  ${get project name}=  Get Text  ${project name xpath}
+    \  ${project number}=  Set Variable  ${index}
+    \  Run Keyword If  '${get project name}' == '${name}'  Exit For Loop
+    Run Keyword If  '${project number}' == '${project count}'  Run Keyword If  '${get project name}' != '${name}'  Fail  Can't find this Project
+    [Return]    ${project number}
+
+Go To Project Detail Page
+    [Arguments]     ${name}
+    ${number}=  Find Project By Name  ${name}
+    ${project name Link}=  Set Variable  ${Project Name Start}${number}${Project Name End}
+    Click Link  ${project name Link}
+
+Delete Project
+    [Arguments]     ${name}
+    Click Button    ${Delete Project BTN}
+    Click Button    ${Delete Project Confirm BTN}
+    Sleep  2
+    Page Should Not Contain  ${name}
+
+Click Quick Create
+    Click Element    ${Create Project Div}
+    Click Element    ${Quick Create}
+
+Find Image template Index
+    [Arguments]  ${name}
+    ${count}=  Get Matching Xpath Count  ${Images Template Div}
+    :FOR  ${index}  IN RANGE  1  ${count}+1
+    \  ${div index}=  Evaluate  ${index} + 1  #+1是因为要从第二个div开始算
+    \  ${get name}=  Get Text  ${Images Template Div Father}/div[${div index}]/div/md-card/md-card-title/md-card-title-text/span[1]
+    \  Return From Keyword If    '${get name}' == '${name}'    ${index}
+    Return From Keyword    ${-1}
+
+Quick Create_2048
+    [Arguments]     ${name}
+    Click Quick Create
+    ${index}=  Find Image template Index      2048
+    ${S2048 BTN}=  Set Variable  ${Images Template BTN Start}${index}${Images Template BTN End}
+    ${Deploy S2048 Link}=  Set Variable  ${Deploy Link Start}${index}${Deploy Link End}
+    Click Button  ${S2048 BTN}
+    Click Link  ${Deploy S2048 Link}
+    Input Text  ${Quick Create Project Name Input}  ${name}
+    Click Button     ${Quick Create Button}
+
+Quick Create Mysql
+    [Arguments]     ${name}
+    Click Quick Create
+    ${index}=  Find Image template Index      mysql
+    ${S2048 BTN}=  Set Variable  ${Images Template BTN Start}${index}${Images Template BTN End}
+    ${Deploy S2048 Link}=  Set Variable  ${Deploy Link Start}${index}${Deploy Link End}
+    Click Button  ${S2048 BTN}
+    Click Link  ${Deploy S2048 Link}
+    Input Text  ${Quick Create Project Name Input}  ${name}
+    Click Button     ${Quick Create Button}
+
+Quick Create Mywebsql
+    [Arguments]     ${name}
+    Click Quick Create
+    ${index}=  Find Image template Index      mywebsql
+    ${S2048 BTN}=  Set Variable  ${Images Template BTN Start}${index}${Images Template BTN End}
+    ${Deploy S2048 Link}=  Set Variable  ${Deploy Link Start}${index}${Deploy Link End}
+    Click Button  ${S2048 BTN}
+    Click Link  ${Deploy S2048 Link}
+    Input Text  ${Quick Create Project Name Input}  ${name}
+    Click Button     ${Quick Create Button}
+
+Quick Create Wordpress
+    [Arguments]     ${name}
+    Click Quick Create
+    ${index}=  Find Image template Index      wordpress
+    ${S2048 BTN}=  Set Variable  ${Images Template BTN Start}${index}${Images Template BTN End}
+    ${Deploy S2048 Link}=  Set Variable  ${Deploy Link Start}${index}${Deploy Link End}
+    Click Button  ${S2048 BTN}
+    Click Link  ${Deploy S2048 Link}
+    Input Text  ${Quick Create Project Name Input}  ${name}
+    Click Button     ${Quick Create Button}
+
+Wait Untill Run
+    Sleep  30
+
+Find Service Index
+    [Arguments]  ${name}
+    ${count}=  Get Matching Xpath Count  ${Service Table Row}
+    :FOR    ${index}    IN RANGE    1  ${count}+1
+    \  ${service name xpath}=  Set Variable  ${Service Table Row Start}${index}${Service Name End}
+    \  ${get service name}=  Get Text  ${service name xpath}
+    \  Return From Keyword If    '${get service name}' == '${name}'    ${index}
+    Return From Keyword    ${-1}
+
+Verify Create Project
+    [Arguments]     ${project name}  @{services}
+    #提示正在部署
+    Page Should Contain  ${INFO}
+
+    Wait Untill Run
+    Reload Page
+    #-------验证项目名称是否正确----------
+    ${get project name}=  Get Text  ${Project Name Xpath}
+    Run Keyword If  '${get project name}' != '${project name}'  Fail  Project name isn't correct in project detail page.
+
+    #------验证服务列表表头是否正确--------
+    Table Header Should Contain     ${Service Table Css}    服务名称
+    Table Header Should Contain     ${Service Table Css}    任务数 运行中/总数
+    Table Header Should Contain     ${Service Table Css}    创建时间
+    Table Header Should Contain     ${Service Table Css}    更新时间
+    Table Header Should Contain     ${Service Table Css}    操作
+
+    #-------验证服务列表中每个服务是否正确----
+    ${length}=  Get Length  ${services}
+    :FOR    ${index}    IN RANGE    ${length}
+    #验证服务名称是否正确
+    \  @{service n}=  Split String    @{services}[${index}]   ${SPACE}
+    \  ${service name}=  Set Variable  @{service n}[0]
+    \  ${service instance}=  Set Variable  @{service n}[1]
+
+    #先找到service name的行号
+    \  ${row}=  Find Service Index  ${service name}
+    \  Run Keyword If  ${row} < 0    Fail  Can't find sevice in service table.
+
+    \  ${service name xpath}=  Set Variable  ${Service Table Row Start}${row}${Service Name End}
+    \  ${service instances xpath}=  Set Variable  ${Service Table Row Start}${row}${Service instances End}
+    \  ${service create time xpath}=  Set Variable  ${Service Table Row Start}${row}${Service Create Time End}
+    \  ${service updatge time xpath}=  Set Variable  ${Service Table Row Start}${row}${Service Update Time End}
+
+    #验证服务数是否正确
+    \  ${get service instance}=  Get Text  ${service instances xpath}
+    \  ${get service acture instance}=  Fetch From Left  ${get service instance}  /
+    \  ${get service set instance}=  Fetch From Right  ${get service instance}  /
+    \  Run Keyword If  '${get service set instance}' != '${service instance}'  Fail  Service instances count is not as set value.
+    \  Run Keyword If  '${get service set instance}' != '${get service acture instance}'  Fail  Some service instances are not run.
+
+    #验证服务创建时间是否正确
+    \  ${get service create time}=  Get Text  ${service create time xpath}
+    \  ${get service create date}=  Fetch From Left  ${get service create time}  ${SPACE}
+
+    \  ${date time}=  Get Current Date
+    \  ${date}=  Fetch From Left  ${date time}  ${SPACE}
+
+    \  Run Keyword If  '${get service create date}' != '${date}'  Fail  Create time is not as correct.
+
+
+*** Test Cases ***
+Case Check Click Project Link
+    [Tags]  1
+    Go To Info Page
+    Sleep Sometime
+    Click Link  ${Project Link}
+    Sleep Sometime
+    Project Page Should Be Open
+
+Case Create 2048
+    [Tags]  2
+    ${project name}=           Generate Random String    6
+    Quick Create_2048         ${project name}
+    ${service}=  Evaluate  "${project name}" + "_2048" + " 1"
+    @{services list}=  Create List  ${service}
+    Verify Create Project      ${project name}      @{services list}
+    Delete Project             ${project name}
+
+Case Create Mysql
+    [Tags]  3
+    ${project name}=           Generate Random String    6
+    Quick Create Mysql  ${project name}
+    ${service}=  Evaluate  "${project name}" + "_mysql" + " 1"
+    @{services list}=  Create List  ${service}
+    Verify Create Project      ${project name}      @{services list}
+    Delete Project             ${project name}
+
+Case Create Mywebsql
+    [Tags]  4
+    ${project name}=           Generate Random String    6
+    Quick Create Mywebsql  ${project name}
+    ${service}=  Evaluate  "${project name}" + "_mywebsql" + " 1"
+    @{services list}=  Create List  ${service}
+    Verify Create Project      ${project name}      @{services list}
+    Delete Project             ${project name}
+
+Case Create Wordpress
+    [Tags]  5
+    ${project name}=           Generate Random String    6
+    Quick Create Wordpress  ${project name}
+    ${service1}=  Evaluate  "${project name}" + "_wordpress" + " 1"
+    ${service2}=  Evaluate  "${project name}" + "_mysql" + " 1"
+    @{services list}=  Create List  ${service1}  ${service2}
+    Verify Create Project      ${project name}      @{services list}
+    Delete Project             ${project name}
+

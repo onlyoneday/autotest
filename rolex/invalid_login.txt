@@ -1,0 +1,35 @@
+
+*** Settings ***
+
+Documentation   A test suite containing tests related to invalid login. These
+...             tests are data-driven by they nature. They use a single
+...             keyword, specified with Test Template setting, that is called
+...             with different arguments to cover different scenarios.
+Resource        common.txt
+Suite Setup     Open Browser To Login Page
+Test Template   Login With Invalid Credentials Should Fail
+Suite Teardown  Close Browser
+Resource        resource.txt
+
+
+*** Test Cases ***              User Name      Password
+
+Case YG-003 Invalid Username                invalid         ${Admin Password}
+Case YG-004 Invalid Password                ${Admin Email}  invalid
+Case YG-005 Invalid Username And Password   invalid         whatever
+Case YG-006 Empty Username                  ${EMPTY}        ${Admin Password}
+Case YG-007 Empty Password                  ${Admin Email}  ${EMPTY}
+Case YG-008 Empty Username And Password     ${EMPTY}        ${EMPTY}
+
+
+*** Keywords ***
+
+Login With Invalid Credentials Should Fail
+    [Arguments]  ${username}  ${password}
+    Input Username  ${username}
+    Input Password  ${password}
+    Submit Credentials
+    Login Should Have Failed
+
+Login Should Have Failed
+    Location Should Be  ${Login Url}

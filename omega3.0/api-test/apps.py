@@ -45,6 +45,7 @@ class apps(object):
     # 新建应用 POST /v1/apps      2
     def post_apps(self,payload):
         re = requests.post(url + "/v1/apps",headers={'Authorization': TOKEN}, data = json.dumps(payload))
+        print(TOKEN)
         return re.status_code ,re.json(), re.text
 
     # 获取指定应用的信息 GET /v1/apps/:aid      3

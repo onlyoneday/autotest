@@ -65,7 +65,6 @@ Delete Network
     [Arguments]     ${name}
     [Documentation]     删除名称是${name}的网络
     ${get row}=  Find Network Row                ${name}
-    Keyword If
     ${delete network button}=     Set Variable    ${Network Table Row Start}${get row}${Network Table Delete Button End}
     Click Button      ${delete network button}
     Click Button      ${Confirm Delete Network Button}
