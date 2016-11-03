@@ -10,12 +10,16 @@ Resource       ../common/resources.txt
 Choose Group Super
     Click Element   select_value_label_0
     Click And Wait  //md-option[@value="1"]
-Choose Group Tgroup
-    Click Element   select_value_label_0
-    Click And Wait  //md-option[@value="9"]
 Choose Group Groupmmj
     Click Element   select_value_label_0
-    Click And Wait  //md-option[@value="19"]
+    #Click And Wait  //md-option[@value="19"] #163
+    Click And Wait  //md-option[@value="898"] #124
+Choose Group Tgroup
+    Click Element   select_value_label_0
+    #Click And Wait  //md-option[@value="9"] #163
+    Click And Wait  //md-option[@value="899"] #124
+
+
 
 Input Group
     [Arguments]   	${username}  ${description}

@@ -8,8 +8,8 @@ Test Setup      Go To Page   ${USER_PWD URL}
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***
-#必填项不填
-G-002
+
+G-002 必填项不填
 	Input Password   p   p   ${EMPTY}
 	Clear Element text   oldPassword
 	Clear Element text   newPassword
@@ -17,25 +17,21 @@ G-002
 	Result Web       div:nth-child(2) > div.layout-column > p    ${message2} 
 	Element Should Be Disabled    ${button}
 
-#旧密码错误
-G-003
+G-003 旧密码错误
 	Input Password    ${VALID PASSWD}  ${VALID PASSWD}  ${VALID PASSWD}
 	Result Api        ${button}        ${message4} 	
 
-#输入项上边外侧界
-G-004
+G-004 输入项上边外侧界
 	Input Password    ${GM PASSWD}      ${STR 17}   ${STR 17}
 	Result Web        div:nth-child(2) > div.layout-column > p     ${message2}
 	Element Should Be Disabled    ${button}
 
-#输入项下边外侧界
-G-004-2
+G-004-2 输入项下边外侧界
 	Input Password    ${GM PASSWD}      ${STR 7}    ${EMPTY} 
 	Result Web        div:nth-child(2) > div.layout-column > p     ${message2}
 	Element Should Be Disabled    ${button}
 
-#密码格式不正确
-G-005
+G-005 密码格式不正确
 	Input Password    ${GM PASSWD}      m1234567   m1234567
 	Result Web        div:nth-child(2) > div.layout-column > p     ${message2}
 	Element Should Be Disabled    ${button}

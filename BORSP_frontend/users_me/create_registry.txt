@@ -9,8 +9,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#必填项不填
-G-212
+G-212 必填项不填
 	Click Element         createUserRegistry
 	Input Registry        1  1  1  1
 	Clear Element text    create-registry-name
@@ -22,8 +21,7 @@ G-212
 	Result Web     div:nth-child(3) > div.layout-column > p:nth-child(2)    ${message2} 
 	Result Web     div:nth-child(4) > div.layout-column > p:nth-child(2)    ${message3}
 
-#超过上限
-G-213
+G-213 超过上限
 	Click Element   createUserRegistry
 	Input Registry  ${STR 256}  ${STR 256}  ${STR 51}  ${STR 51}
 	Result Web      div:nth-child(1) > div.layout-column > p:nth-child(3)    ${message4} 
@@ -31,28 +29,30 @@ G-213
 	Result Web      div:nth-child(3) > div.layout-column > p:nth-child(3)    ${message6} 
 	Result Web      div:nth-child(4) > div.layout-column > p:nth-child(3)    ${message7}
 
-#创建取消
-G-216
+G-216 创建取消
 	Click Element   createUserRegistry
 	Input Registry  ${MMJ RG}  ${RG ADD}  ${RG NAME}  ${RG PWD} 
 	Click And Wait  //button[@aria-label="cancel"]
 	Page Should Not Contain   ${MMJ RG}
 
-#创建（上限）
-G-211
+G-211 创建（上限）
 	Click Element   createUserRegistry
 	Input Registry  ${STR 255}  ${STR 255}  ${STR 50}  ${STR 50}
 	Click And Wait  //button[@aria-label="ok"]
 	Page Should Contain   ${STR 255}
 
-#取消删除
-G-228
+G-215 创建（重名）
+	Click Element   createUserRegistry
+	Input Registry  ${STR 255}  1  1  1
+	Click Element   //button[@aria-label="ok"]
+	Page Should Contain   Error 1062
+
+G-228 取消删除
 	Click Element   userRegistryDelete0
 	Click And Wait  //button[@aria-label="取消"]
 	Page Should Contain   ${STR 255}
-
-#删除
-G-227
+	
+G-227 删除
 	Click Element   userRegistryDelete0
 	Click And Wait  //button[@aria-label="确定"]
 	Page Should Not Contain   ${STR 255}

@@ -7,15 +7,14 @@ Test Setup      Go To Page  ${LOGIN URL}
 Test Template   Invalid Login
 Suite Teardown  Close All Browsers
 
-*** Test Cases ***      User Name            Password            Info
+*** Test Cases ***      User Name          Password            Info
 
-user_4                  admin@dataman.com    ${VALID PASSWD}     ${no record}
-user_4-2                ${VALID USER}        invalid             ${no record}
-user_4-3                invalid              whatever            ${no record}
-user_5                  ${EMPTY}             ${VALID PASSWD}     ${EMPTY} 
-user_5-2                ${VALID USER}        ${EMPTY}            ${EMPTY} 
-user_5-3                ${EMPTY}             ${EMPTY}            ${EMPTY} 
-user_6                  whatever             ${VALID PASSWD}     ${no record}
+user_4-1 用名错误        whatever           ${VALID PASSWD}     ${no record}
+user_4-2 密码错误        ${VALID USER}      invalid             ${no record}
+user_4-3 两个错误        invalid            whatever            ${no record}
+user_5-1 用名不填        ${EMPTY}           ${VALID PASSWD}     ${EMPTY} 
+user_5-2 密码不填        ${VALID USER}      ${EMPTY}            ${EMPTY} 
+user_5-3 两个不填        ${EMPTY}           ${EMPTY}            ${EMPTY} 
 
 *** Keywords ***
 

@@ -35,7 +35,7 @@ app_m_4,22 应用管理列表界面停止、扩展、删除、更新可用/更�
     Should Be Equal As Strings  ${status}   Running
     #停止应用
     Suspended App By Name       ${name}
-    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Suspended  timeout=${LONG TIME} 
+    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Suspended  timeout=600
     #验证应用是否停止
     ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
     Should Contain  ${apname}   ${name}
@@ -51,7 +51,5 @@ app_m_4,22 应用管理列表界面停止、扩展、删除、更新可用/更�
     Should Contain  ${apname}   ${name}
     ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
     Should Be Equal As Strings  ${status}   Running
-
-Delete App After Testing
     #删除该应用（避免垃圾数据）
     Delete App By Name          ${name}

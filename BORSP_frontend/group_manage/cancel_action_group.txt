@@ -9,23 +9,20 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#取消创建
-G-066
+G-066 取消创建
 	Input Group       Cancel   ${EMPTY}
 	Click Element     cancel-create-user
 	${index} =        Get Group Index     Cancel
     Run Keyword If   '${index}' <> 'None'   Fail
 
-#取消修改
-G-081
+G-081 取消修改
 	Edit Group        ${TGROUP}
 	Edit Group Info   Cancel   ${EMPTY}
 	Click Element     cancel-create-user
 	${index} =        Get Group Index     Cancel
     Run Keyword If   '${index}' <> 'None'   Fail
 
-#取消删除
-G-088
+G-088 取消删除
 	${index} =        Get Group Index    ${TGROUP}
 	${no} =           Evaluate    ${index}-1
 	${path} =         Evaluate   'delete-group'+'${no}'

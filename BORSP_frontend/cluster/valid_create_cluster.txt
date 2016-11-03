@@ -1,4 +1,4 @@
-cluster/verify_resource_info.txt*** Settings ***
+*** Settings ***
 
 Documentation   集群管理-超级管理员-创建集群
 Resource        ../common/resources.txt

@@ -35,7 +35,7 @@ G-101/122 组管理员-属于多个组-查看多个组下的多个集群和主�
 	Page Should Contain      ${MMJ CLUSTER}
 	Check Cluster And Node
 
-Delete Node Before Testing
+Delete Menmber After Testing
 	Login Adm
 	Go To Page         ${USER_MANG URL}
 	Manage Group       ${TGROUP}  2

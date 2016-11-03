@@ -9,31 +9,26 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#测试前准备
 Creat Test Group And Cluster For Edition
 	Input Group       ${TEST GRP}  ${EMPTY}
 	Click And Wait    submit-create-user
 
-#用户组管理-超级管理员-管理集群-新建
-G-086
+G-086 管理集群-新建
 	Manage Group      ${TEST GRP}  1
 	Input Group Cluster  ${TEST CLU}  ${EMPTY}
 	Click And Wait    submit-create-cluster
 	Page Should Contain  ${TEST CLU}
 
-#用户组管理-超级管理员-删除有集群的用户组
-G-085
+G-085 删除有集群的用户组
 	Delete Group      ${TEST GRP}
 	Page Should Contain  ${TEST GRP}
 
-#用户组管理-超级管理员-管理集群-删除
-G-087
+G-087 管理集群-删除
 	Manage Group      ${TEST GRP}  1
 	Click And Wait    //button[@aria-label="stop"]
 	Click And Wait    //button[@aria-label="确定"]
 	Page Should Not Contain  ${TEST CLU}
 
-#用户组管理-超级管理员-删除无集群的用户组
-G-084
+G-084 删除无集群的用户组
 	Delete Group      ${TEST GRP}
 	Page Should Not Contain  ${TEST GRP}
