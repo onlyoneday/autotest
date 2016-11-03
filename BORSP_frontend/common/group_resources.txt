@@ -12,14 +12,10 @@ Choose Group Super
     Click And Wait  //md-option[@value="1"]
 Choose Group Groupmmj
     Click Element   select_value_label_0
-    #Click And Wait  //md-option[@value="19"] #163
-    Click And Wait  //md-option[@value="898"] #124
+    Click And Wait  //md-option[@value="19"]  #163
 Choose Group Tgroup
     Click Element   select_value_label_0
-    #Click And Wait  //md-option[@value="9"] #163
-    Click And Wait  //md-option[@value="899"] #124
-
-
+    Click And Wait  //md-option[@value="9"]  #163
 
 Input Group
     [Arguments]   	${username}  ${description}

@@ -9,8 +9,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#必填项不填
-G-033
+G-033 必填项不填
 	Edit User Password     mmj
 	Change User Password   ${STR 7}  ${STR 7}
 	Clear Element text     modals-new-password
@@ -19,8 +18,7 @@ G-033
 	Result Web     div:nth-child(2) > p:nth-child(3) > small     ${message1}
 	Element Should Be Disabled   ${button} 
 
-#输入项上、下边外侧界
-G-035
+G-035 输入项上、下边外侧界
 	Edit User Password     mmj
 	Change User Password   ${STR 17}  ${STR 17}
 	Result Web     ${newpwd css}      ${message2}
@@ -29,8 +27,7 @@ G-035
 	Result Web     ${newpwd css}      ${message2}
 	Element Should Be Disabled   ${button} 
 
-#密码格式不正确
-G-036
+G-036 密码格式不正确
 	Edit User Password     mmj
 	Change User Password   m1234567   m1234567
 	Result Web     ${newpwd css}      ${message2}

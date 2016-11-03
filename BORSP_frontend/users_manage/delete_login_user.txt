@@ -6,8 +6,7 @@ Resource        ../common/user_resources.txt
 
 *** Test Cases ***
 
-#正在登陆的用户被删除-自动退出登陆
-G-052
+G-052 正在登陆的用户被删除-自动退出登陆
     Set Selenium Speed  ${DELAY}
     Open Browser        ${LOGIN URL}  ${BROWSER}   B1
     Sleep   2
@@ -30,8 +29,7 @@ G-052
     Location Should Be  ${LOGIN URL}
     Close All Browsers
 
-#正在登陆的用户被禁用-自动退出登陆
-G-052-2
+G-052-2 正在登陆的用户被禁用-自动退出登陆
     Set Selenium Speed  ${DELAY}
     Open Browser        ${LOGIN URL}  ${BROWSER}   B1
     Sleep   2
