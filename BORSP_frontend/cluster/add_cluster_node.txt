@@ -9,14 +9,12 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#必填项不填
-G-110
+G-110 添加主机-必填项不填
 	Add Cluster Node     ${MMJ CLUSTER}
 	Click Element        //button[@aria-label="ok"]
 	Page Should Contain  请选择主机
 
-#添加主机
-G-107
+G-107 添加主机
 	Add Cluster Node     ${MMJ CLUSTER}
 	Select Cluster Node
 	Page Should Contain  正在添加主机

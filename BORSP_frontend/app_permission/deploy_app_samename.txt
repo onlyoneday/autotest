@@ -14,7 +14,7 @@ Create Cluster Before Testing
 	Input Cluster   ${TEST CLU}  ${MMJ GROUP}  ${TEST CLU}
 	Click And Wait  submit-create-cluster
 
-G-151
+G-131 在不同集群上发名称相同的应用
 	Go To Page      ${APP_CREATE URL} 
 	Create App      ${TEST APP}    ${MMJ CLUSTER}
     Click And Wait  stackFormCreate

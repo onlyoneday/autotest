@@ -9,6 +9,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
+
 #用户管理-删除自己
 G-041
 	Go To Page     ${USER_MANU URL}
@@ -16,29 +17,18 @@ G-041
 	Page Should Contain   ${VALID USER}
 
 #用户管理-禁用自己
-G-051
+G-050
 	Go To Page     ${USER_MANU URL}
 	Disable User   ${VALID USER}
 	${index} =     Get User Index   ${VALID USER}
 	${no} =        Evaluate    ${index}-1
 	${button} =    Evaluate   'disableUser'+'${no}'
-	Element Should Be Enabled   ${button} 
-
-#查看查看任意组成员列表
-G-067
-	Go To Page    ${USER_MANG URL}
-	${row} =      Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
-	:FOR    ${index}      IN RANGE    1  ${row}  10
-    \       ${path} =     Evaluate    '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
-    \       ${group} =    Get Text    ${path}
-	\		Manage Group  ${group}    2
-	\		Page Should Contain       成员名称
-	\		Go Back
+	Element Should Be Enabled  ${button} 
 
 #管理超级用户组
 G-079
+	Go To Page	    ${USER_MANG URL}
 	#添加其他超级管理员
-	Go To Page      ${USER_MANG URL}
 	Manage Group    ${SUPER}  2
 	Add Group User  ${MMJ USER}  superuser
 	Page Should Contain   ${MMJ USER}
@@ -48,7 +38,35 @@ G-079
 
 #管理超级用户组-删除自己
 G-080
-	Go To Page      ${USER_MANG URL}
+	Go To Page	    ${USER_MANG URL}
 	Manage Group    ${SUPER}  2
 	Delete Group User     ${VALID USER}
 	Page Should Contain   ${VALID USER}
+
+#超级管理员组-只能管理组，不能编辑信息和删除
+G-083-2
+	Go To Page	    ${USER_MANG URL}
+	Element Should Not Contain   //*[@id='user-list-table']/tbody/tr[1]/td[6]  编辑
+	Element Should Not Contain   //*[@id='user-list-table']/tbody/tr[1]/td[6]  删除
+
+#超级管理员组-把自己加入和删除非管理员组
+G-083-3
+	Go To Page	    ${USER_MANG URL}
+	#添加自己到其他组
+	Manage Group    ${TGROUP}    2
+	Add Group User  ${VALID USER}  member
+	Page Should Contain   ${VALID USER}
+	#删除自己
+	Delete Group User     ${VALID USER}
+	Page Should Not Contain   ${VALID USER}
+
+#查看查看任意组成员列表
+G-067
+	Go To Page	  ${USER_MANG URL}
+	${row} =      Get Matching Xpath Count  //*[@id='user-list-table']/tbody/tr[*]
+	:FOR    ${index}      IN RANGE    1  ${row}  20
+    \       ${path} =     Evaluate    '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
+    \       ${group} =    Get Text    ${path}
+	\		Manage Group  ${group}    2
+	\		Page Should Contain       成员名称
+	\		Go Back

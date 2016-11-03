@@ -9,7 +9,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-app_c_32
+app_c_32 新建应用json-取消
     #新建应用
     Click And Wait  stackCreate
     #输入最简参数

@@ -7,54 +7,48 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases *** 
 
-#可以创建应用
-G-135     
+G-135 超级管理员-在任意集群上添加应用   
     Set Selenium Speed  ${DELAY}
     Open Browser        ${LOGIN URL}  ${BROWSER}  B1
     Sleep               ${SLEEP TIME}
     Login Adm
     Deploy App          appmmjadm  ${MMJ CLUSTER}
-G-139
+G-139 组管理员-在所属组上添加应用
     Set Selenium Speed  ${DELAY}
     Open Browser        ${LOGIN URL}  ${BROWSER}  B2
     Sleep               ${SLEEP TIME}
     Login Gm
     Deploy App          appmmjgm   ${MMJ CLUSTER}
-G-143
+G-143 普通用户-在所属集群上添加应用
     Set Selenium Speed  ${DELAY}
     Open Browser        ${LOGIN URL}  ${BROWSER}  B3
     Sleep               ${SLEEP TIME}
     Login Mmj
     Deploy App          appmmjmmj  ${MMJ CLUSTER}
 
-#超级管理员可以查看、更新所有应用
-D-134/136
+D-134/136 超级管理员可以查看、更新所有应用
     Switch Browser      B1
     Check App
     Update App          appmmjadm
     Update App          appmmjgm
     Update App          appmmjmmj
 
-#组管理员可以查看、更新本组用户发布的应用
-D-138/140
+D-138/140 组管理员可以查看、更新本组用户发布的应用
     Switch Browser      B2 
     Check App
     Update App          appmmjgm
     Update App          appmmjmmj
 
-#组成员可以查看本组用户发布的应用
-D-142
+D-142 组成员可以查看本组用户发布的应用
     Switch Browser      B3
     Check App
 	Element Should Not Be Visible  node-list-menu-0
 
-#超级管理员可以删除所有应用
-D-137
+D-137 超级管理员可以删除所有应用
     Switch Browser      B1
     Delete App By Name  appmmjgm
 
-#组管理员可以删除本组的应用
-D-141
+D-141 组管理员可以删除本组的应用
     Switch Browser      B2 
     Delete App By Name  appmmjadm
     Delete App By Name  appmmjmmj

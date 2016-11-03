@@ -8,9 +8,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-cluster-2,4-5,10-11
-	#验证主机信息
-    #集群角色和主机状态
+cluster-2,4-5,10-11 验证主机信息/集群角色和主机状态
 	${index} =      Get Matching Xpath Count   //*[@id="node-list"]/tbody/tr[*] 
 	:FOR    ${li}   IN RANGE   ${index}
 	\   ${li} =     Evaluate   ${li} + 1

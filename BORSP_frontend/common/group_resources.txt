@@ -1,4 +1,4 @@
-*** Settings ***
+ *** Settings ***
 
 Documentation  A resource file containing the specific keywords and variables for application
 Library        Selenium2Library
@@ -67,6 +67,12 @@ Delete Group
 	${path} =       Evaluate   'delete-group'+'${no}'
 	Click Element   ${path}
 	Click And Wait  css=md-dialog-actions > button:nth-child(2)
+
+Input Group Cluster
+    [Arguments]   	${clustername}  ${description}
+    Click And Wait  //*[@id='clusterCreate']
+	Input Text		input-clustername  ${clustername}
+	Input Text		clusterDesc        ${description}
 
 Get Group Index
     [Arguments]     ${name}

@@ -15,6 +15,7 @@ Suite Teardown  Close All Browsers
 	#CREATE GROUP
 	#GREATE USER
 	#GREATE CLUSTER
+	#CREATE NODE
 	#CREATE REGISTRY
 
 *** Keywords ***
@@ -29,6 +30,8 @@ CREATE GROUP
 GREATE USER
 	#创建用户
 	Go To Page         ${USER_MANU URL}
+	Create User        minjie  minjie  minjie@m.comm  MMMMMMMM  MMMMMMMM  ${EMPTY}  True
+	Click And Wait     submit-create-user
 	Create User        ${VALID USER}  ${VALID USER}  su@su.comm  ${VALID PASSWD}  ${VALID PASSWD}  test super admin  True
 	Click And Wait     submit-create-user
 	Create User        ${MMJ USER}   ${MMJ USER}  m@m.com  ${MMJ PASSWD}  ${MMJ PASSWD}  test user  ${EMPTY}
@@ -42,6 +45,7 @@ GREATE CLUSTER
 	Go To Page         ${HOME URL}
 	Input Cluster      ${MMJ CLUSTER}  ${MMJ GROUP}  ${EMPTY}
 	Click And Wait     submit-create-cluster
+CREATE NODE
 	#添加主机
 	Add Cluster Node   ${MMJ CLUSTER}
 	Select Cluster Node

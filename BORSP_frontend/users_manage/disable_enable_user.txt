@@ -11,7 +11,7 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 #禁用/启用无组的普通用户
-G-045/053
+G-045/054
 	#创建无组用户
 	Create User         ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Click And Wait      submit-create-user
@@ -28,7 +28,7 @@ G-045/053
 	Delete User         ${TEST ID}
 
 #禁用/启用有组无应用普通用户
-G-046/054
+G-046/055
 	#创建组无应用普通用户
 	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  member
@@ -40,7 +40,7 @@ G-046/054
 	Delete User        ${TEST ID}
 
 #禁用/启用组管理员
-G-048/056
+G-048/057
 	#创建组管理员
 	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  member
@@ -52,7 +52,7 @@ G-048/056
 	Delete User        ${TEST ID}
 
 #禁用/启用超级管理员
-G-049/057
+G-049/058
 	#创建超级管理员
 	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  True
 	Click And Wait     submit-create-user
@@ -63,7 +63,7 @@ G-049/057
 	Delete User        ${TEST ID}
 
 #禁用/启用有应用的组成员
-G-047/055
+G-047/056
 	#创建有应用的组成员
 	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  member

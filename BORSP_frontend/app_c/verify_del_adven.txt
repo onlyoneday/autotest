@@ -9,9 +9,9 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-app_c_08,13
+app_c_08/13 高级设置展开/新建时高级设置删除
     Delete Empty
-app_m_35
+app_m_35 更新时高级设置删除
     Delete Run 
 
 *** Keywords ***

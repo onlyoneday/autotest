@@ -9,7 +9,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-app_m_14
+app_m_14 应用详情-右上方停止、扩展、删除、更新可用
     #创建应用
     Click And Wait  stackCreate
     ${name} =       Input Simple App

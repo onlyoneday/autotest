@@ -10,7 +10,7 @@ Library         DateTime
 
 *** Test Cases ***
 
-app_m_5-7,9-11,15-21,23
+app_m_5-7,9-11,15-21,23 验证应用参数
     #新建应用
     Click And Wait   stackCreate
     ${name} =        Input Simple App

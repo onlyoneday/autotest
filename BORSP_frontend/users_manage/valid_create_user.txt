@@ -1,4 +1,4 @@
-*** Settings ***
+users_manage/valid_edit_user.txt*** Settings ***
 
 Documentation   用户组管理-超级管理员-创建用户-正常
 Resource        ../common/resources.txt
@@ -24,7 +24,7 @@ G-010/038
 	Result User        ${TEST ID}  U  ${TEST EML}  ${MMJ GROUP}  组管理员
 
 #输入项上边界值
-G-011/013/042
+G-011/013/059
 	Create User     ${STR 255}  ${STR 255}  ${EML 255}  ${STR 16}  ${STR 16}  ${STR 255}  True
 	Click And Wait  submit-create-user
 	Result User     ${STR 255}  ${STR 255}  ${EML 255}  ${SUPER}  超级管理员

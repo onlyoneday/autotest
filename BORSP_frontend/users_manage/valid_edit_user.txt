@@ -19,11 +19,21 @@ G-014
 #查看用户信息/修改用户信息
 G-021/022
 	Edit User Info  ${TEST ID}
-	Input Text	    input-name              testU
+	Input Text	    input-name              testu
 	Input Text	    input-email             testu@u.cn
 	Input Text	    input-userDescription   test
 	Click And Wait  submit-update-user
-	Result User     ${TEST ID}  testU  testu@u.cn  test
+	Result User     ${TEST ID}  testu  testu@u.cn  test
+
+#编辑禁用的用户
+G-053
+	Disable User    ${TEST ID}
+	Edit User Info  ${TEST ID}
+	Input Text	    input-name              testu2
+	Input Text	    input-email             testu2@u.cn
+	Input Text	    input-userDescription   test2
+	Click And Wait  submit-update-user
+	Result User     ${TEST ID}  testu2  testu2@u.cn  test2
 
 #删除
 Delete Test User After Edition

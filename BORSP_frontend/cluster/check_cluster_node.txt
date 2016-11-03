@@ -8,7 +8,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-G-098/G-119
+G-098/G-119 超级管理员-查看任意集群信息/查看任意集群的任意主机
 	@{path} =     Get WebElements  //section/header/h3/a
 	${index} =    Get Length   ${path}
 	:FOR  ${li}   IN RANGE     0  ${index}  3

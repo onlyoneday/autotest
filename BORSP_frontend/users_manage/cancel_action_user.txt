@@ -47,7 +47,7 @@ G-032
     Login Adm
 
 #取消禁用
-G-052
+G-051
     ${index} =      Get User Index    ${MMJ USER}
     ${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
     Click Element   ${path} 

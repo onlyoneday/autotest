@@ -8,10 +8,10 @@ Test Setup      Go To Page   ${APP_MY URL}
 Test Template   Verify Json Template
 Suite Teardown  Close All Browsers
 
-*** Test Cases ***    template         
+*** Test Cases ***       template         
 
-app_c_23              stackSimpleModel
-app_c_23,27           stackAdvancedModel 
+app_c_23 试试看简单模板    stackSimpleModel
+app_c_23 试试看高级模板    stackAdvancedModel 
 
 *** Keywords ***
 

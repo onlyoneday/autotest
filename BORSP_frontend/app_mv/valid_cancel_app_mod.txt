@@ -9,7 +9,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-app_m_37   
+app_m_37 更新应用-取消 
     #新建应用
     Click And Wait  stackCreate
     #输入最简参数
@@ -28,6 +28,7 @@ app_m_37
     Not Update      ${index}   ${time1}
 
 *** Keywords *** 
+
 Not Update    [Arguments]   ${i}   ${time}    
     #验证应用是否更新（CPU）
     ${patht} =      Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${i}'+']/td[7]'

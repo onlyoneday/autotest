@@ -9,8 +9,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#名称
-G-135
+G-132/133 新建应用-名称不填
 	#表单模式
     Input Simple App
     Clear Element Text    stackAppName
@@ -21,8 +20,7 @@ G-135
     Result Api            stackJsonCreate    ${message31}
     Capture Page Screenshot
 
-#地址
-G-135-2
+G-132/133 新建应用-地址不填
     #表单模式
     Input Simple App
     Clear Element Text    stackImageAddress
@@ -33,8 +31,7 @@ G-135-2
     Result Api            stackJsonCreate    ${message32}
     Capture Page Screenshot
 
-#集群
-G-136
+G-132/133 新建应用-集群不填
 	#表单模式
 	Create App        appmmj    ${EMPTY}
     Element Should Be Disabled  stackFormCreate

@@ -10,7 +10,7 @@ Library         DateTime
 
 *** Test Cases ***    template
 
-compose_9,12-16
+compose_9,12-16 点击编排名称跳转到服务列表/点击服务名称跳转到任务列表/任务列表、详情、入口列表正确
     #新建编排
     Click And Wait  stack-create
     #新建编排
@@ -79,3 +79,4 @@ compose_9,12-16
     Go To Page   ${RSTACK URL}
     Click And Wait   stack0-name
     Delete Compose
+

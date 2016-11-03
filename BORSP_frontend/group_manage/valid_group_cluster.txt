@@ -1,0 +1,39 @@
+*** Settings ***
+
+Documentation   用户组管理-超级管理员-创建用户组-正常
+Resource        ../common/resources.txt
+Resource        ../common/group_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${USER_MANG URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+#测试前准备
+Creat Test Group And Cluster For Edition
+	Input Group       ${TEST GRP}  ${EMPTY}
+	Click And Wait    submit-create-user
+
+#用户组管理-超级管理员-管理集群-新建
+G-086
+	Manage Group      ${TEST GRP}  1
+	Input Group Cluster  ${TEST CLU}  ${EMPTY}
+	Click And Wait    submit-create-cluster
+	Page Should Contain  ${TEST CLU}
+
+#用户组管理-超级管理员-删除有集群的用户组
+G-085
+	Delete Group      ${TEST GRP}
+	Page Should Contain  ${TEST GRP}
+
+#用户组管理-超级管理员-管理集群-删除
+G-087
+	Manage Group      ${TEST GRP}  1
+	Click And Wait    //button[@aria-label="stop"]
+	Click And Wait    //button[@aria-label="确定"]
+	Page Should Not Contain  ${TEST CLU}
+
+#用户组管理-超级管理员-删除无集群的用户组
+G-084
+	Delete Group      ${TEST GRP}
+	Page Should Not Contain  ${TEST GRP}

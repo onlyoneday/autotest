@@ -10,7 +10,7 @@ Library         DateTime
 
 *** Test Cases ***
 
-app_m_5,8
+app_m_5,8 KILL KILL&SCALE
     #新建应用
     Click And Wait      stackCreate
     #输入最简参数
