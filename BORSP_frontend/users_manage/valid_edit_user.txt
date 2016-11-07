@@ -9,13 +9,13 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-G-014 创建用户-属于多个组
+G-014创建用户-属于多个组
 	Create User     ${TEST ID}  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group     ${MMJ GROUP}  member
 	Select User Group2    ${TGROUP}     member
 	Click And Wait  submit-create-user
 
-G-021/022 查看用户信息/修改用户信息
+G-021/022查看用户信息/修改用户信息
 	Edit User Info  ${TEST ID}
 	Input Text	    input-name              testu
 	Input Text	    input-email             testu@u.cn
@@ -23,7 +23,7 @@ G-021/022 查看用户信息/修改用户信息
 	Click And Wait  submit-update-user
 	Result User     ${TEST ID}  testu  testu@u.cn  test
 
-G-053 编辑禁用的用户
+G-053编辑禁用的用户
 	Disable User    ${TEST ID}
 	Edit User Info  ${TEST ID}
 	Input Text	    input-name              testu2

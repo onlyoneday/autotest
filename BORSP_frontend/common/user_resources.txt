@@ -9,8 +9,7 @@ Resource       ../common/resources.txt
 
 Create User
     [Arguments]   	${username}  ${name}  ${email}  ${password}  ${repassword}  ${description}  ${super}
-    Click Element   stackCreate
-    Sleep           2
+    Click Element  stackCreate
 	Input Text		input-username	 ${username}
 	Input Text		input-name       ${name}
 	Input Text		input-email      ${email}
@@ -27,7 +26,6 @@ Select User Group
 	Click Element   select-group0
 	Click Element   xpath=${gpath}
 	Click Element   xpath=//*[@id="groupForm0"]/md-select[@id="select-role"]
-	#Click Element   xpath=//*[@id="groupForm0"]/md-input-container/md-select[@id="select-role"]
 	Click Element   xpath=${rpath}
 
 Select User Group2
@@ -38,7 +36,6 @@ Select User Group2
 	Click Element   select-group1
 	Click Element   xpath=${gpath}
 	Click Element   xpath=//*[@id="groupForm1"]/md-select[@id="select-role"]
-	#Click Element   xpath=//*[@id="groupForm1"]/md-input-container/md-select[@id="select-role"]
 	Click Element   xpath=${rpath}
 
 Edit User Info
@@ -99,7 +96,6 @@ Disable User
 	${button} =     Evaluate   'disableUser'+'${no}'
 	Click And Wait  ${button} 
 	Click And Wait  css=md-dialog-actions > button:nth-child(2)
-	Sleep  10
 
 Enable User
 	[Arguments]     ${name}
@@ -107,12 +103,11 @@ Enable User
 	${no} =         Evaluate   ${index}-1
 	${button} =     Evaluate   'enableUser'+'${no}'
 	Click And Wait  ${button} 
-	Sleep  10
 
 Get User Index
     [Arguments]     ${name}
     Input Text      stackListSearch    ${name}
-    Sleep  2
+    Sleep  1
     ${row} =        Get Matching Xpath Count    //*[@id='user-list-table']/tbody/tr[*]
     :FOR    ${index}   IN RANGE   ${row}
     \       ${li} =    Evaluate   ${row}-${index}

@@ -9,12 +9,12 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-G-060/082 输入项上边界值
+G-060/082输入项上边界值
 	Input Group     ${STR 255}    ${STR 255}
 	Click And Wait  submit-create-user
 	Result Group    ${STR 255}    ${STR 255}
 
-G-061/082 输入项下边界值
+G-061/082输入项下边界值
 	Input Group     G    ${EMPTY}
 	Click And Wait  submit-create-user
 	Result Group    G    ${EMPTY}

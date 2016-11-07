@@ -10,14 +10,14 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***              input                         text  
 
-app_c_18-1 环境变量包含中文       stackEnvsKey0                  中文
-app_c_18-2 环境变量包含中文       stackEnvsValue0                中文 
-app_c_19-1 Docker参数包含中文    stackDockerKey-0               中文
-app_c_19-2 Docker参数包含中文    stackDockerValue-0             中文
-app_c_20-1 健康检查包含字母       stackTimeoutSeconds-0          Invalid
-app_c_20-2 健康检查包含字母       stackMaxConsecutiveFailures-0  Invalid
-app_c_34-1 健康检查包含字母       containerPort0                 Invalid
-app_c_34-2 健康检查包含字母       mapPort0                       Invalid 
+app_c_18-1环境变量包含中文       stackEnvsKey0                  中文
+app_c_18-2环境变量包含中文       stackEnvsValue0                中文 
+app_c_19-1Docker参数包含中文    stackDockerKey-0               中文
+app_c_19-2Docker参数包含中文    stackDockerValue-0             中文
+app_c_20-1健康检查包含字母       stackTimeoutSeconds-0          Invalid
+app_c_20-2健康检查包含字母       stackMaxConsecutiveFailures-0  Invalid
+app_c_34-1健康检查包含字母       containerPort0                 Invalid
+app_c_34-2健康检查包含字母       mapPort0                       Invalid 
 
 *** Keywords ***
 

@@ -16,7 +16,7 @@ compose_10 试试看2048/修改任务数
     Create Compose  rolex-json-2048
     #验证编排是否发布成功
     Reload Page
-    Sleep  3
+    Sleep  2
     ${task1} =   Get Text        //*[@id='rolexStackServices']/tbody/tr[1]/td[2]
     ${run} =   Get Substring     ${task1}   0    1
     ${sum} =   Get Substring     ${task1}   2

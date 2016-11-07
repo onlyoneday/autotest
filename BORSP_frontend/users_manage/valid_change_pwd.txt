@@ -14,7 +14,7 @@ Creat Test User For Changing Password
 	Select User Group     ${MMJ GROUP}   member
 	Click And Wait        submit-create-user
 
-G-030 上边界值
+G-030上边界值
 	Edit User Password    ${TEST ID}
 	Change User Password  ${STR 16}   ${STR 16}
 	Click And Wait        //button[@aria-label="ok"]
@@ -24,7 +24,7 @@ G-030 上边界值
 	Logout
 	Login Adm
 
-G-031 下边界值
+G-031下边界值
 	Edit User Password    ${TEST ID}
 	Change User Password  ${STR 8}   ${STR 8}
 	Click And Wait        //button[@aria-label="ok"]

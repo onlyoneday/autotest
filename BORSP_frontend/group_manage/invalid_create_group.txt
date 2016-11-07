@@ -9,23 +9,23 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-G-062 必填项不填
+G-062必填项不填
 	Input Group    g     ${EMPTY}
 	Clear Element text   input-username
 	Result Web     div:nth-child(1) > p:nth-child(3)    ${message1} 
 	Element Should Be Disabled     ${button} 
 
-G-063 输入项上边外侧界(用户名)
+G-063输入项上边外侧界(用户名)
 	Input Group    ${STR 256}      ${EMPTY}
 	Result Web     div:nth-child(1) > p:nth-child(4)    ${message0} 
 	Element Should Be Disabled     ${button} 
 
-G-063-2 输入项上边外侧界(用户描述)
+G-063-2输入项上边外侧界(用户描述)
 	Input Group    g    ${STR 256}
 	#Result Web     div:nth-child(1) > p:nth-child(4)    ${message0} 
 	Element Should Be Disabled     ${button} 
 
-G-065 输入项不符合规范(重复)
+G-065输入项不符合规范(重复)
 	Input Group    ${SUPER}    ${EMPTY}
 	Result Api     ${button}   ${message3} 
 

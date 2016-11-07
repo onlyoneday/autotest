@@ -9,13 +9,13 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-app_c_03 新建应用-取消
+app_c_03新建应用-取消
     #新建应用
     Click And Wait  stackCreate
     #输入最简参数
-    ${name} =   Input Simple App
+    ${name} =       Input Simple App
     #点击取消
-    Click And Wait  stackFormCancel
+    Click Element   stackFormCancel
     #验证应用是否部署
     ${index} =    Get Matching Xpath Count   //*[@id="stackListApp"]/tbody/tr[*]
     :FOR    ${li}   IN RANGE   ${index} 

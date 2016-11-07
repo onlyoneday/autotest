@@ -63,7 +63,7 @@ Modify Parameter
     Input Text        stackInstanceNumber   2
     #更改高级设置
     Click Element     css=.fa-chevron-down
-    Sleep   ${SLEEP TIME}
+    Sleep  1
     #环境变量
     Input Text        stackEnvsValue0     evm
     #Docker参数
@@ -91,9 +91,8 @@ Verify Instance
     Should Be Equal As Strings   ${index}  1
     #实例-链接可用
     Click And Wait  xpath=//*[@id='stackInstanceList']/tbody/tr/td[2]/p/span/a
-    Page Should Contain   Welcome to nginx!
-    Go Back
-    Sleep  ${SLEEP TIME}
+    #Page Should Contain   Welcome to nginx!
+    Go Back And Wait
 
 Verify Config
     #转到配置tab

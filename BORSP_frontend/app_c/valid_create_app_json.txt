@@ -10,32 +10,32 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***       template         
 
-app_c_23 试试看简单模板    stackSimpleModel
-app_c_23 试试看高级模板    stackAdvancedModel 
+app_c_23试试看简单模板    stackSimpleModel
+app_c_23试试看高级模板    stackAdvancedModel 
 
 *** Keywords ***
 
 Verify Json Template    [Arguments]   ${template}
     #新建应用
-    Click And Wait    stackCreate
+    Click And Wait     stackCreate
     #切换到json模式
-    Click And Wait    css=md-tab-item:nth-child(2)
+    Click And Wait     css=md-tab-item:nth-child(2)
     #试试看
-    Click Element     stackTrySee
-    Click And Wait    ${template}
+    Click Element      stackTrySee
+    Click Element      ${template}
     #去表单模式
-    Click And Wait    css=md-tab-item:nth-child(1) 
-    Click Element     //form[@name="staticForm"]/div/div[4]/div/md-select
-    Click Element     //*[@value="clustermmj"]
+    Click And Wait     css=md-tab-item:nth-child(1) 
+    Click Element      //form[@name="staticForm"]/div/div[4]/div/md-select
+    Click Element      //*[@value="clustermmj"]
     #切换到json模式
-    Click And Wait    css=md-tab-item:nth-child(2)
+    Click And Wait     css=md-tab-item:nth-child(2)
     #等待应用发布
-    Click And Wait    stackJsonCreate
+    Click And Wait     stackJsonCreate
     Wait Until Element Contains     //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
     #验证应用是否部署成功    
-    ${app name} =     Get Text      //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Contain    ${app name}   template
-    ${app status} =   Get Text      //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+    ${app name} =      Get Text      //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Contain     ${app name}   template
+    ${app status} =    Get Text      //*[@id="stackListApp"]/tbody/tr[1]/td[4]
     Should Be Equal As Strings      ${app status}   Running
     #删除该应用（避免垃圾数据）
     Delete App From Button

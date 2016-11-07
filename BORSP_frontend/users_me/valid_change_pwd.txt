@@ -8,7 +8,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-G-001 用户管理-组管理员-修改自己的密码(上边界)
+G-001用户管理-组管理员-修改自己的密码(上边界)
 	Login Gm
 	Go To   ${USER_PWD URL}
 	Input Password  ${GM PASSWD}    ${STR 16}    ${STR 16}
@@ -19,7 +19,7 @@ G-001 用户管理-组管理员-修改自己的密码(上边界)
 	Input Password  ${STR 16}    ${GM PASSWD}    ${GM PASSWD} 
 	Click Element   submit-update-password
 
-G-007 用户管理-普通用户-修改自己密码（下边界）
+G-007用户管理-普通用户-修改自己密码（下边界）
 	Login Mmj
 	Go To   ${USER_PWD URL}
 	Input Password  ${MMJ PASSWD}    ${STR 8}    ${STR 8} 

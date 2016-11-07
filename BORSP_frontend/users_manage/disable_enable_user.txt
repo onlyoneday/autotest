@@ -10,7 +10,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-G-045/054 禁用/启用无组的普通用户
+G-045/054禁用/启用无组的普通用户
 	#创建无组用户
 	Create User         ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Click And Wait      submit-create-user
@@ -26,7 +26,7 @@ G-045/054 禁用/启用无组的普通用户
 	Go To Page          ${USER_MANU URL}
 	Delete User         ${TEST ID}
 
-G-046/055 禁用/启用有组无应用普通用户
+G-046/055禁用/启用有组无应用普通用户
 	#创建组无应用普通用户
 	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  member

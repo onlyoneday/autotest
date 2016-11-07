@@ -23,7 +23,7 @@ Compose App  [Arguments]   ${template}
     Sleep  ${LONG TIME} 
     #验证编排是否发布成功
     Reload Page
-    Sleep  3
+    Sleep  2
     ${task1} =   Get Text    //*[@id='rolexStackServices']/tbody/tr[1]/td[2]
     ${run} =   Get Substring     ${task1}   0    1
     ${sum} =   Get Substring     ${task1}   2

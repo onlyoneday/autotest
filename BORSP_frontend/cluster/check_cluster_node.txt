@@ -35,6 +35,5 @@ Check Node
 	\     ${link} =       Evaluate   '//table/tbody/tr['+'${lr}'+']/td[2]/a'
 	\	  Click And Wait  ${link}   
 	\     Page Should Contain  主机详情
-	\     Go Back
-	\     Sleep   ${SLEEP TIME} 
+	\     Go Back And Wait
 	Go To Page    ${HOME URL}

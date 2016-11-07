@@ -9,7 +9,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-G-132/133 新建应用-名称不填
+G-132/133新建应用-名称不填
 	#表单模式
     Input Simple App
     Clear Element Text    stackAppName
@@ -18,9 +18,8 @@ G-132/133 新建应用-名称不填
     #JSON模式
     Click Element         css=md-tab-item:nth-child(2)
     Result Api            stackJsonCreate    ${message31}
-    Capture Page Screenshot
 
-G-132/133 新建应用-地址不填
+G-132/133新建应用-地址不填
     #表单模式
     Input Simple App
     Clear Element Text    stackImageAddress
@@ -29,9 +28,8 @@ G-132/133 新建应用-地址不填
     #JSON模式
     Click Element         css=md-tab-item:nth-child(2)
     Result Api            stackJsonCreate    ${message32}
-    Capture Page Screenshot
 
-G-132/133 新建应用-集群不填
+G-132/133新建应用-集群不填
 	#表单模式
 	Create App        appmmj    ${EMPTY}
     Element Should Be Disabled  stackFormCreate
@@ -39,7 +37,6 @@ G-132/133 新建应用-集群不填
     #JSON模式
     Click Element     css=md-tab-item:nth-child(2)
     Result Api        stackJsonCreate    ${message4}
-    Capture Page Screenshot
 
 *** Variables ***
 ${message1}        应用名称不能为空

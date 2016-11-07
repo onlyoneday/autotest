@@ -17,7 +17,7 @@ Add Menmber Before Testing
 	Add Group User    ${MMJ USER}  member
 	Add Group User    ${GM USER}   owner
 
-G-100/121 组管理员-属于多个组-查看多个组下的多个集群和主机
+G-100/121组管理员-属于多个组-查看多个组下的多个集群和主机
 	Login Gm
 	Choose Group Tgroup
 	Page Should Not Contain  ${MMJ CLUSTER}
@@ -26,7 +26,7 @@ G-100/121 组管理员-属于多个组-查看多个组下的多个集群和主�
 	Page Should Contain      ${MMJ CLUSTER}
 	Check Cluster And Node
 
-G-101/122 组管理员-属于多个组-查看多个组下的多个集群和主机
+G-101/122组管理员-属于多个组-查看多个组下的多个集群和主机
 	Login Mmj
 	Choose Group Tgroup
 	Page Should Not Contain  ${MMJ CLUSTER}
@@ -67,6 +67,5 @@ Check Node2
 	\     ${link} =   Evaluate   '//table/tbody/tr['+'${lr}'+']/td[1]/a'
 	\	  Click And Wait       ${link} 
 	\     Page Should Contain  主机详情
-	\     Go Back
-	\     Sleep   ${SLEEP TIME} 
+	\     Go Back And Wait
 	Go To Page    ${HOME URL}

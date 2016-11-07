@@ -8,16 +8,16 @@ Test Setup      Go To Page  ${APP_CREATE URL}
 Test Template   Input Check1
 Suite Teardown  Close All Browsers
 
-*** Test Cases ***            input                 text        active
+*** Test Cases ***           input                 text        active
 
-app_c_14-1 应用名称包含大写字母  stackAppName          Invalid     a
-app_c_14-2 应用名称超长         stackAppName          ${STR 49}   i
-app_c_15-1 CPUS包含字母        stackCpus             Invalid     i
-app_c_15-2 CPUS小于下限        stackCpus             0.009       i
-app_c_16-1 内存包含字母         stackMemory           Invalid     i
-app_c_16-2 内存小于下限         stackMemory           15          i
-app_c_17-1 实例数含字母         stackInstanceNumber   Invalid     i
-app_c_17-2 实例数不填写         stackInstanceNumber   ${EMPTY}    i
+app_c_14-1应用名称包含大写字母  stackAppName          Invalid     a
+app_c_14-2应用名称超长         stackAppName          ${STR 49}   i
+app_c_15-1CPUS包含字母        stackCpus             Invalid     i
+app_c_15-2CPUS小于下限        stackCpus             0.009       i
+app_c_16-1内存包含字母         stackMemory           Invalid     i
+app_c_16-2内存小于下限         stackMemory           15          i
+app_c_17-1实例数含字母         stackInstanceNumber   Invalid     i
+app_c_17-2实例数不填写         stackInstanceNumber   ${EMPTY}    i
 
 
 *** Keywords ***
@@ -32,7 +32,6 @@ Input Check1  [Arguments]  ${input}   ${text}   ${active}
     Run Keyword If  '${active}' == 'a'   Click Element   stackFormCreate
     ...              ELSE   Element Should Be Disabled   stackFormCreate
     Location Should Be  ${APP_CREATE URL} 
-    Capture Page Screenshot 
     
 
     

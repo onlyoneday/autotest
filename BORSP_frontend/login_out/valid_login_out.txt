@@ -9,7 +9,6 @@ Suite Teardown   Close All Browsers
 
 login_out_2-3 反复登录退出
     :FOR   ${index}   IN RANGE    3
-    \    ${index} =   Evaluate    ${index} + 1
     \    Login Mmj
     \    Logout
     \    Location Should Be  ${LOGIN URL} 

@@ -9,14 +9,14 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-G-015 相同组的组管理员和组成员
+G-015相同组的组管理员和组成员
 	Click Element  stackCreate
 	Select User Group    ${MMJ GROUP}   owner
 	Select User Group2   ${MMJ GROUP}   member
 	Sleep  2
 	Result Web     div:nth-child(8) > div.layout-column > div:nth-child(2) > p  ${message10}
 
-G-017 必填项不填
+G-017必填项不填
 	Create User    u  u  u  u  ${EMPTY}  ${EMPTY}    ${EMPTY}
 	Clear Element text    input-username
 	Clear Element text    input-name
@@ -28,7 +28,7 @@ G-017 必填项不填
 	Result Web     div:nth-child(4) > p:nth-child(4)    ${message4} 
 	Element Should Be Disabled     ${button}
 
-G-018 输入项上边外侧界(用户名、姓名、邮箱、密码、确认密码、用户描述)
+G-018输入项上边外侧界(用户名、姓名、邮箱、密码、确认密码、用户描述)
 	Create User    ${STR 256}  ${STR 256}  ${EML 256}  ${STR 17}  ${STR 17}  ${STR 256}  ${EMPTY}
 	Result Web     div:nth-child(1) > p:nth-child(4)   ${message0} 
 	Result Web     div:nth-child(2) > p:nth-child(4)   ${message0} 
