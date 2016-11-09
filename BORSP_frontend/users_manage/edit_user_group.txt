@@ -9,13 +9,11 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#测试前新建
 Create Test User For Edition
 	Create User        ${TEST ID}  U  ${TEST EML}   ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Click Element      submit-create-user
 
-#相同组的组管理员和组成员
-G-023
+G-023相同组的组管理员和组成员
 	Edit User Group    ${TEST ID}
 	Add User Group     ${MMJ GROUP}   member
 	Click Element      css=ng-form > div > button
@@ -23,22 +21,19 @@ G-023
 	Click Element      css=ng-form > div > button
 	Click Element      css=md-dialog-actions > button
 
-#不同组 
-G-023-2
+G-023-2不同组 
 	Edit User Group    ${TEST ID}
 	Add User Group     ${MMJ GROUP}   owner
 	Click Element      css=ng-form > div > button
 	Page Should Contain    不能添加重复的用户组
 
-#0个角色（无组）
-G-024
+G-024没有个角色（无组）
 	Edit User Group    ${TEST ID}
 	Sleep              2
 	Click Element      css=div:nth-child(2) > ng-form > div > button
 	Click Element      css=div:nth-child(2) > ng-form > div > button
 	Click Element      css=md-dialog-actions > button
-	
-#测试后删除
+
 Delete Test User After Edition
 	Delete User        ${TEST ID}
 

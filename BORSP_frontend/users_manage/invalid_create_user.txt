@@ -9,16 +9,14 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#相同组的组管理员和组成员
-G-015
+G-015相同组的组管理员和组成员
 	Click Element  stackCreate
 	Select User Group    ${MMJ GROUP}   owner
 	Select User Group2   ${MMJ GROUP}   member
 	Sleep  2
 	Result Web     div:nth-child(8) > div.layout-column > div:nth-child(2) > p  ${message10}
 
-#必填项不填
-G-017
+G-017必填项不填
 	Create User    u  u  u  u  ${EMPTY}  ${EMPTY}    ${EMPTY}
 	Clear Element text    input-username
 	Clear Element text    input-name
@@ -30,8 +28,7 @@ G-017
 	Result Web     div:nth-child(4) > p:nth-child(4)    ${message4} 
 	Element Should Be Disabled     ${button}
 
-#输入项上边外侧界(用户名、姓名、邮箱、密码、确认密码、用户描述)
-G-018
+G-018输入项上边外侧界(用户名、姓名、邮箱、密码、确认密码、用户描述)
 	Create User    ${STR 256}  ${STR 256}  ${EML 256}  ${STR 17}  ${STR 17}  ${STR 256}  ${EMPTY}
 	Result Web     div:nth-child(1) > p:nth-child(4)   ${message0} 
 	Result Web     div:nth-child(2) > p:nth-child(4)   ${message0} 
@@ -39,14 +36,12 @@ G-018
 	Result Web     div:nth-child(4) > p:nth-child(3)   ${message5} 
 	Element Should Be Disabled     ${button}
 
-#输入项下边外侧界(密码)
-G-019
+G-019 输入项下边外侧界(密码)
 	Create User    u  u  ${MMJ USER}  ${STR 7}  ${STR 7}  ${EMPTY}  ${EMPTY}
 	Result Web     div:nth-child(4) > p:nth-child(3)  ${message5} 
 	Element Should Be Disabled     ${button}
 
-#输入项不符合格式规范(邮箱)
-G-020
+G-020 输入项不符合格式规范(邮箱)
 	#格式
 	Create User     u  u  m@  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
 	Result Web      div:nth-child(3) > p:nth-child(4)  ${message7} 

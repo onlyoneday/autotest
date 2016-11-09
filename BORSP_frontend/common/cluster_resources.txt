@@ -1,4 +1,4 @@
-cluster/valid_create_cluster.txt *** Settings ***
+*** Settings ***
 
 Documentation  A resource file containing the specific keywords and variables for application
 Library        Selenium2Library
@@ -31,13 +31,13 @@ Delete Cluster
 Add Cluster Node
 	[Arguments]     ${name}
 	Input Text		//input    ${name}
-	Sleep   2
+	Sleep   1
 	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
 	Click And Wait  ${link}
 	Click Element   add-cluster-node
 
 Select Cluster Node
-	Click And Wait  //md-input-container/md-select
+	Click Element   //md-input-container/md-select
 	Click Element   //md-option[@ng-value="nodeIp"][1]
 	Click Element   //button[@aria-label="选择需要添加的主机"]
 	Click And Wait  //button[@aria-label="ok"]
@@ -45,7 +45,7 @@ Select Cluster Node
 Enter Cluster
 	[Arguments]     ${name}
 	Input Text		//input    ${name}
-	Sleep   2
+	Sleep   1
 	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
 	Click And Wait  ${link}
 

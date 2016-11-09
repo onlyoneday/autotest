@@ -9,14 +9,12 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#测试前新建
 Creat Test User For Changing Password
 	Create User           ${TEST ID}  U  ${TEST EML}  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
 	Select User Group     ${MMJ GROUP}   member
 	Click And Wait        submit-create-user
 
-#上边界值
-G-030
+G-030上边界值
 	Edit User Password    ${TEST ID}
 	Change User Password  ${STR 16}   ${STR 16}
 	Click And Wait        //button[@aria-label="ok"]
@@ -26,8 +24,7 @@ G-030
 	Logout
 	Login Adm
 
-#下边界值
-G-031
+G-031下边界值
 	Edit User Password    ${TEST ID}
 	Change User Password  ${STR 8}   ${STR 8}
 	Click And Wait        //button[@aria-label="ok"]
@@ -37,7 +34,6 @@ G-031
 	Logout
 	Login Adm
 
-#删除无组用户
 Delete Test User For Changing Password
 	Delete User    ${TEST ID}
 

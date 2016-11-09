@@ -9,33 +9,30 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#输入项下边界值
-G-009/012/037
+G-009/012/037输入项下边界值
 	Create User        II  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  member
 	Click And Wait     submit-create-user
 	Result User        II  U  u@u.cn  ${MMJ GROUP}  组成员
 
-#输入项下边界值
-G-010/038
+G-010/038输入项下边界值
 	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  owner
 	Click And Wait     submit-create-user
 	Result User        ${TEST ID}  U  ${TEST EML}  ${MMJ GROUP}  组管理员
 
-#输入项上边界值
-G-011/013/042
+G-011/013/059输入项上边界值
 	Create User     ${STR 255}  ${STR 255}  ${EML 255}  ${STR 16}  ${STR 16}  ${STR 255}  True
 	Click And Wait  submit-create-user
 	Result User     ${STR 255}  ${STR 255}  ${EML 255}  ${SUPER}  超级管理员
 
-#创建/删除无组用户
-G-037
+G-037创建/删除无组用户
 	Create User     ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Click And Wait  submit-create-user
 	Result User     ${TEST ID}  U  ${TEST EML}  ${EMPTY}  ${EMPTY}
 
 *** Keywords ***
+
 Result User
 	[Arguments]     ${userid}   ${username}   ${useremail}   ${usergroup}   ${role}
 	#验证用户信息

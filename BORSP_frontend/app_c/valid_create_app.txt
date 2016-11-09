@@ -8,31 +8,31 @@ Test Setup      Go To Page   ${APP_MY URL}
 Test Template   Deploy App
 Suite Teardown  Close All Browsers
 
-*** Test Cases ***       Network     forceImage    aedhc
+*** Test Cases ***                                                Network     forceImage    aedhc
 
-app_c_02,04,06,12,G-201  ${EMPTY}    ${EMPTY}      10010
-app_c_05,07,09-11        stackHost   image         01101
+app_c_02,04,06,12,F-201新建应用-不强拉镜像/网桥模式/应用地址/服务发现  ${EMPTY}    ${EMPTY}      10010
+app_c_05,07,09-11新建应用-强拉镜像/HOST模式/环境变量/Docker参数/CMD   stackHost   image         01101
 
 *** Keywords ***
 
 Deploy App  [Arguments]   ${network}   ${forceImage}   ${aedhc}
     #新建应用
-    Click And Wait    stackCreate
+    Click And Wait     stackCreate
     #输入最简参数
-    ${name} =   Input Simple App
+    ${name} =          Input Simple App
     #强制拉取镜像
-    Run Keyword If   '${forceImage}' == 'image'    Click Element  forceImage
+    Run Keyword If     '${forceImage}' == 'image'    Click Element  forceImage
     #选择网络模式
-    Run Keyword If   '${network}' == 'stackHost'   Click Element  stackHost
+    Run Keyword If     '${network}' == 'stackHost'   Click Element  stackHost
     #输入高级设置
     Input Advanced App  ${aedhc}
     #等待应用发布
-    Click And Wait    stackFormCreate
+    Click And Wait     stackFormCreate
     Wait Until Element Contains    //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
     #验证应用是否部署成功
-    ${app name} =     Get Text     //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Contain    ${app name}  ${name}
-    ${app status} =   Get Text     //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+    ${app name} =      Get Text     //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    Should Contain     ${app name}  ${name}
+    ${app status} =    Get Text     //*[@id="stackListApp"]/tbody/tr[1]/td[4]
     Should Be Equal As Strings     ${app status}   Running
     #删除该应用（避免垃圾数据）
     Delete App From Button

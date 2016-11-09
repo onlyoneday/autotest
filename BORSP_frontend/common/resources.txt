@@ -6,12 +6,13 @@ Library        String
 
 *** Variables ***
 
-${SERVER}                http://192.168.1.163:5013/ui
+#${SERVER}                http://192.168.1.163:5013/ui
+${SERVER}                http://192.168.1.124:81/ui
 ${BROWSER}               Firefox
-#${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
+${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
-${SLEEP TIME}            3
-${LONG TIME}             180
+${SLEEP TIME}            5
+${LONG TIME}             90
 
 #--------------------URL--------------------
 ${LOGIN URL}             ${SERVER}/auth/login
@@ -74,8 +75,6 @@ ${STR 256}               0123456789012345678901234567890123456789012345678901234
 ${EML 255}               0123456789012345678901234567890123456789012345678901234567890123@abcde.cn
 ${EML 256}               01234567890123456789012345678901234567890123456789012345678901234@abcde.cn
 
-
-
 *** Keywords ***
 Open Browser To Login Page
     Set Selenium Speed  ${DELAY}
@@ -84,15 +83,19 @@ Open Browser To Login Page
 Go To Page  
     [Arguments]  ${URL}
     Go To   ${URL}
-    Sleep   ${SLEEP TIME} 
+    Sleep   2
 
 Click And Wait  
     [Arguments]  ${ELEMENT}
     Click Element  ${ELEMENT}
-    Sleep   ${SLEEP TIME}
+    Sleep   2
+
+Go Back And Wait
+    Go Back
+    Sleep   2 
 
 Get Lower String
-    ${Random} =    Generate Random String    6
+    ${Random} =    Generate Random String  5
     ${Name} =   Convert To Lowercase  ${Random}
     [Return]    ${Name}
 

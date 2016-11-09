@@ -10,7 +10,7 @@ Library         DateTime
 
 *** Test Cases ***
 
-app_m_5-7,9-11,15-21,23
+app_m_5-7,9-11,15-21,23 验证应用参数
     #新建应用
     Click And Wait   stackCreate
     ${name} =        Input Simple App
@@ -38,7 +38,6 @@ app_m_5-7,9-11,15-21,23
     Modify Parameter
     #等待应用发布
     Click And Wait    stackFormUpdate
-    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
 
     #验证信息是否正确
     Click And Wait    xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
@@ -64,7 +63,7 @@ Modify Parameter
     Input Text        stackInstanceNumber   2
     #更改高级设置
     Click Element     css=.fa-chevron-down
-    Sleep   ${SLEEP TIME}
+    Sleep  1
     #环境变量
     Input Text        stackEnvsValue0     evm
     #Docker参数
@@ -92,9 +91,8 @@ Verify Instance
     Should Be Equal As Strings   ${index}  1
     #实例-链接可用
     Click And Wait  xpath=//*[@id='stackInstanceList']/tbody/tr/td[2]/p/span/a
-    Page Should Contain   Welcome to nginx!
-    Go Back
-    Sleep  ${SLEEP TIME}
+    #Page Should Contain   Welcome to nginx!
+    Go Back And Wait
 
 Verify Config
     #转到配置tab

@@ -11,15 +11,13 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#测试前准备
 Creat Test Group For Edition
 	Input Group     ${TEST GRP}   ${EMPTY}
 	Click And Wait  submit-create-user
 	Input Group     ${TEST ID}    ${EMPTY}
 	Click And Wait  submit-create-user
 
-#添加多个组成员/将一个用户加入多个用户组
-G-073/75
+G-073/75添加多个组成员/将一个用户加入多个用户组
 	Manage Group    ${TEST GRP}  2
 	Add Group User  ${MMJ USER}  member
 	Add Group User  ${GM USER}   member
@@ -27,8 +25,7 @@ G-073/75
 	Page Should Contain   ${GM USER}
 	Page Should Contain   组成员    
 
-#添加多个组管理员/将一个用户加入多个用户组
-G-074/75
+G-074/75添加多个组管理员/将一个用户加入多个用户组
 	Manage Group    ${TEST ID}   2
 	Add Group User  ${MMJ USER}  owner
 	Add Group User  ${GM USER}   owner
@@ -36,19 +33,16 @@ G-074/75
 	Page Should Contain   ${GM USER}
 	Page Should Contain   组管理员
 
-#删除有用户的用户组
-G-083
+G-083删除有用户的用户组
 	Delete Group    ${TEST GRP}
 	Page Should Contain    ${TEST GRP}
 
-#删除所有的组管理员
-G-078
+G-078删除所有的组管理员
 	Manage Group    ${TEST ID}   2
 	Delete Group User    ${MMJ USER} 
 	Delete Group User    ${GM USER}
 
-#删除无用户的用户组
-G-082
+G-082删除无用户的用户组
 	Delete Group    ${TEST ID}
 	Page Should Not Contain  ${TEST ID}
 
@@ -64,19 +58,16 @@ Creat Test App For Edition
 	Logout
 	Login Adm
 
-#删除无应用/有应用的组成员
-G-076/077
+G-076/077删除无应用/有应用的组成员
 	Manage Group    ${TEST GRP}  2
 	Delete Group User    ${MMJ USER} 
 	Delete Group User    ${GM USER}
 
-#删除没有主机有应用的集群
-G-103
+G-103删除没有主机有应用的集群
 	Go To Page      ${HOME URL}
 	Delete Cluster  ${TEST CLU}
 	Page Should Contain   ${TEST CLU}
 
-#删除应用
 Delete Test App For Edition
 	Go To Page      ${APP_ALL URL}
 	Delete App By Name  ${TEST APP}

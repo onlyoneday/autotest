@@ -9,13 +9,11 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#测试前准备
 Creat Test Group For Edition
 	Input Group       ${TEST GRP}   ${EMPTY}
 	Click And Wait    submit-create-user
 
-#修改用户组（修改组名、描述）
-G-068
+G-068修改用户组（修改组名、描述）
 	Edit Group        ${TEST GRP}
 	Edit Group Info   GroupForEditingName  GroupForEditingDescription
 	Click And Wait    submit-update-user

@@ -10,9 +10,8 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#集群上有主机无应用
-G-104
-	Click And Wait    ${link}
+G-104集群上有主机无应用
+	Enter Cluster     ${MMJ CLUSTER}
 	Click Element     delete-cluster
 	Page Should Contain  集群内有主机的时候不能删除集群
 
@@ -21,37 +20,31 @@ Deploy App Before Testing
 	Create App        ${TEST APP}    ${MMJ CLUSTER}
     Click Element	  stackFormCreate
 
-#集群上有主机有应用
-G-105
-	Click And Wait    ${link}
-	Click Element     delete-cluster
+G-105集群上有主机有应用
+	Enter Cluster     ${MMJ CLUSTER}
+	Click And Wait    delete-cluster
 	Page Should Contain  集群内有应用的时候不能删除集群
 	Page Should Contain  集群内有主机的时候不能删除集群
 
-#取消删除主机
-G-116
-	Click And Wait    ${link}
+G-116取消删除主机
+	Enter Cluster     ${MMJ CLUSTER}
 	Click Element     node-detail-list-del0
 	Click Element     css=md-dialog > md-dialog-actions > button:nth-child(1)
 	${row1} =         Get Matching Xpath Count    //table/tbody/tr[*]
 	Run Keyword If    ${row1} == ${0}    Fail
 
-#删除任意集群的任意主机
-G-115
-	Click And Wait    ${link}
+G-115删除任意集群的任意主机
+	Enter Cluster     ${MMJ CLUSTER}
+	${nodeip} =       Get Text  //table/tbody/tr[1]/td[2]/a
 	Delete Node       0
-	Wait Until Page Does Not Contain     192.168.1
-	${row2} =         Get Matching Xpath Count    //table/tbody/tr[*]
-	Should Be Equal As Strings  ${row2}  0
-
-Add Node After Testing
-	Add Cluster Node  ${MMJ CLUSTER}
-	Select Cluster Node
-	Go To Page        ${APP_MY URL} 
+	Wait Until Page Does Not Contain  ${nodeip}  timeout=${LONG TIME}
+	#应用挂掉
+	Go To Page          ${APP_MY URL} 
+	${status} =         Get Text  //*[@id='stackListApp']/tbody/tr[1]/td[4]
+	Should Not Be Equal As Strings  ${status}  Running
 	Delete App By Name  ${TEST APP} 
 
-*** Variables ***
-
-${link}		//section/header/h3/a[text()="clustermmj"]
-
+Add Node After Testing
+	Add Cluster Node    ${MMJ CLUSTER}
+	Select Cluster Node
 

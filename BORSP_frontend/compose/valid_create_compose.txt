@@ -8,10 +8,10 @@ Test Setup      Go To Page   ${RSTACK URL}
 Test Template   Compose App
 Suite Teardown  Close All Browsers
 
-*** Test Cases ***    template
+*** Test Cases ***                 template
 
-compose_2,6,7,11      rolex-json-mysql
-compose_2,6,7,11-2    rolex-json-wordpress
+compose_2,6,7,11 试试看mysql        rolex-json-mysql
+compose_2,6,7,11-2 试试看WordPress  rolex-json-wordpress
 
 *** Keywords ***
 
@@ -23,7 +23,7 @@ Compose App  [Arguments]   ${template}
     Sleep  ${LONG TIME} 
     #验证编排是否发布成功
     Reload Page
-    Sleep  3
+    Sleep  2
     ${task1} =   Get Text    //*[@id='rolexStackServices']/tbody/tr[1]/td[2]
     ${run} =   Get Substring     ${task1}   0    1
     ${sum} =   Get Substring     ${task1}   2

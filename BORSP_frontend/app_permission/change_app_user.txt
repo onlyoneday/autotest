@@ -14,22 +14,19 @@ Create App Before Testing
     Create App        appmmj  ${MMJ CLUSTER}
     Click And Wait    stackFormCreate
 
-#组管理员-修改所属用户
-G-147
+G-147组管理员-修改所属用户
 	Login Gm 
     Go To Page        ${APP_ALL URL} 
     Change App Owner  appmmj
     Change Owner      ${GM USER}
 
-#超级管理员-修改所属用户
-G-148
+G-148超级管理员-修改所属用户
 	Login Adm 
     Go To Page        ${APP_ALL URL} 
     Change App Owner  appmmj
     Change Owner      ${MMJ USER}
 
-#组成员-修改所属用户
-G-149
+G-149组成员-修改所属用户
 	Login Mmj 
     Go To Page        ${APP_MY URL} 
     Change App Owner  appmmj
@@ -40,7 +37,6 @@ Delete App After Testing
     Go To Page          ${APP_MY URL} 
 	Delete App By Name  appmmj
 
-    
 *** Keywords ***
 Change Owner
 	[Arguments]       ${name}  

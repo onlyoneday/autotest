@@ -6,7 +6,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-login_out_10
+login_out_10 相同账号只能一点登录
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}   B1
     Sleep  ${SLEEP TIME}

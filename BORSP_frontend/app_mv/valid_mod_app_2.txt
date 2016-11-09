@@ -9,7 +9,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-app_m_14
+app_m_14 应用详情-右上方停止、扩展、删除、更新可用
     #创建应用
     Click And Wait  stackCreate
     ${name} =       Input Simple App
@@ -39,7 +39,7 @@ app_m_14
     Click And Wait  //*[@id='stackListApp']/tbody/tr[1]/td[1]/a
     Click And Wait  stackDetailMenu
     Click And Wait  stackDetailSuspended
-    Wait Until Element Contains  css=dl:nth-child(1) > dd  Suspended  timeout=${LONG TIME} 
+    Wait Until Element Contains  css=dl:nth-child(1) > dd  Suspended  timeout=600
     #验证应用是否停止
     ${status} =     Get Text    css=dl:nth-child(1) > dd
     Should Be Equal As Strings  ${status}   Suspended

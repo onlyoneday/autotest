@@ -1,4 +1,4 @@
-cluster/delete_cluster_node.txt*** Settings ***
+*** Settings ***
 
 Documentation   集群管理-超级管理员-创建集群
 Resource        ../common/resources.txt
@@ -9,14 +9,12 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#填写用户组/信息填写上边界值
-G-089/091
+G-089/091填写用户组/信息填写上边界值
 	Input Cluster    c  ${TGROUP}  ${EMPTY}
 	Click And Wait   submit-create-cluster
 	Result Group	 c  ${TGROUP}  ${EMPTY}
 
-#信息填写下边界值/删除无主机无应用集群
-G-092
+G-092信息填写下边界值/删除无主机无应用集群
 	Input Cluster    ${STR 255}  ${TGROUP}  ${STR 255}
 	Click And Wait   submit-create-cluster
 	Result Group	 ${STR 255}  ${TGROUP}  ${STR 255}

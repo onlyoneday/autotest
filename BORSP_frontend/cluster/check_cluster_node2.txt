@@ -12,14 +12,12 @@ Suite Teardown  Close All Browsers
 
 Add Menmber Before Testing
 	Login Adm
-	#将用户加入多个用户组
 	Go To Page        ${USER_MANG URL}
 	Manage Group      ${TGROUP}  2
 	Add Group User    ${MMJ USER}  member
 	Add Group User    ${GM USER}   owner
 
-#组管理员-属于多个组-查看多个组下的多个集群和主机
-G-100/121
+G-100/121组管理员-属于多个组-查看多个组下的多个集群和主机
 	Login Gm
 	Choose Group Tgroup
 	Page Should Not Contain  ${MMJ CLUSTER}
@@ -28,8 +26,7 @@ G-100/121
 	Page Should Contain      ${MMJ CLUSTER}
 	Check Cluster And Node
 
-#组管理员-属于多个组-查看多个组下的多个集群和主机
-G-101/122
+G-101/122组管理员-属于多个组-查看多个组下的多个集群和主机
 	Login Mmj
 	Choose Group Tgroup
 	Page Should Not Contain  ${MMJ CLUSTER}
@@ -38,7 +35,7 @@ G-101/122
 	Page Should Contain      ${MMJ CLUSTER}
 	Check Cluster And Node
 
-Delete Node Before Testing
+Delete Menmber After Testing
 	Login Adm
 	Go To Page         ${USER_MANG URL}
 	Manage Group       ${TGROUP}  2
@@ -70,6 +67,5 @@ Check Node2
 	\     ${link} =   Evaluate   '//table/tbody/tr['+'${lr}'+']/td[1]/a'
 	\	  Click And Wait       ${link} 
 	\     Page Should Contain  主机详情
-	\     Go Back
-	\     Sleep   ${SLEEP TIME} 
+	\     Go Back And Wait
 	Go To Page    ${HOME URL}

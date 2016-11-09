@@ -9,15 +9,13 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#取消创建
-G-016   
+G-016取消创建  
     Create User     Cancel  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
     Click Element   cancel-create-user
     ${index} =      Get User Index     Cancel
     Run Keyword If  '${index}' <> 'None'    Fail
 
-#取消修改
-G-025 
+G-025取消修改 
     Edit User Info  ${MMJ USER}
     Input Text      input-name        Cancel
     Click Element   cancel-create-user
@@ -26,8 +24,7 @@ G-025
     ${name} =       Get Text    ${path}
     Run Keyword If  '${name}' == 'Cancel'   Fail
 
-#取消删除
-G-042
+G-042取消删除
     ${index} =      Get User Index    ${MMJ USER}
     ${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
     Click Element   ${path}
@@ -36,8 +33,7 @@ G-042
     ${index} =      Get User Index    ${MMJ USER}
     Run Keyword If  '${index}' == 'None'    Fail
 
-#取消修改密码
-G-032  
+G-032取消修改密码
     Edit User Password    ${MMJ USER}
     Change User Password  ${STR 8}    ${STR 8}
     Click Element         //button[@aria-label="cancel"]
@@ -46,8 +42,7 @@ G-032
     Location Should Be    ${LOGIN URL}
     Login Adm
 
-#取消禁用
-G-052
+G-051取消禁用
     ${index} =      Get User Index    ${MMJ USER}
     ${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
     Click Element   ${path} 

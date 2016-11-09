@@ -9,7 +9,7 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-G-218
+G-218必填项不填
 	Click And Wait        userRegistryUpdate0
 	Clear Element text    create-registry-name
 	Clear Element text    create-registry-addr
@@ -19,14 +19,33 @@ G-218
 	Result Web     div:nth-child(2) > div.layout-column > p:nth-child(2)    ${message1} 
 	Result Web     div:nth-child(3) > div.layout-column > p:nth-child(2)    ${message2} 
 
-#超过上限
-G-219
+G-219超过上限
 	Click And Wait       userRegistryUpdate0
 	Input Registry       ${STR 256}  ${STR 256}  ${STR 51}  ${STR 51}
 	Result Web     div:nth-child(1) > div.layout-column > p:nth-child(3)    ${message4} 
 	Result Web     div:nth-child(2) > div.layout-column > p:nth-child(3)    ${message5} 
 	Result Web     div:nth-child(3) > div.layout-column > p:nth-child(3)    ${message6} 
 	Result Web     div:nth-child(4) > div.layout-column > p:nth-child(3)    ${message7}
+
+G-222修改仓库-取消
+	Click And Wait  userRegistryUpdate0
+	Input Text      create-registry-name  userRegistr
+	Click Element   //button[@aria-label="cancel"]
+	Element Should Not Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  userRegistryUpdate1
+
+G-222修改仓库
+	Click And Wait  userRegistryUpdate0
+	Input Text      create-registry-name  userRegistry
+	Input Text      create-registry-userName  ${MMJ USER}
+	Click Element   //button[@aria-label="ok"]
+	Element Should Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  userRegistryUpdate1
+	Element Should Contain  //*[@id='node-container-list']/tbody/tr[1]/td[3]  ${MMJ USER}
+
+Correct Registry Info After Testing
+	Click And Wait  userRegistryUpdate0
+	Input Text      create-registry-name  ${MMJ CLUSTER}
+	Input Text      create-registry-userName  ${RG NAME}
+	Click Element   //button[@aria-label="ok"]
 
 *** Variables ***
 ${message0}        名称不能为空
