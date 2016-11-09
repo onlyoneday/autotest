@@ -94,8 +94,8 @@ Input Simple App
     #填写镜像名称
     Input Text     stackImageAddress    blackicebird/2048:latest
     #选择集群
-    Click And Wait //form[@name="staticForm"]/div/div[4]/div/md-select
-    Click Element  //*[@value="clustermmj"]
+    Click And Wait  //form[@name="staticForm"]/div/div[4]/div/md-select
+    Click Element   //*[@value="clustermmj"]
     #填写容器规格
     Input Text     stackCpus    0.2
     Clear Element Text  stackMemory
