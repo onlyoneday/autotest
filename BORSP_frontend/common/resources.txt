@@ -7,7 +7,7 @@ Library        String
 *** Variables ***
 
 #${SERVER}                http://192.168.1.163:5013/ui
-${SERVER}                http://192.168.1.124:81/ui
+${SERVER}                http://192.168.1.62:5013/ui
 ${BROWSER}               Firefox
 ${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
@@ -105,11 +105,6 @@ Result Web
     Should Be Equal As Strings    ${TEXT}   ${WEBMSG}
     Element Should Be Visible     css=${CSS}
 
-<<<<<<< HEAD
-Go To Page  [Arguments]  ${URL}
-    Go To   ${URL}
-    Sleep   15
-=======
 Result Api
     [Arguments]     ${LOC}  ${APIMSG}
     Click Element   ${LOC}
@@ -124,7 +119,6 @@ Open Browser And Login Adm
 Open Browser And Login Gm
     Open Browser To Login Page
     Login Gm
->>>>>>> origin/mj
 
 Open Browser And Login Mmj
     Open Browser To Login Page
