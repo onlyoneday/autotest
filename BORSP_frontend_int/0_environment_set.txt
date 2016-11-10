@@ -10,13 +10,13 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-#Setting
-	#Login  admin  dataman1234
-	#CREATE GROUP
-	#GREATE USER
-	#GREATE CLUSTER
-	#CREATE NODE
-	#CREATE REGISTRY
+Setting
+	Login  admin  dataman1234
+	CREATE GROUP
+	GREATE USER
+	GREATE CLUSTER
+	CREATE NODE
+	CREATE REGISTRY
 
 *** Keywords ***
 
