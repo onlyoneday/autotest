@@ -9,40 +9,34 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-Creat Test Group For Edition
-	Input Group    ${TEST GRP}   ${EMPTY}
-	Click Element  submit-create-user
-
 G-069必填项不填
-	Edit Group           ${TEST GRP}
-	Edit Group Info      g    ${EMPTY}
+	Edit Group           ${TGROUP}
 	Clear Element text   input-username
-	Result Web           div:nth-child(1) > p:nth-child(3)    ${message1} 
-	Element Should Be Disabled      ${button} 
+	Result Web           ${location1}    ${message1} 
+	Element Should Be Disabled	${button} 
 
 G-070输入项上边外侧界(用户名)
-	Edit Group           ${TEST GRP}
+	Edit Group           ${TGROUP}
 	Edit Group Info      ${STR 256}      ${EMPTY}
-	Result Web           div:nth-child(1) > p:nth-child(4)    ${message0} 
-	Element Should Be Disabled      ${button} 
+	Result Web           ${location0}    ${message0} 
+	Element Should Be Disabled	${button} 
 
 G-070-2输入项上边外侧界(用户描述)
-	Edit Group           ${TEST GRP}
-	Edit Group Info      g    ${STR 256}
-	#Result Web     div:nth-child(1) > p:nth-child(4)    ${message0} 
-	Element Should Be Disabled     ${button} 
+	Edit Group           ${TGROUP}
+	Edit Group Info      ${TGROUP}       ${STR 256}
+	Result Web           ${location0}    ${message0} 
+	Element Should Be Disabled	${button} 
 
 G-072输入项不符合规范(重复)
-	Edit Group           ${TEST GRP}
+	Edit Group           ${TGROUP}
 	Edit Group Info      ${SUPER}     ${EMPTY}
 	Result Api           ${button}    ${message3} 
 
-Delete Test Group After Edition
-	Delete Group   ${TEST GRP}
-
 *** Variables ***
 ${message0}        最大长度255个字符
-${message1}        用户名不能为空
+${location0}       div:nth-child(1) > p:nth-child(4)
+${message1}        组名不能为空
+${location1}       div:nth-child(1) > p:nth-child(3)
 ${message2}		   Error 1406
 ${message3}		   Error 1062
 ${button}          submit-update-user

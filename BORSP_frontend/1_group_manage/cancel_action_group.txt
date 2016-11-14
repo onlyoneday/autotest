@@ -10,23 +10,26 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 G-066取消创建
-	Input Group       Cancel   ${EMPTY}
+	Input Group       ${InputGroupName}     ${EMPTY}
 	Click Element     cancel-create-user
-	${index} =        Get Group Index     Cancel
+	${index} =        Get Group Index       ${InputGroupName}
     Run Keyword If   '${index}' <> 'None'   Fail
 
 G-081取消修改
 	Edit Group        ${TGROUP}
-	Edit Group Info   Cancel   ${EMPTY}
+	Edit Group Info   ${InputGroupName}     ${EMPTY}
 	Click Element     cancel-create-user
-	${index} =        Get Group Index     Cancel
+	${index} =        Get Group Index       ${InputGroupName}
     Run Keyword If   '${index}' <> 'None'   Fail
 
 G-088取消删除
-	${index} =        Get Group Index    ${TGROUP}
+	${index} =        Get Group Index       ${TGROUP}
 	${no} =           Evaluate    ${index}-1
 	${path} =         Evaluate   'delete-group'+'${no}'
 	Click Element     ${path}
-	Click Element     //md-dialog-actions/button[@aria-label="取消"]
-	${index} =        Get Group Index    ${TGROUP}
+	Click Element     //button[@aria-label="取消"]
+	${index} =        Get Group Index       ${TGROUP}
     Run Keyword If   '${index}' == 'None'   Fail
+
+*** Variables ***
+${InputGroupName}	  Cancel
