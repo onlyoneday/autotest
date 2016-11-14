@@ -34,6 +34,9 @@ ${USERNAME FIELD}        //input[@name="userName"]
 ${PASSWORD FIELD}        //input[@name="Password"]
 
 #--------------------USER--------------------
+${ADMIN USER}            admin
+${ADMIN PASSWD}          dataman1234
+
 ${VALID USER}            superadmin
 ${VALID PASSWD}          MMMMMMMM
 
@@ -43,7 +46,7 @@ ${MMJ GROUP}             groupmmj
 ${MMJ CLUSTER}           clustermmj
 ${MMJ RG}                registrymmj
 
-${GM USER}               groupmanager   
+${GM USER}               groupmanager
 ${GM PASSWD}             M1234567
 
 ${SUPER}                 SuperGroup
@@ -80,19 +83,19 @@ Open Browser To Login Page
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}  #ff_profile_dir=${FF_PROFILE}
 
-Go To Page  
+Go To Page
     [Arguments]  ${URL}
     Go To   ${URL}
     Sleep   2
 
-Click And Wait  
+Click And Wait
     [Arguments]  ${ELEMENT}
     Click Element  ${ELEMENT}
     Sleep   2
 
 Go Back And Wait
     Go Back
-    Sleep   2 
+    Sleep   2
 
 Get Lower String
     ${Random} =    Generate Random String  5
@@ -125,15 +128,15 @@ Open Browser And Login Mmj
     Login Mmj
 
 Login Adm
-    Login   ${VALID USER}   ${VALID PASSWD} 
+    Login   ${VALID USER}   ${VALID PASSWD}
 
 Login Gm
-    Login   ${GM USER}   ${GM PASSWD}    
+    Login   ${GM USER}   ${GM PASSWD}
 
 Login Mmj
     Login   ${MMJ USER}  ${MMJ PASSWD}
 
-Login  
+Login
     [Arguments]    ${USER}   ${PASSWD}
     Input Text     ${USERNAME FIELD}   ${USER}
     Input Text     ${PASSWORD FIELD}   ${PASSWD}
@@ -143,6 +146,6 @@ Login
 Logout
     Click Button   open-user-menu
     Click Button   logout
-    Sleep  ${SLEEP TIME} 
+    Sleep  ${SLEEP TIME}
 
-    
+
