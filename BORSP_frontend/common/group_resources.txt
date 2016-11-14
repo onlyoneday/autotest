@@ -19,16 +19,18 @@ Choose Group Tgroup
 
 Input Group
     [Arguments]   	${username}  ${description}
-    Click And Wait  stackCreate
-	Input Text		input-username	 ${username}
-	Input Text		userDescription  ${description}
+    Click Element   stackCreate
+    Wait Until Page Contains Element  input-username
+	Input Text		input-username	  ${username}
+	Input Text		userDescription   ${description}
 
 Edit Group
     [Arguments]   	${name}
-	${index} =      Get Group Index    ${name}
+	${index} =      Get Group Index   ${name}
 	${no} =         Evaluate    ${index}-1
 	${path} =       Evaluate   'edit-group'+'${no}'
-	Click And Wait  ${path}
+	Click Element   ${path}
+	Wait Until Page Contains Element  input-username
 
 Edit Group Info
 	[Arguments]   	${username}  ${description}
@@ -39,26 +41,28 @@ Manage Group
 	[Arguments]   	${name}  ${tab}
 	${index} =      Get Group Index    ${name}
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button[1]'
-	Click And Wait  ${path}
-	Run Keyword If  '${tab}' == '2'    Click And Wait  css=md-tab-item:nth-child(2) > span
+	Click Element   ${path}
+	Wait Until Page Contains Element   clusterCreate
+	Run Keyword If  '${tab}' == '2'    Click And Wait  css=md-tab-item:nth-child(2)
 
 Add Group User
 	[Arguments]   	${user}  ${role}
-	Click And Wait  accountGroupCreate
+	Click Element   accountGroupCreate
+	Wait Until Page Contains Element   update-select-group
 	${upath} =      Evaluate  '//md-content/md-option/div[contains(text(),'+'"${user}"'+')]'
 	${rpath} =  	Evaluate  '//*[@value='+'"${role}"'+']'
 	Click Element   update-select-group
 	Click Element   xpath=${upath}
 	Click Element   update-select-role
 	Click Element   xpath=${rpath}
-	Click And Wait  css=button:nth-child(3) > span
+	Click And Wait  //button[@aria-label="ok"]
 
 Delete Group User
-	[Arguments]   	${user}  
+	[Arguments]   	${user}
 	${index} =      Get Group User Index    ${user}
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[4]/button'
 	Click Element   ${path}
-	Click And Wait  css=md-dialog-actions > button:nth-child(2)
+	Click And Wait  //button[@aria-label="确定"]
 
 Delete Group
 	[Arguments]     ${name}
@@ -66,11 +70,12 @@ Delete Group
 	${no} =         Evaluate    ${index}-1
 	${path} =       Evaluate   'delete-group'+'${no}'
 	Click Element   ${path}
-	Click And Wait  css=md-dialog-actions > button:nth-child(2)
+	Click And Wait  //button[@aria-label="确定"]
 
 Input Group Cluster
     [Arguments]   	${clustername}  ${description}
-    Click And Wait  //*[@id='clusterCreate']
+    Click Element   clusterCreate
+    Wait Until Page Contains Element   input-clustername
 	Input Text		input-clustername  ${clustername}
 	Input Text		clusterDesc        ${description}
 

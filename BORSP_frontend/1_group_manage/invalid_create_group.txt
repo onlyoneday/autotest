@@ -10,19 +10,19 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 G-062必填项不填
-	Input Group    g     ${EMPTY}
+	Input Group    ${InputGroupName}     ${EMPTY}
 	Clear Element text   input-username
-	Result Web     div:nth-child(1) > p:nth-child(3)    ${message1} 
+	Result Web     ${location1}    ${message1} 
 	Element Should Be Disabled     ${button} 
 
 G-063输入项上边外侧界(用户名)
 	Input Group    ${STR 256}      ${EMPTY}
-	Result Web     div:nth-child(1) > p:nth-child(4)    ${message0} 
+	Result Web     ${location0}    ${message0} 
 	Element Should Be Disabled     ${button} 
 
 G-063-2输入项上边外侧界(用户描述)
-	Input Group    g    ${STR 256}
-	#Result Web     div:nth-child(1) > p:nth-child(4)    ${message0} 
+	Input Group    ${InputGroupName}    ${STR 256}
+	Result Web     ${location0}    ${message0} 
 	Element Should Be Disabled     ${button} 
 
 G-065输入项不符合规范(重复)
@@ -30,8 +30,11 @@ G-065输入项不符合规范(重复)
 	Result Api     ${button}   ${message3} 
 
 *** Variables ***
+${InputGroupName}  g
 ${message0}        最大长度255个字符
+${location0}       div:nth-child(1) > p:nth-child(4)
 ${message1}        用户名不能为空
+${location1}       div:nth-child(1) > p:nth-child(3) 
 ${message2}		   Error 1406
 ${message3}		   group already exist
 ${button}          submit-create-user

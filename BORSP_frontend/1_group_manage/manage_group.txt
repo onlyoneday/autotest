@@ -1,0 +1,85 @@
+*** Settings ***
+
+Documentation   用户组管理-超级管理员-管理用户组
+Resource        ../common/resources.txt
+Resource        ../common/group_resources.txt
+Resource        ../common/cluster_resources.txt
+Resource        ../common/app_resources.txt
+Suite Setup     Open Browser And Login Adm
+Test Setup      Go To Page   ${USER_MANG URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+Creat Group For Management
+	Input Group     ${MANA GRP1}   ${EMPTY}
+	Click And Wait  submit-create-user
+	Input Group     ${MANA GRP2}    ${EMPTY}
+	Click And Wait  submit-create-user
+
+G-073/75添加多个组成员/将一个用户加入多个用户组
+	Manage Group    ${MANA GRP1}  2
+	Add Group User  ${MMJ USER}   member
+	Add Group User  ${GM USER}    member
+	Page Should Contain       ${MMJ USER} 
+	Page Should Contain       ${GM USER}
+	Page Should Contain       组成员
+	Page Should Not Contain   组管理员
+
+G-074/75添加多个组管理员/将一个用户加入多个用户组
+	Manage Group    ${MANA GRP2}  2
+	Add Group User  ${MMJ USER}   owner
+	Add Group User  ${GM USER}    owner
+	Page Should Contain       ${MMJ USER} 
+	Page Should Contain       ${GM USER}
+	Page Should Contain       组管理员
+	Page Should Not Contain   组成员 
+
+G-083删除有用户的用户组
+	Delete Group    ${MANA GRP1}
+	Page Should Contain    ${MANA GRP1}
+
+G-078删除所有的组管理员
+	Manage Group    ${MANA GRP2}  2
+	Delete Group User    ${MMJ USER} 
+	Delete Group User    ${GM USER}
+
+G-082删除无用户的用户组
+	Delete Group    ${MANA GRP2}
+	Page Should Not Contain  ${MANA GRP2}
+
+Creat Cluster And App For Management
+	Go To Page       ${HOME URL} 
+	Input Cluster    ${MANA CLU}  ${MANA GRP1}  ${MANA CLU}
+	Click And Wait   submit-create-cluster
+	Logout
+	Login Mmj
+	Go To Page       ${APP_CREATE URL} 
+	Create App       ${MANA APP}  ${MANA CLU}
+	Click And Wait   stackFormCreate
+	Logout
+	Login Adm
+
+G-076/077删除无应用/有应用的组成员
+	Manage Group    ${MANA GRP1}  2
+	Delete Group User    ${MMJ USER} 
+	Delete Group User    ${GM USER}
+
+G-103删除没有主机有应用的集群
+	Go To Page      ${HOME URL}
+	Delete Cluster  ${MANA CLU}
+	Page Should Contain   ${MANA CLU}
+
+Delete All Data After Testing
+	Go To Page      ${APP_ALL URL}
+	Delete App By Name  ${MANA APP}
+	Go To Page      ${HOME URL}
+	Delete Cluster  ${MANA CLU} 
+	Go To Page      ${USER_MANG URL}
+	Delete Group    ${MANA GRP1}
+
+*** Variables ***
+${MANA GRP1}        managegroup1
+${MANA GRP2}        managegroup2
+${MANA CLU}         clusterformanagement
+${MANA APP}         applicationformanagement

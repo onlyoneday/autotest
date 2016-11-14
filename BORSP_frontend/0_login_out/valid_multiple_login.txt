@@ -9,15 +9,15 @@ Suite Teardown  Close All Browsers
 login_out_10 相同账号只能一点登录
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}   B1
-    Sleep  ${SLEEP TIME}
+    Wait Until Element Is Visible  ${LOGIN BTN} 
     Login Mmj
 
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}   B2
-    Sleep  ${SLEEP TIME}
+    Wait Until Element Is Visible  ${LOGIN BTN} 
     Login Mmj
 
     Switch Browser   B1
-    Sleep  ${SLEEP TIME}
+    Wait Until Element Is Visible  ${LOGIN BTN} 
     Location Should Be  ${LOGIN URL} 
     

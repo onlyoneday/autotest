@@ -32,6 +32,7 @@ ${USER_MANG URL}         ${SERVER}/user-manage/list/group
 ${LOGIN BTN}             login-btn-login
 ${USERNAME FIELD}        //input[@name="userName"]
 ${PASSWORD FIELD}        //input[@name="Password"]
+${LOGIN SYMBOL}          //input
 
 #--------------------USER--------------------
 ${ADMIN USER}            admin
@@ -54,9 +55,8 @@ ${TGROUP}                testGroup
 
 ${TEST ID}               userForEditing
 ${TEST EML}              userforediting@u.com
-${TEST GRP}              groupforediting
-${TEST CLU}              clusterforediting
-${TEST APP}              applicationforediting
+
+
 
 ${RG IMAGE}              demoregistry.dataman-inc.com/zhfang/blackicebird-2048
 ${RG ADD}                demoregistry.dataman-inc.com
@@ -82,11 +82,12 @@ ${EML 256}               0123456789012345678901234567890123456789012345678901234
 Open Browser To Login Page
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}  #ff_profile_dir=${FF_PROFILE}
+    Wait Until Page Contains Element  ${LOGIN BTN} 
 
 Go To Page
     [Arguments]  ${URL}
     Go To   ${URL}
-    Sleep   2
+    Run Keyword If  '${URL}' == '${USER_MANG URL}'  Wait Until Page Contains Element  user-list-table
 
 Click And Wait
     [Arguments]  ${ELEMENT}
@@ -141,11 +142,9 @@ Login
     Input Text     ${USERNAME FIELD}   ${USER}
     Input Text     ${PASSWORD FIELD}   ${PASSWD}
     Click Button   ${LOGIN BTN}
-    Sleep  ${SLEEP TIME}
+    Wait Until Page Contains Element  ${LOGIN SYMBOL}
 
 Logout
     Click Button   open-user-menu
     Click Button   logout
     Sleep  ${SLEEP TIME}
-
-

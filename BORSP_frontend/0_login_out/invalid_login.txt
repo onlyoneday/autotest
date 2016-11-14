@@ -28,4 +28,4 @@ Invalid Login
 
 *** Variables ***
 
-${no record}     not correct
+${no record}     username or password are not correct

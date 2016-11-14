@@ -28,3 +28,6 @@ Delete App Cluster After Testing
 	Delete App By Name   ${TEST APP} 
 	Go To Page		${HOME URL}
 	Delete Cluster  ${TEST CLU}
+
+*** Variables ***
+${Name}	  Cancel
