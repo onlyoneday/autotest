@@ -9,27 +9,31 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-G-009/012/037输入项下边界值
-	Create User        II  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+G-009/012/037输入项下边界值/创建组成员
+	Create User        I  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  member
 	Click And Wait     submit-create-user
-	Result User        II  U  u@u.cn  ${MMJ GROUP}  组成员
+	Result User        I  U  u@u.cn  ${MMJ GROUP}  组成员
 
-G-010/038输入项下边界值
-	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+G-010/038输入项下边界值/创建组管理员
+    ${name} =          Generate UserName
+    ${email} =         Generate UserEmail  ${name}
+	Create User        ${name}  ${name}  ${email}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group  ${MMJ GROUP}  owner
 	Click And Wait     submit-create-user
-	Result User        ${TEST ID}  U  ${TEST EML}  ${MMJ GROUP}  组管理员
+	Result User        ${name}  ${name}  ${email}  ${MMJ GROUP}  组管理员
 
-G-011/013/059输入项上边界值
+G-011/013/059输入项上边界值/超级管理员
 	Create User     ${STR 255}  ${STR 255}  ${EML 255}  ${STR 16}  ${STR 16}  ${STR 255}  True
 	Click And Wait  submit-create-user
 	Result User     ${STR 255}  ${STR 255}  ${EML 255}  ${SUPER}  超级管理员
 
 G-037创建/删除无组用户
-	Create User     ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+    ${name} =       Generate UserName
+    ${email} =      Generate UserEmail  ${name}
+	Create User     ${name}  ${name}  ${email}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Click And Wait  submit-create-user
-	Result User     ${TEST ID}  U  ${TEST EML}  ${EMPTY}  ${EMPTY}
+	Result User     ${name}  ${name}  ${email}  ${EMPTY}  ${EMPTY}
 
 *** Keywords ***
 

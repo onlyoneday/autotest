@@ -29,10 +29,13 @@ ${USER_MANU URL}         ${SERVER}/user-manage/list/user
 ${USER_MANG URL}         ${SERVER}/user-manage/list/group
 
 #--------------------LOCATION----------------
+${APPFORM TAB}           css=md-tab-item:nth-child(1)
+${APPJSON TAB}           css=md-tab-item:nth-child(2)
+
 ${LOGIN BTN}             login-btn-login
 ${USERNAME FIELD}        //input[@name="userName"]
 ${PASSWORD FIELD}        //input[@name="Password"]
-${LOGIN SYMBOL}          //input
+${LOGIN SYMBOL}          open-user-menu
 
 #--------------------USER--------------------
 ${ADMIN USER}            admin
@@ -42,6 +45,7 @@ ${VALID USER}            superadmin
 ${VALID PASSWD}          MMMMMMMM
 
 ${MMJ USER}              mmj
+${MMJ EMAIL}             m@m.cn
 ${MMJ PASSWD}            M12345678
 ${MMJ GROUP}             groupmmj
 ${MMJ CLUSTER}           clustermmj
@@ -52,11 +56,6 @@ ${GM PASSWD}             M1234567
 
 ${SUPER}                 SuperGroup
 ${TGROUP}                testGroup
-
-${TEST ID}               userForEditing
-${TEST EML}              userforediting@u.com
-
-
 
 ${RG IMAGE}              demoregistry.dataman-inc.com/zhfang/blackicebird-2048
 ${RG ADD}                demoregistry.dataman-inc.com
@@ -87,7 +86,11 @@ Open Browser To Login Page
 Go To Page
     [Arguments]  ${URL}
     Go To   ${URL}
-    Run Keyword If  '${URL}' == '${USER_MANG URL}'  Wait Until Page Contains Element  user-list-table
+    Run Keyword If  '${URL}' == '${HOME URL}'       Wait Until Page Contains Element  ${LOGIN SYMBOL}  timeout=10
+    Run Keyword If  '${URL}' == '${USER_MANG URL}'  Wait Until Page Contains Element  user-list-table  timeout=10
+    Run Keyword If  '${URL}' == '${USER_MANU URL}'  Wait Until Page Contains Element  stackListSearch  timeout=10
+    Run Keyword If  '${URL}' == '${APP_ALL URL}'    Wait Until Page Contains Element  stackListSearch  timeout=10
+    Run Keyword If  '${URL}' == '${APP_MY URL}'     Wait Until Page Contains Element  stackListSearch  timeout=10
 
 Click And Wait
     [Arguments]  ${ELEMENT}
@@ -130,21 +133,23 @@ Open Browser And Login Mmj
 
 Login Adm
     Login   ${VALID USER}   ${VALID PASSWD}
+    Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Login Gm
     Login   ${GM USER}   ${GM PASSWD}
+    Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Login Mmj
     Login   ${MMJ USER}  ${MMJ PASSWD}
+    Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Login
     [Arguments]    ${USER}   ${PASSWD}
     Input Text     ${USERNAME FIELD}   ${USER}
     Input Text     ${PASSWORD FIELD}   ${PASSWD}
     Click Button   ${LOGIN BTN}
-    Wait Until Page Contains Element  ${LOGIN SYMBOL}
 
 Logout
     Click Button   open-user-menu
     Click Button   logout
-    Sleep  ${SLEEP TIME}
+    Wait Until Page Contains Element   ${LOGIN BTN}

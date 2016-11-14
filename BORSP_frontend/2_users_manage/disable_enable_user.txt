@@ -12,72 +12,83 @@ Suite Teardown  Close All Browsers
 
 G-045/054禁用/启用无组的普通用户
 	#创建无组用户
-	Create User         ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	${name} =           Generate UserName
+    ${email} =          Generate UserEmail  ${name}
+	Create User         ${name}  ${name}  ${email}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Click And Wait      submit-create-user
 	#禁用/启用
-	Disable User        ${TEST ID} 
-	Enable User         ${TEST ID} 
+	Disable User        ${name}
+	Enable User         ${name}
 	#无组用户不能登录
 	Logout
-	Login               ${TEST ID}  ${STR 8}
+	Login               ${name}  ${STR 8}
 	Location Should Be  ${LOGIN URL}
 	#删除用户
 	Login Adm
 	Go To Page          ${USER_MANU URL}
-	Delete User         ${TEST ID}
+	Delete User         ${name}
 
 G-046/055禁用/启用有组无应用普通用户
 	#创建组无应用普通用户
-	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group  ${MMJ GROUP}  member
-	Click And Wait     submit-create-user
+	${name} =           Generate UserName
+    ${email} =          Generate UserEmail  ${name}
+	Create User         ${name}  ${name}  ${email}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Select User Group   ${MMJ GROUP}  member
+	Click And Wait      submit-create-user
 	#禁用/启用
-	Disable Enable     ${TEST ID}  ${STR 8}
+	Disable Enable      ${name}  ${STR 8}
 	#删除用户
-	Go To Page         ${USER_MANU URL}
-	Delete User        ${TEST ID}
+	Go To Page          ${USER_MANU URL}
+	Delete User         ${name}
 
 G-048/057 禁用/启用组管理员
 	#创建组管理员
-	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group  ${MMJ GROUP}  member
-	Click And Wait     submit-create-user
+	${name} =           Generate UserName
+    ${email} =          Generate UserEmail  ${name}
+	Create User         ${name}  ${name}  ${email}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Select User Group   ${MMJ GROUP}  member
+	Click And Wait      submit-create-user
 	#禁用/启用
-	Disable Enable     ${TEST ID}  ${STR 8}
+	Disable Enable      ${name}  ${STR 8}
 	#删除用户
-	Go To Page         ${USER_MANU URL}
-	Delete User        ${TEST ID}
+	Go To Page          ${USER_MANU URL}
+	Delete User         ${name}
 
 G-049/058 禁用/启用超级管理员
 	#创建超级管理员
-	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  True
-	Click And Wait     submit-create-user
+	${name} =           Generate UserName
+    ${email} =          Generate UserEmail  ${name}
+	Create User         ${name}  ${name}  ${email}  ${STR 8}  ${STR 8}  ${EMPTY}  True
+	Click And Wait      submit-create-user
 	#禁用/启用
-	Disable Enable     ${TEST ID}  ${STR 8}
+	Disable Enable      ${name}  ${STR 8}
 	#删除用户
-	Go To Page         ${USER_MANU URL}
-	Delete User        ${TEST ID}
+	Go To Page          ${USER_MANU URL}
+	Delete User         ${name}
 
-G-047/056 禁用/启用有应用的组成员
+G-047/056/039 禁用/启用有应用的组成员/删除有应用的组成员
 	#创建有应用的组成员
-	Create User        ${TEST ID}  U  ${TEST EML}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Select User Group  ${MMJ GROUP}  member
-	Click And Wait     submit-create-user
+	${name} =           Generate UserName
+    ${email} =          Generate UserEmail  ${name}
+    ${appname} =        Generate AppName
+	Create User         ${name}  ${name}  ${email}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Select User Group   ${MMJ GROUP}  member
+	Click And Wait      submit-create-user
 	Logout
-	Login              ${TEST ID}  ${STR 8}
-	Go To Page         ${APP_CREATE URL} 
-    Create App         appmmj    clustermmj
-    Click And Wait     stackFormCreate
+	Login               ${name}  ${STR 8}
+	Go To Page          ${APP_CREATE URL} 
+    Create App          ${appname}  ${MMJ CLUSTER}
+    Click And Wait      stackFormCreate
     Logout
 	#禁用/启用
 	Login Adm
-	Go To Page         ${USER_MANU URL}
-	Disable Enable     ${TEST ID}  ${STR 8}
-
-G-039 删除有应用的组成员
-	Delete User       ${TEST ID}
-	Go To Page        ${APP_ALL URL}
-	Delete App From Button
+	Go To Page          ${USER_MANU URL}
+	Disable Enable      ${name}  ${STR 8}
+	#删除有应用的组成员
+	Delete User         ${name}
+	#删除应用
+	Go To Page          ${APP_ALL URL}
+	Delete App By Name  ${appname}
 
 *** Keywords ***
 

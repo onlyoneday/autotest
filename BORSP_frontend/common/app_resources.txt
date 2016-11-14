@@ -89,7 +89,7 @@ Create App
 
 Input Simple App
     #填写应用名称
-    ${app name} =  Generate Name
+    ${app name} =  Generate AppName
     Input Text     stackAppName    ${app name}
     #填写镜像名称
     Input Text     stackImageAddress    blackicebird/2048:latest
@@ -104,7 +104,7 @@ Input Simple App
     Input Text     stackInstanceNumber   1
     [Return]       ${app name}
 
-Generate Name
+Generate AppName
     ${random} =    Get Lower String
     ${app name} =  Evaluate  'application'+'${random}'
     [Return]       ${app name}

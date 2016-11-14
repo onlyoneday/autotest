@@ -10,30 +10,35 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 Create Test User For Edition
-	Create User        ${TEST ID}  U  ${TEST EML}   ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Create User        ${InputName}  ${InputName}  ${InputEmail}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Click Element      submit-create-user
 
-G-023相同组的组管理员和组成员
-	Edit User Group    ${TEST ID}
+G-023不同组的组管理员和组成员
+	Edit User Group    ${InputName}
 	Add User Group     ${MMJ GROUP}   member
-	Click Element      css=ng-form > div > button
+	Click Element      ${AddGroup}
 	Add User Group     ${SUPER}   ${EMPTY}
-	Click Element      css=ng-form > div > button
-	Click Element      css=md-dialog-actions > button
+	Click Element      ${AddGroup}
+	Click Element      //button[@aria-label="ok"]
 
-G-023-2不同组 
+G-023-2相同组
 	Edit User Group    ${TEST ID}
 	Add User Group     ${MMJ GROUP}   owner
-	Click Element      css=ng-form > div > button
-	Page Should Contain    不能添加重复的用户组
+	Click Element      ${AddGroup}
+	Page Should Contain   不能添加重复的用户组
 
 G-024没有个角色（无组）
-	Edit User Group    ${TEST ID}
+	Edit User Group    ${InputName} 
 	Sleep              2
-	Click Element      css=div:nth-child(2) > ng-form > div > button
-	Click Element      css=div:nth-child(2) > ng-form > div > button
-	Click Element      css=md-dialog-actions > button
+	Click Element      ${DeleteGroup}
+	Click Element      ${DeleteGroup}
+	Click Element      //button[@aria-label="ok"]
 
 Delete Test User After Edition
-	Delete User        ${TEST ID}
+	Delete User        ${InputName}
 
+*** Variables ***
+${InputName}       UserForEditingGroup
+${InputEmail}      EditingGroup@u.cn
+${AddGroup}        css=div:nth-child(1) > ng-form > div > button
+${DeleteGroup}     css=div:nth-child(2) > ng-form > div > button

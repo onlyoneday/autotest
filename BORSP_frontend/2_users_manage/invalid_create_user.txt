@@ -13,8 +13,8 @@ G-015相同组的组管理员和组成员
 	Click Element  stackCreate
 	Select User Group    ${MMJ GROUP}   owner
 	Select User Group2   ${MMJ GROUP}   member
-	Sleep  2
-	Result Web     div:nth-child(8) > div.layout-column > div:nth-child(2) > p  ${message10}
+	Sleep  1
+	Result Web     ${location10}  ${message10}
 
 G-017必填项不填
 	Create User    u  u  u  u  ${EMPTY}  ${EMPTY}    ${EMPTY}
@@ -47,12 +47,12 @@ G-020 输入项不符合格式规范(邮箱)
 	Result Web      div:nth-child(3) > p:nth-child(4)  ${message7} 
 	Element Should Be Disabled      ${button}
 	#重复用户名
-	Input Text		input-username  mmj
-	Input Text		input-email     m@m.cn
+	Input Text		input-username  ${MMJ USER}
+	Input Text		input-email     ${MMJ EMAIL}
 	Result Api      ${button}       ${message9} 
 	#重复邮箱
 	Input Text		input-username  u
-	Input Text		input-email     m@m.com
+	Input Text		input-email     ${MMJ EMAIL}
 	Result Api      ${button}       ${message9} 
 
 *** Variables ***
@@ -66,5 +66,6 @@ ${message6}         两次输入密码不一致
 ${message7}         邮箱格式不正确
 ${message9}		    Error 1062
 ${message10}	    选择的组重复
+${location10}	    div:nth-child(8) > div.layout-column > div:nth-child(2) > p
 ${button}           submit-create-user
 

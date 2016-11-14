@@ -13,31 +13,31 @@ G-002必填项不填
 	Input Password   p   p   ${EMPTY}
 	Clear Element text   oldPassword
 	Clear Element text   newPassword
-	Result Web       div:nth-child(1) > div.layout-column > p    ${message1} 
-	Result Web       div:nth-child(2) > div.layout-column > p    ${message2} 
+	Result Web       ${location1}      ${message1} 
+	Result Web       ${location2}      ${message2} 
 	Element Should Be Disabled    ${button}
 
 G-003旧密码错误
-	Input Password    ${VALID PASSWD}  ${VALID PASSWD}  ${VALID PASSWD}
-	Result Api        ${button}        ${message4} 	
+	Input Password    ${VALID PASSWD}   ${VALID PASSWD}  ${VALID PASSWD}
+	Result Api        ${button}         ${message4} 	
 
 G-004输入项上边外侧界
 	Input Password    ${GM PASSWD}      ${STR 17}   ${STR 17}
-	Result Web        div:nth-child(2) > div.layout-column > p     ${message2}
+	Result Web        ${location2}      ${message2}
 	Element Should Be Disabled    ${button}
 
 G-004-2输入项下边外侧界
 	Input Password    ${GM PASSWD}      ${STR 7}    ${EMPTY} 
-	Result Web        div:nth-child(2) > div.layout-column > p     ${message2}
+	Result Web        ${location2}      ${message2}
 	Element Should Be Disabled    ${button}
 
 G-005密码格式不正确
 	Input Password    ${GM PASSWD}      m1234567   m1234567
-	Result Web        div:nth-child(2) > div.layout-column > p     ${message2}
+	Result Web        ${location2}      ${message2}
 	Element Should Be Disabled    ${button}
 	Input Password    ${GM PASSWD}      whatever   Whatever
-	Result Web        div:nth-child(2) > div.layout-column > p     ${message2}
-	Result Web        div:nth-child(3) > div.layout-column > p      ${message3}
+	Result Web        ${location2}      ${message2}
+	Result Web        ${location3}      ${message3}
 	Element Should Be Disabled    ${button}
 
 *** Keywords ***	
@@ -49,7 +49,10 @@ Input Password
 
 *** Variables ***
 ${message1}         密码不能为空
+${location1}        div:nth-child(1) > div.layout-column > p    
 ${message2}         密码必须包含大写字母，长度为8-16位。
+${location2}        div:nth-child(2) > div.layout-column > p    
 ${message3}         两次输入密码不一致
+${location3}        div:nth-child(3) > div.layout-column > p     
 ${message4}		    old password is not correct
 ${button}           submit-update-password

@@ -13,18 +13,18 @@ G-132/133新建应用-名称不填
 	#表单模式
     Input Simple App
     Clear Element Text    stackAppName
-    Result Web            div:nth-child(1) > div.layout-column > p:nth-child(2)  ${message1}
+    Result Web            ${location1}  ${message1}
     #JSON模式
-    Click Element         css=md-tab-item:nth-child(2)
+    Click Element         ${APPJSON TAB} 
     Result Api            stackJsonCreate    ${message31}
 
 G-132/133新建应用-地址不填
     #表单模式
     Input Simple App
     Clear Element Text    stackImageAddress
-    Result Web            div:nth-child(2) > div.layout-column > p  ${message2}
+    Result Web            ${location2}  ${message2}
     #JSON模式
-    Click Element         css=md-tab-item:nth-child(2)
+    Click Element         ${APPJSON TAB} 
     Result Api            stackJsonCreate    ${message32}
 
 G-132/133新建应用-集群不填
@@ -32,12 +32,14 @@ G-132/133新建应用-集群不填
 	Create App        appmmj    ${EMPTY}
     Element Should Be Disabled  stackFormCreate
     #JSON模式
-    Click Element     css=md-tab-item:nth-child(2)
+    Click Element     ${APPJSON TAB} 
     Result Api        stackJsonCreate    ${message4}
 
 *** Variables ***
 ${message1}        应用名称不能为空
+${location1}       div:nth-child(1) > div.layout-column > p:nth-child(2)
 ${message2}		   镜像地址不能为空
+${location2}       div:nth-child(2) > div.layout-column > p
 ${message31}       id
 ${message32}	   image
 ${message4}		   have only one vCluster constraint

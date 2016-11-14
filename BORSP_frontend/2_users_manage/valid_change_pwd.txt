@@ -10,30 +10,34 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 Creat Test User For Changing Password
-	Create User           ${TEST ID}  U  ${TEST EML}  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
+	Create User           ${InputName}  ${InputName}  ${InputEmail}  ${MMJ PASSWD}  ${MMJ PASSWD}  ${EMPTY}  ${EMPTY}
 	Select User Group     ${MMJ GROUP}   member
 	Click And Wait        submit-create-user
 
 G-030上边界值
-	Edit User Password    ${TEST ID}
+	Edit User Password    ${InputName}
 	Change User Password  ${STR 16}   ${STR 16}
 	Click And Wait        //button[@aria-label="ok"]
 	Logout
-	Login    ${TEST ID}   ${STR 16} 
+	Login                 ${InputName}   ${STR 16} 
 	Location Should Be    ${HOME URL}
 	Logout
 	Login Adm
 
 G-031下边界值
-	Edit User Password    ${TEST ID}
+	Edit User Password    ${InputName}
 	Change User Password  ${STR 8}   ${STR 8}
 	Click And Wait        //button[@aria-label="ok"]
 	Logout
-	Login    ${TEST ID}   ${STR 8}
+	Login                 ${InputName}   ${STR 8}
 	Location Should Be    ${HOME URL}
 	Logout
 	Login Adm
 
 Delete Test User For Changing Password
-	Delete User    ${TEST ID}
+	Delete User    ${InputUserName}
+
+*** Variables ***
+${InputName}       UserForChangingPwd
+${InputEmail}      ChangingPwd@u.cn
 

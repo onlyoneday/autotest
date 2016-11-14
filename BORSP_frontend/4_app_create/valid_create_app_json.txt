@@ -19,16 +19,16 @@ Verify Json Template    [Arguments]   ${template}
     #新建应用
     Click And Wait     stackCreate
     #切换到json模式
-    Click And Wait     css=md-tab-item:nth-child(2)
+    Click And Wait     ${APPJSON TAB}
     #试试看
     Click Element      stackTrySee
     Click Element      ${template}
     #去表单模式
-    Click And Wait     css=md-tab-item:nth-child(1) 
+    Click And Wait     ${APPFORM TAB}
     Click Element      //form[@name="staticForm"]/div/div[4]/div/md-select
     Click Element      //*[@value="clustermmj"]
     #切换到json模式
-    Click And Wait     css=md-tab-item:nth-child(2)
+    Click And Wait     ${APPJSON TAB}
     #等待应用发布
     Click And Wait     stackJsonCreate
     Wait Until Element Contains     //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 

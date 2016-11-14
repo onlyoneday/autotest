@@ -9,10 +9,11 @@ Resource       ../common/resources.txt
 
 Create User
     [Arguments]   	${username}  ${name}  ${email}  ${password}  ${repassword}  ${description}  ${super}
-    Click Element  stackCreate
-	Input Text		input-username	 ${username}
-	Input Text		input-name       ${name}
-	Input Text		input-email      ${email}
+    Click Element   stackCreate
+    Wait Until Page Contains Element    input-username
+	Input Text		input-username	    ${username}
+	Input Text		input-name          ${name}
+	Input Text		input-email         ${email}
 	Input Text		input-password      ${password}
 	Input Text		input-repassword    ${repassword}
 	Input Text		input-userDescription   ${description}
@@ -21,6 +22,7 @@ Create User
 Select User Group
 	[Arguments]   	${group}  ${role}
 	Click Element   stackParametersAdd
+	Wait Until Page Contains Element    select-group0
 	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${group}"'+')]'
 	${rpath} =  	Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${role}"'+']'
 	Click Element   select-group0
@@ -31,6 +33,7 @@ Select User Group
 Select User Group2
 	[Arguments]   	${group}  ${role}
 	Click Element   stackParametersAdd
+	Wait Until Page Contains Element    select-group1
 	${gpath} =      Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${group}"'+')]'
 	${rpath} =  	Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option[@value='+'"${role}"'+']'
 	Click Element   select-group1
@@ -86,23 +89,25 @@ Delete User
 	${path} =       Evaluate   'node-list-menu-'+'${no}'
 	Click Element   ${path}
 	${button} =     Evaluate   'deleteUser'+'${no}'
-	Click And Wait  ${button} 
-	Click And Wait  css=md-dialog-actions > button:nth-child(2)
+	Click Element   ${button}
+	Wait Until Element Is Visible  //button[@aria-label="确定"]
+	Click And Wait  //button[@aria-label="确定"]
 
 Disable User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
 	${no} =         Evaluate   ${index}-1
 	${button} =     Evaluate   'disableUser'+'${no}'
-	Click And Wait  ${button} 
-	Click And Wait  css=md-dialog-actions > button:nth-child(2)
+	Click Element   ${button} 
+	Wait Until Element Is Visible  //button[@aria-label="确定"]
+	Click And Wait  //button[@aria-label="确定"]
 
 Enable User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
 	${no} =         Evaluate   ${index}-1
 	${button} =     Evaluate   'enableUser'+'${no}'
-	Click And Wait  ${button} 
+	Click And Wait  ${button}
 
 Get User Index
     [Arguments]     ${name}
@@ -122,4 +127,12 @@ Input Registry
 	Input Text      create-registry-userName  ${userName}
 	Input Text      create-registry-password  ${password}
 
+Generate UserName
+    ${random} =     Get Lower String
+    ${user name} =  Evaluate  'user'+'${random}'
+    [Return]        ${user name}
 
+Generate UserEmail
+	[Arguments]      ${name}
+    ${user email} =  Evaluate  '${name}'+'@u.cn'
+    [Return]         ${user email}    

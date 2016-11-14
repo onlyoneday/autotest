@@ -10,30 +10,30 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 G-014创建用户-属于多个组
-	Create User     ${TEST ID}  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Create User     ${InputName}   ${InputName}  ${InputEmail}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group     ${MMJ GROUP}  member
 	Select User Group2    ${TGROUP}     member
 	Click And Wait  submit-create-user
 
 G-021/022查看用户信息/修改用户信息
-	Edit User Info  ${TEST ID}
+	Edit User Info  ${InputName} 
 	Input Text	    input-name              testu
 	Input Text	    input-email             testu@u.cn
 	Input Text	    input-userDescription   test
 	Click And Wait  submit-update-user
-	Result User     ${TEST ID}  testu  testu@u.cn  test
+	Result User     ${InputName}   testu  testu@u.cn  test
 
 G-053编辑禁用的用户
-	Disable User    ${TEST ID}
-	Edit User Info  ${TEST ID}
+	Disable User    ${InputName} 
+	Edit User Info  ${InputName} 
 	Input Text	    input-name              testu2
 	Input Text	    input-email             testu2@u.cn
 	Input Text	    input-userDescription   test2
 	Click And Wait  submit-update-user
-	Result User     ${TEST ID}  testu2  testu2@u.cn  test2
+	Result User     ${InputName}   testu2  testu2@u.cn  test2
 
 Delete Test User After Edition
-	Delete User     ${TEST ID}
+	Delete User     ${InputName}
 
 *** Keywords ***
 Result User
@@ -46,4 +46,8 @@ Result User
 	${name} =       Get Text    ${path2}
 	Should Be Equal As Strings  ${email}   ${useremail}
 	Should Be Equal As Strings  ${name}    ${username}
+
+*** Variables ***
+${InputName}       UserForEditing
+${InputEmail}      Editing@u.cn
 

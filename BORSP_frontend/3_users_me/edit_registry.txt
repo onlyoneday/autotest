@@ -10,44 +10,51 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 G-218必填项不填
-	Click And Wait        userRegistryUpdate0
+	Click Element         ${registry0}
+	Wait Until Page Contains    create-registry-name
 	Clear Element text    create-registry-name
 	Clear Element text    create-registry-addr
 	Clear Element text    create-registry-userName
 	Clear Element text    create-registry-password
-	Result Web     div:nth-child(1) > div.layout-column > p:nth-child(2)    ${message0} 
-	Result Web     div:nth-child(2) > div.layout-column > p:nth-child(2)    ${message1} 
-	Result Web     div:nth-child(3) > div.layout-column > p:nth-child(2)    ${message2} 
+	Result Web     ${location0}    ${message0} 
+	Result Web     ${location1}    ${message1} 
+	Result Web     ${location2}    ${message2} 
 
 G-219超过上限
-	Click And Wait       userRegistryUpdate0
+	Click Element        ${registry0}
+	Wait Until Page Contains    create-registry-name
 	Input Registry       ${STR 256}  ${STR 256}  ${STR 51}  ${STR 51}
-	Result Web     div:nth-child(1) > div.layout-column > p:nth-child(3)    ${message4} 
-	Result Web     div:nth-child(2) > div.layout-column > p:nth-child(3)    ${message5} 
-	Result Web     div:nth-child(3) > div.layout-column > p:nth-child(3)    ${message6} 
-	Result Web     div:nth-child(4) > div.layout-column > p:nth-child(3)    ${message7}
+	Result Web      ${location4}    ${message4} 
+	Result Web      ${location5}    ${message5} 
+	Result Web      ${location6}    ${message6} 
+	Result Web      ${location7}    ${message7}
 
 G-222修改仓库-取消
-	Click And Wait  userRegistryUpdate0
+	Click Element   ${registry0}
+	Wait Until Page Contains    create-registry-name
 	Input Text      create-registry-name  userRegistr
 	Click Element   //button[@aria-label="cancel"]
-	Element Should Not Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  userRegistryUpdate1
+	Element Should Not Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  ${registry1} 
 
 G-222修改仓库
-	Click And Wait  userRegistryUpdate0
+	Click Element   ${registry0}
+	Wait Until Page Contains    create-registry-name
 	Input Text      create-registry-name  userRegistry
 	Input Text      create-registry-userName  ${MMJ USER}
 	Click Element   //button[@aria-label="ok"]
-	Element Should Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  userRegistryUpdate1
+	Element Should Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  ${registry1} 
 	Element Should Contain  //*[@id='node-container-list']/tbody/tr[1]/td[3]  ${MMJ USER}
 
 Correct Registry Info After Testing
-	Click And Wait  userRegistryUpdate0
+	Click Element   ${registry0}
+	Wait Until Page Contains    create-registry-name
 	Input Text      create-registry-name  ${MMJ CLUSTER}
 	Input Text      create-registry-userName  ${RG NAME}
 	Click Element   //button[@aria-label="ok"]
 
 *** Variables ***
+${registry0}       userRegistryUpdate0
+${registry1}       userRegistryUpdate1
 ${message0}        名称不能为空
 ${message1}        镜像地址不能为空
 ${message2}        用户名不能为空
@@ -56,4 +63,12 @@ ${message4}        名称最大长度不超过 255 个字符
 ${message5}        镜像地址最大长度不超过 255 个字符
 ${message6}        用户名最大长度不超过 50 个字符
 ${message7}        密码最大长度不超过 50 个字符
+${location0}       div:nth-child(1) > div.layout-column > p:nth-child(2) 
+${location1}       div:nth-child(2) > div.layout-column > p:nth-child(2) 
+${location2}       div:nth-child(3) > div.layout-column > p:nth-child(2) 
+${location3}       div:nth-child(4) > div.layout-column > p:nth-child(2) 
+${location4}       div:nth-child(1) > div.layout-column > p:nth-child(3)
+${location5}       div:nth-child(2) > div.layout-column > p:nth-child(3)
+${location6}       div:nth-child(3) > div.layout-column > p:nth-child(3)
+${location7}       div:nth-child(4) > div.layout-column > p:nth-child(3)
 

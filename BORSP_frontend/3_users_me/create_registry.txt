@@ -11,38 +11,43 @@ Suite Teardown  Close All Browsers
 
 G-212必填项不填
 	Click Element         createUserRegistry
+	Wait Until Page Contains    create-registry-name
 	Input Registry        1  1  1  1
 	Clear Element text    create-registry-name
 	Clear Element text    create-registry-addr
 	Clear Element text    create-registry-userName
 	Clear Element text    create-registry-password
-	Result Web     div:nth-child(1) > div.layout-column > p:nth-child(2)    ${message0} 
-	Result Web     div:nth-child(2) > div.layout-column > p:nth-child(2)    ${message1} 
-	Result Web     div:nth-child(3) > div.layout-column > p:nth-child(2)    ${message2} 
-	Result Web     div:nth-child(4) > div.layout-column > p:nth-child(2)    ${message3}
+	Result Web     ${location0}    ${message0} 
+	Result Web     ${location1}    ${message1} 
+	Result Web     ${location2}    ${message2} 
+	Result Web     ${location3}    ${message3}
 
 G-213超过上限
 	Click Element   createUserRegistry
+	Wait Until Page Contains    create-registry-name
 	Input Registry  ${STR 256}  ${STR 256}  ${STR 51}  ${STR 51}
-	Result Web      div:nth-child(1) > div.layout-column > p:nth-child(3)    ${message4} 
-	Result Web      div:nth-child(2) > div.layout-column > p:nth-child(3)    ${message5} 
-	Result Web      div:nth-child(3) > div.layout-column > p:nth-child(3)    ${message6} 
-	Result Web      div:nth-child(4) > div.layout-column > p:nth-child(3)    ${message7}
+	Result Web      ${location4}    ${message4} 
+	Result Web      ${location5}    ${message5} 
+	Result Web      ${location6}    ${message6} 
+	Result Web      ${location7}    ${message7}
 
 G-216创建取消
 	Click Element   createUserRegistry
+	Wait Until Page Contains    create-registry-name
 	Input Registry  ${MMJ RG}  ${RG ADD}  ${RG NAME}  ${RG PWD} 
 	Click And Wait  //button[@aria-label="cancel"]
 	Page Should Not Contain   ${MMJ RG}
 
 G-211创建（上限）
 	Click Element   createUserRegistry
+	Wait Until Page Contains    create-registry-name
 	Input Registry  ${STR 255}  ${STR 255}  ${STR 50}  ${STR 50}
 	Click And Wait  //button[@aria-label="ok"]
 	Page Should Contain   ${STR 255}
 
 G-215创建（重名）
 	Click Element   createUserRegistry
+	Wait Until Page Contains    create-registry-name
 	Input Registry  ${STR 255}  1  1  1
 	Click Element   //button[@aria-label="ok"]
 	Page Should Contain   Error 1062
@@ -66,3 +71,11 @@ ${message4}        名称最大长度不超过 255 个字符
 ${message5}        镜像地址最大长度不超过 255 个字符
 ${message6}        用户名最大长度不超过 50 个字符
 ${message7}        密码最大长度不超过 50 个字符
+${location0}       div:nth-child(1) > div.layout-column > p:nth-child(2) 
+${location1}       div:nth-child(2) > div.layout-column > p:nth-child(2) 
+${location2}       div:nth-child(3) > div.layout-column > p:nth-child(2) 
+${location3}       div:nth-child(4) > div.layout-column > p:nth-child(2) 
+${location4}       div:nth-child(1) > div.layout-column > p:nth-child(3)
+${location5}       div:nth-child(2) > div.layout-column > p:nth-child(3)
+${location6}       div:nth-child(3) > div.layout-column > p:nth-child(3)
+${location7}       div:nth-child(4) > div.layout-column > p:nth-child(3)

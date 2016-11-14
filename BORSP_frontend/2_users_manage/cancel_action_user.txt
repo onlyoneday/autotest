@@ -10,26 +10,28 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 G-016取消创建  
-    Create User     Cancel  U  u@u.cn  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+    Create User     ${InputName}  ${InputName}  ${InputEmail}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
     Click Element   cancel-create-user
-    ${index} =      Get User Index     Cancel
+    ${index} =      Get User Index    ${InputName}
     Run Keyword If  '${index}' <> 'None'    Fail
 
-G-025取消修改 
+G-025取消修改
     Edit User Info  ${MMJ USER}
-    Input Text      input-name        Cancel
+    Input Text      input-name        ${InputName}
     Click Element   cancel-create-user
     ${index} =      Get User Index    ${MMJ USER}
     ${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[2]'
     ${name} =       Get Text    ${path}
-    Run Keyword If  '${name}' == 'Cancel'   Fail
+    Run Keyword If  '${name}' == '${InputName}'   Fail
 
 G-042取消删除
     ${index} =      Get User Index    ${MMJ USER}
-    ${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/md-menu/button'
+    ${no} =         Evaluate   ${index}-1
+    ${path} =       Evaluate   'node-list-menu-'+'${no}'
+    ${button} =     Evaluate   'deleteUser'+'${no}'
     Click Element   ${path}
-    Click Element   //*[@aria-hidden='false']/md-menu-content/md-menu-item[3]/button
-    Click Element   //*[@aria-label="是否确认删除该用户?"]/md-dialog-actions/button[@aria-label="取消"]
+    Click Element   ${button}
+    Click Element   //button[@aria-label="取消"]
     ${index} =      Get User Index    ${MMJ USER}
     Run Keyword If  '${index}' == 'None'    Fail
 
@@ -44,10 +46,14 @@ G-032取消修改密码
 
 G-051取消禁用
     ${index} =      Get User Index    ${MMJ USER}
-    ${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button'
-    Click Element   ${path} 
+    ${no} =         Evaluate   ${index}-1
+    ${button} =     Evaluate   'disableUser'+'${no}'
+    Click Element   ${button} 
     Click And Wait  //button[@aria-label="取消"]
     Logout
     Login Mmj
-    Location Should Be    ${HOME URL}
+
+*** Variables ***
+${InputName}        Cancel
+${InputEmail}       Cancel@u.cn
 
