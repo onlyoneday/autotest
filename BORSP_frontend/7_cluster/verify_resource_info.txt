@@ -9,18 +9,15 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 cluster-2,4-5,10-11 验证主机信息/集群角色和主机状态
-	${index} =      Get Matching Xpath Count   //*[@id="node-list"]/tbody/tr[*] 
-	:FOR    ${li}   IN RANGE   ${index}
-	\   ${li} =     Evaluate   ${li} + 1
+    Wait Until Page Contains Element   //table[@id='node-list']
+	${index} =      Get Matching Xpath Count   //table[@id="node-list"]/tbody/tr[*]
+	:FOR    ${li}   IN RANGE   1  ${index}
 	\   ${path3} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[2]'
 	\   ${path4} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[3]'
 	\   ${path6} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[5]'
 	\   ${role} =    Get Text   ${path3}
 	\	${status} =  Get Text   ${path4}
 	\	${mesos} =   Get Text   ${path6}
-    \   ${rolelist} =    Evaluate  'master'+'slave'
-    \   ${statuslist} =  Evaluate  'leader'+'active'+'standby'
-    \   ${mesoslist} =   Evaluate  '1.0.1'+'0.28.2'
     \   Should Contain   ${rolelist}    ${role}
     \   Should Contain   ${statuslist}  ${status}
     \   Should Contain   ${mesoslist}   ${mesos}
@@ -66,4 +63,9 @@ cluster-2,4-5,10-11 验证主机信息/集群角色和主机状态
     Should Be Equal As Strings    ${driver}    overlay
     Page Should Contain   基础信息
     Page Should Contain   环境变量
+
+*** Variables ***
+${rolelist}          Evaluate  'master'+'slave'
+${statuslist}        Evaluate  'leader'+'active'+'standby'
+${mesoslist}         Evaluate  '1.0.1'+'0.28.2'
 

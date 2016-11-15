@@ -1,4 +1,4 @@
-*** Settings ***
+ *** Settings ***
 
 Documentation  A resource file containing the specific keywords and variables for application
 Library        Selenium2Library
@@ -9,13 +9,12 @@ Resource       ../common/resources.txt
 
 Choose Group Super
     Click Element   select_value_label_0
+    Wait Until Page Contains Element   //md-option[@value="1"]
     Click And Wait  //md-option[@value="1"]
 Choose Group Groupmmj
     Click Element   select_value_label_0
-    Click And Wait  //md-option[@value="19"]  #163
-Choose Group Tgroup
-    Click Element   select_value_label_0
-    Click And Wait  //md-option[@value="9"]  #163
+    Wait Until Page Contains Element   //md-option[@value="964"]
+    Click And Wait  //md-option[@value="964"]
 
 Input Group
     [Arguments]   	${username}  ${description}

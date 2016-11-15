@@ -19,7 +19,6 @@ Add Menmber Before Testing
 
 G-100/121组管理员-属于多个组-查看多个组下的多个集群和主机
 	Login Gm
-	Choose Group Tgroup
 	Page Should Not Contain  ${MMJ CLUSTER}
 	Check Cluster And Node
 	Choose Group Groupmmj
@@ -28,7 +27,6 @@ G-100/121组管理员-属于多个组-查看多个组下的多个集群和主机
 
 G-101/122组管理员-属于多个组-查看多个组下的多个集群和主机
 	Login Mmj
-	Choose Group Tgroup
 	Page Should Not Contain  ${MMJ CLUSTER}
 	Check Cluster And Node
 	Choose Group Groupmmj
@@ -45,7 +43,7 @@ Delete Menmber After Testing
 *** Keywords ***
 
 Check Cluster And Node
-	${index} =    Get Matching Xpath Count   //section/header/h3/a
+	${index} =    Get Matching Xpath Count   ${CLUSTER PATH}
 	:FOR  ${li}   IN RANGE  ${index}
 	\             Check Cluster  ${li}
 	\             Check Node2
@@ -55,17 +53,15 @@ Check Cluster
 	${index} =    Evaluate  ${index}+2
 	${path} =     Evaluate  'section:nth-child('+'${index}'+') > header > h3 > a'
 	${name} =     Get Text  css=${path}
-	Input Text    //input   ${name}
-	${link} =     Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
-	Click And Wait  ${link}
-	Page Should Contain  集群详情
+	Enter Cluster    ${name}
 	
 Check Node2
-	${row} =      Get Matching Xpath Count   //table/tbody/tr[*]
-	${noderow} =  Evaluate   ${row}+1
-	:FOR  ${lr}   IN RANGE   1   ${noderow}
+	${row} =      Get Matching Xpath Count   ${TABLE TR}
+	${noderow} =  Evaluate     ${row}+1
+	:FOR  ${lr}   IN RANGE     1   ${noderow}
 	\     ${link} =   Evaluate   '//table/tbody/tr['+'${lr}'+']/td[1]/a'
-	\	  Click And Wait       ${link} 
-	\     Page Should Contain  主机详情
+	\	  Click And Wait          ${link} 
+	\     Page Should Contain     主机详情
 	\     Go Back And Wait
 	Go To Page    ${HOME URL}
+

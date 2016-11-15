@@ -15,43 +15,53 @@ app_m_14 应用详情-右上方停止、扩展、删除、更新可用
     ${name} =       Input Simple App
     #等待应用发布
     Click And Wait  stackFormCreate
-    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    Wait Until Element Contains  ${APP NAME PATH}    ${name}
+    Wait Until Element Contains  ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
     #验证应用是否部署成功
-    ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Contain  ${apname}   ${name}
-    ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
-    Should Be Equal As Strings  ${status}  Running
+    ${apname} =     Get Text     ${APP NAME PATH}
+    Should Contain  ${apname}    ${name}
+    ${status} =     Get Text     ${APP STATUS PATH}
+    Should Be Equal As Strings   ${status}  ${RUNNING}
     #更新应用
-    Click And Wait  //*[@id='stackListApp']/tbody/tr[1]/td[1]/a
-    Click And Wait  stackDetailMenu
+    Click Element   ${APP LINK PATH}
+    Wait Until Element Is Visible    stackDetailMenu
+    Click Element   stackDetailMenu
+    Wait Until Element Is Visible    stackDetailUpdate
     Click And Wait  stackDetailUpdate  
     #更新CPU
     Input Text      stackCpus   0.1
     #等待应用更新
     Click And Wait  stackFormUpdate
-    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    Wait Until Element Contains  ${APP NAME PATH}    ${name}
+    Wait Until Element Contains  ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
     #验证应用是否部署
-    ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Contain  ${apname}   ${name}
-    ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
-    Should Be Equal As Strings  ${status}  Running
+    ${apname} =     Get Text     ${APP NAME PATH}
+    Should Contain  ${apname}    ${name}
+    ${status} =     Get Text     ${APP STATUS PATH}
+    Should Be Equal As Strings   ${status}  ${RUNNING}
     #停止应用
-    Click And Wait  //*[@id='stackListApp']/tbody/tr[1]/td[1]/a
-    Click And Wait  stackDetailMenu
+    Click Element   ${APP LINK PATH}
+    Wait Until Element Is Visible    stackDetailMenu
+    Click Element   stackDetailMenu
+    Wait Until Element Is Visible    stackDetailSuspended
     Click And Wait  stackDetailSuspended
-    Wait Until Element Contains  css=dl:nth-child(1) > dd  Suspended  timeout=600
+    #Wait Until Element Contains  ${statustext}  ${SUSPENDED}  timeout=${LONG TIME} 
     #验证应用是否停止
-    ${status} =     Get Text    css=dl:nth-child(1) > dd
-    Should Be Equal As Strings  ${status}   Suspended
+    ${status} =     Get Text    ${statustext}
+    #Should Be Equal As Strings  ${status}   ${SUSPENDED}
     #扩展应用
-    Click And Wait  stackDetailMenu
+    Click Element   stackDetailMenu
+    Wait Until Element Is Visible    stackDetailExtend
     Click And Wait  stackDetailExtend
     Input Text      name=containerNum   1
-    Click And Wait  css=md-dialog-actions > button:nth-child(3)
-    Wait Until Element Contains  css=dl:nth-child(1) > dd  Running  timeout=${LONG TIME} 
+    Click And Wait  //button[@aria-label="ok"]
+    Wait Until Element Contains  ${statustext}  ${RUNNING}  timeout=${LONG TIME} 
     #验证应用是否扩展成功
-    ${status} =     Get Text    css=dl:nth-child(1) > dd
-    Should Be Equal As Strings  ${status}   Running
+    ${status} =     Get Text    ${statustext}
+    Should Be Equal As Strings  ${status}   ${RUNNING}
     #删除该应用（避免垃圾数据）
     Delete App From Detail
+
+*** Variables ***
+${statustext}      css=dl:nth-child(1) > dd
 

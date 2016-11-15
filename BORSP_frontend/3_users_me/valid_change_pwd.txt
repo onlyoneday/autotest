@@ -3,34 +3,40 @@
 Documentation   用户管理-修改自己的密码-正常
 Resource        ../common/resources.txt
 Resource        ../common/user_resources.txt
-Test Setup      Open Browser To Login Page
+Test Setup      Open Browser And Login Adm
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
 G-001用户管理-组管理员-修改自己的密码(上边界)
-	Login Gm
-	Go To   ${USER_PWD URL}
-	Input Password  ${GM PASSWD}    ${STR 16}    ${STR 16}
-	Click Element   submit-update-password
+    ${name} =          Generate UserName
+    ${email} =         Generate UserEmail  ${name}
+	Create User        ${name}  ${name}  ${email}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
+	Select User Group  ${MMJ GROUP}  owner
+	Click And Wait     submit-create-user
 	Logout
-	Login   ${GM USER}    ${STR 16} 
+	Login   ${name}    ${STR 8}
 	Go To   ${USER_PWD URL}
-	Input Password  ${STR 16}    ${GM PASSWD}    ${GM PASSWD} 
-	Click Element   submit-update-password
+	Input Password     ${STR 8}    ${STR 16}    ${STR 16}
+	Click And Wait     submit-update-password
+	Logout
+	Login   ${name}    ${STR 16} 
 
 G-007用户管理-普通用户-修改自己密码（下边界）
-	Login Mmj
-	Go To   ${USER_PWD URL}
-	Input Password  ${MMJ PASSWD}    ${STR 8}    ${STR 8} 
-	Click Element   submit-update-password
+    ${name} =          Generate UserName
+    ${email} =         Generate UserEmail  ${name}
+	Create User        ${name}  ${name}  ${email}  ${STR 16}  ${STR 16}  ${EMPTY}  ${EMPTY}
+	Select User Group  ${MMJ GROUP}  owner
+	Click And Wait     submit-create-user
 	Logout
-	Login   ${MMJ USER}    ${STR 8} 
+	Login   ${name}    ${STR 16}
 	Go To   ${USER_PWD URL}
-	Input Password  ${STR 8}    ${MMJ PASSWD}    ${MMJ PASSWD}
-	Click Element   submit-update-password
+	Input Password     ${STR 16}    ${STR 8}    ${STR 8}
+	Click And Wait     submit-update-password
+	Logout
+	Login   ${name}    ${STR 8} 
 
-*** Keywords ***	
+*** Keywords ***
 Input Password
     [Arguments]   	${oldpassword}  ${newpassword}  ${repassword}
 	Input Text		oldPassword	    ${oldpassword}

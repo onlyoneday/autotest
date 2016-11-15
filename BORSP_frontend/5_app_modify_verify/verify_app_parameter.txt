@@ -14,14 +14,14 @@ app_m_5-7,9-11,15-21,23 验证应用参数
     #新建应用
     Click And Wait   stackCreate
     ${name} =        Input Simple App
-    Input Text       stackImageAddress   nginx:latest
+    Input Text       stackImageAddress   ${image}
     Input Advanced App      11110
     #等待应用发布
     Click And Wait   stackFormCreate
-    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    Wait Until Element Contains  ${APP NAME PATH}  ${RUNNING}  timeout=${LONG TIME} 
 
     #验证信息是否正确
-    Click And Wait    xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
+    Click And Wait    ${APP LINK PATH}
     #应用名称
     ${app name} =     Get Text  css=h2
     Should Contain    ${app name}   ${name}
@@ -40,7 +40,7 @@ app_m_5-7,9-11,15-21,23 验证应用参数
     Click And Wait    stackFormUpdate
 
     #验证信息是否正确
-    Click And Wait    xpath=//*[@id='stackListApp']/tbody/tr[1]/td[1]/a
+    Click And Wait    ${APP LINK PATH}
     #验证实例2
     Verify Config 2
     #验证Debug
@@ -54,7 +54,7 @@ app_m_5-7,9-11,15-21,23 验证应用参数
 
 Modify Parameter
     #更改基本参数
-    Input Text        stackImageAddress   nginx:latestt
+    Input Text        stackImageAddress   ${wrong image}
     Click Element     forceImage
     Click Element     stackHost
     Input Text        stackCpus      0.1
@@ -62,7 +62,7 @@ Modify Parameter
     Input Text        stackMemory    64
     Input Text        stackInstanceNumber   2
     #更改高级设置
-    Click Element     css=.fa-chevron-down
+    Click Element     ${APP ADVENTURE}
     Sleep  1
     #环境变量
     Input Text        stackEnvsValue0     evm
@@ -91,23 +91,23 @@ Verify Instance
     Should Be Equal As Strings   ${index}  1
     #实例-链接可用
     Click And Wait  xpath=//*[@id='stackInstanceList']/tbody/tr/td[2]/p/span/a
-    #Page Should Contain   Welcome to nginx!
+    Page Should Contain   Welcome to nginx!
     Go Back And Wait
 
 Verify Config
     #转到配置tab
-    Click And Wait  css=md-tab-item:nth-child(2)
+    Click And Wait  ${APP TAB 2}
     #CPU
-    ${cpu} =    Get Text   css=div.flex-75 > div > dl:nth-child(2) > dd
+    ${cpu} =    Get Text   ${cputext}
     Should Be Equal As Strings   ${cpu}    0.2
     #内存
-    ${mem} =    Get Text   css=div.flex-75 > div > dl:nth-child(3) > dd
+    ${mem} =    Get Text   ${memtext}
     Should Be Equal As Strings   ${mem}    32.00 MB
     #实例个数
-    ${num} =    Get Text   css=div.flex-75 > div > dl:nth-child(4) > dd
+    ${num} =    Get Text   ${numtext}
     Should Be Equal As Strings   ${num}    1
     #CMD
-    ${cmd} =   Get Text    css=div.flex-75 > div > dl:nth-child(5) > dd
+    ${cmd} =   Get Text    ${cmdtext}
     Should Be Equal As Strings   ${cmd}    -
     #镜像
     Page Should Contain    "image": "nginx:latest"
@@ -123,15 +123,15 @@ Verify Config
 
 Verify Config 2
     #转到配置tab
-    Click And Wait  css=md-tab-item:nth-child(2)
+    Click And Wait  ${APP TAB 2}
     #CPU
-    ${cpu} =    Get Text   css=div.flex-75 > div > dl:nth-child(2) > dd
+    ${cpu} =    Get Text   ${cputext}
     Should Be Equal As Strings   ${cpu}    0.1
     #内存
-    ${mem} =    Get Text   css=div.flex-75 > div > dl:nth-child(3) > dd
+    ${mem} =    Get Text   ${memtext}
     Should Be Equal As Strings   ${mem}    64.00 MB
     #实例个数
-    ${num} =    Get Text   css=div.flex-75 > div > dl:nth-child(4) > dd
+    ${num} =    Get Text   ${numtext}
     Should Be Equal As Strings   ${num}    2
     #版本信息（原、新）
     Click And Wait  stackConfigDetail0
@@ -155,6 +155,14 @@ Verify Config 2
 
 Verify Debug
     #Debug信息
-    Click And Wait  css=md-tab-item:nth-child(3)
+    Click And Wait  ${APP TAB 3}
     Page Should Contain    'docker -H unix:///var/run/docker.sock pull nginx:latestt'
+
+*** Variables ***
+${image}                 nginx:latest
+${wrong image}           nginx:latestt
+${cputext}               css=div.flex-75 > div > dl:nth-child(2) > dd
+${memtext}               css=div.flex-75 > div > dl:nth-child(3) > dd
+${numtext}               css=div.flex-75 > div > dl:nth-child(4) > dd
+${cmdtext}               css=div.flex-75 > div > dl:nth-child(5) > dd
 

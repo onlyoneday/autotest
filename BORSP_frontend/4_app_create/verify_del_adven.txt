@@ -18,9 +18,9 @@ app_m_35更新时高级设置删除
 
 Delete Empty
     #打开收起高级设置
-    Click Element   css=.fa-chevron-down
-    Click Element   css=.fa-chevron-up
-    Click Element   css=.fa-chevron-down
+    Click Element   ${APP ADVENTURE}
+    Click Element   ${APP ADVENTURE}
+    Click Element   ${APP ADVENTURE}
     #添加高级设置
     Click Element   stackAddMountpoints
     Click Element   stackAddMountpoints
@@ -50,16 +50,16 @@ Delete Run
     #更新应用
     Update App By Name  ${name}
     #打开高级设置
-    Click And Wait   css=.fa-chevron-down
+    Click And Wait   ${APP ADVENTURE}
     #删除第高级设置
-    Click Element    //*[@id="stackEnvsDelete0"]
-    Click Element    //*[@id="stackDockerParametersDel-0"]
-    Click Element    //*[@id="deleteHealthChecks-0"]
+    Click Element    stackEnvsDelete0
+    Click Element    stackDockerParametersDel-0
+    Click Element    deleteHealthChecks-0
     #应用更新
     Click And Wait   stackFormUpdate
     #打开高级设置
     Update App By Name  ${name}
-    Click Element    css=.fa-chevron-down
+    Click Element    ${APP ADVENTURE}
     #验证删除的高级设置不存在
     Page Should Not Contain Element    stackEnvsKey0
     Page Should Not Contain Element    stackDockerKey-1

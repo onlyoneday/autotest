@@ -44,14 +44,14 @@ G-083-2管理超级用户组-不能编辑信息和删除
 	Element Should Not Contain   //*[@id='user-list-table']/tbody/tr[1]/td[6]  删除
 
 G-083-3超级管理员组-把自己加入和删除非管理员组
-	Go To Page	    ${USER_MANG URL}
+	#Go To Page	    ${USER_MANG URL}
 	#添加自己到其他组
-	Manage Group    ${TGROUP}    2
-	Add Group User  ${VALID USER}  member
-	Page Should Contain   ${VALID USER}
+	#Manage Group    ${TGROUP}    2
+	#Add Group User  ${VALID USER}  member
+	#Page Should Contain   ${VALID USER}
 	#删除自己
-	Delete Group User     ${VALID USER}
-	Page Should Not Contain   ${VALID USER}
+	#Delete Group User     ${VALID USER}
+	#Page Should Not Contain   ${VALID USER}
 
 G-067查看查看任意组成员列表
 	Go To Page	  ${USER_MANG URL}

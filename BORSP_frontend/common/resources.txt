@@ -7,12 +7,12 @@ Library        String
 *** Variables ***
 
 #${SERVER}                http://192.168.1.163:5013/ui
-${SERVER}                http://192.168.1.124:81/ui
+${SERVER}                http://192.168.1.87:81/ui
 ${BROWSER}               Firefox
 ${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
 ${DELAY}                 0.1
-${SLEEP TIME}            5
-${LONG TIME}             90
+${SLEEP TIME}            6
+${LONG TIME}             300
 
 #--------------------URL--------------------
 ${LOGIN URL}             ${SERVER}/auth/login
@@ -29,13 +29,28 @@ ${USER_MANU URL}         ${SERVER}/user-manage/list/user
 ${USER_MANG URL}         ${SERVER}/user-manage/list/group
 
 #--------------------LOCATION----------------
-${APPFORM TAB}           css=md-tab-item:nth-child(1)
-${APPJSON TAB}           css=md-tab-item:nth-child(2)
+${APP FORM TAB}          css=md-tab-item:nth-child(1)
+${APP JSON TAB}          css=md-tab-item:nth-child(2)
+${APP NAME PATH}         //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+${APP STATUS PATH}       //*[@id="stackListApp"]/tbody/tr[1]/td[4]
+${APP LINK PATH}         //*[@id='stackListApp']/tbody/tr[1]/td[1]/a
+${APP TABLE TR}          //*[@id="stackListApp"]/tbody/tr[*]
+${APP ADVENTURE}         //a[@aria-label="高级设置"]
+${APP TAB 1}             css=md-tab-item:nth-child(1)
+${APP TAB 2}             css=md-tab-item:nth-child(2)
+${APP TAB 3}             css=md-tab-item:nth-child(3)
+
+${CLUSTER PATH}          //section/header/h3/a
+${TABLE TR}              //table/tbody/tr[*]
 
 ${LOGIN BTN}             login-btn-login
 ${USERNAME FIELD}        //input[@name="userName"]
 ${PASSWORD FIELD}        //input[@name="Password"]
-${LOGIN SYMBOL}          open-user-menu
+${LOGIN SYMBOL}          //input[@placeholder="搜索"]
+
+#--------------------APP STATUS--------------
+${RUNNING}               Running
+${SUSPENDED}             Suspended
 
 #--------------------USER--------------------
 ${ADMIN USER}            admin
@@ -49,10 +64,11 @@ ${MMJ EMAIL}             m@m.cn
 ${MMJ PASSWD}            M12345678
 ${MMJ GROUP}             groupmmj
 ${MMJ CLUSTER}           clustermmj
-${MMJ RG}                registrymmj
+${MMJ RG}                registryfzh
 
 ${GM USER}               groupmanager
 ${GM PASSWD}             M1234567
+${GM EMAIL}              gm@gm.com
 
 ${SUPER}                 SuperGroup
 ${TGROUP}                testGroup
@@ -81,21 +97,23 @@ ${EML 256}               0123456789012345678901234567890123456789012345678901234
 Open Browser To Login Page
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}  #ff_profile_dir=${FF_PROFILE}
-    Wait Until Page Contains Element  ${LOGIN BTN} 
+    Wait Until Page Contains Element  ${USERNAME FIELD}
 
 Go To Page
     [Arguments]  ${URL}
     Go To   ${URL}
-    Run Keyword If  '${URL}' == '${HOME URL}'       Wait Until Page Contains Element  ${LOGIN SYMBOL}  timeout=10
-    Run Keyword If  '${URL}' == '${USER_MANG URL}'  Wait Until Page Contains Element  user-list-table  timeout=10
-    Run Keyword If  '${URL}' == '${USER_MANU URL}'  Wait Until Page Contains Element  stackListSearch  timeout=10
-    Run Keyword If  '${URL}' == '${APP_ALL URL}'    Wait Until Page Contains Element  stackListSearch  timeout=10
-    Run Keyword If  '${URL}' == '${APP_MY URL}'     Wait Until Page Contains Element  stackListSearch  timeout=10
+    Run Keyword If  '${URL}' == '${HOME URL}'        Wait Until Page Contains Element  ${LOGIN SYMBOL}
+    Run Keyword If  '${URL}' == '${USER_MANG URL}'   Wait Until Page Contains Element  user-list-table
+    Run Keyword If  '${URL}' == '${USER_MANU URL}'   Wait Until Page Contains Element  stackListSearch
+    Run Keyword If  '${URL}' == '${APP_ALL URL}'     Wait Until Page Contains Element  stackListSearch
+    Run Keyword If  '${URL}' == '${APP_MY URL}'      Wait Until Page Contains Element  stackListSearch
+    Run Keyword If  '${URL}' == '${USER_PWD URL}'    Wait Until Page Contains Element  oldPassword
+    Run Keyword If  '${URL}' == '${APP_CREATE URL}'  Wait Until Page Contains Element  stackAppName
 
 Click And Wait
     [Arguments]  ${ELEMENT}
     Click Element  ${ELEMENT}
-    Sleep   2
+    Sleep   3
 
 Go Back And Wait
     Go Back

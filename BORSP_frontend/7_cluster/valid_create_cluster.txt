@@ -23,11 +23,12 @@ G-092信息填写下边界值/删除无主机无应用集群
 
 Result Group
 	[Arguments]     ${name}    ${group}    ${description}
-	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
-	Click And Wait  ${link}
-	${cdscp} =      Get Text    css=dl:nth-child(4) > dd
-	Should Be Equal As Strings  ${cdscp}   ${description}  
+	Enter Cluster   ${name}
+	${cluster} =      Get Text    ${clustertext}
+	Should Be Equal As Strings    ${cluster}   ${description}  
 	#删除
 	Click And Wait  delete-cluster
-	Click And Wait  css=md-dialog-actions > button:nth-child(2)
+	Click And Wait  //button[@aria-label="确定"]
 	
+*** Variables ***	
+${clustertext}      css=dl:nth-child(4) > dd

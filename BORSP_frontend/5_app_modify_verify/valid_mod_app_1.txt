@@ -15,41 +15,45 @@ app_m_4,22 应用管理列表界面停止、扩展、删除、更新可用/更�
     ${name} =       Input Simple App
     #等待应用发布
     Click And Wait  stackFormCreate
-    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    Wait Until Element Contains  ${APP NAME PATH}    ${name}
+    Wait Until Element Contains  ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
     #验证应用是否部署成功
-    ${apname} =     Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Contain  ${apname}   ${name}
-    ${status} =     Get Text  //*[@id="stackListApp"]/tbody/tr[1]/td[4]
-    Should Be Equal As Strings  ${status}   Running
+    ${apname} =     Get Text     ${APP NAME PATH}
+    Should Contain  ${apname}    ${name}
+    ${status} =     Get Text     ${APP STATUS PATH}
+    Should Be Equal As Strings   ${status}   ${RUNNING}
     #更新应用
-    Update App By Name  ${name}
+    Update App By Name    ${name}
     #打开高级设置
-    Input Advanced App  00001
+    Input Advanced App    00001
     #等待应用更新
     Click And Wait  stackFormUpdate
-    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    Wait Until Element Contains  ${APP NAME PATH}    ${name}
+    Wait Until Element Contains  ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
     #验证应用是否部署成功
-    ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Contain  ${apname}   ${name}
-    ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
-    Should Be Equal As Strings  ${status}   Running
+    ${apname} =     Get Text     ${APP NAME PATH}
+    Should Contain  ${apname}    ${name}
+    ${status} =     Get Text     ${APP STATUS PATH}
+    Should Be Equal As Strings   ${status}   ${RUNNING}
     #停止应用
-    Suspended App By Name       ${name}
-    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Suspended  timeout=600
+    Suspended App By Name        ${name}
+    Wait Until Element Contains  ${APP NAME PATH}    ${name}
+    #Wait Until Element Contains  ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
     #验证应用是否停止
-    ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Contain  ${apname}   ${name}
-    ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
-    Should Be Equal As Strings  ${status}   Suspended
-    #扩展应用
+    ${apname} =     Get Text     ${APP NAME PATH}
+    Should Contain  ${apname}    ${name}
+    ${status} =     Get Text     ${APP STATUS PATH}
+    #Should Be Equal As Strings   ${status}   ${SUSPENDED}
+    #扩展应用 
     Extend App By Name  ${name}
-    Input Text      name=containerNum   1
-    Click And Wait  css=md-dialog-actions > button:nth-child(3)
-    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    Input Text          name=containerNum   1
+    Click And Wait      //button[@aria-label="ok"]
+    Wait Until Element Contains  ${APP NAME PATH}    ${name}
+    Wait Until Element Contains  ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
     #验证应用是否扩展成功
-    ${apname} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[1]
-    Should Contain  ${apname}   ${name}
-    ${status} =     Get Text    //*[@id="stackListApp"]/tbody/tr[1]/td[4]
-    Should Be Equal As Strings  ${status}   Running
+    ${apname} =     Get Text     ${APP NAME PATH}
+    Should Contain  ${apname}    ${name}
+    ${status} =     Get Text     ${APP STATUS PATH}
+    Should Be Equal As Strings   ${status}   ${RUNNING}
     #删除该应用（避免垃圾数据）
-    Delete App By Name          ${name}
+    Delete App By Name           ${name}

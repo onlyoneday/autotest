@@ -17,7 +17,7 @@ app_c_03新建应用-取消
     #点击取消
     Click Element   stackFormCancel
     #验证应用是否部署
-    ${index} =    Get Matching Xpath Count   //*[@id="stackListApp"]/tbody/tr[*]
+    ${index} =      Get Matching Xpath Count   ${APP TABLE TR}
     :FOR    ${li}   IN RANGE   ${index} 
     \    ${li} =    Evaluate   ${li} + 1
     \    ${path} =  Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${li}'+']/td[1]'

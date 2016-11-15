@@ -15,7 +15,7 @@ G-132/133新建应用-名称不填
     Clear Element Text    stackAppName
     Result Web            ${location1}  ${message1}
     #JSON模式
-    Click Element         ${APPJSON TAB} 
+    Click Element         ${APP JSON TAB} 
     Result Api            stackJsonCreate    ${message31}
 
 G-132/133新建应用-地址不填
@@ -24,18 +24,19 @@ G-132/133新建应用-地址不填
     Clear Element Text    stackImageAddress
     Result Web            ${location2}  ${message2}
     #JSON模式
-    Click Element         ${APPJSON TAB} 
+    Click Element         ${APP JSON TAB} 
     Result Api            stackJsonCreate    ${message32}
 
 G-132/133新建应用-集群不填
 	#表单模式
-	Create App        appmmj    ${EMPTY}
+	Create App        ${AppName}    ${EMPTY}
     Element Should Be Disabled  stackFormCreate
     #JSON模式
-    Click Element     ${APPJSON TAB} 
+    Click Element     ${APP JSON TAB} 
     Result Api        stackJsonCreate    ${message4}
 
 *** Variables ***
+${AppName}         appforcreating
 ${message1}        应用名称不能为空
 ${location1}       div:nth-child(1) > div.layout-column > p:nth-child(2)
 ${message2}		   镜像地址不能为空

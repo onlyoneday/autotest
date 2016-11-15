@@ -11,7 +11,7 @@ Suite Teardown  Close All Browsers
 
 G-212必填项不填
 	Click Element         createUserRegistry
-	Wait Until Page Contains    create-registry-name
+	Wait Until Element Is Visible    create-registry-name
 	Input Registry        1  1  1  1
 	Clear Element text    create-registry-name
 	Clear Element text    create-registry-addr
@@ -24,7 +24,7 @@ G-212必填项不填
 
 G-213超过上限
 	Click Element   createUserRegistry
-	Wait Until Page Contains    create-registry-name
+	Wait Until Element Is Visible    create-registry-name
 	Input Registry  ${STR 256}  ${STR 256}  ${STR 51}  ${STR 51}
 	Result Web      ${location4}    ${message4} 
 	Result Web      ${location5}    ${message5} 
@@ -33,32 +33,34 @@ G-213超过上限
 
 G-216创建取消
 	Click Element   createUserRegistry
-	Wait Until Page Contains    create-registry-name
+	Wait Until Element Is Visible    create-registry-name
 	Input Registry  ${MMJ RG}  ${RG ADD}  ${RG NAME}  ${RG PWD} 
 	Click And Wait  //button[@aria-label="cancel"]
 	Page Should Not Contain   ${MMJ RG}
 
 G-211创建（上限）
 	Click Element   createUserRegistry
-	Wait Until Page Contains    create-registry-name
+	Wait Until Element Is Visible    create-registry-name
 	Input Registry  ${STR 255}  ${STR 255}  ${STR 50}  ${STR 50}
 	Click And Wait  //button[@aria-label="ok"]
 	Page Should Contain   ${STR 255}
 
 G-215创建（重名）
 	Click Element   createUserRegistry
-	Wait Until Page Contains    create-registry-name
+	Wait Until Element Is Visible    create-registry-name
 	Input Registry  ${STR 255}  1  1  1
 	Click Element   //button[@aria-label="ok"]
 	Page Should Contain   Error 1062
 
 G-228取消删除
 	Click Element   userRegistryDelete0
+	Wait Until Element Is Visible    create-registry-name
 	Click And Wait  //button[@aria-label="取消"]
 	Page Should Contain   ${STR 255}
 	
 G-227删除
 	Click Element   userRegistryDelete0
+	Wait Until Element Is Visible    create-registry-name
 	Click And Wait  //button[@aria-label="确定"]
 	Page Should Not Contain   ${STR 255}
 

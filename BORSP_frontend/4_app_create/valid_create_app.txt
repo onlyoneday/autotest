@@ -28,12 +28,12 @@ Deploy App  [Arguments]   ${network}   ${forceImage}   ${aedhc}
     Input Advanced App  ${aedhc}
     #等待应用发布
     Click And Wait     stackFormCreate
-    Wait Until Element Contains     //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    Wait Until Element Contains     ${APP STATUS PATH}   ${RUNNING}  timeout=${LONG TIME} 
     #验证应用是否部署成功
-    ${app name} =      Get Text     //*[@id="stackListApp"]/tbody/tr[1]/td[1]
+    ${app name} =      Get Text     ${APP NAME PATH}
     Should Contain     ${app name}  ${name}
-    ${app status} =    Get Text     //*[@id="stackListApp"]/tbody/tr[1]/td[4]
-    Should Be Equal As Strings     ${app status}   Running
+    ${app status} =    Get Text     ${APP STATUS PATH} 
+    Should Be Equal As Strings      ${app status}   ${RUNNING}
     #删除该应用（避免垃圾数据）
     Delete App From Button
 

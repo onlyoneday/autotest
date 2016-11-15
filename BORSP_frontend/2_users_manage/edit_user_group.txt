@@ -22,7 +22,7 @@ G-023不同组的组管理员和组成员
 	Click Element      //button[@aria-label="ok"]
 
 G-023-2相同组
-	Edit User Group    ${TEST ID}
+	Edit User Group    ${InputName}
 	Add User Group     ${MMJ GROUP}   owner
 	Click Element      ${AddGroup}
 	Page Should Contain   不能添加重复的用户组

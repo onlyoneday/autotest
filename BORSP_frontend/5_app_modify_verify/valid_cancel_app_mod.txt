@@ -16,7 +16,7 @@ app_m_37 更新应用-取消
     ${name} =       Input Simple App
     #等待应用发布
     Click And Wait  stackFormCreate
-    ${time1} =      Get Text  //*[@id='stackListApp']/tbody/tr[1]/td[7]
+    ${time1} =      Get Text  ${apptime}
     #更新应用
     Update App By Name  ${name}
     #更新CPU
@@ -36,9 +36,13 @@ Not Update    [Arguments]   ${i}   ${time}
     Should Be Equal As Strings  ${time2}  ${time} 
     ${patha} =      Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${i}'+']/td[1]/a'
     Click And Wait  ${patha}
-    Click And Wait  css=md-tab-item:nth-child(2) 
-    ${cpu} =        Get Text    css=div.flex-75 > div > dl:nth-child(2) > dd
+    Click And Wait  ${APP TAB 2} 
+    ${cpu} =        Get Text    ${cputest}
     Should Be Equal As Strings  ${cpu}  0.2
     #删除该应用（避免垃圾数据）
     Delete App From Detail
+
+*** Variables ***
+${apptime}      //*[@id='stackListApp']/tbody/tr[1]/td[7]
+${cputest}      css=div.flex-75 > div > dl:nth-child(2) > dd
 

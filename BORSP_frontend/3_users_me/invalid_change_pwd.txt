@@ -10,11 +10,11 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 G-002必填项不填
-	Input Password   p   p   ${EMPTY}
+	Input Password    p   p   ${EMPTY}
 	Clear Element text   oldPassword
 	Clear Element text   newPassword
-	Result Web       ${location1}      ${message1} 
-	Result Web       ${location2}      ${message2} 
+	Result Web        ${location1}      ${message1} 
+	Result Web        ${location2}      ${message2} 
 	Element Should Be Disabled    ${button}
 
 G-003旧密码错误

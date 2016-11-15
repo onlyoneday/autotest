@@ -15,11 +15,11 @@ app_c_32新建应用json-取消
     #输入最简参数
     ${name} =       Input Simple App
     #切换到json模式
-    Click And Wait  ${APPJSON TAB} 
+    Click And Wait  ${APP JSON TAB} 
     #点击取消
     Click Element   stackJsonCancel
     #验证应用是否部署
-    ${index} =      Get Matching Xpath Count   //*[@id="stackListApp"]/tbody/tr[*]
+    ${index} =      Get Matching Xpath Count   ${APP TABLE TR}
     :FOR    ${li}   IN RANGE   ${index} 
     \    ${li} =    Evaluate   ${li} + 1
     \    ${path} =  Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${li}'+']/td[1]'

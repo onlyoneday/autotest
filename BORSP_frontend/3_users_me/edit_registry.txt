@@ -11,7 +11,7 @@ Suite Teardown  Close All Browsers
 
 G-218必填项不填
 	Click Element         ${registry0}
-	Wait Until Page Contains    create-registry-name
+	Wait Until Element Is Visible    create-registry-name
 	Clear Element text    create-registry-name
 	Clear Element text    create-registry-addr
 	Clear Element text    create-registry-userName
@@ -22,7 +22,7 @@ G-218必填项不填
 
 G-219超过上限
 	Click Element        ${registry0}
-	Wait Until Page Contains    create-registry-name
+	Wait Until Element Is Visible    create-registry-name
 	Input Registry       ${STR 256}  ${STR 256}  ${STR 51}  ${STR 51}
 	Result Web      ${location4}    ${message4} 
 	Result Web      ${location5}    ${message5} 
@@ -31,14 +31,14 @@ G-219超过上限
 
 G-222修改仓库-取消
 	Click Element   ${registry0}
-	Wait Until Page Contains    create-registry-name
+	Wait Until Element Is Visible    create-registry-name
 	Input Text      create-registry-name  userRegistr
 	Click Element   //button[@aria-label="cancel"]
 	Element Should Not Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  ${registry1} 
 
 G-222修改仓库
 	Click Element   ${registry0}
-	Wait Until Page Contains    create-registry-name
+	Wait Until Element Is Visible    create-registry-name
 	Input Text      create-registry-name  userRegistry
 	Input Text      create-registry-userName  ${MMJ USER}
 	Click Element   //button[@aria-label="ok"]
@@ -47,7 +47,7 @@ G-222修改仓库
 
 Correct Registry Info After Testing
 	Click Element   ${registry0}
-	Wait Until Page Contains    create-registry-name
+	Wait Until Element Is Visible    create-registry-name
 	Input Text      create-registry-name  ${MMJ CLUSTER}
 	Input Text      create-registry-userName  ${RG NAME}
 	Click Element   //button[@aria-label="ok"]

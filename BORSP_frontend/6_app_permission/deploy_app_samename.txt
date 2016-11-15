@@ -11,23 +11,24 @@ Suite Teardown  Close All Browsers
 
 #创建集群
 Create Cluster Before Testing
-	Input Cluster   ${TEST CLU}  ${MMJ GROUP}  ${TEST CLU}
+	Input Cluster   ${ClusterForApp}  ${MMJ GROUP}  ${ClusterForApp}
 	Click And Wait  submit-create-cluster
 
 G-131在不同集群上发名称相同的应用
-	Go To Page      ${APP_CREATE URL} 
-	Create App      ${TEST APP}    ${MMJ CLUSTER}
-    Click And Wait  stackFormCreate
     Go To Page		${APP_CREATE URL} 
-    Create App      ${TEST APP}    ${TEST CLU}
+    Create App      ${SameName}    ${ClusterForApp}
+    Click And Wait  stackFormCreate
+	Go To Page      ${APP_CREATE URL} 
+	Create App      ${SameName}    ${MMJ CLUSTER}
     Click And Wait  stackFormCreate
 
 Delete App Cluster After Testing
 	Go To Page      ${APP_ALL URL} 
-	Delete App By Name   ${TEST APP} 
-	Delete App By Name   ${TEST APP} 
+	Delete App By Name   ${SameName} 
+	Delete App By Name   ${SameName}
 	Go To Page		${HOME URL}
-	Delete Cluster  ${TEST CLU}
+	Delete Cluster  ${ClusterForApp}
 
 *** Variables ***
-${Name}	  Cancel
+${ClusterForApp}    clusterforsamename
+${SameName}         samename

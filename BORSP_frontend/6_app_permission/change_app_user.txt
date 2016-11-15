@@ -11,41 +11,42 @@ Suite Teardown  Close All Browsers
 Create App Before Testing
 	Login Mmj 
     Go To Page        ${APP_CREATE URL} 
-    Create App        appmmj  ${MMJ CLUSTER}
+    Create App        ${AppName}  ${MMJ CLUSTER}
     Click And Wait    stackFormCreate
 
 G-147组管理员-修改所属用户
 	Login Gm 
     Go To Page        ${APP_ALL URL} 
-    Change App Owner  appmmj
+    Change App Owner  ${AppName}
     Change Owner      ${GM USER}
 
 G-148超级管理员-修改所属用户
 	Login Adm 
     Go To Page        ${APP_ALL URL} 
-    Change App Owner  appmmj
+    Change App Owner  ${AppName}
     Change Owner      ${MMJ USER}
 
 G-149组成员-修改所属用户
 	Login Mmj 
     Go To Page        ${APP_MY URL} 
-    Change App Owner  appmmj
+    Change App Owner  ${AppName}
     Change Owner      ${GM USER}
 
 Delete App After Testing
 	Login Gm 
     Go To Page          ${APP_MY URL} 
-	Delete App By Name  appmmj
+	Delete App By Name  ${AppName}
 
 *** Keywords ***
 Change Owner
 	[Arguments]       ${name}  
     Click Element     update-select-group
-    @{path} =         Get Webelements  //*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div
-    :FOR    ${path}   IN    @{path}
-    \       ${user} =       Get Text   ${path}
-    \       Should Contain  mmjgroupmanager  ${user}
-    ${path} =  Evaluate  '//*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div[contains(text(),'+'"${name}"'+')]'
+    ${path} =  Evaluate  '${UserOption}'+'[contains(text(),'+'"${name}"'+')]'
     Click Element     ${path}
-    Click And Wait    css=md-dialog-actions > button:nth-child(3)
+    Click And Wait    //button[@aria-label="ok"]
+
+*** Variables ***
+${ExpectUser}    mmj+groupmanager
+${AppName}       appforchanginguser
+${UserOption}    //*[@aria-hidden="false"]/md-select-menu/md-content/md-option/div
 

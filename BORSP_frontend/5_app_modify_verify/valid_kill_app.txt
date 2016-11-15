@@ -20,23 +20,27 @@ app_m_5,8 KILL KILL&SCALE
     Input Text          stackInstanceNumber   2   
     #等待应用发布
     Click And Wait      stackFormCreate
-    Wait Until Element Contains  //*[@id="stackListApp"]/tbody/tr[1]/td[4]  Running  timeout=${LONG TIME} 
+    Wait Until Element Contains  ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
     #跳转到详情页面
-    Click And Wait      //*[@id='stackListApp']/tbody/tr[1]/td[1]/a
+    Click And Wait      ${APP LINK PATH}
     #KILL
-    Click Element       //*[@id='stackInstanceList']/tbody/tr/td[1]/md-checkbox
+    Click Element       ${checkbox}
     Click Element       stackInstanceKilTack
-    Click And Wait      css=md-dialog-actions > button:nth-child(2)
+    Click And Wait      //button[@aria-label="确定"]
     Sleep               ${SLEEP TIME}
-    ${index} =          Get Matching Xpath Count   //*[@id="stackInstanceList"]/tbody/tr[*] 
+    ${index} =          Get Matching Xpath Count   ${table tr} 
     Should Be Equal     ${index}   2
     #KILL&SCALE
-    Click Element       //*[@id='stackInstanceList']/tbody/tr/td[1]/md-checkbox
+    Click Element       ${checkbox}
     Click Element       stackInstanceKilOrTack
-    Click And Wait      css=md-dialog-actions > button:nth-child(2)
+    Click And Wait      //button[@aria-label="确定"]
     Sleep               ${SLEEP TIME}
-    ${index} =          Get Matching Xpath Count   //*[@id="stackInstanceList"]/tbody/tr[*] 
+    ${index} =          Get Matching Xpath Count   ${table tr}
     Should Be Equal     ${index}   1
     #删除该应用（避免垃圾数据）
     Delete App From Detail
+
+*** Variables ***
+${checkbox}      //*[@id='stackInstanceList']/tbody/tr/td[1]/md-checkbox
+${table tr}      //*[@id='stackInstanceList']/tbody/tr[*]
 

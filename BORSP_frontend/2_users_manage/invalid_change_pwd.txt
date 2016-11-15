@@ -25,16 +25,16 @@ G-035输入项上、下边外侧界
 	Element Should Be Disabled   ${button} 
 	Change User Password   ${STR 7}   ${STR 7}
 	Result Web     ${location2}       ${message2}
-	Element Should Be Disabled   ${button} 
+	Element Should Be Disabled   ${button}
 
 G-036密码格式不正确
 	Edit User Password     ${MMJ USER}
 	Change User Password   m1234567   m1234567
-	Result Web     ${newpwd css}      ${message2}
+	Result Web     ${location2}       ${message2}
 	Element Should Be Disabled   ${button} 
 	Change User Password   whatever   Whatever
-	Result Web     ${newpwd css}      ${message2}
-	Result Web     ${repwd css}       ${message3}
+	Result Web     ${location2}       ${message2}
+	Result Web     ${location3}       ${message3}
 	Element Should Be Disabled   ${button} 
 
 *** Variables ***

@@ -12,32 +12,32 @@ G-135超级管理员-在任意集群上添加应用
     Open Browser        ${LOGIN URL}  ${BROWSER}  B1
     Sleep               ${SLEEP TIME}
     Login Adm
-    Deploy App          appmmjadm  ${MMJ CLUSTER}
+    Deploy App          ${adminApp}  ${MMJ CLUSTER}
 G-139组管理员-在所属组上添加应用
     Set Selenium Speed  ${DELAY}
     Open Browser        ${LOGIN URL}  ${BROWSER}  B2
     Sleep               ${SLEEP TIME}
     Login Gm
-    Deploy App          appmmjgm   ${MMJ CLUSTER}
+    Deploy App          ${gmApp}   ${MMJ CLUSTER}
 G-143普通用户-在所属集群上添加应用
     Set Selenium Speed  ${DELAY}
     Open Browser        ${LOGIN URL}  ${BROWSER}  B3
     Sleep               ${SLEEP TIME}
     Login Mmj
-    Deploy App          appmmjmmj  ${MMJ CLUSTER}
+    Deploy App          ${mmjApp}  ${MMJ CLUSTER}
 
 D-134/136超级管理员可以查看、更新所有应用
     Switch Browser      B1
     Check App
-    Update App          appmmjadm
-    Update App          appmmjgm
-    Update App          appmmjmmj
+    Update App          ${adminApp}
+    Update App          ${gmApp}
+    Update App          ${mmjApp}
 
 D-138/140组管理员可以查看、更新本组用户发布的应用
     Switch Browser      B2 
     Check App
-    Update App          appmmjgm
-    Update App          appmmjmmj
+    Update App          ${gmApp}
+    Update App          ${mmjApp}
 
 D-142组成员可以查看本组用户发布的应用
     Switch Browser      B3
@@ -46,12 +46,12 @@ D-142组成员可以查看本组用户发布的应用
 
 D-137超级管理员可以删除所有应用
     Switch Browser      B1
-    Delete App By Name  appmmjgm
+    Delete App By Name  ${gmApp}
 
 D-141组管理员可以删除本组的应用
-    Switch Browser      B2 
-    Delete App By Name  appmmjadm
-    Delete App By Name  appmmjmmj
+    Switch Browser      B2
+    Delete App By Name  ${adminApp}
+    Delete App By Name  ${mmjApp}
 
 *** Keywords ***
 Deploy App
@@ -62,13 +62,18 @@ Deploy App
 
 Check App
 	Go To Page           ${APP_ALL URL}
-	Page Should Contain  appmmjadm
-	Page Should Contain  appmmjgm
-	Page Should Contain  appmmjmmj
+	Page Should Contain  ${adminApp}
+	Page Should Contain  ${gmApp}
+	Page Should Contain  ${mmjApp}
 
 Update App
 	[Arguments]          ${name}
 	Update App By Name   ${name}
 	Element Should Be Enabled  stackFormUpdate
 	Go Back And Wait
+
+*** Variables ***
+${mmjApp}         appmmjmmj
+${gmApp}          appmmjgm
+${adminApp}       appmmjadm
 

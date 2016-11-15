@@ -10,13 +10,16 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 G-097集群-取消创建
-	Input Cluster     Cancel  ${TGROUP}  Cancel
+	Input Cluster     ${ClusterForCancel}  ${TGROUP}  ${ClusterForCancel}
 	Click Element     cancel-create-cluster
-	Page Should Not Contain   Cancel
+	Page Should Not Contain   ${ClusterForCancel}
 
 G-106集群-取消删除
 	Input Text		  //input   ${MMJ CLUSTER} 
-	Click And Wait    //section/header/h3/a[text()="clustermmj"]
+	Enter Cluster     ${MMJ CLUSTER} 
 	Click Element     node-detail-list-del0
-	Click Element     //md-dialog-actions/button[@aria-label="取消"]
-	Page Should Contain    ${MMJ CLUSTER} 
+	Click Element     //button[@aria-label="取消"]
+	Page Should Contain    ${MMJ CLUSTER}
+
+*** Variables ***
+${ClusterForCancel}    Cancel 
