@@ -11,7 +11,7 @@ Resource
 
 *** Variables ***
 ${domain}      shurenyun
-${nodes IP}    172.16.1.4
+${nodes IP}    172.16.1.8
 
 *** Keywords ***
 Login Sry
@@ -51,13 +51,6 @@ Add Registry Auth
     ${resp}=          Post Request    ${domain}    /v1/external_registries    data=${data}    headers=${headers}
     log               ${resp.text}
     [Return]          ${resp}
-
-Create Cluster
-    [Arguments]       ${data}         ${headers}
-    Create Session    shurenyun       ${SERVER}
-    ${resp}=          Post Request    ${domain}    /v1/clusters    data=${data}    headers=${headers}
-    log               ${resp.text}
-    [Return]          ${resp}
 #-------------------
 
 Login Sry With Admin
@@ -74,13 +67,13 @@ Create Some Groups
     ${data} =  Set Variable          {"name": "${MMJ GROUP}" , "description": ""}
     ${resp}=  Create User Group      ${data}                    ${adminheaders}
     Should Be Equal As Strings       ${resp.status_code}        200
-    ${groupid}=    Evaluate          '${resp.json()['data']['id']}'
+    ${mmjgroupid}=    Evaluate       '${resp.json()['data']['id']}'
     Set Global Variable              ${mmjgroupid}
 #create testgroup
     ${data} =  Set Variable          {"name": "${TGROUP}" , "description": ""}
     ${resp}=  Create User Group      ${data}                    ${adminheaders}
     Should Be Equal As Strings       ${resp.status_code}        200
-    ${groupid}=    Evaluate          '${resp.json()['data']['id']}'
+    ${testgroupid}=    Evaluate      '${resp.json()['data']['id']}'
     Set Global Variable              ${testgroupid}
 
 Create Some Users
@@ -89,11 +82,11 @@ Create Some Users
     ${resp}=    Create User       ${data}                ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
     #create ower of mmj group
-    ${data}=    Set Variable      {"email":"su@su.comm","password":"${GM PASSWD}","title":"职位, 可不填","userName":"${GM USER}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"owner"}]}
+    ${data}=    Set Variable      {"email":"su2@su.comm","password":"${GM PASSWD}","title":"职位, 可不填","userName":"${GM USER}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"owner"}]}
     ${resp}=    Create User       ${data}                ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
     #create member of mmj group
-    ${data}=    Set Variable      {"email":"su@su.comm","password":"${MMJ PASSWD}","title":"职位, 可不填","userName":"${MMJ USER}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"member"}]}
+    ${data}=    Set Variable      {"email":"su3@su.comm","password":"${MMJ PASSWD}","title":"职位, 可不填","userName":"${MMJ USER}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"member"}]}
     ${resp}=    Create User       ${data}                ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
 
@@ -102,10 +95,10 @@ Create A Cluster
     ${resp}=    Create Cluster    ${data}                ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
     ${clusterid}=    Evaluate     '${resp.json()['data']}'
-    Set Global Variable           ${vclusterid}
+    Set Global Variable           ${clusterid}
 
 Add A Node To Cluster
-    ${data}=    Set Variable      {"method":"add","nodeIps":"${nodes IP}","vClusterId": "${vclusterid}"}
+    ${data}=    Set Variable      {"method":"add","nodeIps":["${nodes IP}"],"vClusterId": ${clusterid}}
     ${resp}=    Add Nodes         ${data}                 ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
 
@@ -114,6 +107,6 @@ Add A Node To Cluster
 Testing Initialization
     Login Sry With Admin
     Create Some Groups
-    # Create Some Users
-    # Create A Cluster
-    # Add A Node To Cluster
+    Create Some Users
+    Create A Cluster
+    Add A Node To Cluster
