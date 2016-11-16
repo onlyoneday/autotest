@@ -11,11 +11,13 @@ Suite Teardown  Close All Browsers
 
 app_c_32新建应用json-取消
     #新建应用
-    Click And Wait  stackCreate
+    Click Element   stackCreate
+    Wait Until Page Contains Element  stackAppName
     #输入最简参数
     ${name} =       Input Simple App
     #切换到json模式
-    Click And Wait  ${APP JSON TAB} 
+    Click Element   ${APP JSON TAB} 
+    Wait Until Page Contains Element  stackTrySee
     #点击取消
     Click Element   stackJsonCancel
     #验证应用是否部署

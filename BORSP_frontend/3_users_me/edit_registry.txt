@@ -32,15 +32,14 @@ G-219超过上限
 G-222修改仓库-取消
 	Click Element   ${registry0}
 	Wait Until Element Is Visible    create-registry-name
-	Input Text      create-registry-name  userRegistr
+	Input Text      create-registry-name  ${InputRegistry}
 	Click Element   //button[@aria-label="cancel"]
 	Element Should Not Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  ${registry1} 
 
 G-222修改仓库
 	Click Element   ${registry0}
 	Wait Until Element Is Visible    create-registry-name
-	Input Text      create-registry-name  userRegistry
-	Input Text      create-registry-userName  ${MMJ USER}
+	Input Registry  ${InputRegistry}  ${RG ADD}  ${MMJ USER}  ${RG PWD}
 	Click Element   //button[@aria-label="ok"]
 	Element Should Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  ${registry1} 
 	Element Should Contain  //*[@id='node-container-list']/tbody/tr[1]/td[3]  ${MMJ USER}
@@ -48,11 +47,11 @@ G-222修改仓库
 Correct Registry Info After Testing
 	Click Element   ${registry0}
 	Wait Until Element Is Visible    create-registry-name
-	Input Text      create-registry-name  ${MMJ CLUSTER}
-	Input Text      create-registry-userName  ${RG NAME}
+	Input Registry  ${MMJ RG}  ${RG ADD}  ${RG NAME}  ${RG PWD}
 	Click Element   //button[@aria-label="ok"]
 
 *** Variables ***
+${InputRegistry}   userRegistry
 ${registry0}       userRegistryUpdate0
 ${registry1}       userRegistryUpdate1
 ${message0}        名称不能为空

@@ -11,7 +11,8 @@ Suite Teardown  Close All Browsers
 
 app_m_4,22 应用管理列表界面停止、扩展、删除、更新可用/更新CMD
     #创建应用
-    Click And Wait  stackCreate
+    Click Element   stackCreate
+    Wait Until Page Contains Element  stackAppName
     ${name} =       Input Simple App
     #等待应用发布
     Click And Wait  stackFormCreate

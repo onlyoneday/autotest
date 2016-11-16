@@ -47,7 +47,7 @@ Manage Group
 Add Group User
 	[Arguments]   	${user}  ${role}
 	Click Element   accountGroupCreate
-	Wait Until Page Contains Element   update-select-group
+	Wait Until Element Is Visible  update-select-group
 	${upath} =      Evaluate  '//md-content/md-option/div[contains(text(),'+'"${user}"'+')]'
 	${rpath} =  	Evaluate  '//*[@value='+'"${role}"'+']'
 	Click Element   update-select-group
@@ -61,6 +61,7 @@ Delete Group User
 	${index} =      Get Group User Index    ${user}
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[4]/button'
 	Click Element   ${path}
+	Wait Until Element Is Visible  //button[@aria-label="确定"]
 	Click And Wait  //button[@aria-label="确定"]
 
 Delete Group
@@ -69,6 +70,7 @@ Delete Group
 	${no} =         Evaluate    ${index}-1
 	${path} =       Evaluate   'delete-group'+'${no}'
 	Click Element   ${path}
+	Wait Until Element Is Visible  //button[@aria-label="确定"]
 	Click And Wait  //button[@aria-label="确定"]
 
 Input Group Cluster

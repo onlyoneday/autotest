@@ -48,8 +48,7 @@ Edit User Info
 	${path} =       Evaluate   'node-list-menu-'+'${no}'
 	Click Element   ${path}
 	${button} =     Evaluate   'editUserInfo'+'${no}'
-	Click Element   ${button}
-	Wait Until Page Contains   更新成功
+	Click And Wait  ${button}
 
 Edit User Group
 	[Arguments]     ${name}
@@ -76,8 +75,7 @@ Edit User Password
 	${path} =       Evaluate   'node-list-menu-'+'${no}'
 	Click Element   ${path}
 	${button} =     Evaluate   'changePassword'+'${no}'
-	Click Element   ${button} 
-	Wait Until Page Contains   密码修改成功
+	Click And Wait  ${button} 
 
 Change User Password
     [Arguments]   	${newpassword}  ${repassword}

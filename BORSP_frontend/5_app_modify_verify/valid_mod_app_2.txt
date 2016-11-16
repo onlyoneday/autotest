@@ -11,7 +11,8 @@ Suite Teardown  Close All Browsers
 
 app_m_14 应用详情-右上方停止、扩展、删除、更新可用
     #创建应用
-    Click And Wait  stackCreate
+    Click Element   stackCreate
+    Wait Until Page Contains Element  stackAppName
     ${name} =       Input Simple App
     #等待应用发布
     Click And Wait  stackFormCreate
@@ -24,9 +25,9 @@ app_m_14 应用详情-右上方停止、扩展、删除、更新可用
     Should Be Equal As Strings   ${status}  ${RUNNING}
     #更新应用
     Click Element   ${APP LINK PATH}
-    Wait Until Element Is Visible    stackDetailMenu
+    Wait Until Page Contains Element  stackDetailMenu
     Click Element   stackDetailMenu
-    Wait Until Element Is Visible    stackDetailUpdate
+    Wait Until Element Is Visible     stackDetailUpdate
     Click And Wait  stackDetailUpdate  
     #更新CPU
     Input Text      stackCpus   0.1
@@ -41,9 +42,9 @@ app_m_14 应用详情-右上方停止、扩展、删除、更新可用
     Should Be Equal As Strings   ${status}  ${RUNNING}
     #停止应用
     Click Element   ${APP LINK PATH}
-    Wait Until Element Is Visible    stackDetailMenu
+    Wait Until Page Contains Element  stackDetailMenu
     Click Element   stackDetailMenu
-    Wait Until Element Is Visible    stackDetailSuspended
+    Wait Until Element Is Visible     stackDetailSuspended
     Click And Wait  stackDetailSuspended
     #Wait Until Element Contains  ${statustext}  ${SUSPENDED}  timeout=${LONG TIME} 
     #验证应用是否停止

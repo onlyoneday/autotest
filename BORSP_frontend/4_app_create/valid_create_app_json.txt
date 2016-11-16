@@ -17,17 +17,21 @@ app_c_23试试看高级模板    stackAdvancedModel
 
 Verify Json Template    [Arguments]   ${template}
     #新建应用
-    Click And Wait     stackCreate
+    Click Element      stackCreate
+    Wait Until Page Contains Element  stackAppName
     #切换到json模式
-    Click And Wait     ${APP JSON TAB}
+    Click Element      ${APP JSON TAB} 
+    Wait Until Page Contains Element  stackTrySee
     #试试看
     Click Element      stackTrySee
     Click Element      ${template}
     #去表单模式
-    Click And Wait     ${APP FORM TAB}
+    Click Element      ${APP FORM TAB}
+    Wait Until Page Contains Element  stackAppName
     Choose Cluster     ${MMJ CLUSTER}
     #切换到json模式
-    Click And Wait     ${APP JSON TAB}
+    Click Element      ${APP JSON TAB} 
+    Wait Until Page Contains Element  stackTrySee
     #等待应用发布
     Click And Wait     stackJsonCreate
     Wait Until Element Contains      ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 

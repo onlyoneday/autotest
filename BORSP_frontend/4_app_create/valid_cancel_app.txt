@@ -11,7 +11,8 @@ Suite Teardown  Close All Browsers
 
 app_c_03新建应用-取消
     #新建应用
-    Click And Wait  stackCreate
+    Click Element   stackCreate
+    Wait Until Page Contains Element  stackAppName
     #输入最简参数
     ${name} =       Input Simple App
     #点击取消

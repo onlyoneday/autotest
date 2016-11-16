@@ -12,13 +12,14 @@ Library         DateTime
 
 app_m_5-7,9-11,15-21,23 验证应用参数
     #新建应用
-    Click And Wait   stackCreate
-    ${name} =        Input Simple App
-    Input Text       stackImageAddress   ${image}
-    Input Advanced App      11110
+    Click Element   stackCreate
+    Wait Until Page Contains Element  stackAppName
+    ${name} =       Input Simple App
+    Input Text      stackImageAddress   ${image}
+    Input Advanced App  11110
     #等待应用发布
-    Click And Wait   stackFormCreate
-    Wait Until Element Contains  ${APP NAME PATH}  ${RUNNING}  timeout=${LONG TIME} 
+    Click And Wait    stackFormCreate
+    Wait Until Element Contains  ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
 
     #验证信息是否正确
     Click And Wait    ${APP LINK PATH}

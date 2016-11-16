@@ -17,7 +17,8 @@ app_c_05,07,09-11新建应用-强拉镜像/HOST模式/环境变量/Docker参数/
 
 Deploy App  [Arguments]   ${network}   ${forceImage}   ${aedhc}
     #新建应用
-    Click And Wait     stackCreate
+    Click Element   stackCreate
+    Wait Until Page Contains Element  stackAppName
     #输入最简参数
     ${name} =          Input Simple App
     #强制拉取镜像

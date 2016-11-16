@@ -60,7 +60,7 @@ ${VALID USER}            superadmin
 ${VALID PASSWD}          MMMMMMMM
 
 ${MMJ USER}              mmj
-${MMJ EMAIL}             m@m.cn
+${MMJ EMAIL}             m@m.com
 ${MMJ PASSWD}            M12345678
 ${MMJ GROUP}             groupmmj
 ${MMJ CLUSTER}           clustermmj
@@ -140,6 +140,8 @@ Result Api
 Open Browser And Login Adm
     Open Browser To Login Page
     Login Adm
+    ${group} =       Get Text  select_value_label_0
+    Run Keyword If  '${group}' <> '${SUPER}'   Choose Group Super
 
 Open Browser And Login Gm
     Open Browser To Login Page
@@ -168,6 +170,7 @@ Login
     Click Button   ${LOGIN BTN}
 
 Logout
-    Click Button   open-user-menu
-    Click Button   logout
+    Wait Until Page Contains Element   open-user-menu
+    Click Button    open-user-menu
+    Click Button    logout
     Wait Until Page Contains Element   ${LOGIN BTN}

@@ -12,7 +12,8 @@ Library         DateTime
 
 app_m_5,8 KILL KILL&SCALE
     #新建应用
-    Click And Wait      stackCreate
+    Click Element   stackCreate
+    Wait Until Page Contains Element  stackAppName
     #输入最简参数
     ${name} =           Input Simple App
     Input Advanced App  10000
@@ -22,7 +23,8 @@ app_m_5,8 KILL KILL&SCALE
     Click And Wait      stackFormCreate
     Wait Until Element Contains  ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
     #跳转到详情页面
-    Click And Wait      ${APP LINK PATH}
+    Click Element       ${APP LINK PATH}
+    Wait Until Page Contains Element  ${checkbox}
     #KILL
     Click Element       ${checkbox}
     Click Element       stackInstanceKilTack

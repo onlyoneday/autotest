@@ -24,10 +24,11 @@ G-092信息填写下边界值/删除无主机无应用集群
 Result Group
 	[Arguments]     ${name}    ${group}    ${description}
 	Enter Cluster   ${name}
-	${cluster} =      Get Text    ${clustertext}
-	Should Be Equal As Strings    ${cluster}   ${description}  
+	${cluster} =     Get Text    ${clustertext}
+	Should Be Equal As Strings   ${cluster}   ${description}  
 	#删除
-	Click And Wait  delete-cluster
+	Click Element   delete-cluster
+	Wait Until Page Contains Element  //button[@aria-label="确定"]
 	Click And Wait  //button[@aria-label="确定"]
 	
 *** Variables ***	

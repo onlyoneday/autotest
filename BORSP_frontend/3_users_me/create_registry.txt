@@ -54,13 +54,13 @@ G-215创建（重名）
 
 G-228取消删除
 	Click Element   userRegistryDelete0
-	Wait Until Element Is Visible    create-registry-name
+	Wait Until Element Is Visible    //button[@aria-label="取消"]
 	Click And Wait  //button[@aria-label="取消"]
 	Page Should Contain   ${STR 255}
 	
 G-227删除
 	Click Element   userRegistryDelete0
-	Wait Until Element Is Visible    create-registry-name
+	Wait Until Element Is Visible    //button[@aria-label="确定"]
 	Click And Wait  //button[@aria-label="确定"]
 	Page Should Not Contain   ${STR 255}
 

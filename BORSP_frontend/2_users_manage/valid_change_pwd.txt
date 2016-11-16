@@ -35,7 +35,7 @@ G-031下边界值
 	Login Adm
 
 Delete Test User For Changing Password
-	Delete User    ${InputUserName}
+	Delete User    ${InputName}
 
 *** Variables ***
 ${InputName}       UserForChangingPwd

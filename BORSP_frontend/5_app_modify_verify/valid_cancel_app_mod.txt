@@ -11,7 +11,8 @@ Suite Teardown  Close All Browsers
 
 app_m_37 更新应用-取消 
     #新建应用
-    Click And Wait  stackCreate
+    Click Element   stackCreate
+    Wait Until Page Contains Element  stackAppName
     #输入最简参数
     ${name} =       Input Simple App
     #等待应用发布
@@ -35,8 +36,10 @@ Not Update    [Arguments]   ${i}   ${time}
     ${time2} =      Get Text    ${patht}
     Should Be Equal As Strings  ${time2}  ${time} 
     ${patha} =      Evaluate   '//*[@id="stackListApp"]/tbody/tr['+'${i}'+']/td[1]/a'
-    Click And Wait  ${patha}
-    Click And Wait  ${APP TAB 2} 
+    Click Element   ${patha}
+    Wait Until Page Contains Element  ${APP TAB 2} 
+    Click Element   ${APP TAB 2} 
+    Wait Until Page Contains Element  ${cputest}
     ${cpu} =        Get Text    ${cputest}
     Should Be Equal As Strings  ${cpu}  0.2
     #删除该应用（避免垃圾数据）

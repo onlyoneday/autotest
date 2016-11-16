@@ -24,7 +24,6 @@ G-073/75添加多个组成员/将一个用户加入多个用户组
 	Page Should Contain       ${MMJ USER} 
 	Page Should Contain       ${GM USER}
 	Page Should Contain       组成员
-	Page Should Not Contain   组管理员
 
 G-074/75添加多个组管理员/将一个用户加入多个用户组
 	Manage Group    ${MANA GRP2}  2
@@ -33,11 +32,10 @@ G-074/75添加多个组管理员/将一个用户加入多个用户组
 	Page Should Contain       ${MMJ USER} 
 	Page Should Contain       ${GM USER}
 	Page Should Contain       组管理员
-	Page Should Not Contain   组成员 
 
 G-083删除有用户的用户组
 	Delete Group    ${MANA GRP1}
-	Page Should Contain    ${MANA GRP1}
+	Page Should Contain  ${MANA GRP1}
 
 G-078删除所有的组管理员
 	Manage Group    ${MANA GRP2}  2
