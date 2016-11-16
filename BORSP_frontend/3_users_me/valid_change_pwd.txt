@@ -17,11 +17,13 @@ G-001用户管理-组管理员-修改自己的密码(上边界)
 	Click And Wait     submit-create-user
 	Logout
 	Login   ${name}    ${STR 8}
+	Wait Until Page Contains Element   ${LOGIN SYMBOL}
 	Go To   ${USER_PWD URL}
 	Input Password     ${STR 8}    ${STR 16}    ${STR 16}
 	Click And Wait     submit-update-password
 	Logout
 	Login   ${name}    ${STR 16} 
+	Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 G-007用户管理-普通用户-修改自己密码（下边界）
 	Go To Page         ${USER_MANU URL}
@@ -32,11 +34,13 @@ G-007用户管理-普通用户-修改自己密码（下边界）
 	Click And Wait     submit-create-user
 	Logout
 	Login   ${name}    ${STR 16}
+	Wait Until Page Contains Element   ${LOGIN SYMBOL}
 	Go To   ${USER_PWD URL}
 	Input Password     ${STR 16}    ${STR 8}    ${STR 8}
 	Click And Wait     submit-update-password
 	Logout
-	Login   ${name}    ${STR 8} 
+	Login   ${name}    ${STR 8}
+	Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 *** Keywords ***
 Input Password

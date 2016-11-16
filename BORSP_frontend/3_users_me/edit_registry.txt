@@ -31,7 +31,7 @@ G-219超过上限
 
 G-222修改仓库-取消
 	Click Element   ${registry0}
-	Wait Until Element Is Visible    create-registry-name
+	Wait Until Page Contains Element      create-registry-name
 	Input Text      create-registry-name  ${InputRegistry}
 	Click Element   //button[@aria-label="cancel"]
 	Element Should Not Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  ${registry1} 

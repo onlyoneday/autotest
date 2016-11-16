@@ -15,7 +15,8 @@ G-132/133新建应用-名称不填
     Clear Element Text    stackAppName
     Result Web            ${location1}  ${message1}
     #JSON模式
-    Click Element         ${APP JSON TAB} 
+    Click Element         ${APP JSON TAB}
+    Wait Until Page Contains Element         stackJsonCreate
     Result Api            stackJsonCreate    ${message31}
 
 G-132/133新建应用-地址不填
@@ -25,6 +26,7 @@ G-132/133新建应用-地址不填
     Result Web            ${location2}  ${message2}
     #JSON模式
     Click Element         ${APP JSON TAB} 
+    Wait Until Page Contains Element         stackJsonCreate
     Result Api            stackJsonCreate    ${message32}
 
 G-132/133新建应用-集群不填
@@ -33,6 +35,7 @@ G-132/133新建应用-集群不填
     Element Should Be Disabled  stackFormCreate
     #JSON模式
     Click Element     ${APP JSON TAB} 
+    Wait Until Page Contains Element     stackJsonCreate
     Result Api        stackJsonCreate    ${message4}
 
 *** Variables ***

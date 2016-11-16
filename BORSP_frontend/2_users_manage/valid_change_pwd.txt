@@ -21,7 +21,7 @@ G-030上边界值
 	Click And Wait        //button[@aria-label="ok"]
 	Logout
 	Login                 ${InputName}   ${STR 16} 
-	Location Should Be    ${HOME URL}
+	Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 G-031下边界值
 	Go To Page            ${USER_MANU URL}
@@ -30,7 +30,7 @@ G-031下边界值
 	Click And Wait        //button[@aria-label="ok"]
 	Logout
 	Login                 ${InputName}   ${STR 8}
-	Location Should Be    ${HOME URL}
+	Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Delete Test User For Changing Password
 	Go To Page            ${USER_MANU URL}

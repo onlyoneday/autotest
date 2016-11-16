@@ -15,8 +15,6 @@ Add Menmber Before Testing
 	Go To Page        ${USER_MANG URL}
 	Manage Group      ${TGROUP}    2
 	Add Group User    ${MMJ USER}  member
-	Go To Page        ${USER_MANG URL}
-	Manage Group      ${TGROUP}    2
 	Add Group User    ${GM USER}   owner
 
 G-100/121组管理员-属于多个组-查看多个组下的多个集群和主机

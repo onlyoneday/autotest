@@ -66,8 +66,9 @@ G-076/077删除无应用/有应用的组成员
 
 G-103删除没有主机有应用的集群
 	Go To Page      ${HOME URL}
-	Delete Cluster  ${MANA CLU}
-	Page Should Contain   ${MANA CLU}
+	Enter Cluster   ${MANA CLU}
+	Click Element   delete-cluster
+	Page Should Contain   ${message1} 
 
 Delete All Data After Testing
 	Go To Page      ${APP_ALL URL}
@@ -82,3 +83,4 @@ ${MANA GRP1}        managegroup1
 ${MANA GRP2}        managegroup2
 ${MANA CLU}         clusterformanagement
 ${MANA APP}         applicationformanagement
+${message1}         集群内有应用的时候不能删除集群

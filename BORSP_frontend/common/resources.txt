@@ -3,6 +3,7 @@
 Documentation  A resource file containing the specific keywords and variables for application
 Library        Selenium2Library
 Library        String
+Resource        ../common/group_resources.txt
 
 *** Variables ***
 
@@ -22,11 +23,11 @@ ${APP_ALL URL}           ${SERVER}/app/list/all
 ${APP_CREATE URL}        ${SERVER}/app/create
 ${NODE URL}              ${SERVER}/node/list&clusterInfo
 ${RSTACK URL}            ${SERVER}/rolexStack/list
+${USER_MANU URL}         ${SERVER}/user-manage/list/user
+${USER_MANG URL}         ${SERVER}/user-manage/list/group
 ${USER_ME URL}           ${SERVER}/user/aboutme
 ${USER_PWD URL}          ${SERVER}/user/password
 ${USER_RG URL}           ${SERVER}/user/registry
-${USER_MANU URL}         ${SERVER}/user-manage/list/user
-${USER_MANG URL}         ${SERVER}/user-manage/list/group
 
 #--------------------LOCATION----------------
 ${APP FORM TAB}          css=md-tab-item:nth-child(1)
@@ -104,9 +105,9 @@ Go To Page
     Go To   ${URL}
     Sleep   1
     Run Keyword If  '${URL}' == '${HOME URL}'        Wait Until Page Contains Element  ${LOGIN SYMBOL}
-    Run Keyword If  '${URL}' == '${USER_MANG URL}'   Wait Until Page Contains Element  user-list-table
-    Run Keyword If  '${URL}' == '${USER_MANU URL}'   Wait Until Page Contains Element  stackListSearch
-    Run Keyword If  '${URL}' == '${APP_ALL URL}'     Wait Until Page Contains Element  stackListSearch
+    Run Keyword If  '${URL}' == '${USER_MANG URL}'   Wait Until Page Contains Element  stackCreate
+    Run Keyword If  '${URL}' == '${USER_MANU URL}'   Wait Until Page Contains Element  stackCreate
+    Run Keyword If  '${URL}' == '${APP_ALL URL}'     Wait Until Page Contains Element  stackCreate
     Run Keyword If  '${URL}' == '${APP_MY URL}'      Wait Until Page Contains Element  stackListSearch
     Run Keyword If  '${URL}' == '${USER_PWD URL}'    Wait Until Page Contains Element  oldPassword
     Run Keyword If  '${URL}' == '${APP_CREATE URL}'  Wait Until Page Contains Element  stackAppName
@@ -114,7 +115,7 @@ Go To Page
 Click And Wait
     [Arguments]  ${ELEMENT}
     Click Element  ${ELEMENT}
-    Sleep   3
+    Sleep   2
 
 Go Back And Wait
     Go Back
@@ -141,7 +142,7 @@ Result Api
 Open Browser And Login Adm
     Open Browser To Login Page
     Login Adm
-    ${group} =       Get Text  select_value_label_0
+    ${group} =       Get Text  //*[@id='select_value_label_0']/span[1]/div/span
     Run Keyword If  '${group}' <> '${SUPER}'    Choose Group Super
 
 Open Browser And Login Gm
@@ -154,19 +155,21 @@ Open Browser And Login Mmj
 
 Login Adm
     Login   ${VALID USER}   ${VALID PASSWD}
+    Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Login Gm
     Login   ${GM USER}   ${GM PASSWD}
+    Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Login Mmj
     Login   ${MMJ USER}  ${MMJ PASSWD}
+    Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Login
     [Arguments]    ${USER}   ${PASSWD}
     Input Text     ${USERNAME FIELD}   ${USER}
     Input Text     ${PASSWORD FIELD}   ${PASSWD}
     Click Button   ${LOGIN BTN}
-    Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Logout
     Wait Until Page Contains Element   open-user-menu

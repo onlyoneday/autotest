@@ -50,7 +50,8 @@ Enter Cluster
 
 Delete Node
 	[Arguments]     ${index}
-	${ippath} =     Evaluate   '//table/tbody/tr['+'${index}'+']/td[2]'
+	${tr} =         Evaluate   ${index}+1
+	${ippath} =     Evaluate   '//table/tbody/tr['+'${tr}'+']/td[2]'
 	${nodeip} =     Get Text   ${ippath}
 	${path} =       Evaluate   'node-detail-list-del'+'${index}'
 	Click Element   ${path}

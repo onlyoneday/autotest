@@ -35,7 +35,7 @@ G-072输入项不符合规范(重复)
 *** Variables ***
 ${message0}        最大长度255个字符
 ${location0}       div:nth-child(1) > p:nth-child(4)
-${message1}        组名不能为空
+${message1}        名称不能为空
 ${location1}       div:nth-child(1) > p:nth-child(3)
 ${message2}		   Error 1406
 ${message3}		   Error 1062

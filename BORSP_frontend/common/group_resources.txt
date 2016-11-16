@@ -46,7 +46,8 @@ Manage Group
 	${path} =       Evaluate   '//*[@id="user-list-table"]/tbody/tr['+'${index}'+']/td[6]/button[1]'
 	Click Element   ${path}
 	Wait Until Page Contains Element   clusterCreate
-	Run Keyword If  '${tab}' == '2'    Click And Wait  css=md-tab-item:nth-child(2)
+	Run Keyword If  '${tab}' == '2'    Click Element  css=md-tab-item:nth-child(2)
+	Run Keyword If  '${tab}' == '2'    Wait Until Page Contains Element   accountGroupCreate
 
 Add Group User
 	[Arguments]   	${user}  ${role}

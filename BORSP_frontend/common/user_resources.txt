@@ -49,7 +49,7 @@ Edit User Info
 	Click Element   ${path}
 	${button} =     Evaluate     'editUserInfo'+'${no}'
 	Click Element   ${button}
-	Wait Until Element Contains   input-name
+	Wait Until Page Contains Element  input-name
 
 Edit User Group
 	[Arguments]     ${name}

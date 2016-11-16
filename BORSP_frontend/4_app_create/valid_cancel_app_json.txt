@@ -17,7 +17,7 @@ app_c_32新建应用json-取消
     ${name} =       Input Simple App
     #切换到json模式
     Click Element   ${APP JSON TAB} 
-    Wait Until Page Contains Element  stackTrySee
+    Wait Until Page Contains Element  stackJsonCreate
     #点击取消
     Click Element   stackJsonCancel
     #验证应用是否部署
