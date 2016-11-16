@@ -44,20 +44,22 @@ Select User Group2
 Edit User Info
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
-	${no} =         Evaluate   ${index}-1
-	${path} =       Evaluate   'node-list-menu-'+'${no}'
+	${no} =         Evaluate      ${index}-1
+	${path} =       Evaluate     'node-list-menu-'+'${no}'
 	Click Element   ${path}
-	${button} =     Evaluate   'editUserInfo'+'${no}'
-	Click And Wait  ${button}
+	${button} =     Evaluate     'editUserInfo'+'${no}'
+	Click Element   ${button}
+	Wait Until Element Contains   input-name
 
 Edit User Group
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
-	${no} =         Evaluate   ${index}-1
-	${path} =       Evaluate   'node-list-menu-'+'${no}'
+	${no} =         Evaluate       ${index}-1
+	${path} =       Evaluate      'node-list-menu-'+'${no}'
 	Click Element   ${path}
-	${button} =     Evaluate   'editUserGroup'+'${no}'
-	Click And Wait  ${button} 
+	${button} =     Evaluate      'editUserGroup'+'${no}'
+	Click Element   ${button} 
+	Wait Until Element Is Visible  update-select-group
 
 Add User Group
 	[Arguments]   	${group}  ${role}
@@ -75,7 +77,8 @@ Edit User Password
 	${path} =       Evaluate   'node-list-menu-'+'${no}'
 	Click Element   ${path}
 	${button} =     Evaluate   'changePassword'+'${no}'
-	Click And Wait  ${button} 
+	Click Element   ${button} 
+	Wait Until Element Is Visible   modals-new-password
 
 Change User Password
     [Arguments]   	${newpassword}  ${repassword}

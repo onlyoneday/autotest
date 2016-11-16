@@ -15,6 +15,10 @@ Choose Group Groupmmj
     Click Element   select_value_label_0
     Wait Until Page Contains Element   //md-option[@value="964"]
     Click And Wait  //md-option[@value="964"]
+Choose Group testGroup
+    Click Element   select_value_label_0
+    Wait Until Page Contains Element   //md-option[@value="965"]
+    Click And Wait  //md-option[@value="965"]
 
 Input Group
     [Arguments]   	${username}  ${description}

@@ -13,12 +13,15 @@ Suite Teardown  Close All Browsers
 Add Menmber Before Testing
 	Login Adm
 	Go To Page        ${USER_MANG URL}
-	Manage Group      ${TGROUP}  2
+	Manage Group      ${TGROUP}    2
 	Add Group User    ${MMJ USER}  member
+	Go To Page        ${USER_MANG URL}
+	Manage Group      ${TGROUP}    2
 	Add Group User    ${GM USER}   owner
 
 G-100/121组管理员-属于多个组-查看多个组下的多个集群和主机
 	Login Gm
+	Choose Group testGroup
 	Page Should Not Contain  ${MMJ CLUSTER}
 	Check Cluster And Node
 	Choose Group Groupmmj
@@ -27,6 +30,7 @@ G-100/121组管理员-属于多个组-查看多个组下的多个集群和主机
 
 G-101/122组管理员-属于多个组-查看多个组下的多个集群和主机
 	Login Mmj
+	Choose Group testGroup
 	Page Should Not Contain  ${MMJ CLUSTER}
 	Check Cluster And Node
 	Choose Group Groupmmj

@@ -102,6 +102,7 @@ Open Browser To Login Page
 Go To Page
     [Arguments]  ${URL}
     Go To   ${URL}
+    Sleep   1
     Run Keyword If  '${URL}' == '${HOME URL}'        Wait Until Page Contains Element  ${LOGIN SYMBOL}
     Run Keyword If  '${URL}' == '${USER_MANG URL}'   Wait Until Page Contains Element  user-list-table
     Run Keyword If  '${URL}' == '${USER_MANU URL}'   Wait Until Page Contains Element  stackListSearch
@@ -141,7 +142,7 @@ Open Browser And Login Adm
     Open Browser To Login Page
     Login Adm
     ${group} =       Get Text  select_value_label_0
-    Run Keyword If  '${group}' <> '${SUPER}'   Choose Group Super
+    Run Keyword If  '${group}' <> '${SUPER}'    Choose Group Super
 
 Open Browser And Login Gm
     Open Browser To Login Page
@@ -153,21 +154,19 @@ Open Browser And Login Mmj
 
 Login Adm
     Login   ${VALID USER}   ${VALID PASSWD}
-    Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Login Gm
     Login   ${GM USER}   ${GM PASSWD}
-    Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Login Mmj
     Login   ${MMJ USER}  ${MMJ PASSWD}
-    Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Login
     [Arguments]    ${USER}   ${PASSWD}
     Input Text     ${USERNAME FIELD}   ${USER}
     Input Text     ${PASSWORD FIELD}   ${PASSWD}
     Click Button   ${LOGIN BTN}
+    Wait Until Page Contains Element   ${LOGIN SYMBOL}
 
 Logout
     Wait Until Page Contains Element   open-user-menu

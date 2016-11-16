@@ -48,7 +48,8 @@ Update App By Name
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     Click Element   ${menu}
     ${button} =     Evaluate  'stackListUpdate'+'${index}'
-    Click And Wait  ${button}
+    Click Element   ${button}
+    Wait Until Page Contains Element  stackImageAddress
 
 Change App Owner
     [Arguments]     ${appname}
@@ -57,7 +58,8 @@ Change App Owner
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     Click Element   ${menu}
     ${button} =     Evaluate  'stackLisChangeAppUser'+'${index}'
-    Click And Wait  ${button}
+    Click Element   ${button}
+    Wait Until Element Is Visible    update-select-group
 
 Extend App By Name
     [Arguments]     ${appname}
@@ -66,7 +68,8 @@ Extend App By Name
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     Click Element   ${menu}
     ${button} =     Evaluate  'stackListExtend'+'${index}'
-    Click And Wait  ${button}
+    Click Element   ${button}
+    Wait Until Element Is Visible    name=containerNum
     
 Get App Index
     [Arguments]     ${name}

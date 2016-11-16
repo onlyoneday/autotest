@@ -11,9 +11,10 @@ Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-Creat Group For Management
+Creat Group1 For Management
 	Input Group     ${MANA GRP1}   ${EMPTY}
 	Click And Wait  submit-create-user
+Creat Group2 For Management
 	Input Group     ${MANA GRP2}    ${EMPTY}
 	Click And Wait  submit-create-user
 

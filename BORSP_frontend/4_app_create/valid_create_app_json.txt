@@ -21,17 +21,17 @@ Verify Json Template    [Arguments]   ${template}
     Wait Until Page Contains Element  stackAppName
     #切换到json模式
     Click Element      ${APP JSON TAB} 
-    Wait Until Page Contains Element  stackTrySee
+    Wait Until Element Is Visible  stackTrySee
     #试试看
     Click Element      stackTrySee
     Click Element      ${template}
     #去表单模式
     Click Element      ${APP FORM TAB}
-    Wait Until Page Contains Element  stackAppName
+    Wait Until Element Is Visible  stackAppName
     Choose Cluster     ${MMJ CLUSTER}
     #切换到json模式
     Click Element      ${APP JSON TAB} 
-    Wait Until Page Contains Element  stackTrySee
+    Wait Until Element Is Visible  stackTrySee
     #等待应用发布
     Click And Wait     stackJsonCreate
     Wait Until Element Contains      ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
