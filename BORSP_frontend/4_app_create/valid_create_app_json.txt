@@ -3,10 +3,8 @@
 Documentation   新建应用json-验证试试看模板
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
-Suite Setup     Open Browser And Login Mmj
-Test Setup      Go To Page   ${APP_MY URL}
+Test Setup      Open Browser And Login Mmj
 Test Template   Verify Json Template
-Suite Teardown  Close All Browsers
 
 *** Test Cases ***       template         
 
@@ -17,11 +15,12 @@ app_c_23试试看高级模板    stackAdvancedModel
 
 Verify Json Template    [Arguments]   ${template}
     #新建应用
+    Go To Page         ${APP_MY URL}
     Click Element      stackCreate
     Wait Until Page Contains Element  stackAppName
     #切换到json模式
     Click Element      ${APP JSON TAB} 
-    Wait Until Element Is Visible  stackJsonCreate
+    Wait Until Element Is Visible  stackTrySee
     #试试看
     Click Element      stackTrySee
     Click Element      ${template}
@@ -42,3 +41,4 @@ Verify Json Template    [Arguments]   ${template}
     Should Be Equal As Strings       ${app status}   ${RUNNING}
     #删除该应用（避免垃圾数据）
     Delete App From Button
+    Close All Browsers

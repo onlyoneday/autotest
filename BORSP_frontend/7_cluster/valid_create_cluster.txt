@@ -28,7 +28,7 @@ Result Group
 	Should Be Equal As Strings   ${cluster}   ${description}  
 	#删除
 	Click Element   delete-cluster
-	Wait Until Element Is Visible  //button[@aria-label="确定"]
+	Wait Until Element Is Visible  //button[@aria-label="确定"]  timeout=${LONG TIME} 
 	Click And Wait  //button[@aria-label="确定"]
 	
 *** Variables ***	

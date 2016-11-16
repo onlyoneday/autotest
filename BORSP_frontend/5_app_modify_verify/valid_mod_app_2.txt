@@ -53,7 +53,8 @@ app_m_14 应用详情-右上方停止、扩展、删除、更新可用
     #扩展应用
     Click Element   stackDetailMenu
     Wait Until Element Is Visible    stackDetailExtend
-    Click And Wait  stackDetailExtend
+    Click Element   stackDetailExtend
+    Wait Until Element Is Visible    name=containerNum
     Input Text      name=containerNum   1
     Click And Wait  //button[@aria-label="ok"]
     Wait Until Element Contains  ${statustext}  ${RUNNING}  timeout=${LONG TIME} 

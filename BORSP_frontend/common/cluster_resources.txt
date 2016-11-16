@@ -44,7 +44,7 @@ Enter Cluster
 	[Arguments]     ${name}
 	Input Text		//input    ${name}
 	Sleep   1
-	${link} =       Evaluate   '//section/header/h3/a[contains(text(),'+'"${name}"'+')]'
+	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
 	Click Element   ${link}
 	Wait Until Page Contains   集群详情
 
@@ -56,5 +56,5 @@ Delete Node
 	${path} =       Evaluate   'node-detail-list-del'+'${index}'
 	Click Element   ${path}
 	Click And Wait  //button[@aria-label="确定"]
-	Wait Until Page Does Not Contain  ${nodeip}
+	Wait Until Page Does Not Contain    ${nodeip}    timeout=${LONG TIME} 
 

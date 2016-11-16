@@ -31,24 +31,24 @@ G-219超过上限
 
 G-222修改仓库-取消
 	Click Element   ${registry0}
-	Wait Until Page Contains Element      create-registry-name
+	Wait Until Element Is Visible    create-registry-name
 	Input Text      create-registry-name  ${InputRegistry}
 	Click Element   //button[@aria-label="cancel"]
 	Element Should Not Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  ${registry1} 
 
 G-222修改仓库
-	Click Element   ${registry0}
+	Click Element    ${registry0}
 	Wait Until Element Is Visible    create-registry-name
-	Input Registry  ${InputRegistry}  ${RG ADD}  ${MMJ USER}  ${RG PWD}
-	Click Element   //button[@aria-label="ok"]
-	Element Should Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  ${registry1} 
+	Input Registry   ${InputRegistry}  ${RG ADD}  ${MMJ USER}  ${RG PWD}
+	Click And Wait   //button[@aria-label="ok"]
+	Element Should Contain  //*[@id='node-container-list']/tbody/tr[1]/td[1]  ${InputRegistry} 
 	Element Should Contain  //*[@id='node-container-list']/tbody/tr[1]/td[3]  ${MMJ USER}
 
 Correct Registry Info After Testing
-	Click Element   ${registry0}
+	Click Element    ${registry0}
 	Wait Until Element Is Visible    create-registry-name
-	Input Registry  ${MMJ RG}  ${RG ADD}  ${RG NAME}  ${RG PWD}
-	Click Element   //button[@aria-label="ok"]
+	Input Registry   ${MMJ RG}  ${RG ADD}  ${RG NAME}  ${RG PWD}
+	Click And Wait   //button[@aria-label="ok"]
 
 *** Variables ***
 ${InputRegistry}   userRegistry

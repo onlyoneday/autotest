@@ -32,7 +32,8 @@ G-085删除有集群的用户组
 
 G-087管理集群-删除
 	Manage Group      ${TEST GRP}  1
-	Click And Wait    //button[@aria-label="stop"]
+	Click Element     //button[@aria-label="stop"]
+	Wait Until Element Is Visible  //button[@aria-label="确定"]
 	Click And Wait    //button[@aria-label="确定"]
 	Page Should Not Contain  ${TEST CLU}
 

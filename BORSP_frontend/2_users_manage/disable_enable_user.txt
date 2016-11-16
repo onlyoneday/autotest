@@ -41,7 +41,7 @@ G-046/055禁用/启用有组无应用普通用户
 	Go To Page          ${USER_MANU URL}
 	Delete User         ${name}
 
-G-048/057 禁用/启用组管理员
+G-048/057禁用/启用组管理员
 	#创建组管理员
 	${name} =           Generate UserName
     ${email} =          Generate UserEmail  ${name}
@@ -54,7 +54,7 @@ G-048/057 禁用/启用组管理员
 	Go To Page          ${USER_MANU URL}
 	Delete User         ${name}
 
-G-049/058 禁用/启用超级管理员
+G-049/058禁用/启用超级管理员
 	#创建超级管理员
 	${name} =           Generate UserName
     ${email} =          Generate UserEmail  ${name}
@@ -66,7 +66,7 @@ G-049/058 禁用/启用超级管理员
 	Go To Page          ${USER_MANU URL}
 	Delete User         ${name}
 
-G-047/056/039 禁用/启用有应用的组成员/删除有应用的组成员
+G-047/056/039禁用/启用有应用的组成员/删除有应用的组成员
 	#创建有应用的组成员
 	${name} =           Generate UserName
     ${email} =          Generate UserEmail  ${name}
@@ -86,6 +86,7 @@ G-047/056/039 禁用/启用有应用的组成员/删除有应用的组成员
 	Go To Page          ${USER_MANU URL}
 	Disable Enable      ${name}  ${STR 8}
 	#删除有应用的组成员
+	Go To Page	        ${USER_MANU URL}
 	Delete User         ${name}
 	#删除应用
 	Go To Page          ${APP_ALL URL}

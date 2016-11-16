@@ -22,7 +22,8 @@ app_m_5-7,9-11,15-21,23 验证应用参数
     Wait Until Element Contains  ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
 
     #验证信息是否正确
-    Click And Wait    ${APP LINK PATH}
+    Click Element     ${APP LINK PATH}
+    Wait Until Page Contains Element  stackDetailMenu
     #应用名称
     ${app name} =     Get Text  css=h2
     Should Contain    ${app name}   ${name}
@@ -34,14 +35,16 @@ app_m_5-7,9-11,15-21,23 验证应用参数
     Verify Config
 
     #编辑按钮可用
-    Click And Wait    stackConfigEditFirst
+    Click Element     stackConfigEditFirst
+    Wait Until Page Contains Element  stackImageAddress
     #更新应用
     Modify Parameter
     #等待应用发布
     Click And Wait    stackFormUpdate
 
     #验证信息是否正确
-    Click And Wait    ${APP LINK PATH}
+    Click Element     ${APP LINK PATH}
+    Wait Until Page Contains Element  stackDetailMenu
     #验证实例2
     Verify Config 2
     #验证Debug
@@ -75,7 +78,7 @@ Modify Parameter
 Verify Header
     #Header-更新时间
     ${cur date} =     Get Current Date
-    ${app date} =     Get Text   css=div.flex > dl:nth-child(3) > dd
+    ${app date} =     Get Text    ${statustext}
     ${cd} =   Get Substring   ${cur date}   0  13
     ${ad} =   Get Substring   ${app date}   0  13
     #Should Be Equal As Strings   ${cd}   ${ad}
@@ -91,9 +94,9 @@ Verify Instance
     ${index} =      Get Matching Xpath Count   //*[@id="stackInstanceList"]/tbody/tr[*] 
     Should Be Equal As Strings   ${index}  1
     #实例-链接可用
-    Click And Wait  xpath=//*[@id='stackInstanceList']/tbody/tr/td[2]/p/span/a
+    #Click And Wait  xpath=//*[@id='stackInstanceList']/tbody/tr/td[2]/p/span/a
     #Page Should Contain   Welcome to nginx!
-    Go Back And Wait
+    #Go Back And Wait
 
 Verify Config
     #转到配置tab
@@ -162,6 +165,7 @@ Verify Debug
 *** Variables ***
 ${image}                 nginx:latest
 ${wrong image}           nginx:latestt
+${statustext}            css=dl:nth-child(1) > dd
 ${cputext}               css=div.flex-75 > div > dl:nth-child(2) > dd
 ${memtext}               css=div.flex-75 > div > dl:nth-child(3) > dd
 ${numtext}               css=div.flex-75 > div > dl:nth-child(4) > dd

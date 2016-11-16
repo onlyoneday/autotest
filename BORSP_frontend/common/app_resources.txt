@@ -121,6 +121,7 @@ Choose Cluster
     ${path} =       Evaluate   '//*[@value='+'"${cluster}"'+']'
     Wait Until Element Is Visible  ${path}
     Click Element   ${path}
+    Sleep    0.5
 
 Input Advanced App  
     [Arguments]     ${AEDHC}
