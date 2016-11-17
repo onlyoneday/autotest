@@ -7,7 +7,6 @@ Resource        ../common/group_resources.txt
 
 *** Variables ***
 
-#${SERVER}                http://192.168.1.163:5013/ui
 ${SERVER}                http://192.168.1.87:81/ui
 ${BROWSER}               Firefox
 ${FF_PROFILE}            /Users/mmj/Library/Application  Support/Firefox/Profiles/6s2nko1b.default
@@ -105,13 +104,17 @@ Go To Page
     [Arguments]  ${URL}
     Go To   ${URL}
     Sleep   1
-    Run Keyword If  '${URL}' == '${HOME URL}'        Wait Until Page Contains Element  ${LOGIN SYMBOL}
-    Run Keyword If  '${URL}' == '${USER_MANG URL}'   Wait Until Page Contains Element  stackCreate
-    Run Keyword If  '${URL}' == '${USER_MANU URL}'   Wait Until Page Contains Element  stackCreate
-    Run Keyword If  '${URL}' == '${APP_ALL URL}'     Wait Until Page Contains Element  stackCreate
-    Run Keyword If  '${URL}' == '${APP_MY URL}'      Wait Until Page Contains Element  stackListSearch
-    Run Keyword If  '${URL}' == '${USER_PWD URL}'    Wait Until Page Contains Element  oldPassword
-    Run Keyword If  '${URL}' == '${APP_CREATE URL}'  Wait Until Page Contains Element  stackAppName
+    Run Keyword If  '${URL}' == '${HOME URL}'        Wait Element   ${LOGIN SYMBOL}
+    Run Keyword If  '${URL}' == '${USER_MANG URL}'   Wait Element   stackCreate
+    Run Keyword If  '${URL}' == '${USER_MANU URL}'   Wait Element   stackCreate
+    Run Keyword If  '${URL}' == '${APP_ALL URL}'     Wait Element   stackCreate
+    Run Keyword If  '${URL}' == '${APP_MY URL}'      Wait Element   stackListSearch
+    Run Keyword If  '${URL}' == '${USER_PWD URL}'    Wait Element   oldPassword
+    Run Keyword If  '${URL}' == '${APP_CREATE URL}'  Wait Element   stackAppName
+
+Wait Element
+     [Arguments]  ${ELEMENT}
+     Wait Until Page Contains Element  ${ELEMENT}  timeout=10
 
 Click And Wait
     [Arguments]  ${ELEMENT}

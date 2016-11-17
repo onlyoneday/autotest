@@ -26,6 +26,7 @@ G-027输入项上边外侧界(姓名、邮箱)
 	Element Should Be Disabled      ${button}
 
 G-027-2输入项上边外侧界(用户描述)
+	[Documentation]  Bug
 	Edit User Info  ${MMJ USER}
 	Input Text		userDescription  ${STR 256}
 	Result Web      ${location02}    ${message0} 

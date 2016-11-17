@@ -10,18 +10,20 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 G-069必填项不填
+	[Documentation]  Bug
 	Edit Group           ${TGROUP}
 	Clear Element text   input-username
 	Result Web           ${location1}    ${message1} 
 	Element Should Be Disabled	${button} 
 
-G-070输入项上边外侧界(用户名)
+G-070输入项上边外侧界(名称)
 	Edit Group           ${TGROUP}
 	Edit Group Info      ${STR 256}      ${EMPTY}
 	Result Web           ${location0}    ${message0} 
 	Element Should Be Disabled	${button} 
 
 G-070-2输入项上边外侧界(用户描述)
+	[Documentation]  Bug
 	Edit Group           ${TGROUP}
 	Edit Group Info      ${TGROUP}       ${STR 256}
 	Result Web           ${location0}    ${message0} 

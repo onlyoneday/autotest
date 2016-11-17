@@ -10,7 +10,8 @@ Library         DateTime
 
 *** Test Cases ***
 
-app_m_5-7,9-11,15-21,23 验证应用参数(实例链接跑不通)
+app_m_5-7,9-11,15-21,23 验证应用参数
+    [Documentation]  实例链接没有跑
     #新建应用
     Click Element       stackCreate
     Wait Until Page Contains Element  stackAppName

@@ -43,8 +43,9 @@ G-083-2管理超级用户组-不能编辑信息和删除
 	Element Should Not Contain   //*[@id='user-list-table']/tbody/tr[1]/td[6]  编辑
 	Element Should Not Contain   //*[@id='user-list-table']/tbody/tr[1]/td[6]  删除
 
-G-083-3超级管理员组-把自己加入和删除非管理员组(bug)
-	#Go To Page	    ${USER_MANG URL}
+G-083-3超级管理员组-把自己加入和删除非管理员组
+	[Documentation]  Bug
+	#Go To Page	     ${USER_MANG URL}
 	#添加自己到其他组
 	#Manage Group    ${TGROUP}    2
 	#Add Group User  ${VALID USER}  member

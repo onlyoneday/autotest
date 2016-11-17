@@ -4,6 +4,7 @@ Documentation   用户管理-修改自己的密码-正常
 Resource        ../common/resources.txt
 Resource        ../common/user_resources.txt
 Test Setup      Open Browser And Login Adm
+Test Teardown   Close All Browsers
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***
