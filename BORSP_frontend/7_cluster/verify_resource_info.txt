@@ -9,8 +9,8 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 cluster-2,4-5,10-11 验证主机信息/集群角色和主机状态
-    Wait Until Page Contains Element   //table[@id='node-list']
-	${index} =      Get Matching Xpath Count   //table[@id="node-list"]/tbody/tr[*]
+    Wait Until Page Contains Element   node-list
+	${index} =      Get Matching Xpath Count   ${nodelist}
 	:FOR    ${li}   IN RANGE   1  ${index}
 	\   ${path3} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[2]'
 	\   ${path4} =  Evaluate   '//*[@id="node-list"]/tbody/tr['+'${li}'+']/td[3]'
@@ -23,38 +23,42 @@ cluster-2,4-5,10-11 验证主机信息/集群角色和主机状态
     \   Should Contain   ${mesoslist}   ${mesos}
 
 	#验证集群状态信息
-    Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(2)
+    Click And Wait  ${TAB 2}
     Page Should Contain   资源
     Page Should Contain   任务
     Page Should Contain   Slave
     #返回主机管理标签
-    Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(1)
-    ${master ip} =  Get Text   xpath=//*[@id='node-list']/tbody/tr[1]/td[1]
+    Click Element   ${TAB 1}
+    Wait Until Element Is Visible  ${iptext}
+    ${master ip} =  Get Text   ${iptext}
     #跳转到容器列表
-    Click And Wait  xpath=//*[@id='node-list']/tbody/tr[1]/td[1]/a
+    Click And Wait  ${dockerlink} 
     #验证header信息
     ${ip add} =     Get Text   //h2
     ${system} =     Get Text   node-detail-system
     ${container} =  Get Text   node-detail-container-running
-    ${count} =      Get Matching Xpath Count   //*[@id="node-container-list"]/tbody/tr[*] 
+    ${count} =      Get Matching Xpath Count   ${dockerlist} 
     Should Be Equal As Strings   ${ip add}     ${master ip}
     Should Be Equal As Strings   ${system}     CentOS Linux 7 (Core)
     Should Be Equal As Strings   ${container}  ${count} 
     #验证基本信息
-    Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(2)
-    ${docker} =     Get Text   docker-info-version
+    Click Element   ${TAB 2}
+    Wait Until Element Is Visible  docker-info-version
+    ${docker} =     Get Text     docker-info-version
     Should Be Equal As Strings   ${docker}    1.12.1
     Page Should Contain   Docker 信息
     Page Should Contain   主机信息
     Page Should Contain   服务信息
     #验证镜像列表
-    Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(3)
-    Page Should Contain   删除
+    Click Element   ${TAB 3}
+    Wait Until Element Is Visible  node-image-delete
     #返回容器列表
-    Click And Wait  css=md-pagination-wrapper > md-tab-item:nth-child(1)
-    ${time} =       Get Text   xpath=//*[@id='node-container-list']/tbody/tr[1]/td[6]
+    Click Element   ${TAB 1}
+    Wait Until Element Is Visible  ${timetext}
+    ${time} =       Get Text   ${timetext}
     #跳转到容器详情
-    Click And Wait  xpath=//*[@id='node-container-list']/tbody/tr[1]/td[1]/a
+    Click Element   ${detaillink}
+    Wait Until Page Contains Element  instance-detail-status
     ${status} =     Get Text   instance-detail-status
     ${created} =    Get Text   instance-detail-created
     ${driver} =     Get Text   instance-detail-driver
@@ -68,4 +72,13 @@ cluster-2,4-5,10-11 验证主机信息/集群角色和主机状态
 ${rolelist}          Evaluate  'master'+'slave'
 ${statuslist}        Evaluate  'leader'+'active'+'standby'
 ${mesoslist}         Evaluate  '1.0.1'+'0.28.2'
+${TAB 1}             css=md-pagination-wrapper > md-tab-item:nth-child(1)
+${TAB 2}             css=md-pagination-wrapper > md-tab-item:nth-child(2)
+${TAB 3}             css=md-pagination-wrapper > md-tab-item:nth-child(3)
+${timetext}          //*[@id='node-container-list']/tbody/tr[1]/td[6]
+${iptext}            //*[@id='node-list']/tbody/tr[1]/td[1]
+${dockerlink}        //*[@id='node-list']/tbody/tr[1]/td[1]/a
+${detaillink}        //*[@id='node-container-list']/tbody/tr[1]/td[1]/a 
+${nodelist}          //table[@id="node-list"]/tbody/tr[*]
+${dockerlist}        //*[@id="node-container-list"]/tbody/tr[*] 
 

@@ -52,6 +52,7 @@ ${LOGIN SYMBOL}          //input[@placeholder="搜索"]
 #--------------------APP STATUS--------------
 ${RUNNING}               Running
 ${SUSPENDED}             Suspended
+${HEALTHY}               Healthy
 
 #--------------------USER--------------------
 ${ADMIN USER}            admin

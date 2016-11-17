@@ -156,7 +156,7 @@ Add Environment
 Add Docker
     Click Element  stackParametersAdd
     Input Text     stackDockerKey-0    hostname 
-    Input Text     stackDockerValue-0  mmj
+    Input Text     stackDockerValue-0  ${VALID USER}
 
 Add Healthchecks
     Click Element  stackAddHealthChecks

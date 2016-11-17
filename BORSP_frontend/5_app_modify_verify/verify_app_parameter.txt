@@ -10,23 +10,23 @@ Library         DateTime
 
 *** Test Cases ***
 
-app_m_5-7,9-11,15-21,23 验证应用参数
+app_m_5-7,9-11,15-21,23 验证应用参数(实例链接跑不通)
     #新建应用
-    Click Element   stackCreate
+    Click Element       stackCreate
     Wait Until Page Contains Element  stackAppName
-    ${name} =       Input Simple App
-    Input Text      stackImageAddress   ${image}
+    ${name} =           Input Simple App
+    Input Text          stackImageAddress   ${image}
     Input Advanced App  11110
     #等待应用发布
-    Click And Wait    stackFormCreate
+    Click And Wait     stackFormCreate
     Wait Until Element Contains  ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
 
     #验证信息是否正确
-    Click Element     ${APP LINK PATH}
+    Click Element      ${APP LINK PATH}
     Wait Until Page Contains Element  stackDetailMenu
     #应用名称
-    ${app name} =     Get Text  css=h2
-    Should Contain    ${app name}   ${name}
+    ${app name} =      Get Text      ${nametext} 
+    Should Contain     ${app name}   ${name}
     #验证Header
     Verify Header
     #验证实例
@@ -35,15 +35,15 @@ app_m_5-7,9-11,15-21,23 验证应用参数
     Verify Config
 
     #编辑按钮可用
-    Click Element     stackConfigEditFirst
+    Click Element       stackConfigEditFirst
     Wait Until Page Contains Element  stackImageAddress
     #更新应用
     Modify Parameter
     #等待应用发布
-    Click And Wait    stackFormUpdate
+    Click And Wait      stackFormUpdate
 
     #验证信息是否正确
-    Click Element     ${APP LINK PATH}
+    Click Element       ${APP LINK PATH}
     Wait Until Page Contains Element  stackDetailMenu
     #验证实例2
     Verify Config 2
@@ -69,9 +69,9 @@ Modify Parameter
     Click Element     ${APP ADVENTURE}
     Sleep  1
     #环境变量
-    Input Text        stackEnvsValue0     evm
+    Input Text        stackEnvsValue0     ${inputevm}
     #Docker参数
-    Input Text        stackDockerValue-0  mou
+    Input Text        stackDockerValue-0  ${inputdocker}
     #健康检查
     Input Text        stackMaxConsecutiveFailures-0  6
 
@@ -83,11 +83,11 @@ Verify Header
     ${ad} =   Get Substring   ${app date}   0  13
     #Should Be Equal As Strings   ${cd}   ${ad}
     #Header-应用状态
-    ${app status} =   Get Text   css=dl:nth-child(1) > dd
-    Should Be Equal As Strings   ${app status}    Running
+    ${app status} =   Get Text   ${statustext}
+    Should Be Equal As Strings   ${app status}    ${RUNNING}
     #Healthy
-    ${app healthy} =  Get Text   //*[@id='stackInstanceList']/tbody/tr/td[3]
-    Should Be Equal As Strings   ${app healthy}   Healthy
+    ${app healthy} =  Get Text   ${healthytext}
+    Should Be Equal As Strings   ${app healthy}   ${HEALTHY}
 
 Verify Instance
     #实例-实例数
@@ -119,9 +119,9 @@ Verify Config
     #网络模式
     Page Should Contain    "network": "BRIDGE"
     #环境变量
-    Page Should Contain    environment
+    Page Should Contain    ${inputenvironment}
     #Docker参数
-    Page Should Contain    mmj
+    Page Should Contain    ${VALID USER}
     #健康检查
     Page Should Contain    "maxConsecutiveFailures": 5
 
@@ -148,11 +148,11 @@ Verify Config 2
     Page Should Contain    "network": "BRIDGE"
     Page Should Contain    "network": "HOST"
     #环境变量
-    Page Should Contain    environment
-    Page Should Contain    evm
+    Page Should Contain    ${inputevm} 
+    Page Should Contain    ${inputenvironment}
     #Docker参数
-    Page Should Contain    mmj
-    Page Should Contain    mou
+    Page Should Contain    ${VALID USER}
+    Page Should Contain    ${inputdocker}
     #健康检查
     Page Should Contain    "maxConsecutiveFailures": 5
     Page Should Contain    "maxConsecutiveFailures": 6
@@ -160,14 +160,21 @@ Verify Config 2
 Verify Debug
     #Debug信息
     Click And Wait  ${APP TAB 3}
-    Page Should Contain    'docker -H unix:///var/run/docker.sock pull nginx:latestt'
+    Page Should Contain    ${debugmessage}
 
 *** Variables ***
 ${image}                 nginx:latest
 ${wrong image}           nginx:latestt
+${nametext}              css=h2
 ${statustext}            css=dl:nth-child(1) > dd
 ${cputext}               css=div.flex-75 > div > dl:nth-child(2) > dd
 ${memtext}               css=div.flex-75 > div > dl:nth-child(3) > dd
 ${numtext}               css=div.flex-75 > div > dl:nth-child(4) > dd
 ${cmdtext}               css=div.flex-75 > div > dl:nth-child(5) > dd
+${healthytext}           //*[@id='stackInstanceList']/tbody/tr[1]/td[3]
+${debugmessage}          docker -H unix:///var/run/docker.sock pull nginx:latestt
+${inputdocker}           docker
+${inputevm}              evm
+${inputenvironment}      environment       
+
 

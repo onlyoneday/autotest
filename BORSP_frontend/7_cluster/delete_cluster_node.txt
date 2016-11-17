@@ -13,7 +13,7 @@ Suite Teardown  Close All Browsers
 G-104集群上有主机无应用
 	Enter Cluster     ${MMJ CLUSTER}
 	Click Element     delete-cluster
-	Page Should Contain  ${message0}
+	Wait Until Page Contains  ${message0}
 
 Deploy App Before Testing
 	Go To Page        ${APP_CREATE URL} 
@@ -22,8 +22,8 @@ Deploy App Before Testing
 
 G-105集群上有主机有应用
 	Enter Cluster     ${MMJ CLUSTER}
-	Click And Wait    delete-cluster
-	Page Should Contain  ${message1}
+	Click Element     delete-cluster
+	Wait Until Page Contains  ${message1}
 	Page Should Contain  ${message0}
 
 G-116取消删除主机

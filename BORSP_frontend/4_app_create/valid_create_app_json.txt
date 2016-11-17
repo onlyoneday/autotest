@@ -5,6 +5,8 @@ Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Test Setup      Open Browser And Login Mmj
 Test Template   Verify Json Template
+Test Teardown   Close All Browsers
+Suite Teardown  Close All Browsers
 
 *** Test Cases ***       template         
 
@@ -27,6 +29,8 @@ Verify Json Template    [Arguments]   ${template}
     #去表单模式
     Click Element      ${APP FORM TAB}
     Wait Until Element Is Visible  stackAppName
+    ${app name} =      Generate AppName
+    Input Text         stackAppName    ${app name}
     Choose Cluster     ${MMJ CLUSTER}
     #切换到json模式
     Click Element      ${APP JSON TAB} 
@@ -36,9 +40,9 @@ Verify Json Template    [Arguments]   ${template}
     Wait Until Element Contains      ${APP STATUS PATH}  ${RUNNING}  timeout=${LONG TIME} 
     #验证应用是否部署成功    
     ${app name} =      Get Text      ${APP NAME PATH}
-    Should Contain     ${app name}   template
+    Should Contain     ${app name}   ${app name}
     ${app status} =    Get Text      ${APP STATUS PATH}
     Should Be Equal As Strings       ${app status}   ${RUNNING}
     #删除该应用（避免垃圾数据）
     Delete App From Button
-    Close All Browsers
+
