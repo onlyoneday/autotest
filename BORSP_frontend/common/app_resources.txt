@@ -85,6 +85,7 @@ Get App Index
 Create App
     [Arguments]     ${name}    ${cluster}
     #填写应用名称
+    Wait Until Page Contains Element  stackAppName
     Input Text      stackAppName    ${name}
     #填写镜像名称
     Input Text      stackImageAddress    blackicebird/2048:latest

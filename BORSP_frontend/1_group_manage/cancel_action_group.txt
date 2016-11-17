@@ -27,7 +27,8 @@ G-088取消删除
 	${no} =           Evaluate    ${index}-1
 	${path} =         Evaluate   'delete-group'+'${no}'
 	Click Element     ${path}
-	Wait Until Element Is Visible   //button[@aria-label="取消"]
+	Wait Until Page Contains Element  //button[@aria-label="取消"]
+	Wait Until Element Is Visible     //button[@aria-label="取消"]
 	Click Element     //button[@aria-label="取消"]
 	${index} =        Get Group Index       ${TGROUP}
     Run Keyword If   '${index}' == 'None'   Fail

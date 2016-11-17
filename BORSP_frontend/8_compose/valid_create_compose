@@ -1,0 +1,37 @@
+*** Settings ***
+
+Documentation   应用编排-测试使用试试看模板发布编排
+Resource        ../common/resources.txt
+Resource        ../common/comp_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${RSTACK URL}
+Test Template   Compose App
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***                 template
+
+compose_2,6,7,11 试试看mysql        rolex-json-mysql
+compose_2,6,7,11-2 试试看WordPress  rolex-json-wordpress
+
+*** Keywords ***
+
+Compose App  [Arguments]   ${template}
+    #新建编排
+    Click And Wait  stack-create
+    #新建编排
+    Create Compose  ${template}
+    Sleep  100
+    #验证编排是否发布成功
+    Reload Page
+    Sleep  2
+    ${task1} =   Get Text    //*[@id='rolexStackServices']/tbody/tr[1]/td[2]
+    ${run} =   Get Substring     ${task1}   0    1
+    ${sum} =   Get Substring     ${task1}   2
+    Should Be Equal As Strings   ${run}    ${sum}
+    ${task2} =   Get Text    //*[@id='rolexStackServices']/tbody/tr[2]/td[2]
+    ${run} =   Get Substring     ${task2}   0    1
+    ${sum} =   Get Substring     ${task2}   2
+    Should Be Equal As Strings   ${run}    ${sum}
+    #删除编排
+    Delete Compose
+

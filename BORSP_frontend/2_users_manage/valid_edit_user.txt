@@ -48,6 +48,6 @@ Result User
 	Should Be Equal As Strings  ${name}    ${username}
 
 *** Variables ***
-${InputName}       UserForEditing
+${InputName}       testuserForEditing
 ${InputEmail}      Editing@u.cn
 

@@ -49,7 +49,7 @@ Add Node After Testing
 	Select Cluster Node
 
 *** Variables ***
-${testapp}         appfordeletingnode
+${testapp}         aapplicationfordeletingnode
 ${message0}        集群内有主机的时候不能删除集群
 ${message1}        集群内有应用的时候不能删除集群
 ${NodeIPtext}      //table/tbody/tr[1]/td[2]

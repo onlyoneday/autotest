@@ -38,6 +38,6 @@ Delete Test User For Changing Password
 	Delete User    ${InputName}
 
 *** Variables ***
-${InputName}       UserForChangingPwd
+${InputName}       testuserForChangingPwd
 ${InputEmail}      ChangingPwd@u.cn
 

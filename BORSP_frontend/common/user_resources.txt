@@ -132,10 +132,10 @@ Input Registry
 
 Generate UserName
     ${random} =     Get Lower String
-    ${user name} =  Evaluate  'user'+'${random}'
+    ${user name} =  Evaluate  'testuser'+'${random}'
     [Return]        ${user name}
 
 Generate UserEmail
 	[Arguments]      ${name}
     ${user email} =  Evaluate  '${name}'+'@u.cn'
-    [Return]         ${user email}    
+    [Return]         ${user email} 

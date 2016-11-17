@@ -1,0 +1,33 @@
+*** Settings ***
+
+Documentation   应用编排-测试修改任务数
+Resource        ../common/resources.txt
+Resource        ../common/comp_resources.txt
+Suite Setup     Open Browser And Login Mmj
+Test Setup      Go To Page   ${RSTACK URL}
+Suite Teardown  Close All Browsers
+
+*** Test Cases ***
+
+compose_10 试试看2048/修改任务数
+    #新建编排
+    Click And Wait  stack-create
+    #新建编排
+    Create Compose  rolex-json-2048
+    #验证编排是否发布成功
+    Reload Page
+    Sleep  2
+    ${task1} =   Get Text        //*[@id='rolexStackServices']/tbody/tr[1]/td[2]
+    ${run} =   Get Substring     ${task1}   0    1
+    ${sum} =   Get Substring     ${task1}   2
+    Should Be Equal As Strings   ${run}     ${sum}
+    #修改任务数
+    Click Element   upServiceScale0
+    Input Text      rolex-scale  2
+    Click And Wait  rolex-confirm
+    #验证编排是否扩展成功
+    ${task1} =   Get Text    //*[@id='rolexStackServices']/tbody/tr[1]/td[2]
+    ${sum} =     Get Substring   ${task1}   2
+    Should Be Equal As Strings   ${sum}     2
+    #删除编排
+    Delete Compose
