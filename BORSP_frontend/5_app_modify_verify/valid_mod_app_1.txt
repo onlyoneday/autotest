@@ -10,6 +10,7 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 app_m_4,22 应用管理列表界面停止、扩展、删除、更新可用/更新CMD
+    [Documentation]  暂停应用所需时间过长，没有执行
     #创建应用
     Click Element   stackCreate
     Wait Until Page Contains Element  stackAppName

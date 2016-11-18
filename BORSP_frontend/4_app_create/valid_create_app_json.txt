@@ -20,7 +20,7 @@ Verify Json Template    [Arguments]   ${template}
     Go To Page         ${APP_MY URL}
     Click Element      stackCreate
     Wait Until Page Contains Element  stackAppName
-    Input Text          stackAppName
+    Input Text          stackAppName  name
     Clear Element Text  stackAppName
     #切换到json模式
     Click Element      ${APP JSON TAB} 
