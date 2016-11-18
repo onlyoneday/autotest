@@ -3,6 +3,7 @@
 Documentation   用户管理-正在登陆的用户被删除或禁用-自动退出登陆
 Resource        ../common/resources.txt
 Resource        ../common/user_resources.txt
+Test Setup      Close All Browsers    
 
 *** Test Cases ***
 
@@ -28,9 +29,9 @@ G-052正在登陆的用户被删除-自动退出登陆
     Delete User         ${name}
     Sleep   2
 
-    Switch Browser      B2
+    Switch Browser 
+    Sleep  1
     Location Should Be  ${LOGIN URL}
-    Close All Browsers
 
 G-052-2正在登陆的用户被禁用-自动退出登陆
     Set Selenium Speed  ${DELAY}
@@ -55,9 +56,9 @@ G-052-2正在登陆的用户被禁用-自动退出登陆
     Sleep   2
 
     Switch Browser      B2
+    Sleep  1
     Location Should Be  ${LOGIN URL}
 
     Switch Browser      B1
     Delete User         ${name}
-    Close All Browsers
 
