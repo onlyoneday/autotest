@@ -98,6 +98,7 @@ ${EML 256}               0123456789012345678901234567890123456789012345678901234
 Open Browser To Login Page
     Set Selenium Speed  ${DELAY}
     Open Browser  ${LOGIN URL}  ${BROWSER}  #ff_profile_dir=${FF_PROFILE}
+    Maximize Browser Window
     Wait Until Page Contains Element  ${USERNAME FIELD}
 
 Go To Page
