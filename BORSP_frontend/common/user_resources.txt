@@ -93,7 +93,8 @@ Delete User
 	Click Element   ${path}
 	${button} =     Evaluate   'deleteUser'+'${no}'
 	Click Element   ${button}
-	Wait Until Element Is Visible  //button[@aria-label="确定"]
+	Wait Until Page Contains Element  //button[@aria-label="确定"]
+	Wait Until Element Is Visible     //button[@aria-label="确定"]
 	Click And Wait  //button[@aria-label="确定"]
 
 Disable User
@@ -102,7 +103,8 @@ Disable User
 	${no} =         Evaluate   ${index}-1
 	${button} =     Evaluate   'disableUser'+'${no}'
 	Click Element   ${button} 
-	Wait Until Element Is Visible  //button[@aria-label="确定"]
+	Wait Until Page Contains Element  //button[@aria-label="确定"]
+	Wait Until Element Is Visible     //button[@aria-label="确定"]
 	Click And Wait  //button[@aria-label="确定"]
 
 Enable User
