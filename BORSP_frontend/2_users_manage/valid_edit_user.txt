@@ -13,14 +13,11 @@ G-014创建用户-属于多个组
 	Create User     ${InputName}   ${InputName}  ${InputEmail}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group     ${MMJ GROUP}  member
 	Select User Group2    ${TGROUP}     member
-	Set Window Size 	  ${1000} 	${2000}
-	Sleep  3
-	Set Window Position   ${0} 	    ${-500}
-	Sleep  3
-	Click And Wait  submit-create-user
+	Execute Javascript    document.getElementById("submit-create-user").click()
+	Sleep   2
 
 G-021/022查看用户信息/修改用户信息
-	Edit User Info  ${InputName} 
+	Edit User Info  ${InputName}
 	Input Text	    input-name              testu
 	Input Text	    input-email             testu@u.cn
 	Input Text	    input-userDescription   test
