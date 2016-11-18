@@ -39,7 +39,8 @@ Delete App By Name
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     ${button} =     Evaluate  'stackListDelete'+'${index}'
     Click Element   ${menu}
-    Wait Until Element Is Visible  ${button}
+    Wait Until Page Contains Element  ${button}
+    Wait Until Element Is Visible     ${button}
     Click Element   ${button}
     Wait Until Page Contains Element  //button[@aria-label="确定"]
     Wait Until Element Is Visible     //button[@aria-label="确定"]
