@@ -39,6 +39,7 @@ Delete App By Name
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     ${button} =     Evaluate  'stackListDelete'+'${index}'
     Click Element   ${menu}
+    Wait Until Element Is Visible  ${button}
     Click Element   ${button}
     Wait Until Page Contains Element  //button[@aria-label="确定"]
     Wait Until Element Is Visible     //button[@aria-label="确定"]
@@ -51,6 +52,7 @@ Update App By Name
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     Click Element   ${menu}
     ${button} =     Evaluate  'stackListUpdate'+'${index}'
+    Wait Until Element Is Visible  ${button}
     Click Element   ${button}
     Wait Until Page Contains Element  stackImageAddress
 
@@ -61,6 +63,7 @@ Change App Owner
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     Click Element   ${menu}
     ${button} =     Evaluate  'stackLisChangeAppUser'+'${index}'
+    Wait Until Element Is Visible  ${button}
     Click Element   ${button}
     Wait Until Page Contains Element  update-select-group
     Wait Until Element Is Visible     update-select-group
@@ -72,6 +75,7 @@ Extend App By Name
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     Click Element   ${menu}
     ${button} =     Evaluate  'stackListExtend'+'${index}'
+    Wait Until Element Is Visible  ${button}
     Click Element   ${button}
     Wait Until Page Contains Element  name=containerNum
     Wait Until Element Is Visible     name=containerNum
