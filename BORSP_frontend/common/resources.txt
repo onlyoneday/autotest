@@ -29,8 +29,8 @@ ${USER_PWD URL}          ${SERVER}/user/password
 ${USER_RG URL}           ${SERVER}/user/registry
 
 #--------------------LOCATION----------------
-${APP FORM TAB}          css=md-tab-item:nth-child(1)
-${APP JSON TAB}          css=md-tab-item:nth-child(2)
+${APP FORM TAB}          //md-tab-item[@role="tab"][1]
+${APP JSON TAB}          //md-tab-item[@role="tab"][2]
 ${APP NAME PATH}         //*[@id="stackListApp"]/tbody/tr[1]/td[1]
 ${APP STATUS PATH}       //*[@id="stackListApp"]/tbody/tr[1]/td[4]
 ${APP LINK PATH}         //*[@id='stackListApp']/tbody/tr[1]/td[1]/a

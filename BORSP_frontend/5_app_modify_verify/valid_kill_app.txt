@@ -29,7 +29,7 @@ app_m_5,8 KILL KILL&SCALE
     Click Element       ${checkbox}
     Click Element       stackInstanceKilTack
     Click And Wait      //button[@aria-label="确定"]
-    Wait Until Page Contains Element  ${table tr2}
+    Wait Until Page Contains Element  ${table tr2}  timeout=${LONG TIME} 
     ${index} =          Get Matching Xpath Count    ${table tr} 
     Should Be Equal     ${index}   2
     #KILL&SCALE
