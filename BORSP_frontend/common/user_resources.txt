@@ -50,7 +50,6 @@ Edit User Info
 	${button} =     Evaluate     'editUserInfo'+'${no}'
 	Wait Until Element Is Visible  ${button}
 	Click Element   ${button}
-	Wait Until Element Is Visible  ${button}
 	Wait Until Page Contains Element  input-name
 
 Edit User Group
@@ -107,7 +106,6 @@ Disable User
 	${index} =      Get User Index    ${name}
 	${no} =         Evaluate   ${index}-1
 	${button} =     Evaluate   'disableUser'+'${no}'
-	Wait Until Element Is Visible  ${button}
 	Click Element   ${button} 
 	Wait Until Page Contains Element  //button[@aria-label="确定"]
 	Wait Until Element Is Visible     //button[@aria-label="确定"]
@@ -117,7 +115,6 @@ Enable User
 	[Arguments]     ${name}
 	${index} =      Get User Index    ${name}
 	${no} =         Evaluate   ${index}-1
-	Wait Until Element Is Visible  ${button}
 	${button} =     Evaluate   'enableUser'+'${no}'
 	Click And Wait  ${button}
 
