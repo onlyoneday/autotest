@@ -6,7 +6,6 @@ Resource        ../common/user_resources.txt
 Resource        ../common/app_resources.txt
 Suite Setup     Open Browser And Login Adm
 Test Setup      Go To Page   ${USER_MANU URL}
-Test Teardown   Close All Browsers
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***
