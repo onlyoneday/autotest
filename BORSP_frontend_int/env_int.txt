@@ -7,7 +7,6 @@ Library        Collections
 Library        XML
 Library        json
 Resource       ../BORSP_frontend/common/resources.txt
-Resource
 
 *** Variables ***
 ${domain}      shurenyun
@@ -78,15 +77,15 @@ Create Some Groups
 
 Create Some Users
     #create a super user
-    ${data}=    Set Variable      {"email":"su@su.comm","password":"${VALID PASSWD}","title":"职位, 可不填","userName":"${VALID USER}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":1,"role":"owner"}]}
+    ${data}=    Set Variable      {"email":"su@su.comm","password":"${VALID PASSWD}","title":"职位, 可不填","userName":"${VALID USER}","name":"${VALID USER}","phone":"手机号, 可不填","accountGroups":[{"groupId":1,"role":"owner"}]}
     ${resp}=    Create User       ${data}                ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
     #create ower of mmj group
-    ${data}=    Set Variable      {"email":"su2@su.comm","password":"${GM PASSWD}","title":"职位, 可不填","userName":"${GM USER}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"owner"}]}
+    ${data}=    Set Variable      {"email":"su2@su.comm","password":"${GM PASSWD}","title":"职位, 可不填","userName":"${GM USER}","name":"${GM USER}","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"owner"}]}
     ${resp}=    Create User       ${data}                ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
     #create member of mmj group
-    ${data}=    Set Variable      {"email":"su3@su.comm","password":"${MMJ PASSWD}","title":"职位, 可不填","userName":"${MMJ USER}","name":"真实名称, 可不填","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"member"}]}
+    ${data}=    Set Variable      {"email":"su3@su.comm","password":"${MMJ PASSWD}","title":"职位, 可不填","userName":"${MMJ USER}","name":"${MMJ USER}","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"member"}]}
     ${resp}=    Create User       ${data}                ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
 
