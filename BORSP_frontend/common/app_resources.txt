@@ -145,6 +145,7 @@ Add Address
     Click Element  //*[@name="portMap"]/md-select
     Click Element  //md-option/div[contains(text(),"tcp")]
     Click Element  //*[@name="portMap"]/md-radio-button
+    Wait Until Page Contains Element  mapPort0
     ${random} =    Generate Random String  3  [NUMBERS]
     ${mapPort} =   Evaluate  '7'+'${random}'
     Input Text     mapPort0  ${mapPort}

@@ -12,7 +12,7 @@ Library         DateTime
 
 app_m_5,8 KILL KILL&SCALE
     #新建应用
-    Click Element   stackCreate
+    Click Element       stackCreate
     Wait Until Page Contains Element  stackAppName
     #输入最简参数
     ${name} =           Input Simple App
@@ -29,7 +29,7 @@ app_m_5,8 KILL KILL&SCALE
     Click Element       ${checkbox}
     Click Element       stackInstanceKilTack
     Click And Wait      //button[@aria-label="确定"]
-    Wait Until Page Contains Element  ${table tr2}  stackListSearch
+    Wait Until Page Contains Element  ${table tr2}
     ${index} =          Get Matching Xpath Count    ${table tr} 
     Should Be Equal     ${index}   2
     #KILL&SCALE

@@ -33,7 +33,8 @@ G-116取消删除主机
 	${row1} =         Get Matching Xpath Count    ${TABLE TR}
 	Run Keyword If    ${row1} == ${0}    Fail
 
-G-115删除任意集群的任意主机
+G-107/115添加主机/删除任意集群的任意主机
+	#删除主机
 	Enter Cluster     ${MMJ CLUSTER}
 	${nodeip} =       Get Text  ${NodeIPtext}
 	Delete Node       0
@@ -42,11 +43,18 @@ G-115删除任意集群的任意主机
 	Go To Page          ${APP_MY URL} 
 	${status} =         Get Text    ${APP STATUS PATH}
 	Should Not Be Equal As Strings  ${status}  ${RUNNING} 
-	Delete App By Name  ${testapp} 
+	Delete App By Name  ${testapp}
+    #添加主机
+    Go To Page           ${HOME URL}
+	Add Cluster Node     ${MMJ CLUSTER}
+	Choose Cluster Node  ${nodeip}
+	Page Should Contain  正在添加主机
+	Wait Until Page Contains  ${nodeip}  timeout=${LONG TIME}
 
-Add Node After Testing
-	Add Cluster Node    ${MMJ CLUSTER}
-	Select Cluster Node
+G-110添加主机-必填项不填
+	Add Cluster Node     ${MMJ CLUSTER}
+	Click Element        //button[@aria-label="ok"]
+	Page Should Contain  请选择主机
 
 *** Variables ***
 ${testapp}         aapplicationfordeletingnode
