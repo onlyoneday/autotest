@@ -54,7 +54,7 @@ Result Group
 	Should Be Equal As Strings  ${dscp}   ${description}
 
 *** Variables ***
-${InputGroupName}	GroupForEditing
-${TEST GRP}         editgroup
-${TEST CLU}         editcluster
+${InputGroupName}	testgroupForEditing
+${TEST GRP}         testgroupedit
+${TEST CLU}         testclusteredit
 

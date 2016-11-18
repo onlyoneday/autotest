@@ -30,5 +30,5 @@ Delete App Cluster After Testing
 	Delete Cluster  ${ClusterForApp}
 
 *** Variables ***
-${ClusterForApp}    clusterforsamename
+${ClusterForApp}    testclusterforsamename
 ${SameName}         samename

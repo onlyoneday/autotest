@@ -13,7 +13,7 @@ Suite Teardown  Close All Browsers
 G-104集群上有主机无应用
 	Enter Cluster     ${MMJ CLUSTER}
 	Click Element     delete-cluster
-	Page Should Contain  ${message0}
+	Wait Until Page Contains  ${message0}
 
 Deploy App Before Testing
 	Go To Page        ${APP_CREATE URL} 
@@ -22,8 +22,8 @@ Deploy App Before Testing
 
 G-105集群上有主机有应用
 	Enter Cluster     ${MMJ CLUSTER}
-	Click And Wait    delete-cluster
-	Page Should Contain  ${message1}
+	Click Element     delete-cluster
+	Wait Until Page Contains  ${message1}
 	Page Should Contain  ${message0}
 
 G-116取消删除主机
@@ -33,7 +33,8 @@ G-116取消删除主机
 	${row1} =         Get Matching Xpath Count    ${TABLE TR}
 	Run Keyword If    ${row1} == ${0}    Fail
 
-G-115删除任意集群的任意主机
+G-107/115添加主机/删除任意集群的任意主机
+	#删除主机
 	Enter Cluster     ${MMJ CLUSTER}
 	${nodeip} =       Get Text  ${NodeIPtext}
 	Delete Node       0
@@ -42,14 +43,21 @@ G-115删除任意集群的任意主机
 	Go To Page          ${APP_MY URL} 
 	${status} =         Get Text    ${APP STATUS PATH}
 	Should Not Be Equal As Strings  ${status}  ${RUNNING} 
-	Delete App By Name  ${testapp} 
+	Delete App By Name  ${testapp}
+    #添加主机
+    Go To Page           ${HOME URL}
+	Add Cluster Node     ${MMJ CLUSTER}
+	Choose Cluster Node  ${nodeip}
+	Page Should Contain  正在添加主机
+	Wait Until Page Contains  ${nodeip}  timeout=${LONG TIME}
 
-Add Node After Testing
-	Add Cluster Node    ${MMJ CLUSTER}
-	Select Cluster Node
+G-110添加主机-必填项不填
+	Add Cluster Node     ${MMJ CLUSTER}
+	Click Element        //button[@aria-label="ok"]
+	Page Should Contain  请选择主机
 
 *** Variables ***
-${testapp}         appfordeletingnode
+${testapp}         aapplicationfordeletingnode
 ${message0}        集群内有主机的时候不能删除集群
 ${message1}        集群内有应用的时候不能删除集群
 ${NodeIPtext}      //table/tbody/tr[1]/td[2]

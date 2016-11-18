@@ -33,17 +33,18 @@ G-149组成员-修改所属用户
     Change Owner      ${GM USER}
 
 Delete App After Testing
-	Login Gm 
-    Go To Page          ${APP_MY URL} 
+	Login Adm 
+    Go To Page          ${APP_ALL URL} 
 	Delete App By Name  ${AppName}
 
 *** Keywords ***
 Change Owner
-	[Arguments]       ${name}  
-    Click Element     update-select-group
+	[Arguments]        ${name}  
+    Click Element      update-select-group
     ${path} =  Evaluate  '${UserOption}'+'[contains(text(),'+'"${name}"'+')]'
-    Click Element     ${path}
-    Click And Wait    //button[@aria-label="ok"]
+    Click Element      ${path}
+    Click Element      //button[@aria-label="ok"]
+    Wait Until Page Contains  更新用户成功
 
 *** Variables ***
 ${ExpectUser}    mmj+groupmanager

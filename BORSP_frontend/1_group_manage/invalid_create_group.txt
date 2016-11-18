@@ -21,6 +21,7 @@ G-063输入项上边外侧界(用户名)
 	Element Should Be Disabled     ${button} 
 
 G-063-2输入项上边外侧界(用户描述)
+	[Documentation]  Bug
 	Input Group    ${InputGroupName}    ${STR 256}
 	Result Web     ${location0}    ${message0} 
 	Element Should Be Disabled     ${button} 

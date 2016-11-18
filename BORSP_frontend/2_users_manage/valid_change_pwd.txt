@@ -4,6 +4,7 @@ Documentation   用户管理-修改其他用户的密码-正常
 Resource        ../common/resources.txt
 Resource        ../common/user_resources.txt
 Test Setup      Open Browser And Login Adm
+Test Teardown   Close All Browsers
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***
@@ -37,6 +38,6 @@ Delete Test User For Changing Password
 	Delete User    ${InputName}
 
 *** Variables ***
-${InputName}       UserForChangingPwd
+${InputName}       testuserForChangingPwd
 ${InputEmail}      ChangingPwd@u.cn
 

@@ -14,9 +14,11 @@ Suite Teardown  Close All Browsers
 Creat Group1 For Management
 	Input Group     ${MANA GRP1}   ${EMPTY}
 	Click And Wait  submit-create-user
+	Wait Until Page Contains    ${MANA GRP1}
 Creat Group2 For Management
-	Input Group     ${MANA GRP2}    ${EMPTY}
+	Input Group     ${MANA GRP2}   ${EMPTY}
 	Click And Wait  submit-create-user
+	Wait Until Page Contains    ${MANA GRP1}
 
 G-073/75添加多个组成员/将一个用户加入多个用户组
 	Manage Group    ${MANA GRP1}  2
@@ -79,8 +81,8 @@ Delete All Data After Testing
 	Delete Group    ${MANA GRP1}
 
 *** Variables ***
-${MANA GRP1}        managegroup1
-${MANA GRP2}        managegroup2
-${MANA CLU}         clusterformanagement
+${MANA GRP1}        testgroup1
+${MANA GRP2}        testgroup2
+${MANA CLU}         testclusterformanagement
 ${MANA APP}         applicationformanagement
 ${message1}         集群内有应用的时候不能删除集群

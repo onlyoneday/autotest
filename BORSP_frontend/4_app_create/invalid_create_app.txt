@@ -39,7 +39,7 @@ G-132/133新建应用-集群不填
     Result Api        stackJsonCreate    ${message4}
 
 *** Variables ***
-${AppName}         appforcreating
+${AppName}         applicationforcreating
 ${message1}        应用名称不能为空
 ${location1}       div:nth-child(1) > div.layout-column > p:nth-child(2)
 ${message2}		   镜像地址不能为空

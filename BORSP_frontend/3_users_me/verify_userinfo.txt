@@ -4,6 +4,7 @@ Documentation   用户中心-查看个人信息
 Resource        ../common/resources.txt
 Resource        ../common/user_resources.txt
 Test Setup      Open Browser To Login Page
+Test Teardown   Close All Browsers
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***

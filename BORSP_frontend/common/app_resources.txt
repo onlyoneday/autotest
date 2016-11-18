@@ -85,6 +85,7 @@ Get App Index
 Create App
     [Arguments]     ${name}    ${cluster}
     #填写应用名称
+    Wait Until Page Contains Element  stackAppName
     Input Text      stackAppName    ${name}
     #填写镜像名称
     Input Text      stackImageAddress    blackicebird/2048:latest
@@ -144,6 +145,7 @@ Add Address
     Click Element  //*[@name="portMap"]/md-select
     Click Element  //md-option/div[contains(text(),"tcp")]
     Click Element  //*[@name="portMap"]/md-radio-button
+    Wait Until Page Contains Element  mapPort0
     ${random} =    Generate Random String  3  [NUMBERS]
     ${mapPort} =   Evaluate  '7'+'${random}'
     Input Text     mapPort0  ${mapPort}
@@ -156,7 +158,7 @@ Add Environment
 Add Docker
     Click Element  stackParametersAdd
     Input Text     stackDockerKey-0    hostname 
-    Input Text     stackDockerValue-0  mmj
+    Input Text     stackDockerValue-0  ${VALID USER}
 
 Add Healthchecks
     Click Element  stackAddHealthChecks

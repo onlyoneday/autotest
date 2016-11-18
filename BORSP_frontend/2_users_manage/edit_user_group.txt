@@ -38,7 +38,7 @@ Delete Test User After Edition
 	Delete User        ${InputName}
 
 *** Variables ***
-${InputName}       UserForEditingGroup
+${InputName}       testuserForEditingGroup
 ${InputEmail}      EditingGroup@u.cn
 ${AddGroup}        css=div:nth-child(1) > ng-form > div > button
 ${DeleteGroup}     css=div:nth-child(2) > ng-form > div > button

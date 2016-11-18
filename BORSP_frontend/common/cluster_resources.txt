@@ -33,18 +33,20 @@ Add Cluster Node
 	Enter Cluster   ${name}
 	Click Element   add-cluster-node
 
-Select Cluster Node
+Choose Cluster Node
+	[Arguments]     ${nodeip}
+	${node} =       Evaluate  '//md-option/div[text()="'+'${nodeip}'+'"]'
 	Click Element   //md-input-container/md-select
-	Wait Until Page Contains Element    //md-option[@ng-value="nodeIp"][1]
-	Click Element   //md-option[@ng-value="nodeIp"][1]
+	Wait Until Page Contains Element    ${node}
+	Click Element   ${node}
 	Click Element   //button[@aria-label="选择需要添加的主机"]
 	Click And Wait  //button[@aria-label="ok"]
 
 Enter Cluster
 	[Arguments]     ${name}
 	Input Text		//input    ${name}
-	Sleep   1
 	${link} =       Evaluate   '//section/header/h3/a[text()='+'"${name}"'+']'
+	Wait Until Page Contains Element  ${link}
 	Click Element   ${link}
 	Wait Until Page Contains   集群详情
 

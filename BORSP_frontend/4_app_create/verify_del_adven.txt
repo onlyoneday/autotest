@@ -50,7 +50,7 @@ Delete Run
     #更新应用
     Update App By Name  ${name}
     #打开高级设置
-    Click And Wait   ${APP ADVENTURE}
+    Click Element    ${APP ADVENTURE}
     #删除第高级设置
     Click Element    stackEnvsDelete0
     Click Element    stackDockerParametersDel-0
