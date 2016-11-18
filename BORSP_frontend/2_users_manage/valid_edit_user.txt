@@ -13,6 +13,7 @@ G-014创建用户-属于多个组
 	Create User     ${InputName}   ${InputName}  ${InputEmail}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
 	Select User Group     ${MMJ GROUP}  member
 	Select User Group2    ${TGROUP}     member
+	Execute Javascript    window.scrollTo(0,6000)
 	Click And Wait  submit-create-user
 
 G-021/022查看用户信息/修改用户信息
