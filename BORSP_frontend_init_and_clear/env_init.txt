@@ -9,7 +9,6 @@ Library        json
 Resource       ../BORSP_frontend/common/resources.txt
 
 *** Variables ***
-${domain}      shurenyun
 ${nodes IP}    172.16.1.8
 
 *** Keywords ***
@@ -23,31 +22,31 @@ Login Sry
 
 Create User Group
     [Arguments]      ${data}            ${headers}
-    ${resp}=         Post Request       ${domain}    /v1/groups    data=${data}    headers=${headers}
+    ${resp}=         Post Request       shurenyun    /v1/groups    data=${data}    headers=${headers}
     log              ${resp.text}
     [Return]         ${resp}
 
 Create User
     [Arguments]       ${data}         ${headers}
-    ${resp}=          Post Request    ${domain}     /v1/accounts      data=${data}     headers=${headers}
+    ${resp}=          Post Request    shurenyun     /v1/accounts      data=${data}     headers=${headers}
     log               ${resp.text}
     [Return]          ${resp}
 
 Create Cluster
     [Arguments]       ${data}         ${headers}
-    ${resp}=          Post Request    ${domain}    /v1/clusters    data=${data}    headers=${headers}
+    ${resp}=          Post Request    shurenyun    /v1/clusters    data=${data}    headers=${headers}
     log               ${resp.text}
     [Return]          ${resp}
 
 Add Nodes
     [Arguments]       ${data}         ${headers}
-    ${resp}=          Patch Request   ${domain}    /v1/nodes    data=${data}    headers=${headers}
+    ${resp}=          Patch Request   shurenyun    /v1/nodes    data=${data}    headers=${headers}
     log               ${resp.text}
     [Return]          ${resp}
 
 Add Registry Auth
     [Arguments]       ${data}         ${headers}
-    ${resp}=          Post Request    ${domain}    /v1/external_registries    data=${data}    headers=${headers}
+    ${resp}=          Post Request    shurenyun    /v1/external_registries    data=${data}    headers=${headers}
     log               ${resp.text}
     [Return]          ${resp}
 #-------------------
