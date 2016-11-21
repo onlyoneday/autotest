@@ -27,9 +27,9 @@ G-052正在登陆的用户被删除-自动退出登陆
 
     Switch Browser      B1
     Delete User         ${name}
-    Sleep   2
+    Sleep  1
 
-    Switch Browser 
+    Switch Browser      B2
     Sleep  1
     Location Should Be  ${LOGIN URL}
 
@@ -53,7 +53,7 @@ G-052-2正在登陆的用户被禁用-自动退出登陆
 
     Switch Browser      B1
     Disable User        ${name}
-    Sleep   2
+    Sleep  1
 
     Switch Browser      B2
     Sleep  1

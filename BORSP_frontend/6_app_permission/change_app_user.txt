@@ -4,6 +4,7 @@ Documentation   应用管理-修改所属用户
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
 Test Setup      Open Browser To Login Page
+Test Teardown   Close All Browsers
 Suite Teardown  Close All Browsers
 
 *** Test Cases ***

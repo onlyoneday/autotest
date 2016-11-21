@@ -11,7 +11,7 @@ Suite Teardown  Close All Browsers
 
 Create Test User For Edition
 	Create User        ${InputName}  ${InputName}  ${InputEmail}  ${STR 8}  ${STR 8}  ${EMPTY}  ${EMPTY}
-	Click Element      submit-create-user
+	Click And Wait     submit-create-user
 
 G-023不同组的组管理员和组成员
 	Edit User Group    ${InputName}

@@ -11,7 +11,7 @@ Library         DateTime
 *** Test Cases ***
 
 app_m_5-7,9-11,15-21,23 验证应用参数
-    [Documentation]  实例链接没有跑
+    [Documentation]  实例链接需要配置代理才能访问，没有执行
     #新建应用
     Click Element       stackCreate
     Wait Until Page Contains Element  stackAppName

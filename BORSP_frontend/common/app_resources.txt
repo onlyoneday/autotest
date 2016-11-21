@@ -11,7 +11,8 @@ Delete App From Button
     #从应用列表的Button删除应用
     Click Element   node-list-menu-0
     Click Element   stackListDelete0
-    Wait Until Element Is Visible  //button[@aria-label="确定"]
+    Wait Until Page Contains Element  //button[@aria-label="确定"]
+    Wait Until Element Is Visible     //button[@aria-label="确定"]
     Click Element   //button[@aria-label="确定"]
     Wait Until Page Contains    删除成功
 
@@ -19,7 +20,8 @@ Delete App From Detail
     #从应用详情的菜单删除应用
     Click Element   stackDetailMenu
     Click Element   stackDetailDelete
-    Wait Until Element Is Visible  //button[@aria-label="确定"]
+    Wait Until Page Contains Element  //button[@aria-label="确定"]    
+    Wait Until Element Is Visible     //button[@aria-label="确定"]
     Click Element   //button[@aria-label="确定"]
     Wait Until Page Contains    删除成功
 
@@ -37,8 +39,11 @@ Delete App By Name
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     ${button} =     Evaluate  'stackListDelete'+'${index}'
     Click Element   ${menu}
+    Wait Until Page Contains Element  ${button}
+    Wait Until Element Is Visible     ${button}
     Click Element   ${button}
-    Wait Until Element Is Visible  //button[@aria-label="确定"]
+    Wait Until Page Contains Element  //button[@aria-label="确定"]
+    Wait Until Element Is Visible     //button[@aria-label="确定"]
     Click And Wait  //button[@aria-label="确定"]
 
 Update App By Name
@@ -48,6 +53,7 @@ Update App By Name
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     Click Element   ${menu}
     ${button} =     Evaluate  'stackListUpdate'+'${index}'
+    Wait Until Element Is Visible  ${button}
     Click Element   ${button}
     Wait Until Page Contains Element  stackImageAddress
 
@@ -58,8 +64,10 @@ Change App Owner
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     Click Element   ${menu}
     ${button} =     Evaluate  'stackLisChangeAppUser'+'${index}'
+    Wait Until Element Is Visible  ${button}
     Click Element   ${button}
-    Wait Until Element Is Visible    update-select-group
+    Wait Until Page Contains Element  update-select-group
+    Wait Until Element Is Visible     update-select-group
 
 Extend App By Name
     [Arguments]     ${appname}
@@ -68,8 +76,10 @@ Extend App By Name
     ${menu} =       Evaluate  'node-list-menu-'+'${index}'
     Click Element   ${menu}
     ${button} =     Evaluate  'stackListExtend'+'${index}'
+    Wait Until Element Is Visible  ${button}
     Click Element   ${button}
-    Wait Until Element Is Visible    name=containerNum
+    Wait Until Page Contains Element  name=containerNum
+    Wait Until Element Is Visible     name=containerNum
     
 Get App Index
     [Arguments]     ${name}

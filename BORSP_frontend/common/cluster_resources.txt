@@ -25,7 +25,8 @@ Delete Cluster
 	[Arguments]     ${name}
 	Enter Cluster   ${name}
 	Click Element   delete-cluster
-	Wait Until Element Is Visible  //button[@aria-label="确定"]
+	Wait Until Page Contains Element  //button[@aria-label="确定"]
+	Wait Until Element Is Visible     //button[@aria-label="确定"]
 	Click And Wait  //button[@aria-label="确定"]
 
 Add Cluster Node

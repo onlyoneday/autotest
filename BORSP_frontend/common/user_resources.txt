@@ -48,6 +48,7 @@ Edit User Info
 	${path} =       Evaluate     'node-list-menu-'+'${no}'
 	Click Element   ${path}
 	${button} =     Evaluate     'editUserInfo'+'${no}'
+	Wait Until Element Is Visible  ${button}
 	Click Element   ${button}
 	Wait Until Page Contains Element  input-name
 
@@ -58,6 +59,7 @@ Edit User Group
 	${path} =       Evaluate      'node-list-menu-'+'${no}'
 	Click Element   ${path}
 	${button} =     Evaluate      'editUserGroup'+'${no}'
+	Wait Until Element Is Visible  ${button}
 	Click Element   ${button} 
 	Wait Until Element Is Visible  update-select-group
 
@@ -77,6 +79,7 @@ Edit User Password
 	${path} =       Evaluate   'node-list-menu-'+'${no}'
 	Click Element   ${path}
 	${button} =     Evaluate   'changePassword'+'${no}'
+	Wait Until Element Is Visible  ${button}
 	Click Element   ${button} 
 	Wait Until Element Is Visible   modals-new-password
 
@@ -92,8 +95,10 @@ Delete User
 	${path} =       Evaluate   'node-list-menu-'+'${no}'
 	Click Element   ${path}
 	${button} =     Evaluate   'deleteUser'+'${no}'
+	Wait Until Element Is Visible  ${button}
 	Click Element   ${button}
-	Wait Until Element Is Visible  //button[@aria-label="确定"]
+	Wait Until Page Contains Element  //button[@aria-label="确定"]
+	Wait Until Element Is Visible     //button[@aria-label="确定"]
 	Click And Wait  //button[@aria-label="确定"]
 
 Disable User
@@ -102,7 +107,8 @@ Disable User
 	${no} =         Evaluate   ${index}-1
 	${button} =     Evaluate   'disableUser'+'${no}'
 	Click Element   ${button} 
-	Wait Until Element Is Visible  //button[@aria-label="确定"]
+	Wait Until Page Contains Element  //button[@aria-label="确定"]
+	Wait Until Element Is Visible     //button[@aria-label="确定"]
 	Click And Wait  //button[@aria-label="确定"]
 
 Enable User
