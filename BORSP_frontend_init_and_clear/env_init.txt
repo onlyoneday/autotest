@@ -49,8 +49,8 @@ Add Registry Auth
     ${resp}=          Post Request    shurenyun    /v1/external_registries    data=${data}    headers=${headers}
     log               ${resp.text}
     [Return]          ${resp}
-#-------------------
 
+#-------------------
 Login Sry With Admin
     [Tags]    用户管理
     ${data}=                      Set Variable             {"userName":"${ADMIN USER}","password":"${ADMIN PASSWD}"}
@@ -104,7 +104,7 @@ Add A Node To Cluster
 *** Test Cases ***
 Testing Initialization
     Login Sry With Admin
-    Create Some Groups
-    Create Some Users
-    Create A Cluster
-    Add A Node To Cluster
+    Run Keyword And Ignore Error       Create Some Groups
+    Run Keyword And Ignore Error       Create Some Users
+    Run Keyword And Ignore Error       Create A Cluster
+    Run Keyword And Ignore Error       Add A Node To Cluster

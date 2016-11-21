@@ -233,6 +233,6 @@ Testing Teardown 1
     Login Sry With Admin
     # Login Sry With MMJ
     Run Keyword And Ignore Error       Clear Test Apps
-    Clear Test Clusters
-    Clear Test Users
-    Clear Test Groups
+    Run Keyword And Ignore Error       Clear Test Clusters
+    Run Keyword And Ignore Error       Clear Test Users
+    Run Keyword And Ignore Error       Clear Test Groups
