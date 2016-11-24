@@ -30,7 +30,11 @@ G-042取消删除
     ${path} =       Evaluate   'node-list-menu-'+'${no}'
     ${button} =     Evaluate   'deleteUser'+'${no}'
     Click Element   ${path}
+    Wait Until Page Contains Element  ${button}
+    Wait Until Element Is Visible     ${button}
     Click Element   ${button}
+    Wait Until Page Contains Element  //button[@aria-label="取消"]
+    Wait Until Element Is Visible     //button[@aria-label="取消"]
     Click Element   //button[@aria-label="取消"]
     ${index} =      Get User Index    ${MMJ USER}
     Run Keyword If  '${index}' == 'None'    Fail
