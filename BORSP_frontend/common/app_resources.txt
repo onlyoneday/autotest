@@ -10,6 +10,7 @@ Resource       ../common/resources.txt
 Delete App From Button
     #从应用列表的Button删除应用
     Click Element   node-list-menu-0
+    Wait Until Element Is Visible     stackListDelete0
     Click Element   stackListDelete0
     Wait Until Page Contains Element  //button[@aria-label="确定"]
     Wait Until Element Is Visible     //button[@aria-label="确定"]
@@ -19,6 +20,7 @@ Delete App From Button
 Delete App From Detail
     #从应用详情的菜单删除应用
     Click Element   stackDetailMenu
+    Wait Until Element Is Visible     stackDetailDelete
     Click Element   stackDetailDelete
     Wait Until Page Contains Element  //button[@aria-label="确定"]    
     Wait Until Element Is Visible     //button[@aria-label="确定"]
