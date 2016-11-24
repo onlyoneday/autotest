@@ -28,6 +28,8 @@ app_m_5,8 KILL KILL&SCALE
     #KILL
     Click Element       ${checkbox}
     Click Element       stackInstanceKilTack
+    Wait Until Page Contains Element  //button[@aria-label="确定"]
+    Wait Until Element Is Visible     //button[@aria-label="确定"]
     Click And Wait      //button[@aria-label="确定"]
     Wait Until Page Contains Element  ${table tr2}  timeout=${LONG TIME} 
     ${index} =          Get Matching Xpath Count    ${table tr} 
@@ -35,6 +37,8 @@ app_m_5,8 KILL KILL&SCALE
     #KILL&SCALE
     Click Element       ${checkbox}
     Click Element       stackInstanceKilOrTack
+    Wait Until Page Contains Element  //button[@aria-label="确定"]
+    Wait Until Element Is Visible     //button[@aria-label="确定"]
     Click And Wait      //button[@aria-label="确定"]
     ${index} =          Get Matching Xpath Count   ${table tr}
     Should Be Equal     ${index}   1

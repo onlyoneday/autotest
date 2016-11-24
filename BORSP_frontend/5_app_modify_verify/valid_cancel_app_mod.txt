@@ -42,6 +42,8 @@ Not Update    [Arguments]   ${i}   ${time}
     ${menu} =       Evaluate   'node-list-menu-'+'${index}'
     Click Element   ${menu}
     ${button} =     Evaluate   'stackListUpdate'+'${index}'
+    Wait Until Page Contains Element  ${button}
+    Wait Until Element Is Visible     ${button}
     Click Element   ${button}
     Wait Until Page Contains Element  ${cputest}
     ${cpu} =        Get Text    ${cputest}
