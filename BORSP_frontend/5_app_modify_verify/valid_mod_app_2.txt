@@ -10,7 +10,7 @@ Suite Teardown  Close All Browsers
 *** Test Cases ***
 
 app_m_14 应用详情-右上方停止、扩展、删除、更新可用
-    [Documentation]  暂停应用所需时间过长没有执行
+    [Documentation]  暂停应用所需时间过长，没有执行
     #创建应用
     Click Element   stackCreate
     Wait Until Page Contains Element  stackAppName

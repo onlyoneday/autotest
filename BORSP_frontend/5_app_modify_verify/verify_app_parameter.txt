@@ -160,7 +160,7 @@ Verify Config 2
 
 Verify Debug
     #Debug信息
-    Click And Wait  ${APP TAB 3}
+    Execute Javascript     document.getElementsByTagName('md-tab-item')[2].click()
     Page Should Contain    ${debugmessage}
 
 *** Variables ***
