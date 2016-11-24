@@ -3,12 +3,12 @@
 Documentation   新建应用
 Resource        ../common/resources.txt
 Resource        ../common/app_resources.txt
-Suite Setup     Open Browser And Login Mmj
-Test Setup      Go To Page   ${APP_MY URL}
+Test Setup      Open Browser And Login Mmj
 Test Template   Deploy App
+Test Teardown   Close All Browsers
 Suite Teardown  Close All Browsers
 
-*** Test Cases ***                                                Network     forceImage    aedhc
+*** Test Cases ***                                               Network     forceImage    aedhc
 
 app_c_02,04,06,12,F-201新建应用-不强拉镜像/网桥模式/应用地址/服务发现  ${EMPTY}    ${EMPTY}      10010
 app_c_05,07,09-11新建应用-强拉镜像/HOST模式/环境变量/Docker参数/CMD   stackHost   image         01101
@@ -17,10 +17,11 @@ app_c_05,07,09-11新建应用-强拉镜像/HOST模式/环境变量/Docker参数/
 
 Deploy App  [Arguments]   ${network}   ${forceImage}   ${aedhc}
     #新建应用
-    Click Element   stackCreate
+    Go To Page          ${APP_MY URL}
+    Click Element       stackCreate
     Wait Until Page Contains Element  stackAppName
     #输入最简参数
-    ${name} =          Input Simple App
+    ${name} =           Input Simple App
     #强制拉取镜像
     Run Keyword If     '${forceImage}' == 'image'    Click Element  forceImage
     #选择网络模式
