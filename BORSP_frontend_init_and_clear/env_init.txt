@@ -60,6 +60,15 @@ Login Sry With Admin
     ${adminheaders}=              Create Dictionary        Authorization=${token}
     Set Global Variable           ${adminheaders}
 
+Login Sry With Mmj
+    [Tags]    用户管理
+    ${data}=                      Set Variable             {"userName":"${MMJ USER}","password":"${MMJ PASSWD}"}
+    ${resp}=                      Login Sry                ${data}
+    Should Be Equal As Strings    ${resp.status_code}      200
+    ${token}=  Evaluate           '${resp.json()['data']}'
+    ${mmjheaders}=                Create Dictionary        Authorization=${token}
+    Set Global Variable           ${mmjheaders}
+
 Create Some Groups
 #create mmj group
     ${data} =  Set Variable          {"name": "${MMJ GROUP}" , "description": ""}
@@ -76,15 +85,15 @@ Create Some Groups
 
 Create Some Users
     #create a super user
-    ${data}=    Set Variable      {"email":"su@su.comm","password":"${VALID PASSWD}","title":"职位, 可不填","userName":"${VALID USER}","name":"${VALID USER}","phone":"手机号, 可不填","accountGroups":[{"groupId":1,"role":"owner"}]}
+    ${data}=    Set Variable      {"email":"su@su.comm","password":"${VALID PASSWD}","title":"职位, 可不填","userName":"${VALID USER}","name":"${VALID USER}","phone":"手机号, 可不填","accountGroups":[{"groupId":1,"role":"superuser"}]}
     ${resp}=    Create User       ${data}                ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
     #create ower of mmj group
-    ${data}=    Set Variable      {"email":"su2@su.comm","password":"${GM PASSWD}","title":"职位, 可不填","userName":"${GM USER}","name":"${GM USER}","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"owner"}]}
+    ${data}=    Set Variable      {"email":"${GM EMAIL}","password":"${GM PASSWD}","title":"职位, 可不填","userName":"${GM USER}","name":"${GM USER}","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"owner"}]}
     ${resp}=    Create User       ${data}                ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
     #create member of mmj group
-    ${data}=    Set Variable      {"email":"su3@su.comm","password":"${MMJ PASSWD}","title":"职位, 可不填","userName":"${MMJ USER}","name":"${MMJ USER}","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"member"}]}
+    ${data}=    Set Variable      {"email":"${MMJ EMAIL}","password":"${MMJ PASSWD}","title":"职位, 可不填","userName":"${MMJ USER}","name":"${MMJ USER}","phone":"手机号, 可不填","accountGroups":[{"groupId":${mmjgroupid},"role":"member"}]}
     ${resp}=    Create User       ${data}                ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
 
@@ -100,6 +109,10 @@ Add A Node To Cluster
     ${resp}=    Add Nodes         ${data}                 ${adminheaders}
     Should Be Equal As Strings    ${resp.status_code}    200
 
+Add A Registry
+    ${data}=    Set Variable       {"name": "${MMJ RG}","userName":"${RG NAME}", "password":"${RG PWD}", "addr":"${RG ADD}"}
+    ${resp}=    Add Registry Auth  ${data}                ${mmjheaders}
+    Should Be Equal As Strings     ${resp.status_code}    200
 
 *** Test Cases ***
 Testing Initialization
@@ -108,3 +121,5 @@ Testing Initialization
     Run Keyword And Ignore Error       Create Some Users
     Run Keyword And Ignore Error       Create A Cluster
     Run Keyword And Ignore Error       Add A Node To Cluster
+    Login Sry With Mmj
+    Run Keyword And Ignore Error       Add A Registry
